@@ -26,7 +26,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    //connect to sqlite database
+    //connect to sqlite database (testdatabase.db)
     public static void connect(){
         //path to the database
         var url = "jdbc:sqlite:testdatabase.db";
@@ -35,14 +35,19 @@ public class App extends Application {
             //open connection to database
             conn = DriverManager.getConnection(url);
             System.out.println("Connected to database successfully");
+
             //statement for queries
             Statement stmt = conn.createStatement();
+
             //create table and enter values for testing
             //stmt.executeUpdate("drop table if exists users");
             //stmt.executeUpdate("create table users (id integer, name string)");
             //stmt.executeUpdate("insert into users (id, name) values (1, 'John')");
             //stmt.executeUpdate("insert into users (id, name) values (2, 'Michael')");
+
+            //execute query selecting all from users table
             ResultSet rs = stmt.executeQuery("select * from users");
+            //print data to console
             while(rs.next()){
                 System.out.println(rs.getInt("id") + " " + rs.getString("name"));
             }
