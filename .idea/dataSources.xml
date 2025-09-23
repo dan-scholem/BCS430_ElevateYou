@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="testdatabase" uuid="3d87c456-1467-4818-b342-4a968b65b6bd">
+    <data-source source="LOCAL" name="database" uuid="18457352-e5b4-414f-bcad-b02d46dcdbe9">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\dansc\IdeaProjects\BCS430_ElevateYou\testdatabase.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\dansc\IdeaProjects\BCS430_ElevateYou\src\main\resources\database\database.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar</url>
+        </library>
+      </libraries>
     </data-source>
-    <data-source source="LOCAL" name="database" uuid="e59552cf-1c89-4ba3-8a53-9bba79866344">
+    <data-source source="LOCAL" name="test_database" uuid="8f0f2879-85fd-4e31-bace-8327ff016392">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\dansc\IdeaProjects\BCS430_ElevateYou\database.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\dansc\IdeaProjects\BCS430_ElevateYou\src\main\resources\database\test_database.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
