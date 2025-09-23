@@ -1,0 +1,22 @@
+package com.elevate5.elevateyou.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+
+    public static Connection connect(){
+        //path to the database
+        var url = "jdbc:sqlite:database.db";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            System.out.println("Connected to database successfully");
+            return conn;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+}
