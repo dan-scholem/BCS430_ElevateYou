@@ -12,7 +12,7 @@ public class DatabaseConnection {
         var url = "jdbc:sqlite:src/main/resources/database/database.db";
         try {
             Connection conn = DriverManager.getConnection(url);
-            System.out.println("Connected to database successfully");
+            System.out.println("Connected to production database successfully");
             return conn;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -26,7 +26,7 @@ public class DatabaseConnection {
         var url = "jdbc:sqlite:src/main/resources/database/test_database.db";
         try {
             Connection conn = DriverManager.getConnection(url);
-            System.out.println("Connected to database successfully");
+            System.out.println("Connected to test database successfully");
             return conn;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
