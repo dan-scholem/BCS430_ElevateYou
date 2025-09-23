@@ -1,6 +1,7 @@
 package com.elevate5.elevateyou;
 
 import com.elevate5.elevateyou.util.DatabaseConnection;
+import com.elevate5.elevateyou.util.DatabaseUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,14 +15,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-        try(Connection conn = DatabaseConnection.connect()){
+        try(Connection conn = DatabaseConnection.connectTestDatabase()){
             assert conn != null;
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from appointment_log");
-            while (rs.next()) {
-                System.out.println(rs.getInt("user_id") + " " + rs.getString("appointment_date") + " " + rs.getString("appointment_time") + " " + rs.getString("doc_name") + " " + rs.getString("appointment_notes"));
-            }
-            stmt.close();
+            DatabaseUtil.createTables(conn);
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
