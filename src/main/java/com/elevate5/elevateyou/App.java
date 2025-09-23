@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.util.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-        try(Connection conn = connect()){
+        try(Connection conn = DatabaseConnection.connect()){
             assert conn != null;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from appointment_log");
@@ -35,20 +36,6 @@ public class App extends Application {
         primaryStage.setTitle("ElevateYou");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    //connect to sqlite database (database.db)
-    public static Connection connect(){
-        //path to the database
-        var url = "jdbc:sqlite:database.db";
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            System.out.println("Connected to database successfully");
-            return conn;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
     }
 
     //method for creating database tables
