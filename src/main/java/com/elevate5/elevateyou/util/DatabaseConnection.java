@@ -6,9 +6,10 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
+    //connects to sqlite database (database.db)
     public static Connection connect(){
         //path to the database
-        var url = "jdbc:sqlite:database.db";
+        var url = "jdbc:sqlite:src/main/resources/database/database.db";
         try {
             Connection conn = DriverManager.getConnection(url);
             System.out.println("Connected to database successfully");
