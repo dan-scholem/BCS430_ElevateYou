@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0"
+      prefWidth="869.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.UserLoginController">
+   <AnchorPane layoutX="347.0" layoutY="76.0" prefHeight="509.0" prefWidth="484.0"
+               style="-fx-background-color: #EDF6F9; -fx-background-radius: 30;">
+      <Label layoutX="68.0" layoutY="125.0" prefHeight="23.0" prefWidth="78.0" text="Email" textFill="#e29578">
+         <font>
+            <Font name="System Bold" size="22.0"/>
+         </font>
+      </Label>
+      <Label layoutX="68.0" layoutY="211.0" prefHeight="23.0" prefWidth="93.0" text="Password" textFill="#e29578">
+         <font>
+            <Font name="System Bold" size="22.0"/>
+         </font>
+      </Label>
+      <Label layoutX="198.0" layoutY="48.0" prefHeight="29.0" prefWidth="93.0" text="Sign In" textFill="#006d77">
+         <font>
+            <Font name="System Bold" size="28.0"/>
+         </font>
+      </Label>
+      <TextField fx:id="userEmail" layoutX="68.0" layoutY="170.0" prefHeight="25.0" prefWidth="322.0"
+                 style="-fx-border-radius: 20;"/>
+      <PasswordField fx:id="userPassword" layoutX="68.0" layoutY="256.0" prefHeight="25.0" prefWidth="322.0"/>
+      <Button fx:id="signInButton" layoutX="87.0" layoutY="312.0" mnemonicParsing="false" prefHeight="36.0"
+              prefWidth="284.0" style="-fx-background-color: #E29578;" text="Sign In">
+         <font>
+            <Font name="System Bold" size="18.0"/>
+         </font>
+      </Button>
+      <Label layoutX="34.0" layoutY="386.0" prefHeight="17.0" prefWidth="178.0" text="Don't have an account?">
+         <font>
+            <Font name="Roboto Bold" size="14.0"/>
+         </font>
+      </Label>
+      <Button fx:id="createAccountButton" layoutX="32.0" layoutY="427.0" mnemonicParsing="false" prefHeight="36.0"
+              prefWidth="124.0" style="-fx-background-color: #E29578;" text="Create Account">
+         <font>
+            <Font name="Roboto Bold" size="13.0"/>
+         </font>
+      </Button>
+      <Label layoutX="265.0" layoutY="386.0" prefHeight="17.0" prefWidth="178.0" text="Forgot password?">
+         <font>
+            <Font name="Roboto Bold" size="14.0"/>
+         </font>
+      </Label>
+   </AnchorPane>
+   <Text fill="#ffddd2" layoutX="28.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0"
+         text="Your Health and Wellness Journey Starts Here" wrappingWidth="330.0">
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Text>
+   <Text fill="#ffddd2" layoutX="37.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0"
+         text="Track your fitness, medication, sleep and take control of your wellness with our comprehensive health and wellness management platform"
+         wrappingWidth="257.58447265625">
+      <font>
+         <Font name="System Bold" size="18.0"/>
+      </font>
+   </Text>
+</Pane>
