@@ -6,7 +6,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String passwordHash;
+    //private String passwordHash;
     private String profileImageURL;
 
     public User(int userID, String firstName, String lastName, String email, String passwordHash, String profileImageURL) {
@@ -14,7 +14,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.passwordHash = passwordHash;
+        //this.passwordHash = passwordHash;
         this.profileImageURL = profileImageURL;
     }
 
@@ -42,18 +42,24 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    /*
     public String getPasswordHash() {
         return passwordHash;
     }
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
+    */
     public String getProfileImageURL() {
         return profileImageURL;
     }
     public void setProfileImageURL(String profileImageURL) {
         this.profileImageURL = profileImageURL;
     }
-
+    public String fullName() {
+        if (lastName == null || lastName.isBlank()) return firstName;
+        if (firstName == null || firstName.isBlank()) return lastName;
+        return firstName + " " + lastName;
+    }
 
 }
