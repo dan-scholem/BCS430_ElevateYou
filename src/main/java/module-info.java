@@ -3,6 +3,7 @@ module com.elevate5.elevateyou {
     requires javafx.fxml;
     requires javafx.web;
 
+    requires jbcrypt;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires eu.hansolo.tilesfx;
