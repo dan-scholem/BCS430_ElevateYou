@@ -16,6 +16,8 @@ module com.elevate5.elevateyou {
     requires firebase.admin;
     requires google.cloud.core;
     requires com.google.auth;
+    requires org.slf4j;
+    requires org.slf4j.simple;
 
     opens com.elevate5.elevateyou to javafx.fxml;
     exports com.elevate5.elevateyou;
