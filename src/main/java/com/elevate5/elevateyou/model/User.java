@@ -9,6 +9,14 @@ public class User {
     //private String passwordHash;
     private String profileImageURL;
 
+    public User(){
+        this.userID = 0;
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.profileImageURL = "";
+    }
+
     public User(int userID, String firstName, String lastName, String email, String passwordHash, String profileImageURL) {
         this.userID = userID;
         this.firstName = firstName;
