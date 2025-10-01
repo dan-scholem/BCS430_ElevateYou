@@ -1,0 +1,38 @@
+package com.elevate5.elevateyou;
+
+import com.elevate5.elevateyou.util.DatabaseConnection;
+import com.elevate5.elevateyou.util.DatabaseUtil;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class UserLogin extends Application {
+
+        public static void main(String[] args) {
+
+            try(Connection conn = DatabaseConnection.connectTestDatabase()){
+                assert conn != null;
+                DatabaseUtil.createTables(conn);
+            } catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+
+            launch(args);
+        }
+
+        @Override
+        public void start(Stage primaryStage) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(com.elevate5.elevateyou.UserLogin.class.getResource("UserLogin.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 869, 669);
+            primaryStage.setTitle("ElevateYou");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            primaryStage.setResizable(false);
+        }
+
+    }
