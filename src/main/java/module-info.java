@@ -18,6 +18,7 @@ module com.elevate5.elevateyou {
     requires com.google.auth;
     requires org.slf4j;
     requires org.slf4j.simple;
+    requires com.google.gson;
 
     opens com.elevate5.elevateyou to javafx.fxml;
     exports com.elevate5.elevateyou;
