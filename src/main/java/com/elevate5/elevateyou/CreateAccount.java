@@ -25,7 +25,25 @@ public class CreateAccount extends Application {
             launch(args);
         }
 
-        @Override
+    public static void loadCreateAccountScene(Stage stage) throws IOException {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("CreateAccount.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 869 , 669);
+            stage.setTitle("Create Account");
+            stage.setScene(scene);
+            stage.show();
+    }
+
+    public static void loadUserLoginScene(Stage stage) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("UserLogin.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 869 , 669);
+        stage.setTitle("User Login");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
         public void start(Stage primaryStage) throws IOException {
             FXMLLoader fxmlLoader = new FXMLLoader(com.elevate5.elevateyou.CreateAccount.class.getResource("CreateAccount.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 869, 669);
@@ -36,3 +54,4 @@ public class CreateAccount extends Application {
         }
 
     }
+

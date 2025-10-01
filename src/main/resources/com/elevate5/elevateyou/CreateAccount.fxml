@@ -14,50 +14,50 @@
          <children>
             <Label layoutX="69.0" layoutY="91.0" prefHeight="28.0" prefWidth="124.0" text="First Name" textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="394.0" layoutY="91.0" prefHeight="28.0" prefWidth="92.0" text="Last Name" textFill="#e29578">
+            <Label layoutX="394.0" layoutY="91.0" prefHeight="28.0" prefWidth="115.0" text="Last Name" textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="266.0" layoutY="28.0" prefHeight="34.0" prefWidth="290.0" text="Create your account " textFill="#e29578">
+            <Label layoutX="243.0" layoutY="28.0" prefHeight="40.0" prefWidth="316.0" text="Create your account " textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="28.0" />
+                  <Font name="Poppins ExtraBold" size="28.0" />
                </font>
             </Label>
             <TextField fx:id="firstName" layoutX="69.0" layoutY="132.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="69.0" layoutY="397.0" prefHeight="25.0" prefWidth="284.0" />
             <Button fx:id="createAccountButton" layoutX="246.0" layoutY="468.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" text="Create Account">
                <font>
-                  <Font name="Roboto" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="494.0" layoutY="531.0" prefHeight="18.0" prefWidth="124.0" text=" Have an account?">
+            <Label layoutX="406.0" layoutY="527.0" prefHeight="27.0" prefWidth="172.0" text=" Have an account?">
                <font>
-                  <Font name="Roboto Bold" size="14.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="signInButton" layoutX="625.0" layoutY="522.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #006D77;" text="Sign In" textFill="#ffddd2">
+            <Button fx:id="signInButton" layoutX="625.0" layoutY="522.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #006D77;" text="Sign In" textFill="#ffddd2">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
             <TextField fx:id="lastName" layoutX="388.0" layoutY="132.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <Label layoutX="69.0" layoutY="332.0" prefHeight="28.0" prefWidth="92.0" text="Password" textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
             <Label layoutX="69.0" layoutY="193.0" prefHeight="28.0" prefWidth="92.0" text="Email" textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="394.0" layoutY="332.0" prefHeight="28.0" prefWidth="162.0" text="Confirm Password" textFill="#e29578">
+            <Label layoutX="394.0" layoutY="332.0" prefHeight="28.0" prefWidth="191.0" text="Confirm Password" textFill="#e29578">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
             <TextField fx:id="userEmail" layoutX="69.0" layoutY="250.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
