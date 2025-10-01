@@ -39,3 +39,6 @@ build/
 
 ### Firebase Private Key ###
 src/main/resources/com/elevate5/elevateyou/key.json
+
+### Firebase API Key ###
+src/main/resources/com/elevate5/elevateyou/FirebaseAPI.json
