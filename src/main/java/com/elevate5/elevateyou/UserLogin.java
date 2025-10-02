@@ -13,26 +13,35 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class UserLogin extends Application {
+import static javafx.application.Application.launch;
+
+public class UserLogin  {
 
     public static Firestore firestore;
     public static FirebaseAuth firebaseAuth;
     private final com.elevate5.elevateyou.model.FirestoreContext firestoreContext = new com.elevate5.elevateyou.model.FirestoreContext();
 
+     /*
         public static void main(String[] args) {
 
-            /*
+
             try(Connection conn = DatabaseConnection.connectTestDatabase()){
                 assert conn != null;
                 DatabaseUtil.createTables(conn);
             } catch(SQLException e){
                 System.out.println(e.getMessage());
             }
-             */
+
 
             launch(args);
         }
 
+      */
+
+
+
+
+        /*
         @Override
         public void start(Stage primaryStage) throws IOException {
 
@@ -40,11 +49,23 @@ public class UserLogin extends Application {
             firebaseAuth = FirebaseAuth.getInstance();
 
             FXMLLoader fxmlLoader = new FXMLLoader(com.elevate5.elevateyou.UserLogin.class.getResource("UserLogin.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1200, 669);
+            Scene scene = new Scene(fxmlLoader.load(), 1008, 631);
             primaryStage.setTitle("ElevateYou");
             primaryStage.setScene(scene);
             primaryStage.show();
             primaryStage.setResizable(true);
         }
+
+         */
+
+    public static void loadUserLoginScene(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("UserLogin.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 1008 , 631);
+        stage.setTitle("User Login");
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
+    }
 
     }
