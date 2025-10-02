@@ -15,12 +15,15 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
+        /*
         try(Connection conn = DatabaseConnection.connectTestDatabase()){
             assert conn != null;
             DatabaseUtil.createTables(conn);
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
+
+         */
 
         launch(args);
     }
