@@ -108,7 +108,7 @@ public boolean addUser() {
 
     Map<String, Object> data = new HashMap<>();
     data.put("Email", userEmail.getText());
-    data.put("Password", userPassword.getText());
+    //data.put("Password", userPassword.getText());
     data.put("FirstName", firstName.getText());
     data.put("LastName", lastName.getText());
 

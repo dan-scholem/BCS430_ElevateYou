@@ -17,7 +17,7 @@ import static javafx.application.Application.launch;
 
 public class UserLogin  {
 
-    public static Firestore firestore;
+    public static Firestore firestore ;
     public static FirebaseAuth firebaseAuth;
     private final com.elevate5.elevateyou.model.FirestoreContext firestoreContext = new com.elevate5.elevateyou.model.FirestoreContext();
 

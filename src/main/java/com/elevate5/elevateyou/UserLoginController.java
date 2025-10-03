@@ -79,6 +79,8 @@ public class UserLoginController {
     @FXML
     protected void onSignInButtonClick() throws IOException, ExecutionException, InterruptedException {
 
+        System.out.println("Sign In Button Clicked");
+
         if (userEmail.getText().isEmpty() || userPassword.getText().isEmpty()) {
 
             showAlert(Alert.AlertType.ERROR, "Please enter your email and password!");
@@ -86,7 +88,7 @@ public class UserLoginController {
         }
 
         else if (signInUser()) {
-
+            System.out.println("Sign In Success");
             showAlert(Alert.AlertType.CONFIRMATION, "Sign in successful!");
 
         }
@@ -117,7 +119,7 @@ public class UserLoginController {
                     documentPassword = String.valueOf(document.getData().get("Password"));
 
                     // user found
-                    if (documentEmail.equals(enteredEmail) && documentPassword.equals(enteredPassword)) {
+                    if (logInModel.passwordAuth(enteredEmail, enteredPassword)) {
                         App.theUser = new User();
                         App.theUser.setEmail(enteredEmail);
                         App.theUser.setPassword(enteredPassword);
@@ -127,7 +129,7 @@ public class UserLoginController {
                         stage.close();
 
                         Dashboard.loadDashboardScene(stage);
-
+                        System.out.println("Sign In Success");
                         showAlert(Alert.AlertType.CONFIRMATION, "Sign in successful!");
 
                     }
