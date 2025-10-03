@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="1200.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="872.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
    <children>
       <AnchorPane layoutX="47.0" layoutY="31.0" prefHeight="567.0" prefWidth="776.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 30;">
          <children>
@@ -29,7 +29,7 @@
             </Label>
             <TextField fx:id="firstName" layoutX="69.0" layoutY="132.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="69.0" layoutY="397.0" prefHeight="25.0" prefWidth="284.0" />
-            <Button fx:id="createAccountButton" layoutX="246.0" layoutY="468.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" text="Create Account">
+            <Button fx:id="createAccountButton" layoutX="246.0" layoutY="468.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" text="Create Account">
                <font>
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
@@ -55,13 +55,7 @@
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="394.0" layoutY="332.0" prefHeight="28.0" prefWidth="191.0" text="Confirm Password" textFill="#e29578">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Label>
             <TextField fx:id="userEmail" layoutX="69.0" layoutY="250.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
-            <PasswordField fx:id="confirmPassword" layoutX="388.0" layoutY="397.0" prefHeight="25.0" prefWidth="284.0" />
          </children>
       </AnchorPane>
    </children>

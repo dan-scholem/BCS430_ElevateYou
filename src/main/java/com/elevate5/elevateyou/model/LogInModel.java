@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou.model;
 
+import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.UserLogin;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
@@ -49,7 +50,7 @@ public class LogInModel {
             }
 
             if(connection.getResponseCode() == 200){
-                user = UserLogin.firebaseAuth.getUserByEmail(email);
+                user = App.fauth.getUserByEmail(email);
                 return true;
             } else{
                 System.out.println(connection.getResponseMessage() + connection.getResponseCode());
