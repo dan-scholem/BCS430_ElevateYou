@@ -28,8 +28,8 @@
                </font>
             </Label>
             <TextField fx:id="firstName" layoutX="69.0" layoutY="132.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
-            <PasswordField fx:id="userPassword" layoutX="69.0" layoutY="397.0" prefHeight="25.0" prefWidth="284.0" />
-            <Button fx:id="createAccountButton" layoutX="246.0" layoutY="468.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" text="Create Account">
+            <PasswordField fx:id="userPassword" layoutX="63.0" layoutY="351.0" prefHeight="25.0" prefWidth="284.0" />
+            <Button fx:id="createAccountButton" layoutX="246.0" layoutY="430.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" text="Create Account">
                <font>
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
@@ -45,7 +45,7 @@
                </font>
             </Button>
             <TextField fx:id="lastName" layoutX="388.0" layoutY="132.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
-            <Label layoutX="69.0" layoutY="332.0" prefHeight="28.0" prefWidth="92.0" text="Password" textFill="#e29578">
+            <Label layoutX="69.0" layoutY="311.0" prefHeight="28.0" prefWidth="92.0" text="Password" textFill="#e29578">
                <font>
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="userEmail" layoutX="69.0" layoutY="250.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <TextField fx:id="userEmail" layoutX="69.0" layoutY="233.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
          </children>
       </AnchorPane>
    </children>

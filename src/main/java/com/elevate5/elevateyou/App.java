@@ -6,8 +6,6 @@ import com.elevate5.elevateyou.model.User;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -40,7 +38,7 @@ public class App extends Application {
 
         catch (IOException e) {
 
-            showAlert(Alert.AlertType.INFORMATION, "Failed to load UserLogin");
+            showAlert(Alert.AlertType.INFORMATION, "Failed to load User Login");
         }
     }
 
