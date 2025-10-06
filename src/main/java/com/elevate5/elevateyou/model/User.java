@@ -6,8 +6,17 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     //private String passwordHash;
     private String profileImageURL;
+
+    public User(){
+        this.userID = 0;
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.profileImageURL = "";
+    }
 
     public User(int userID, String firstName, String lastName, String email, String passwordHash, String profileImageURL) {
         this.userID = userID;
@@ -42,6 +51,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
     /*
     public String getPasswordHash() {
         return passwordHash;
@@ -61,5 +73,6 @@ public class User {
         if (firstName == null || firstName.isBlank()) return lastName;
         return firstName + " " + lastName;
     }
+
 
 }

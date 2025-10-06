@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Firebase Private Key ###
+src/main/resources/com/elevate5/elevateyou/key.json
+
+### Firebase Web API Key ###
+src/main/resources/com/elevate5/elevateyou/FirebaseAPI.json

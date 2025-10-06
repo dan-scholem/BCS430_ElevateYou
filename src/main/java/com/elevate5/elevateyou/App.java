@@ -1,37 +1,54 @@
 package com.elevate5.elevateyou;
 
-import com.elevate5.elevateyou.util.DatabaseConnection;
-import com.elevate5.elevateyou.util.DatabaseUtil;
+import com.elevate5.elevateyou.model.FirestoreContext;
+import com.elevate5.elevateyou.model.User;
+
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.sql.*;
+
 
 import java.io.IOException;
 
+
 public class App extends Application {
 
+    public static Firestore fstore;
+    public static FirebaseAuth fauth;
+    private final FirestoreContext contxtFirebase = new FirestoreContext();
+    public static User theUser;
+
     public static void main(String[] args) {
-
-        try(Connection conn = DatabaseConnection.connectTestDatabase()){
-            assert conn != null;
-            DatabaseUtil.createTables(conn);
-        } catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-
-        launch(args);
+        launch();
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("LandingView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        primaryStage.setTitle("ElevateYou");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage stage) throws IOException {
+
+
+        try {
+            fstore = contxtFirebase.firebase();
+            fauth = FirebaseAuth.getInstance();
+            theUser = new User();
+            UserLogin.loadUserLoginScene(stage);
+        }
+
+        catch (IOException e) {
+
+            showAlert(Alert.AlertType.INFORMATION, "Failed to load User Login");
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message) {
+
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alert.getTitle());
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
 }
