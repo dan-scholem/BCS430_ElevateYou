@@ -39,13 +39,20 @@ public class CalendarView extends Application {
     @FXML
     private TableView<WeekData> calendarTableView;
 
-    @FXML private TableColumn<WeekData,DayData> sunCol;
-    @FXML private TableColumn<WeekData,DayData> monCol;
-    @FXML private TableColumn<WeekData,DayData> tueCol;
-    @FXML private TableColumn<WeekData,DayData> wedCol;
-    @FXML private TableColumn<WeekData,DayData> thuCol;
-    @FXML private TableColumn<WeekData,DayData> friCol;
-    @FXML private TableColumn<WeekData,DayData> satCol;
+    @FXML
+    private TableColumn<WeekData,DayData> sunCol;
+    @FXML
+    private TableColumn<WeekData,DayData> monCol;
+    @FXML
+    private TableColumn<WeekData,DayData> tueCol;
+    @FXML
+    private TableColumn<WeekData,DayData> wedCol;
+    @FXML
+    private TableColumn<WeekData,DayData> thuCol;
+    @FXML
+    private TableColumn<WeekData,DayData> friCol;
+    @FXML
+    private TableColumn<WeekData,DayData> satCol;
 
     @FXML
     private void initialize(){
@@ -70,146 +77,204 @@ public class CalendarView extends Application {
 
         selection = calendarTableView.getSelectionModel().getSelectedItems();
 
-        sunCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        sunCol.setCellFactory(col -> {
+                    TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                        @Override
+                        protected void updateItem(DayData item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty || item == null) {
+                                setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                            } else {
+                                String dayOfMonth;
+                                if (item.getDate() != null) {
+                                    dayOfMonth = item.getDate().getDayOfMonth() + "";
+                                } else {
+                                    dayOfMonth = "";
+                                }
+                                setText(dayOfMonth);
+                                setStyle("-fx-alignment: TOP-LEFT;");
+                            }
+                        }
+                    };
+                    cell.setOnMouseClicked(event -> {
+                        if(!cell.isEmpty()) {
+                            System.out.println(cell.getItem().getDate().toString());
+                        }
+                    });
+                    return cell;
+                });
+
+
+
+
+        monCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
+                }
+            });
+            return cell;
         });
 
-        monCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        tueCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
+                }
+            });
+            return cell;
         });
 
-        tueCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        wedCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
+                }
+            });
+            return cell;
         });
 
-        wedCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        thuCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
+                }
+            });
+            return cell;
         });
 
-        thuCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        friCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
+                }
+            });
+            return cell;
         });
 
-        friCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
+        satCol.setCellFactory(col -> {
+            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
+                @Override
+                protected void updateItem(DayData item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
 
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
+                    } else {
+                        String dayOfMonth;
+                        if (item.getDate() != null) {
+                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                        } else {
+                            dayOfMonth = "";
+                        }
+                        setText(dayOfMonth);
+                        setStyle("-fx-alignment: TOP-LEFT;");
                     }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
                 }
-            }
-        });
-
-        satCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
-            @Override
-            protected void updateItem(DayData item, boolean empty){
-                super.updateItem(item, empty);
-                if(empty || item == null){
-                    setText(null);
-
-                } else {
-                    String dayOfMonth;
-                    if(item.getDate() != null){
-                        dayOfMonth = item.getDate().getDayOfMonth() + "";
-                    }else{
-                        dayOfMonth = "";
-                    }
-                    setText(dayOfMonth);
-                    setStyle("-fx-alignment: TOP-LEFT;");
+            };
+            cell.setOnMouseClicked(event -> {
+                if(!cell.isEmpty()) {
+                    System.out.println(cell.getItem().getDate().toString());
                 }
-            }
+            });
+            return cell;
         });
-
     }
 
     public static void main(String[] args) {

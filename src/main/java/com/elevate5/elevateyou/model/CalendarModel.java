@@ -1,7 +1,9 @@
 package com.elevate5.elevateyou.model;
 
+import com.elevate5.elevateyou.model.calendardata.DayData;
 import com.elevate5.elevateyou.model.calendardata.WeekData;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,8 @@ import java.util.Map;
 public class CalendarModel {
 
     private ArrayList<WeekData> weeks;
+
+    private Map<LocalDate,ArrayList<DayData>> eventMap;
 
     private static final Map<String, Integer> daysInMonth = new HashMap<String, Integer>();
 
@@ -37,6 +41,10 @@ public class CalendarModel {
 
     public void addWeek(WeekData week){
         weeks.add(week);
+    }
+
+    public Map<LocalDate, ArrayList<DayData>> getDays() {
+        return eventMap;
     }
 
 }
