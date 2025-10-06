@@ -3,37 +3,16 @@ package com.elevate5.elevateyou;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 
 import java.io.IOException;
 
-public class DashboardController {
-
-    @FXML
-    private Button appointmentsButton;
-
-    @FXML
-    private Button calendarButton;
-
-    @FXML
-    private Button chatButton;
+public class MedicationTrackerController {
 
     @FXML
     private Button dashButton;
-
-    @FXML
-    private Button exerciseButton;
-
-    @FXML
-    private Button foodButton;
-
-    @FXML
-    private Button freindsButton;
-
-    @FXML
-    private Button journalButton;
 
     @FXML
     private Button logoutButton;
@@ -41,14 +20,6 @@ public class DashboardController {
     @FXML
     private Button medButton;
 
-    @FXML
-    private Button reviewsButton;
-
-    @FXML
-    private Button sleepButton;
-
-    @FXML
-    private Button tutorialsButton;
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
@@ -92,20 +63,17 @@ public class DashboardController {
     }
 
     @FXML
-    protected void medicationButtonClick() throws IOException {
+    protected void medicationButtonClick() {
 
         try {
+
             Stage stage = (Stage) medButton.getScene().getWindow();
 
             MedicationTracker.loadMedTrackerScene(stage);
-        }
 
-        catch (IOException e) {
+        } catch (Exception e) {
 
             throw new RuntimeException(e);
         }
-
     }
-
-
 }
