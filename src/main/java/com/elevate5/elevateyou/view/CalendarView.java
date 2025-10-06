@@ -2,6 +2,7 @@ package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.CalendarModel;
+import com.elevate5.elevateyou.model.Event;
 import com.elevate5.elevateyou.model.calendardata.DayData;
 import com.elevate5.elevateyou.model.calendardata.WeekData;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.application.Application;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CalendarView extends Application {
 
@@ -84,11 +86,10 @@ public class CalendarView extends Application {
                             super.updateItem(item, empty);
                             if (empty || item == null) {
                                 setText(null);
-
                             } else {
                                 String dayOfMonth;
                                 if (item.getDate() != null) {
-                                    dayOfMonth = item.getDate().getDayOfMonth() + "";
+                                    dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                                 } else {
                                     dayOfMonth = "";
                                 }
@@ -115,11 +116,10 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                         } else {
                             dayOfMonth = "";
                         }
@@ -143,11 +143,15 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
+                            if(!item.getEvents().isEmpty()) {
+                                for(Event event : item.getEvents()) {
+                                    dayOfMonth +=  event.toString() + "\n";
+                                }
+                            }
                         } else {
                             dayOfMonth = "";
                         }
@@ -171,11 +175,10 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                         } else {
                             dayOfMonth = "";
                         }
@@ -199,11 +202,10 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                         } else {
                             dayOfMonth = "";
                         }
@@ -227,11 +229,10 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                         } else {
                             dayOfMonth = "";
                         }
@@ -255,11 +256,10 @@ public class CalendarView extends Application {
                     super.updateItem(item, empty);
                     if (empty || item == null) {
                         setText(null);
-
                     } else {
                         String dayOfMonth;
                         if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "";
+                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                         } else {
                             dayOfMonth = "";
                         }
@@ -275,6 +275,22 @@ public class CalendarView extends Application {
             });
             return cell;
         });
+
+        LocalDate sampleDate = LocalDate.of(2025,10,6);
+        LocalTime sampleTime = LocalTime.of(16,30);
+
+        Event sampleEvent = new Event(sampleDate, sampleTime, "Dr Appointment", "Appointment");
+
+        System.out.println(sampleEvent.toString());
+
+        //DayData sampleDay = new DayData(sampleEvent.getDate());
+
+        LocalDate target = sampleEvent.getDate();
+
+        for(WeekData week : calendar.getWeeks()){
+
+        }
+
     }
 
     public static void main(String[] args) {

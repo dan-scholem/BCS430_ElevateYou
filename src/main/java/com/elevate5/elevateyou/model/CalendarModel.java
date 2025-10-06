@@ -43,6 +43,10 @@ public class CalendarModel {
         weeks.add(week);
     }
 
+    public ArrayList<WeekData> getWeeks() {
+        return weeks;
+    }
+
     public Map<LocalDate, ArrayList<DayData>> getDays() {
         return eventMap;
     }

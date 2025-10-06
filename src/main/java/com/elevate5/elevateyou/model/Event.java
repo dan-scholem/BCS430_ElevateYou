@@ -52,7 +52,7 @@ public class Event {
 
     @Override
     public String toString(){
-        return date.toString() + " " + time.toString() + " " + eventName + " " + eventDescription;
+        return time.toString() + " " + eventName;
     }
 
 }
