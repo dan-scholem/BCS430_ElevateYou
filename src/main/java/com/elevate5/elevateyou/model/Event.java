@@ -50,4 +50,9 @@ public class Event {
         this.eventDescription = eventDescription;
     }
 
+    @Override
+    public String toString(){
+        return date.toString() + " " + time.toString() + " " + eventName + " " + eventDescription;
+    }
+
 }
