@@ -26,5 +26,7 @@ module com.elevate5.elevateyou {
     exports com.elevate5.elevateyou.view;
     opens com.elevate5.elevateyou.model to javafx.fxml;
     exports com.elevate5.elevateyou.model;
+    opens com.elevate5.elevateyou.model.calendardata to javafx.fxml;
+    exports com.elevate5.elevateyou.model.calendardata;
 
 }

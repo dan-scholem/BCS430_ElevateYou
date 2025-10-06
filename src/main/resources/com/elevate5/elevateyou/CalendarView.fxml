@@ -4,35 +4,34 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.CalendarView">
-   <children>
-      <BorderPane prefHeight="631.0" prefWidth="1008.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0"
+            prefWidth="1008.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.elevate5.elevateyou.view.CalendarView">
+    <BorderPane prefHeight="631.0" prefWidth="1008.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <top>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="decrementMonth" mnemonicParsing="false" onAction="#handleDecrementMonth" text="&lt;" />
-                  <Label fx:id="monthLabel" alignment="CENTER" prefWidth="272.0" text="Calendar">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="incrementMonth" mnemonicParsing="false" onAction="#handleIncrementMonth" text="&gt;" />
-               </children>
+                <Button fx:id="decrementMonth" mnemonicParsing="false" onAction="#handleDecrementMonth" text="&lt;"/>
+                <Label fx:id="monthLabel" alignment="CENTER" prefWidth="272.0" text="Calendar">
+                  <font>
+                      <Font size="24.0"/>
+                  </font>
+                </Label>
+                <Button fx:id="incrementMonth" mnemonicParsing="false" onAction="#handleIncrementMonth" text="&gt;"/>
             </HBox>
-         </top>
-         <center>
-            <TableView fx:id="calendarTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        </top>
+        <center>
+          <TableView fx:id="calendarTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="sunCol" prefWidth="144.0" text="Sun" />
-                <TableColumn fx:id="monCol" prefWidth="144.0" text="Mon" />
-                  <TableColumn fx:id="tueCol" prefWidth="144.0" text="Tue" />
-                  <TableColumn fx:id="wedCol" prefWidth="144.0" text="Wed" />
-                  <TableColumn fx:id="thuCol" prefWidth="144.0" text="Thu" />
-                  <TableColumn fx:id="friCol" prefWidth="144.0" text="Fri" />
-                  <TableColumn fx:id="satCol" prefWidth="144.0" text="Sat" />
+                  <TableColumn fx:id="sunCol" prefWidth="144.0" text="Sun"/>
+                  <TableColumn fx:id="monCol" prefWidth="144.0" text="Mon"/>
+                  <TableColumn fx:id="tueCol" prefWidth="144.0" text="Tue"/>
+                  <TableColumn fx:id="wedCol" prefWidth="144.0" text="Wed"/>
+                  <TableColumn fx:id="thuCol" prefWidth="144.0" text="Thu"/>
+                  <TableColumn fx:id="friCol" prefWidth="144.0" text="Fri"/>
+                  <TableColumn fx:id="satCol" prefWidth="144.0" text="Sat"/>
               </columns>
-            </TableView>
-         </center>
-      </BorderPane>
-   </children>
+          </TableView>
+        </center>
+    </BorderPane>
 </AnchorPane>

@@ -2,20 +2,15 @@ package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.CalendarModel;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
+import com.elevate5.elevateyou.model.calendardata.DayData;
+import com.elevate5.elevateyou.model.calendardata.WeekData;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
@@ -30,7 +25,7 @@ public class CalendarView extends Application {
 
     private final static CalendarModel calendar = new CalendarModel();
 
-    ObservableList<CalendarModel>  calendarModelObservableList = FXCollections.observableArrayList();
+    private ObservableList<WeekData> selection;
 
     @FXML
     private Label monthLabel;
@@ -42,18 +37,15 @@ public class CalendarView extends Application {
     private Button incrementMonth;
 
     @FXML
-    private GridPane calendarGrid;
+    private TableView<WeekData> calendarTableView;
 
-    @FXML
-    private TableView<CalendarModel> calendarTableView;
-
-    @FXML private TableColumn<CalendarModel,String> sunCol;
-    @FXML private TableColumn<CalendarModel,String> monCol;
-    @FXML private TableColumn<CalendarModel,String> tueCol;
-    @FXML private TableColumn<CalendarModel,String> wedCol;
-    @FXML private TableColumn<CalendarModel,String> thuCol;
-    @FXML private TableColumn<CalendarModel,String> friCol;
-    @FXML private TableColumn<CalendarModel,String> satCol;
+    @FXML private TableColumn<WeekData,DayData> sunCol;
+    @FXML private TableColumn<WeekData,DayData> monCol;
+    @FXML private TableColumn<WeekData,DayData> tueCol;
+    @FXML private TableColumn<WeekData,DayData> wedCol;
+    @FXML private TableColumn<WeekData,DayData> thuCol;
+    @FXML private TableColumn<WeekData,DayData> friCol;
+    @FXML private TableColumn<WeekData,DayData> satCol;
 
     @FXML
     private void initialize(){
@@ -68,12 +60,155 @@ public class CalendarView extends Application {
 
         calendarTableView.getSelectionModel().setCellSelectionEnabled(true);
         calendarTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        calendarTableView.setFixedCellSize(100);
 
         selectedDate = today;
 
         monthLabel.setText(selectedDate.getMonth().toString() + ",  " + selectedDate.getYear());
 
         populateCalendar(selectedDate, calendarTableView);
+
+        selection = calendarTableView.getSelectionModel().getSelectedItems();
+
+        sunCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        monCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        tueCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        wedCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        thuCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        friCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
+
+        satCol.setCellFactory(col -> new TableCell<WeekData, DayData>(){
+            @Override
+            protected void updateItem(DayData item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null){
+                    setText(null);
+
+                } else {
+                    String dayOfMonth;
+                    if(item.getDate() != null){
+                        dayOfMonth = item.getDate().getDayOfMonth() + "";
+                    }else{
+                        dayOfMonth = "";
+                    }
+                    setText(dayOfMonth);
+                    setStyle("-fx-alignment: TOP-LEFT;");
+                }
+            }
+        });
 
     }
 
@@ -110,113 +245,36 @@ public class CalendarView extends Application {
     }
 
     @FXML
-    private void populateCalendar(LocalDate date, TableView<CalendarModel> calendarTableView) {
+    private void populateCalendar(LocalDate date, TableView<WeekData> calendarTableView) {
 
-        LocalDate firstDayOfMonth =  date.minusDays(date.getDayOfMonth() - 1);
-        int firstDayAsInt = firstDayOfMonth.getDayOfWeek().getValue();
+        LocalDate currDate =  date.minusDays(date.getDayOfMonth() - 1);
+        int firstDayAsInt = currDate.getDayOfWeek().getValue();
         int dayOfMonthCounter = 1;
-        int daysInMonth = calendar.getDaysInMonth().get(date.getMonth().toString());
+        int daysInMonth = CalendarModel.getDaysInMonth().get(date.getMonth().toString());
 
-        for(int row = 0; row < 7; row++){
-            CalendarModel week = new CalendarModel();
+        for(int row = 0; row < 6; row++){
+            WeekData week = new WeekData();
             for(int col = 0; col < 7; col++){
                 if(row == 0 && col >= firstDayAsInt){
-                    week.setDay(col, Integer.toString(dayOfMonthCounter));
+                    DayData day = new DayData(currDate);
+                    week.setDay(col, day);
+                    week.addDay(day);
+                    currDate = currDate.plusDays(1);
                     dayOfMonthCounter++;
                 } else if(row > 0 && dayOfMonthCounter <= daysInMonth){
-                    week.setDay(col, Integer.toString(dayOfMonthCounter));
+                    DayData day = new DayData(currDate);
+                    week.setDay(col, day);
+                    week.addDay(day);
+                    currDate = currDate.plusDays(1);
                     dayOfMonthCounter++;
                 }
 
             }
+            calendar.addWeek(week);
             calendarTableView.getItems().add(week);
         }
     }
 
-
-/*
-    @FXML
-    public static void populateCalendar(LocalDate date, GridPane calendarGrid){
-
-
-        LocalDate firstDayOfMonth =  date.minusDays(date.getDayOfMonth() - 1);
-        int firstDayAsInt = firstDayOfMonth.getDayOfWeek().getValue();
-        int dayOfMonthCounter = 1;
-        int daysInMonth = calendar.getDaysInMonth().get(date.getMonth().toString());
-
-        for(int row = 0; row < 7; row++){
-            for(int col = 0; col < 7; col++){
-                if(row == 0){
-                    String dayOfWeek = switch (col) {
-                        case 0 -> "Sun";
-                        case 1 -> "Mon";
-                        case 2 -> "Tue";
-                        case 3 -> "Wed";
-                        case 4 -> "Thu";
-                        case 5 -> "Fri";
-                        case 6 -> "Sat";
-                        default -> "Unknown";
-                    };
-                    Label label = new Label(dayOfWeek);
-                    calendarGrid.add(label, col, row);
-                    label.setPadding(new Insets(0, 0, 0, 10));
-                } else if(row == 1 && col >= firstDayAsInt){
-                    Label label = new Label(Integer.toString(dayOfMonthCounter));
-                    calendarGrid.add(label, col, row);
-                    GridPane.setHalignment(label, HPos.LEFT);
-                    GridPane.setValignment(label, VPos.TOP);
-                    label.setPadding(new Insets(0, 0, 0, 5));
-                    dayOfMonthCounter++;
-                } else if(row > 1 && dayOfMonthCounter <= daysInMonth){
-                    Label label = new Label(Integer.toString(dayOfMonthCounter));
-                    calendarGrid.add(label, col, row);
-                    GridPane.setHalignment(label, HPos.LEFT);
-                    GridPane.setValignment(label, VPos.TOP);
-                    label.setPadding(new Insets(0, 0, 0, 5));
-                    dayOfMonthCounter++;
-                }
-
-            }
-        }
-
- */
-
-
-
-    /*
-        LocalDate today =  LocalDate.now();
-        System.out.println("today: " + today);
-        System.out.println("today: " + today.getDayOfMonth());
-        System.out.println("today: " + today.getDayOfWeek());
-        System.out.println("today: " + today.getMonth());
-
-        LocalDate firstDay =  today.minusDays(today.getDayOfMonth() - 1);
-
-        System.out.println("First Day of Month: " + firstDay + "DoW: " + firstDay.getDayOfWeek());
-
-        //System.out.println("Days in Month: " + calendar.getDaysInMonth().get(today.getMonth().toString()));
-
-        System.out.println("DoW as int: " + firstDay.getDayOfWeek().getValue());
-
-
-        for(int row = 0; row < 7; row++){
-            for(int col = 0; col < 7; col++){
-                Label label = new Label("Cell " + row + ", " + col);
-                calendarGrid.add(label, col, row);
-            }
-        }
-
-        for(Node node : calendarGrid.getChildren()){
-            int colIndex = GridPane.getColumnIndex(node);
-            int rowIndex = GridPane.getRowIndex(node);
-            System.out.println(rowIndex + ", " + colIndex);
-        }
-
-
-        //today = today.plusDays(1);
-        //Calendar calendar = Calendar.getInstance();
-        //calendar.setTime(today);
-        */
 }
 
 
