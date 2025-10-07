@@ -19,6 +19,7 @@ module com.elevate5.elevateyou {
     requires org.slf4j;
     requires org.slf4j.simple;
     requires com.google.gson;
+    requires java.desktop;
 
     opens com.elevate5.elevateyou to javafx.fxml;
     exports com.elevate5.elevateyou;
