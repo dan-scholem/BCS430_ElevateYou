@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou.view;
 
+import com.elevate5.elevateyou.Dashboard;
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.CalendarModel;
 import com.elevate5.elevateyou.model.Event;
@@ -48,6 +49,9 @@ public class CalendarView extends Application {
 
     @FXML
     private Button incrementMonth;
+
+    @FXML
+    private Button backToDashboardButton;
 
     @FXML
     private TableView<WeekData> calendarTableView;
@@ -419,6 +423,25 @@ public class CalendarView extends Application {
             //calendar.addWeek(week);
             calendarTableView.getItems().add(week);
         }
+    }
+
+    @FXML
+    private void backToDashboard(ActionEvent event) {
+        try {
+            Stage stage = (Stage) backToDashboardButton.getScene().getWindow();
+            Dashboard.loadDashboardScene(stage);
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void loadCalendarScene(Stage stage) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("CalendarView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Calendar");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
