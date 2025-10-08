@@ -188,6 +188,7 @@ public class CalendarView extends Application {
                                                 eventDescription.setPromptText("Event Description...");
                                                 Button updateEventButton = new Button("Update Event");
                                                 Button cancelEventButton = new Button("Cancel");
+                                                Button deleteEventButton = new Button("Delete");
                                                 HBox buttonBox = new HBox();
 
                                                 hourBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -236,8 +237,23 @@ public class CalendarView extends Application {
                                                     popup.hide();
                                                 });
 
+                                                deleteEventButton.setOnAction(popEvent -> {
+                                                    Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                                                    deleteAlert.setTitle("Confirm Delete Event");
+                                                    deleteAlert.setHeaderText("Delete Event");
+                                                    deleteAlert.setContentText("Are you sure you want to delete this event? " + selectedEvent.toString());
+                                                    if(deleteAlert.showAndWait().get() == ButtonType.OK){
+                                                        eventManager.getEvents().get(selectedEvent.getDate()).remove(selectedEvent);
+                                                        calendarTableView.refresh();
+                                                        popup.hide();
+                                                    }else{
+                                                        popup.show(calendarTableView.getScene().getWindow());
+                                                    }
+
+                                                });
+
                                                 buttonBox.setSpacing(10);
-                                                buttonBox.getChildren().addAll(updateEventButton, cancelEventButton);
+                                                buttonBox.getChildren().addAll(updateEventButton, cancelEventButton, deleteEventButton);
 
                                                 popBox.getChildren().addAll(popLabel, eventName, eventDatePicker, timeBox, eventDescription, buttonBox);
                                                 popBox.setSpacing(5);
