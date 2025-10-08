@@ -6,13 +6,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Dashboard  {
+public class MedicationTracker {
 
-    public static void loadDashboardScene(Stage stage) throws IOException {
+    public static void loadMedTrackerScene(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("Dashboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("MedicationTracker.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Dashboard");
+        stage.setTitle("Medication Tracker");
         stage.setScene(scene);
         stage.show();
     }

@@ -67,7 +67,7 @@
                   <Font name="Poppins ExtraBold" size="14.0" />
                </font>
             </Label>
-            <Text fill="#e29578" layoutX="120.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ElevateYou" wrappingWidth="144.0">
+            <Text fill="#e29578" layoutX="115.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ElevateYou" wrappingWidth="144.0">
                <font>
                   <Font name="Poppins ExtraBold" size="24.0" />
                </font>
