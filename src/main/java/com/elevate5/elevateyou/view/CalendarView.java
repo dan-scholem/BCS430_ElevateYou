@@ -131,11 +131,13 @@ public class CalendarView extends Application {
                         if (empty || item == null) {
                             setText(null);
                         } else {
+                            //System.out.println(item.getDate());
                             VBox vbox = new VBox();
                             String dayOfMonth;
                             if (item.getDate() != null) {
                                 //dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                                 Label dowLabel = new Label(item.getDate().getDayOfMonth() + "");
+
                                 vbox.getChildren().add(dowLabel);
                                 if(eventManager.getEvents().containsKey(item.getDate())) {
                                     for(Event event : eventManager.getEvents().get(item.getDate())) {
@@ -161,14 +163,24 @@ public class CalendarView extends Application {
                                                 DatePicker eventDatePicker = new DatePicker();
                                                 eventDatePicker.setValue(selectedEvent.getDate());
                                                 ComboBox<String> hourBox = new ComboBox<>();
-                                                hourBox.setValue(selectedEvent.getTime().getHour() + "");
+
+
                                                 ComboBox<String> minuteBox = new ComboBox<>();
-                                                minuteBox.setValue(selectedEvent.getTime().getMinute() + "");
+                                                if(selectedEvent.getTime().getMinute() == 0){
+                                                    minuteBox.setValue(selectedEvent.getTime().getMinute() + "0");
+                                                } else if(selectedEvent.getTime().getMinute() < 10){
+                                                    minuteBox.setValue("0" + selectedEvent.getTime().getMinute());
+                                                } else{
+                                                    minuteBox.setValue(selectedEvent.getTime().getMinute() + "");
+                                                }
+
                                                 ComboBox<String> AMorPMBox = new ComboBox<>();
-                                                if(Integer.parseInt(hourBox.getValue()) > 11){
+                                                if(selectedEvent.getTime().getHour() > 11){
                                                     AMorPMBox.setValue("PM");
+                                                    hourBox.setValue(selectedEvent.getTime().getHour() - 12 + "");
                                                 } else{
                                                     AMorPMBox.setValue("AM");
+                                                    hourBox.setValue(selectedEvent.getTime().getHour() + "");
                                                 }
                                                 HBox timeBox = new HBox();
                                                 TextArea eventDescription = new TextArea();
@@ -191,11 +203,13 @@ public class CalendarView extends Application {
 
                                                 updateEventButton.setOnAction(popEvent -> {
                                                     LocalDate eventDate = eventDatePicker.getValue();
+                                                    LocalDate oldDate = selectedEvent.getDate();
                                                     String name = eventName.getText();
                                                     String hour = hourBox.getValue();
                                                     String minute = minuteBox.getValue();
+
                                                     if (AMorPMBox.getValue().equals("PM")) {
-                                                        hour = (Integer.parseInt(hourBox.getValue()) + 12) + "";
+                                                        hour = Integer.parseInt(hour) + 12 + "";
                                                     }
                                                     if (hour.length() == 1) {
                                                         hour = "0" + hour;
@@ -205,9 +219,15 @@ public class CalendarView extends Application {
                                                     LocalTime eventTime = LocalTime.parse(time, formatter);
                                                     String description = eventDescription.getText();
                                                     System.out.println(name + "\n" + item.getDate() + "\n" + time + "\n" + description);
+                                                    event.setDate(eventDate);
+                                                    event.setTime(eventTime);
+                                                    event.setEventName(name);
+                                                    event.setEventDescription(description);
+                                                    eventManager.getEvents().get(oldDate).remove(event);
+                                                    eventManager.addEvent(event.getDate(), event);
                                                     //Event newEvent = new Event(eventDate, eventTime, name, description);
                                                     //eventManager.addEvent(newEvent.getDate(), newEvent);
-                                                    //Collections.sort(eventManager.getEvents().get(newEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
+                                                    Collections.sort(eventManager.getEvents().get(event.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
                                                     calendarTableView.refresh();
                                                     popup.hide();
                                                 });
@@ -241,10 +261,12 @@ public class CalendarView extends Application {
                                                 }
                                             }
 
-                                             */
+                                            */
 
 
                                         });
+
+
                                     }
                                 }
                                 if(!item.getEvents().isEmpty()) {
@@ -721,6 +743,7 @@ public class CalendarView extends Application {
         selectedDate = selectedDate.minusMonths(1);
         monthLabel.setText(selectedDate.getMonth().toString() + ",  " + selectedDate.getYear());
         calendarTableView.getItems().clear();
+        calendarTableView.refresh();
         populateCalendar(selectedDate, calendarTableView);
     }
 
@@ -729,6 +752,7 @@ public class CalendarView extends Application {
         selectedDate = selectedDate.plusMonths(1);
         monthLabel.setText(selectedDate.getMonth().toString() + ",  " + selectedDate.getYear());
         calendarTableView.getItems().clear();
+        calendarTableView.refresh();
         populateCalendar(selectedDate, calendarTableView);
     }
 
