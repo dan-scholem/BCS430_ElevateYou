@@ -38,8 +38,6 @@ public class CalendarView extends Application {
 
     private final static CalendarModel calendar = new CalendarModel();
 
-    private ObservableList<WeekData> selection;
-
     private final EventManager eventManager = new EventManager();
 
     @FXML
@@ -69,7 +67,7 @@ public class CalendarView extends Application {
     @FXML
     private TableColumn<WeekData,DayData> satCol;
 
-    private ArrayList<TableColumn<WeekData,DayData>> columns = new ArrayList<>();
+    private final ArrayList<TableColumn<WeekData,DayData>> columns = new ArrayList<>();
 
     @FXML
     private void initialize(){
@@ -101,7 +99,7 @@ public class CalendarView extends Application {
 
         populateCalendar(selectedDate, calendarTableView);
 
-        selection = calendarTableView.getSelectionModel().getSelectedItems();
+        //selection = calendarTableView.getSelectionModel().getSelectedItems();
 
         LocalDate sampleDate = LocalDate.of(2025,10,7);
         LocalTime sampleTime = LocalTime.of(16,30);
@@ -116,8 +114,6 @@ public class CalendarView extends Application {
         eventManager.addEvent(sample2.getDate(), sample2);
         Collections.sort(eventManager.getEvents().get(sampleEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
 
-        //System.out.println(eventManager.getEvents().get(sampleEvent.getDate()).getFirst().getDate().getDayOfWeek().toString());
-
         Event sample3 = new Event(LocalDate.of(2025, 11, 15), LocalTime.of(12, 00), "Workout", "Back and Biceps");
 
         eventManager.addEvent(sample3.getDate(), sample3);
@@ -131,11 +127,8 @@ public class CalendarView extends Application {
                         if (empty || item == null) {
                             setText(null);
                         } else {
-                            //System.out.println(item.getDate());
                             VBox vbox = new VBox();
-                            String dayOfMonth;
                             if (item.getDate() != null) {
-                                //dayOfMonth = item.getDate().getDayOfMonth() + "\n";
                                 Label dowLabel = new Label(item.getDate().getDayOfMonth() + "");
 
                                 vbox.getChildren().add(dowLabel);
@@ -226,8 +219,6 @@ public class CalendarView extends Application {
                                                     event.setEventDescription(description);
                                                     eventManager.getEvents().get(oldDate).remove(event);
                                                     eventManager.addEvent(event.getDate(), event);
-                                                    //Event newEvent = new Event(eventDate, eventTime, name, description);
-                                                    //eventManager.addEvent(newEvent.getDate(), newEvent);
                                                     Collections.sort(eventManager.getEvents().get(event.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
                                                     calendarTableView.refresh();
                                                     popup.hide();
@@ -266,32 +257,12 @@ public class CalendarView extends Application {
 
                                                 popup.show(calendarTableView.getScene().getWindow());
                                             }
-                                            /*
-                                            for(int i = 0; i < eventManager.getEvents().get(item.getDate()).size(); i++){
-                                                LocalTime eventTime = eventManager.getEvents().get(item.getDate()).get(i).getTime();
-                                                String eventName = eventManager.getEvents().get(item.getDate()).get(i).getEventName();
-                                                String eventComparator = eventTime.toString() + " " + eventName;
-                                                if(event.toString().equals(eventComparator)){
-                                                    System.out.println("Selected event: " + event.toString());
-                                                    //selectedEvent = event;
-                                                }
-                                            }
-
-                                            */
-
 
                                         });
 
 
                                     }
                                 }
-                                if(!item.getEvents().isEmpty()) {
-                                    for(Event event : item.getEvents()) {
-                                        //dayOfMonth +=  event.toString() + "\n";
-                                    }
-                                }
-                            } else {
-                                dayOfMonth = "";
                             }
                             vbox.setFillWidth(true);
                             setGraphic(vbox);
@@ -383,359 +354,6 @@ public class CalendarView extends Application {
                 return cell;
             });
         }
-/*
-        sunCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-
-
-
-        monCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-        tueCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        VBox vbox = new VBox();
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            //dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            Label dowLabel = new Label(item.getDate().getDayOfMonth() + "");
-                            vbox.getChildren().add(dowLabel);
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    //dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                    Button eventButton = new Button(event.toString());
-                                    eventButton.setMaxWidth(Double.MAX_VALUE);
-                                    eventButton.setAlignment(Pos.CENTER_LEFT);
-                                    vbox.getChildren().add(eventButton);
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    //dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        vbox.setFillWidth(true);
-                        setGraphic(vbox);
-                        //setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                Popup popup = new Popup();
-
-                if(cell.getItem() != null && !popup.isShowing()) {
-                    popup.setAutoHide(true);
-
-                    VBox popBox = new VBox();
-                    Label popLabel = new Label("New Event");
-                    TextField eventName = new TextField();
-                    eventName.setPromptText("Event Name...");
-                    DatePicker eventDatePicker = new DatePicker();
-                    eventDatePicker.setValue(cell.getItem().getDate());
-                    ComboBox<String> hourBox = new ComboBox<>();
-                    ComboBox<String> minuteBox = new ComboBox<>();
-                    ComboBox<String> AMorPMBox = new ComboBox<>();
-                    HBox timeBox = new HBox();
-                    TextArea eventDescription = new TextArea();
-                    eventDescription.setPromptText("Event Description...");
-                    Button addEventButton = new Button("Add Event");
-                    Button cancelEventButton = new Button("Cancel");
-                    HBox buttonBox = new HBox();
-
-                    hourBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
-                    minuteBox.getItems().addAll("00", "15", "30", "45");
-                    AMorPMBox.getItems().addAll("AM", "PM");
-                    hourBox.setEditable(true);
-                    hourBox.setPrefWidth(70);
-                    minuteBox.setEditable(true);
-                    minuteBox.setPrefWidth(70);
-
-                    timeBox.getChildren().addAll(hourBox, minuteBox, AMorPMBox);
-                    timeBox.setSpacing(5);
-
-                    addEventButton.setOnAction(popEvent -> {
-                        LocalDate eventDate = eventDatePicker.getValue();
-                        String name = eventName.getText();
-                        String hour = hourBox.getValue();
-                        String minute = minuteBox.getValue();
-                        if (AMorPMBox.getValue().equals("PM")) {
-                            hour = (Integer.parseInt(hourBox.getValue()) + 12) + "";
-                        }
-                        if (hour.length() == 1) {
-                            hour = "0" + hour;
-                        }
-                        String time = hour + ":" + minute;
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                        LocalTime eventTime = LocalTime.parse(time, formatter);
-                        String description = eventDescription.getText();
-                        System.out.println(name + "\n" + cell.getItem().getDate() + "\n" + time + "\n" + description);
-                        Event newEvent = new Event(eventDate, eventTime, name, description);
-                        eventManager.addEvent(newEvent.getDate(), newEvent);
-                        Collections.sort(eventManager.getEvents().get(newEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-                        calendarTableView.refresh();
-                        popup.hide();
-                    });
-
-                    cancelEventButton.setOnAction(popEvent -> {
-                        popup.hide();
-                    });
-
-                    buttonBox.setSpacing(10);
-                    buttonBox.getChildren().addAll(addEventButton, cancelEventButton);
-
-                    popBox.getChildren().addAll(popLabel, eventName, eventDatePicker, timeBox, eventDescription, buttonBox);
-                    popBox.setSpacing(5);
-
-                    popLabel.setAlignment(Pos.TOP_LEFT);
-                    popLabel.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
-                    popLabel.setPrefSize(200, 20);
-
-                    popup.getContent().add(popBox);
-
-                    popup.show(calendarTableView.getScene().getWindow(), event.getScreenX(), event.getScreenY());
-                }
-                else{
-                    popup.hide();
-                }
-
-            });
-            return cell;
-        });
-
-        wedCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-        thuCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-        friCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-        satCol.setCellFactory(col -> {
-            TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
-                @Override
-                protected void updateItem(DayData item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        String dayOfMonth;
-                        if (item.getDate() != null) {
-                            dayOfMonth = item.getDate().getDayOfMonth() + "\n";
-                            if(eventManager.getEvents().containsKey(item.getDate())) {
-                                for(Event event : eventManager.getEvents().get(item.getDate())) {
-                                    dayOfMonth = dayOfMonth + event.toString() + "\n";
-                                }
-                            }
-                            if(!item.getEvents().isEmpty()) {
-                                for(Event event : item.getEvents()) {
-                                    dayOfMonth +=  event.toString() + "\n";
-                                }
-                            }
-                        } else {
-                            dayOfMonth = "";
-                        }
-                        setText(dayOfMonth);
-                        setStyle("-fx-alignment: TOP-LEFT;");
-                    }
-                }
-            };
-            cell.setOnMouseClicked(event -> {
-                if(cell.getItem() != null && eventManager.getEvents().get(cell.getItem().getDate()) != null) {
-                    for(Event events : eventManager.getEvents().get(cell.getItem().getDate())) {
-                        System.out.println(events.toString());
-                    }
-                }
-            });
-            return cell;
-        });
-
-
- */
-
-
-
     }
 
     public static void main(String[] args) {
@@ -798,7 +416,7 @@ public class CalendarView extends Application {
                 }
 
             }
-            calendar.addWeek(week);
+            //calendar.addWeek(week);
             calendarTableView.getItems().add(week);
         }
     }
