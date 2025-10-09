@@ -1,6 +1,7 @@
 package com.elevate5.elevateyou.notification;
 
 import com.elevate5.elevateyou.util.DatabaseConnection;
+import com.elevate5.elevateyou.dao.NotificationDao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.concurrent.*;
 public class NotificationDispatcher {
     private final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
     private final NotificationSink sink;
+    private final NotificationDao dao =  new NotificationDao();
     private final int intervalSeconds;
 
     public NotificationDispatcher(NotificationSink sink, int intervalSeconds) {
@@ -50,10 +52,12 @@ public class NotificationDispatcher {
                         String body = rs.getString("body");
 
                         // 2) deliver
+                        String deliveredIso = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                         sink.deliver(userId, title, body);
-
+                        dao.markSent(nqId, deliveredIso);
+                        dao.logSent(nqId, userId);
                         // 3) mark sent + log
-                        markSent(nqId);
+                        markSent(nqId, LocalDateTime.now().toString());
                         logResult(nqId, userId, "SENT");
                     }
                 }
@@ -63,11 +67,12 @@ public class NotificationDispatcher {
         }
     }
 
-    private void markSent(long nqId) throws SQLException {
+    public void markSent(long nqId, String deliveredIso) throws SQLException {
         try (Connection c = DatabaseConnection.connect();
              PreparedStatement ps = c.prepareStatement(
                      "UPDATE notification_queue SET status='SENT' WHERE nq_id=?")) {
-            ps.setLong(1, nqId);
+            ps.setString(1, deliveredIso);
+            ps.setLong(2, nqId);
             ps.executeUpdate();
         }
     }

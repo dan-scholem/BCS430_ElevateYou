@@ -23,8 +23,8 @@ CREATE INDEX IF NOT EXISTS idx_nq_user
 
 -- Notification Log: delivery audit trail
 CREATE TABLE IF NOT EXISTS notification_log (
-                                                log_id       INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                nq_id        INTEGER REFERENCES notification_queue(nq_id) ON DELETE SET NULL,
+    log_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    nq_id        INTEGER REFERENCES notification_queue(nq_id) ON DELETE SET NULL,
     user_id      INTEGER NOT NULL,
     delivered_at TEXT NOT NULL,                          -- actual delivery time
     result       TEXT NOT NULL                           -- e.g., 'SENT'
@@ -33,3 +33,15 @@ CREATE TABLE IF NOT EXISTS notification_log (
 -- Optional: speed up log lookups by user/time
 CREATE INDEX IF NOT EXISTS idx_nlog_user_time
     ON notification_log(user_id, delivered_at);
+
+-- Inbox fields
+ALTER TABLE notification_queue add column is_read      integer not null default 0;
+ALTER TABLE notification_queue add column read_at      text;
+ALTER TABLE notification_queue add column is_archived  integer not null default 0;
+ALTER TABLE notification_queue add column delivered_at TEXT;
+
+create index if not exists idx_nq_index_user_delivered
+    on notification_queue(user_id, is_archived, delivered_at DESC);
+
+create index if not exists idx_nq_unread_badge
+    on notification_queue(user_id, is_archived, is_read);
