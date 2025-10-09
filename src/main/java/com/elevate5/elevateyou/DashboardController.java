@@ -50,6 +50,9 @@ public class DashboardController {
     @FXML
     private Button tutorialsButton;
 
+    @FXML
+    private Button notificationsButton;
+
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
     private void logoutUser(ActionEvent event) throws IOException {
@@ -98,14 +101,21 @@ public class DashboardController {
             Stage stage = (Stage) medButton.getScene().getWindow();
 
             MedicationTracker.loadMedTrackerScene(stage);
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
 
             throw new RuntimeException(e);
         }
 
     }
 
+    @FXML
+    private void notificationsButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) notificationsButton.getScene().getWindow();
+            Notifications.loadNotificationsScene(stage);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 
 }
