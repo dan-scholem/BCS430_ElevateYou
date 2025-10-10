@@ -11,7 +11,7 @@
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
             <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="400.0">
                <children>
-                  <Button fx:id="backToDashboardButton" onAction="#backToDashboard" contentDisplay="CENTER" mnemonicParsing="false" text="Dashboard" />
+                  <Button fx:id="backToDashboardButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToDashboard" text="Dashboard" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -20,13 +20,13 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-                <Button fx:id="decrementMonth" mnemonicParsing="false" onAction="#handleDecrementMonth" text="&lt;" />
+                <Button fx:id="decrementMonth" ellipsisString="&lt;" mnemonicParsing="false" onAction="#handleDecrementMonth" prefHeight="25.0" prefWidth="35.0" text="&lt;" />
                 <Label fx:id="monthLabel" alignment="CENTER" prefHeight="34.0" prefWidth="272.0" text="Calendar">
                   <font>
                       <Font size="24.0" />
                   </font>
                 </Label>
-                <Button fx:id="incrementMonth" mnemonicParsing="false" onAction="#handleIncrementMonth" text="&gt;" />
+                <Button fx:id="incrementMonth" ellipsisString="&gt;" mnemonicParsing="false" onAction="#handleIncrementMonth" text="&gt;" />
             <HBox prefHeight="34.0" prefWidth="400.0" />
             </HBox>
         </top>
