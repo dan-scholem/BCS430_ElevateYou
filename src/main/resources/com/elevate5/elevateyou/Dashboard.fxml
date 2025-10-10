@@ -167,7 +167,7 @@
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good morning User">
+            <Text fx:id="welcometext" layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good morning User">
                <font>
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>

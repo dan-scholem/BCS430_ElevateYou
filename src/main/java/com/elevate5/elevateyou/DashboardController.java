@@ -10,14 +10,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
 public class DashboardController {
 
+    @FXML
+    public Text welcometext;
     @FXML
     private Button appointmentsButton;
 
@@ -60,8 +62,6 @@ public class DashboardController {
     @FXML
     private Button notificationsButton;
 
-    //@FXML
-    //private Text welcomeText;
 
     private Session session;
 
@@ -73,8 +73,8 @@ public class DashboardController {
             DocumentReference docRef = App.fstore.collection("Users").document(uid);
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot doc = future.get();
-            String name = (String) doc.get("name");
-            //welcomeText.setTextContent("Good Morning, " + name);
+            String name = (String) doc.get("FirstName");
+            welcometext.setText("Good Morning, " + name);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
