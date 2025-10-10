@@ -105,23 +105,18 @@ public class CalendarView extends Application {
 
         //selection = calendarTableView.getSelectionModel().getSelectedItems();
 
+        //sample events for testing
         LocalDate sampleDate = LocalDate.of(2025,10,7);
         LocalTime sampleTime = LocalTime.of(16,30);
-
         Event sampleEvent = new Event(sampleDate, sampleTime, "Dr Appointment", "Appointment");
-
         Event sample2 = new Event(LocalDate.of(2025, 10, 7), LocalTime.of(15, 00), "Take Meds", "Advil 20mg");
-
-        LocalDate target = sampleEvent.getDate();
-
         eventManager.addEvent(sampleEvent.getDate(), sampleEvent);
         eventManager.addEvent(sample2.getDate(), sample2);
         Collections.sort(eventManager.getEvents().get(sampleEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-
         Event sample3 = new Event(LocalDate.of(2025, 11, 15), LocalTime.of(12, 00), "Workout", "Back and Biceps");
-
         eventManager.addEvent(sample3.getDate(), sample3);
 
+        //sets cell behavior within the calendar table
         for(TableColumn<WeekData, DayData> dayCol : columns){
             dayCol.setCellFactory(col -> {
                 TableCell<WeekData, DayData> cell = new TableCell<WeekData, DayData>() {
@@ -136,6 +131,7 @@ public class CalendarView extends Application {
                                 Label dowLabel = new Label(item.getDate().getDayOfMonth() + "");
 
                                 vbox.getChildren().add(dowLabel);
+                                //checks if there are events for the date in the cell and displays them
                                 if(eventManager.getEvents().containsKey(item.getDate())) {
                                     for(Event event : eventManager.getEvents().get(item.getDate())) {
                                         //dayOfMonth = dayOfMonth + event.toString() + "\n";
@@ -143,10 +139,9 @@ public class CalendarView extends Application {
                                         eventButton.setMaxWidth(Double.MAX_VALUE);
                                         eventButton.setAlignment(Pos.CENTER_LEFT);
                                         vbox.getChildren().add(eventButton);
-
+                                        //button representing each event, opens a popup with event info populated
                                         eventButton.setOnAction(e -> {
-                                            Event selectedEvent = event;
-                                            System.out.println("Selected event: " + selectedEvent.toString());
+                                            System.out.println("Selected event: " + event.toString());
                                             Popup popup = new Popup();
                                             if(!popup.isShowing()){
                                                 popup.setAutoHide(true);
@@ -155,33 +150,33 @@ public class CalendarView extends Application {
                                                 popBox.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
                                                 Label popLabel = new Label("New Event");
                                                 TextField eventName = new TextField();
-                                                eventName.setText(selectedEvent.getEventName());
+                                                eventName.setText(event.getEventName());
                                                 eventName.setPromptText("Event Name...");
                                                 DatePicker eventDatePicker = new DatePicker();
-                                                eventDatePicker.setValue(selectedEvent.getDate());
+                                                eventDatePicker.setValue(event.getDate());
                                                 ComboBox<String> hourBox = new ComboBox<>();
 
 
                                                 ComboBox<String> minuteBox = new ComboBox<>();
-                                                if(selectedEvent.getTime().getMinute() == 0){
-                                                    minuteBox.setValue(selectedEvent.getTime().getMinute() + "0");
-                                                } else if(selectedEvent.getTime().getMinute() < 10){
-                                                    minuteBox.setValue("0" + selectedEvent.getTime().getMinute());
+                                                if(event.getTime().getMinute() == 0){
+                                                    minuteBox.setValue(event.getTime().getMinute() + "0");
+                                                } else if(event.getTime().getMinute() < 10){
+                                                    minuteBox.setValue("0" + event.getTime().getMinute());
                                                 } else{
-                                                    minuteBox.setValue(selectedEvent.getTime().getMinute() + "");
+                                                    minuteBox.setValue(event.getTime().getMinute() + "");
                                                 }
 
                                                 ComboBox<String> AMorPMBox = new ComboBox<>();
-                                                if(selectedEvent.getTime().getHour() > 11){
+                                                if(event.getTime().getHour() > 11){
                                                     AMorPMBox.setValue("PM");
-                                                    hourBox.setValue(selectedEvent.getTime().getHour() - 12 + "");
+                                                    hourBox.setValue(event.getTime().getHour() - 12 + "");
                                                 } else{
                                                     AMorPMBox.setValue("AM");
-                                                    hourBox.setValue(selectedEvent.getTime().getHour() + "");
+                                                    hourBox.setValue(event.getTime().getHour() + "");
                                                 }
                                                 HBox timeBox = new HBox();
                                                 TextArea eventDescription = new TextArea();
-                                                eventDescription.setText(selectedEvent.getEventDescription());
+                                                eventDescription.setText(event.getEventDescription());
                                                 eventDescription.setPromptText("Event Description...");
                                                 Button updateEventButton = new Button("Update Event");
                                                 Button cancelEventButton = new Button("Cancel");
@@ -198,10 +193,10 @@ public class CalendarView extends Application {
 
                                                 timeBox.getChildren().addAll(hourBox, minuteBox, AMorPMBox);
                                                 timeBox.setSpacing(5);
-
+                                                //button for updating event info
                                                 updateEventButton.setOnAction(popEvent -> {
                                                     LocalDate eventDate = eventDatePicker.getValue();
-                                                    LocalDate oldDate = selectedEvent.getDate();
+                                                    LocalDate oldDate = event.getDate();
                                                     String name = eventName.getText();
                                                     String hour = hourBox.getValue();
                                                     String minute = minuteBox.getValue();
@@ -227,18 +222,18 @@ public class CalendarView extends Application {
                                                     calendarTableView.refresh();
                                                     popup.hide();
                                                 });
-
+                                                //button for canceling popup
                                                 cancelEventButton.setOnAction(popEvent -> {
                                                     popup.hide();
                                                 });
-
+                                                //button for deleting event
                                                 deleteEventButton.setOnAction(popEvent -> {
                                                     Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
                                                     deleteAlert.setTitle("Confirm Delete Event");
                                                     deleteAlert.setHeaderText("Delete Event");
-                                                    deleteAlert.setContentText("Are you sure you want to delete this event? " + selectedEvent.toString());
+                                                    deleteAlert.setContentText("Are you sure you want to delete this event? " + event.toString());
                                                     if(deleteAlert.showAndWait().get() == ButtonType.OK){
-                                                        eventManager.getEvents().get(selectedEvent.getDate()).remove(selectedEvent);
+                                                        eventManager.getEvents().get(event.getDate()).remove(event);
                                                         calendarTableView.refresh();
                                                         popup.hide();
                                                     }else{
@@ -275,6 +270,7 @@ public class CalendarView extends Application {
                     }
                 };
 
+                //cell functionality when clicking on empty space within a date
                 cell.setOnMouseClicked(event -> {
                     Popup popup = new Popup();
                     //cell.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
@@ -309,6 +305,7 @@ public class CalendarView extends Application {
                         timeBox.getChildren().addAll(hourBox, minuteBox, AMorPMBox);
                         timeBox.setSpacing(5);
 
+                        //button functionality for adding a new event
                         addEventButton.setOnAction(popEvent -> {
                             LocalDate eventDate = eventDatePicker.getValue();
                             String name = eventName.getText();
@@ -332,6 +329,7 @@ public class CalendarView extends Application {
                             popup.hide();
                         });
 
+                        //button functionality for canceling action
                         cancelEventButton.setOnAction(popEvent -> {
                             popup.hide();
                         });
@@ -376,6 +374,7 @@ public class CalendarView extends Application {
         //stage.setResizable(false);
     }
 
+    //decreases the month and recreates the calendar
     @FXML
     private void handleDecrementMonth(ActionEvent event) {
         selectedDate = selectedDate.minusMonths(1);
@@ -385,6 +384,7 @@ public class CalendarView extends Application {
         populateCalendar(selectedDate, calendarTableView);
     }
 
+    //increases the month and recreates the calendar
     @FXML
     private void handleIncrementMonth(ActionEvent event) {
         selectedDate = selectedDate.plusMonths(1);
@@ -394,6 +394,7 @@ public class CalendarView extends Application {
         populateCalendar(selectedDate, calendarTableView);
     }
 
+    //creates the calendar based on the current month/year
     @FXML
     private void populateCalendar(LocalDate date, TableView<WeekData> calendarTableView) {
 
@@ -425,6 +426,7 @@ public class CalendarView extends Application {
         }
     }
 
+    //button for going back to the app dashboard
     @FXML
     private void backToDashboard(ActionEvent event) {
         try {
