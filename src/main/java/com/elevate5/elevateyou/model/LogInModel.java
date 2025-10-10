@@ -2,6 +2,9 @@ package com.elevate5.elevateyou.model;
 
 import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.UserLogin;
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.gson.Gson;
@@ -51,6 +54,7 @@ public class LogInModel {
 
             if(connection.getResponseCode() == 200){
                 user = App.fauth.getUserByEmail(email);
+                SessionManager.setSession(new Session(user));
                 return true;
             } else{
                 System.out.println(connection.getResponseMessage() + connection.getResponseCode());
