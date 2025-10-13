@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.elevate5.elevateyou.NotificationController">
+    <children>
+        <Button fx:id="bellButton" text="🔔" onAction="#onBellClicked" layoutX="0" layoutY="0"/>
+        <Label fx:id="badgeLabel" text="" layoutX= "28" layoutY="4"
+               style="-fx-background-color: red; -fx-text-fill: white; -fx-padding: 2 6; -fx-background-radius: 10;"/>
+
+        <VBox fx:id="dropdownList" layoutX="0" layoutY= "30" visible="false" managed="false" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0,15), 8,0,0,2);">
+            <children>
+                <Label text="No notification" />
+                <Button fx:id="markAllButton" text="Mark all as read" onAction="#onMarkAllClicked"/>
+            </children>
+        </VBox>>
+    </children>>
+</AnchorPane>

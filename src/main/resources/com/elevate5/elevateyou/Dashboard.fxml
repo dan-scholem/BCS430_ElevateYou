@@ -9,6 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="809.0" prefWidth="1218.0" style="-fx-background-color: edede9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
    <children>
       <Pane prefHeight="809.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
@@ -163,6 +165,7 @@
                </font>
             </Text>
             <TextField layoutX="593.0" layoutY="19.0" text="Search" />
+         <HBox fx:id="topRightBar" spacing="8.0" layoutX="900.0" layoutY="10.0" alignment="CENTER_RIGHT"/>
          </children>
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">

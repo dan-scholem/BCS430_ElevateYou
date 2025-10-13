@@ -1,11 +1,11 @@
 package com.elevate5.elevateyou.service;
 
-import com.elevate5.elevateyou.util.DatabaseConnection;
+//import com.elevate5.elevateyou.dao.NotificationDao;
+import com.elevate5.elevateyou.model.NotificationModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Application-facing service for creating notifications.
@@ -14,47 +14,114 @@ import java.time.LocalDateTime;
  */
 public class NotificationService {
 
-    /** Enqueue a generic notification at a specific time. */
-    public void enqueue(int userId, String title, String body, LocalDateTime when) throws SQLException {
-        final String sql = "INSERT INTO notification_queue(user_id, title, body, scheduled_at) VALUES (?,?,?,?)";
-        try (Connection c = DatabaseConnection.connect();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, userId);
-            ps.setString(2, title);
-            ps.setString(3, body);
-            ps.setString(4, when.toString()); // ISO_LOCAL_DATE_TIME
-            ps.executeUpdate();
+//    private final NotificationDao dao;
+//    public NotificationService() {
+//        this.dao = new NotificationDao();
+//    }
+//
+//    // read / show relase
+//    public List<NotificationModel> fetchInbox(String userId, int limit) throws Exception {
+//        try {
+//            return dao.getLatest(userId, limit);
+//        } catch (Exception e) {
+//            return List.of();
+//        }
+//    }
+//
+//    public int getUnreadCount(String userId) throws Exception {
+//        try {
+//            return dao.getUnreadCount(userId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
+//
+//    public void markAllRead(String userId) throws Exception {
+//        try {
+//            dao.markAllRead(userId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void markOneRead(String docId) throws Exception {
+//        try {
+//            dao.markOneRead(docId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public String publish(String userId, String title, String body) throws Exception {
+//        try {
+//            return dao.insert(userId, title, body, null, null, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+//
+//    public String publishWithLink(String userId, String title, String body, String linkType, String linkRefId, Instant dueAt) throws Exception {
+//        try {
+//            return dao.insert(userId, title, body, linkType, linkRefId, dueAt);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    public static class Item {
+        public final String userId;
+        public final String title;
+        public final String body;
+        private final Instant createdAt;
+        public boolean read;
+
+        public Item(String userId, String title, String body, Instant createdAt, boolean read) {
+            this.userId = userId;
+            this.title = title;
+            this.body = body;
+            this.createdAt = createdAt;
+            this.read = read;
         }
     }
 
-    /** Task reminder: enqueue a notification at the task due time. */
-    public void createTaskReminder(int userId, String taskTitle, String note, LocalDateTime dueAt) throws SQLException {
-        String title = (taskTitle == null || taskTitle.isBlank()) ? "Task due" : taskTitle;
-        String body  = (note == null) ? "" : note;
-        enqueue(userId, title, body, dueAt);
+    private final List<Item> store = new ArrayList<>();
+    private final AtomicInteger seq = new AtomicInteger(1);
+    public void add(String title, String body, Instant createdAt, boolean read) {
+        String userId = String.valueOf(seq.getAndIncrement());
+        store.add(0, new Item(userId, title, body, Instant.now(), read));
     }
 
-    /** Doctor visit: schedule a reminder at the appointment time. */
-    public void remindDoctorVisit(int userId, String doctorName, LocalDateTime appointmentAt) throws SQLException {
-        String title = "Doctor visit";
-        String who   = (doctorName == null || doctorName.isBlank()) ? "appointment" : ("visit with " + doctorName);
-        String body  = "Upcoming " + who + " at " + appointmentAt;
-        enqueue(userId, title, body, appointmentAt);
+//    public NotificationService() {
+//        add("Appointments", "You hava a doctor visist tomorrow at 9:00 AM", false);
+//        add();
+//
+//    }
+
+    public List<Item> latest(int limit) {
+        int end = Math.min(limit, store.size());
+        List<Item> list = new ArrayList<>(store.subList(0, end));
+        return list;
     }
 
-    /** Workout: schedule a single workout reminder. */
-    public void remindWorkout(int userId, LocalDateTime workoutAt) throws SQLException {
-        enqueue(userId, "Workout", "Workout at " + workoutAt, workoutAt);
+    public int unreadCount () {
+        int count = 0;
+        for (Item item : store) if (item.read) count++;
+        return count;
     }
 
-    /** Water: schedule a one-time hydration reminder. */
-    public void remindWaterOnce(int userId, LocalDateTime when) throws SQLException {
-        enqueue(userId, "Hydration time", "Drink some water", when);
+    public void markAllRead() {
+        for (Item item : store)  item.read = true;
     }
 
-    /** Supportive notification: send now (enqueue at current time). */
-    public void supportiveNow(int userId, String message) throws SQLException {
-        String body = (message == null) ? "Keep going!" : message;
-        enqueue(userId, "Keep going!", body, LocalDateTime.now());
+    public void markOneRead(String id) {
+        for (Item item : store) {
+            if (item.userId.equals(id)) {
+                item.read = true;
+                break;
+            }
+        };
     }
 }

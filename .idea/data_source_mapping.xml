@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/src/main/resources/database/migrations/notifications.sql" value="18457352-e5b4-414f-bcad-b02d46dcdbe9" />
-  </component>
-</project>

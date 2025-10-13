@@ -2,8 +2,11 @@ package com.elevate5.elevateyou;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -51,7 +54,7 @@ public class DashboardController {
     private Button tutorialsButton;
 
     @FXML
-    private Button notificationsButton;
+    private HBox topRightBar;
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
@@ -108,13 +111,16 @@ public class DashboardController {
 
     }
 
+
     @FXML
-    private void notificationsButtonClick() throws IOException {
+    public void initialize() {
         try {
-            Stage stage = (Stage) notificationsButton.getScene().getWindow();
-            Notifications.loadNotificationsScene(stage);
-        } catch (Exception e){
-            throw new RuntimeException(e);
+            var loader = new FXMLLoader(getClass().getResource("Notification.fxml"));
+            var bellNode = loader.load();
+            topRightBar.getChildren().clear();
+            topRightBar.getChildren().add((Node) bellNode);
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
