@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.model.Event;
 import com.elevate5.elevateyou.model.EventManager;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
@@ -18,9 +19,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static com.elevate5.elevateyou.App.fauth;
 import static javafx.application.Application.launch;
@@ -65,7 +68,7 @@ public class CreateAccountController {
     }
 
     @FXML
-    protected void onCreateAccountButtonClick() throws IOException, FirebaseAuthException {
+    protected void onCreateAccountButtonClick() throws IOException, FirebaseAuthException, ExecutionException, InterruptedException {
 
         if (userEmail.getText().isEmpty() || userPassword.getText().isEmpty()) {
 
@@ -123,8 +126,7 @@ public boolean addUser() throws FirebaseAuthException {
     data.put("LastName", lastName.getText());
 
     DocumentReference eventDocRef = App.fstore.collection("Events").document(user.getUid());
-    Map<String, Object> eventData = new HashMap<>();
-    eventData.put("Events", new EventManager());
+    EventManager eventData = new EventManager();
 
     try {
         //asynchronously write data

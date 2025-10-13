@@ -14,6 +14,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutionException;
 
 public class LogInModel {
 
@@ -67,6 +68,8 @@ public class LogInModel {
             System.out.println("Error reading file: " + e.getMessage());
         } catch(FirebaseAuthException e){
             System.out.println("Firebase auth error: " + e.getMessage());
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println("Execution Error: " + e.getMessage());
         }
         return false;
 
