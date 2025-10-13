@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1008.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.UserLoginController">
    <children>
@@ -18,61 +17,49 @@
             <Image url="@images/wellnessimage.png" />
          </image>
       </ImageView>
-      <Text fill="#ffddd2" layoutX="30.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Health and Wellness Journey Starts Here" wrappingWidth="330.0">
-         <font>
-            <Font name="Poppins ExtraBold" size="21.0" />
-         </font>
-      </Text>
-      <Text fill="#ffddd2" layoutX="36.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track your fitness, medication, sleep and take control of your wellness with our comprehensive health and wellness management platform" wrappingWidth="559.58447265625">
-         <font>
-            <Font name="Poppins ExtraBold" size="28.0" />
-         </font>
-      </Text>
-      <AnchorPane layoutX="634.0" prefHeight="631.0" prefWidth="374.0" style="-fx-background-color: #EDF6F9;">
+      <AnchorPane layoutX="634.0" prefHeight="631.0" prefWidth="374.0" styleClass="sidebackground" stylesheets="@styles.css">
          <children>
              <ImageView fitHeight="383.0" fitWidth="407.0" layoutX="-11.0" layoutY="-34.0" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@images/elevateyoulogo.png" />
                  </image>
              </ImageView>
-            <Label layoutX="35.0" layoutY="246.0" prefHeight="23.0" prefWidth="78.0" text="Email" textFill="#e29578">
+            <Label layoutX="35.0" layoutY="246.0" prefHeight="23.0" prefWidth="78.0" styleClass="emaillabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
                <font>
                   <Font name="Poppins ExtraBold" size="22.0" />
                </font>
             </Label>
-            <Label layoutX="35.0" layoutY="357.0" prefHeight="32.0" prefWidth="144.0" text="Password" textFill="#e29578">
+            <Label layoutX="35.0" layoutY="357.0" prefHeight="32.0" prefWidth="144.0" styleClass="passwordlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
                <font>
                   <Font name="Poppins ExtraBold" size="22.0" />
                </font>
             </Label>
             <TextField fx:id="userEmail" layoutX="35.0" layoutY="303.0" prefHeight="25.0" prefWidth="274.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="35.0" layoutY="411.0" prefHeight="25.0" prefWidth="274.0" />
-            <Button fx:id="signInButton" layoutX="85.0" layoutY="453.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="39.0" prefWidth="214.0" style="-fx-background-color: #E29578;" text="Sign In">
+            <Button fx:id="signInButton" layoutX="72.0" layoutY="457.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="39.0" prefWidth="214.0" style="-fx-background-color: #E29578;" styleClass="signinbutton" stylesheets="@styles.css" text="Sign In">
                <font>
                   <Font name="Poppins ExtraBold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="24.0" layoutY="523.0" prefHeight="17.0" prefWidth="178.0" text="Don't have an account?">
+            <Label layoutX="24.0" layoutY="523.0" prefHeight="17.0" prefWidth="178.0" styleClass="accountlabel" stylesheets="@styles.css" text="Don't have an account?">
                <font>
                   <Font name="Poppins ExtraBold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="createAccountButton" layoutX="24.0" layoutY="566.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="40.0" prefWidth="144.0" style="-fx-background-color: #E29578;" text="Create Account">
+            <Button fx:id="createAccountButton" layoutX="24.0" layoutY="566.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="40.0" prefWidth="144.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Label layoutX="226.0" layoutY="523.0" prefHeight="20.0" prefWidth="133.0" text="Forgot password?">
+            <Label layoutX="226.0" layoutY="523.0" prefHeight="20.0" prefWidth="133.0" styleClass="forgotpass" stylesheets="@styles.css" text="Forgot password?">
                <font>
                   <Font name="Poppins ExtraBold" size="14.0" />
                </font>
             </Label>
-            <Text fill="#e29578" layoutX="115.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ElevateYou" wrappingWidth="144.0">
-               <font>
-                  <Font name="Poppins ExtraBold" size="24.0" />
-               </font>
-            </Text>
+            <Label layoutX="110.0" layoutY="169.0" styleClass="elevatelabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </AnchorPane>
+      <Label layoutX="14.0" layoutY="82.0" styleClass="wellnesslabel" stylesheets="@styles.css" text="Your Health and Wellness Journey Starts Here" />
+      <Label layoutX="24.0" layoutY="398.0" prefHeight="233.0" prefWidth="601.0" styleClass="descriptionlabel" stylesheets="@styles.css" text="Track your fitness, medication, sleep and take control of your wellness with our comprehensive health and wellness management platform" wrapText="true" />
    </children>
 </Pane>
