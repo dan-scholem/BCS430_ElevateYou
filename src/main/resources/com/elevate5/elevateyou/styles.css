@@ -14,3 +14,19 @@
     -fx-border-radius: 25px;
 }
 
+.medlabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFDDD2;
+}
+
+.addbutton, .updatebutton, .deletebutton, .clearbutton {
+    -fx-background-color: #E29578;
+    -fx-background-radius: 30px;
+    -fx-text-fill: #000000;
+    -fx-border-color: #FFDDD2;
+    -fx-border-radius: 25px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
