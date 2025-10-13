@@ -16,6 +16,7 @@ public class Medication {
         private String frequency;
         private String notes;
 
+        /** Getters and setters **/
         public String getMedicationName() {
             return medicationName;
         }
@@ -74,6 +75,7 @@ public class Medication {
 
         }
 
+        /** Loads the medication tracker scene **/
         public static void loadMedTrackerScene(Stage stage) throws IOException {
 
             FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("MedicationTracker.fxml"));

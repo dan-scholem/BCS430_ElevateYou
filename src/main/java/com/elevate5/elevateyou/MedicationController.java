@@ -101,7 +101,7 @@ public class MedicationController {
         enddateField.setValue(null);
         notesField.clear();
     }
-
+/** This method will delete the medication from the table **/
     @FXML
     protected void deleteMedication(ActionEvent event) {
 
@@ -137,6 +137,7 @@ public class MedicationController {
         }
     }
 
+    /** Clears the fields **/
     @FXML
     protected void clearEntry (ActionEvent event) {
         mednameField.clear();
@@ -148,7 +149,7 @@ public class MedicationController {
 
     }
 
-    // This event is called to log the user out of the application and returns the user to the login screen
+    /** This event is called to log the user out of the application and returns the user to the login screen **/
     @FXML
     private void logoutUser(ActionEvent event) throws IOException {
 
