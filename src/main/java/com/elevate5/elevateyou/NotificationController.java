@@ -3,6 +3,7 @@ package com.elevate5.elevateyou;
 import com.elevate5.elevateyou.service.NotificationService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
@@ -28,6 +29,7 @@ public class NotificationController {
             dropdownList.getChildren().add(new Label("No notifications found"));
             return;
         }
+
 
         for (var it: items) {
             Label line = new Label(

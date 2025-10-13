@@ -14,3 +14,15 @@
     -fx-border-radius: 25px;
 }
 
+.notif-badge {
+    -fx-background-color: #e53935;   /* 红底 */
+    -fx-text-fill: white;            /* 白字 */
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 999px;    /* 超大圆角 => 圆/胶囊形 */
+    -fx-padding: 0 6px 0 6px;        /* 两侧留白，使双位数变胶囊 */
+    -fx-min-width: 18px;             /* 最小尺寸，单数字时接近正圆 */
+    -fx-min-height: 18px;
+    -fx-alignment: center;           /* 文本居中 */
+}
+

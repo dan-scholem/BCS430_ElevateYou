@@ -115,10 +115,11 @@ public class DashboardController {
     @FXML
     public void initialize() {
         try {
-            var loader = new FXMLLoader(getClass().getResource("Notification.fxml"));
-            var bellNode = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notification.fxml"));
+            Node bell = loader.load();
             topRightBar.getChildren().clear();
-            topRightBar.getChildren().add((Node) bellNode);
+            topRightBar.getChildren().add(bell);
+            topRightBar.toFront();
         } catch (IOException e){
             e.printStackTrace();
         }

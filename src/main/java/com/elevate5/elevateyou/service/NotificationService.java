@@ -1,7 +1,6 @@
 package com.elevate5.elevateyou.service;
 
 //import com.elevate5.elevateyou.dao.NotificationDao;
-import com.elevate5.elevateyou.model.NotificationModel;
 
 import java.time.Instant;
 import java.util.*;
@@ -89,16 +88,19 @@ public class NotificationService {
 
     private final List<Item> store = new ArrayList<>();
     private final AtomicInteger seq = new AtomicInteger(1);
-    public void add(String title, String body, Instant createdAt, boolean read) {
+    public void add(String title, String body, boolean read) {
         String userId = String.valueOf(seq.getAndIncrement());
         store.add(0, new Item(userId, title, body, Instant.now(), read));
     }
 
-//    public NotificationService() {
-//        add("Appointments", "You hava a doctor visist tomorrow at 9:00 AM", false);
-//        add();
-//
-//    }
+    public NotificationService() {
+        add("Appointments", "You have a doctor visit tomorrow at 9:00 AM", false);
+        add("Doctor", "Doctor A messaged you something, check it out", false);
+        add("Workout", "You completed your workout yesterday. Great job!", false);
+        add("Nutrition", "Reminder: Log your lunch from 2 days ago", false);
+        add("System", "Your account settings were updated 3 days ago", false);
+        add("Calendar", "Weekly summary is ready for review", false);
+    }
 
     public List<Item> latest(int limit) {
         int end = Math.min(limit, store.size());
