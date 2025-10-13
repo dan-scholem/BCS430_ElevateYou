@@ -1,5 +1,7 @@
 package com.elevate5.elevateyou;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,7 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class MedicationController {
 
@@ -70,28 +73,107 @@ public class MedicationController {
 
     private final ObservableList<Medication> medications = FXCollections.observableArrayList();
 
+
+
     @FXML
-    private void initialize() {
+    private void initialize() throws ExecutionException, InterruptedException {
         medNameColumn.setCellValueFactory(new PropertyValueFactory<Medication, String>("medicationName"));
         dosageColumn.setCellValueFactory(new PropertyValueFactory<Medication, String>("dosage"));
         frequencyColumn.setCellValueFactory(new PropertyValueFactory<Medication, String>("frequency"));
         startdateColumn.setCellValueFactory(new PropertyValueFactory<Medication, LocalDate>("startDate"));
         enddateColumn.setCellValueFactory(new PropertyValueFactory<Medication, LocalDate>("endDate"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<Medication, String>("notes"));
+
         MedicationTable.setItems(medications);
 
         frequencyField.setItems(FXCollections.observableArrayList("As needed", "Once a day", "Twice a day", "Three times a day"));
 
+        loadMedications();
+
     }
+
+     private void loadMedications() {
+
+        medications.clear();
+
+        try {
+            CollectionReference medCollectionRef = App.fstore.collection("Medications").document(App.theUser.getEmail()).collection("UserMedications");
+
+            ApiFuture<QuerySnapshot> query = medCollectionRef.get();
+
+            List<QueryDocumentSnapshot> documents = query.get().getDocuments();
+
+            for (QueryDocumentSnapshot document : documents) {
+                String medname = document.getString("medicationName");
+                String dosage = document.getString("dosage");
+                String frequency = document.getString("frequency");
+                String notes = document.getString("notes");
+
+                String startDateStr = document.getString("startDate");
+                String endDateStr = document.getString("endDate");
+
+                LocalDate startDate = null;
+                LocalDate endDate = null;
+
+                if (startDateStr != null) {
+                    startDate = LocalDate.parse(startDateStr);
+                }
+                if (endDateStr != null) {
+                    endDate = LocalDate.parse(endDateStr);
+                }
+
+                Medication newmedication = new Medication(medname, dosage, frequency, startDate, endDate, notes);
+
+                medications.add(newmedication);
+
+            }
+
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println("Error loading medication" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
 
 // This method is for adding a new medication into the table after the Add button is clicked
 
     @FXML
-    protected void addMedication(ActionEvent event) {
-        Medication newmedication = new Medication(mednameField.getText(), dosageField.getText(), frequencyField.getValue(),
-                startdateField.getValue(),
-                enddateField.getValue(),
-                notesField.getText());
+    protected void addMedication(ActionEvent event) throws ExecutionException, InterruptedException {
+
+        String medname = mednameField.getText();
+        String dosage = dosageField.getText();
+        String frequency = frequencyField.getValue();
+        LocalDate startdate = startdateField.getValue();
+        LocalDate enddate = enddateField.getValue();
+        String notes = notesField.getText();
+
+        if (medname.isEmpty() || dosage.isEmpty() || frequency == null || startdate == null || enddate == null || notes.isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Incomplete Form");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill out all the required fields!");
+            alert.showAndWait();
+            return;
+        }
+
+        /** Adding the medication to Firestore, based on the user **/
+
+        Map<String, Object> meds = new HashMap<>();
+
+        meds.put("medicationName", mednameField.getText());
+        meds.put("dosage", dosageField.getText());
+        meds.put("frequency", frequencyField.getValue());
+        meds.put("startDate", startdateField.getValue().toString());
+        meds.put("endDate", enddateField.getValue().toString());
+        meds.put("notes", notesField.getText());
+
+        DocumentReference docRef = App.fstore.collection("Medications").document(App.theUser.getEmail());
+
+        ApiFuture<DocumentReference> result = docRef.collection("UserMedications").add(meds);
+
+        Medication newmedication = new Medication(medname, dosage, frequency, startdate, enddate, notes);
+
         medications.add(newmedication);
 
         mednameField.clear();
@@ -101,7 +183,8 @@ public class MedicationController {
         enddateField.setValue(null);
         notesField.clear();
     }
-/** This method will delete the medication from the table **/
+
+    /** This method will delete the medication from the table **/
     @FXML
     protected void deleteMedication(ActionEvent event) {
 
@@ -124,7 +207,10 @@ public class MedicationController {
                 success.setTitle("Successful Deletion");
                 success.setHeaderText(null);
                 success.setContentText("Medication entry successfully deleted!");
-            } else {
+                success.showAndWait();
+            }
+
+            else {
                 System.out.println("Deletion cancelled");
             }
 
@@ -142,7 +228,7 @@ public class MedicationController {
     protected void clearEntry (ActionEvent event) {
         mednameField.clear();
         dosageField.clear();
-        frequencyField.getItems().clear();
+        frequencyField.setValue(null);
         startdateField.setValue(null);
         enddateField.setValue(null);
         notesField.clear();

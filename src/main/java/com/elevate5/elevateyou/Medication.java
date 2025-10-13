@@ -15,6 +15,7 @@ public class Medication {
         private LocalDate endDate;
         private String frequency;
         private String notes;
+        private String userID;
 
         /** Getters and setters **/
         public String getMedicationName() {
@@ -72,7 +73,6 @@ public class Medication {
             this.endDate = endDate;
             this.frequency = frequency;
             this.notes = notes;
-
         }
 
         /** Loads the medication tracker scene **/
@@ -84,7 +84,4 @@ public class Medication {
             stage.setScene(scene);
             stage.show();
         }
-
-
     }
-

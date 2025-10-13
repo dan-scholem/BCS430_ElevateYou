@@ -20,6 +20,55 @@
     -fx-text-fill: #FFDDD2;
 }
 
+.wellnesslabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 20px;
+    -fx-text-fill: #FFDDD2;
+}
+
+.descriptionlabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 22px;
+    -fx-text-fill: #FFDDD2;
+}
+
+.elevatelabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 24px;
+    -fx-text-fill: #e29578
+}
+
+.emaillabel, .passwordlabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 22px;
+    -fx-text-fill: #e29578;
+}
+
+.signinbutton, .createaccountbutton {
+    -fx-background-color: #E29578;
+    -fx-text-fill: #006D77;
+}
+
+.accountlabel, .forgotpass {
+    -fx-text-fill: #000000;
+}
+
+.dashlabel {
+    -fx-font-family: Poppins;
+    -fx-font-size: 18px;
+    -fx-text-fill: #EDF6F9;
+}
+
+.trackerlabel {
+    -fx-text-fill: #000000;
+    -fx-font-family: Poppins;
+    -fx-font-size: 24px;
+}
+
+.sidebackground {
+    -fx-background-color: #EDF6F9;
+}
+
 .addbutton, .updatebutton, .deletebutton, .clearbutton {
     -fx-background-color: #E29578;
     -fx-background-radius: 30px;
