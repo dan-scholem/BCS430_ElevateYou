@@ -131,7 +131,7 @@ public class DashboardController {
         try {
             Stage stage = (Stage) medButton.getScene().getWindow();
 
-            MedicationTracker.loadMedTrackerScene(stage);
+            Medication.loadMedTrackerScene(stage);
         } catch (IOException e) {
 
             throw new RuntimeException(e);
