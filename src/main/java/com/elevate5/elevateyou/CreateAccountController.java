@@ -1,5 +1,9 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.model.Event;
+import com.elevate5.elevateyou.model.EventManager;
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
@@ -15,9 +19,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static com.elevate5.elevateyou.App.fauth;
 import static javafx.application.Application.launch;
@@ -43,6 +49,8 @@ public class CreateAccountController {
     @FXML
     private PasswordField userPassword;
 
+    private UserRecord user;
+
 
     @FXML
     public void onSignInButtonClick(ActionEvent actionEvent) {
@@ -60,7 +68,7 @@ public class CreateAccountController {
     }
 
     @FXML
-    protected void onCreateAccountButtonClick() throws IOException  {
+    protected void onCreateAccountButtonClick() throws IOException, FirebaseAuthException, ExecutionException, InterruptedException {
 
         if (userEmail.getText().isEmpty() || userPassword.getText().isEmpty()) {
 
@@ -83,6 +91,10 @@ public class CreateAccountController {
                     userEmail.clear();
                     userPassword.clear();
 
+                    user = App.fauth.getUserByEmail(App.theUser.getEmail());
+                    SessionManager.setSession(new Session(user));
+
+
                     Stage stage = (Stage) createAccountButton.getScene().getWindow();
 
                     Dashboard.loadDashboardScene(stage);
@@ -102,9 +114,10 @@ public class CreateAccountController {
     }
 
 // This method is called when registering a new user. This method will add the username and password to a collection in Firestore
-public boolean addUser() {
+public boolean addUser() throws FirebaseAuthException {
 
-    DocumentReference docRef = App.fstore.collection("Users").document(UUID.randomUUID().toString());
+    UserRecord user = App.fauth.getUserByEmail(userEmail.getText());
+    DocumentReference docRef = App.fstore.collection("Users").document(user.getUid());
 
     Map<String, Object> data = new HashMap<>();
     data.put("Email", userEmail.getText());
@@ -112,13 +125,17 @@ public boolean addUser() {
     data.put("FirstName", firstName.getText());
     data.put("LastName", lastName.getText());
 
+    DocumentReference eventDocRef = App.fstore.collection("Events").document(user.getUid());
+    EventManager eventData = new EventManager();
+
     try {
         //asynchronously write data
         ApiFuture<WriteResult> result = docRef.set(data);
+        result = eventDocRef.set(eventData);
     }
 
     catch (Exception ex) {
-
+        System.out.println(ex.getMessage());
         return false;
     }
 

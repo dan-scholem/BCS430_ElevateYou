@@ -1,10 +1,16 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.CalendarView;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -12,6 +18,8 @@ import java.io.IOException;
 
 public class DashboardController {
 
+    @FXML
+    public Text welcometext;
     @FXML
     private Button appointmentsButton;
 
@@ -54,6 +62,26 @@ public class DashboardController {
     @FXML
     private Button notificationsButton;
 
+
+    private Session session;
+
+    @FXML
+    public void initialize(){
+        session = SessionManager.getSession();
+        String uid = session.getUser().getUid();
+        try {
+            DocumentReference docRef = App.fstore.collection("Users").document(uid);
+            ApiFuture<DocumentSnapshot> future = docRef.get();
+            DocumentSnapshot doc = future.get();
+            String name = (String) doc.get("FirstName");
+            welcometext.setText("Good Morning, " + name);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
     private void logoutUser(ActionEvent event) throws IOException {
@@ -72,6 +100,8 @@ public class DashboardController {
             stage = (Stage) logoutButton.getScene().getWindow();
 
             System.out.println("User logged out successfully");
+
+            SessionManager.closeSession();
 
             stage.close();
 
