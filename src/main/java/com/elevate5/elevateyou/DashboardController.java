@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.view.CalendarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -109,11 +110,12 @@ public class DashboardController {
     }
 
     @FXML
-    private void notificationsButtonClick() throws IOException {
+    protected void calendarButtonClick() throws IOException {
+
         try {
-            Stage stage = (Stage) notificationsButton.getScene().getWindow();
-            Notifications.loadNotificationsScene(stage);
-        } catch (Exception e){
+            Stage stage = (Stage) calendarButton.getScene().getWindow();
+            CalendarView.loadCalendarScene(stage);
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
     }
