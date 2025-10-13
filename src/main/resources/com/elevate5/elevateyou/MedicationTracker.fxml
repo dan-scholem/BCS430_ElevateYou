@@ -1,162 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="809.0" prefWidth="892.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.MedicationTrackerController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="809.0" prefWidth="968.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.MedicationController">
    <children>
-      <Pane layoutX="-5.0" prefHeight="809.0" prefWidth="197.0" style="-fx-background-color: #006D77;">
-         <children>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/pillicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/friendsicon.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="freindsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="50.0" fitWidth="55.0" layoutX="7.0" layoutY="751.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/logouticon.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="logoutButton" layoutX="62.0" layoutY="755.0" mnemonicParsing="false" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="1.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/tutorialsicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="76.0" fitWidth="79.0" layoutX="4.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/exerciseicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/nutritionicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="7.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/sleepicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="14.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/journalicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="7.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/appointment.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="572.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/calendaricon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="699.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/reviewsicon.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="51.0" layoutX="7.0" layoutY="663.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/chaticon.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="appointmentsButton" layoutX="67.0" layoutY="483.0" mnemonicParsing="false" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="tutorialsButton" layoutX="69.0" layoutY="534.0" mnemonicParsing="false" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="199.0" fitWidth="204.0" layoutX="11.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/elevateyoulogo.png" />
-               </image>
-            </ImageView>
-            <Text fill="#edf6f9" layoutX="46.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ElevateYou">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/dashboard.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="dashButton" layoutX="78.0" layoutY="180.0" mnemonicParsing="false" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="medButton" layoutX="74.0" layoutY="225.0" mnemonicParsing="false" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="exerciseButton" layoutX="72.0" layoutY="327.0" mnemonicParsing="false" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="chatButton" layoutX="69.0" layoutY="664.0" mnemonicParsing="false" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="reviewsButton" layoutX="59.0" layoutY="713.0" mnemonicParsing="false" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="sleepButton" layoutX="69.0" layoutY="382.0" mnemonicParsing="false" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Text layoutX="446.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="💊 Medication Tracker">
+      <Text layoutX="310.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="💊 Medication Tracker">
          <font>
             <Font name="Poppins ExtraBold" size="24.0" />
          </font>
       </Text>
+      <AnchorPane layoutX="194.0" layoutY="110.0" prefHeight="306.0" prefWidth="602.0" style="-fx-background-color: #006d77;">
+         <children>
+            <Label layoutX="14.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Medication:" />
+            <Label layoutX="324.0" layoutY="186.0" styleClass="medlabel" stylesheets="@styles.css" text="Notes:" />
+            <Label layoutX="15.0" layoutY="82.0" styleClass="medlabel" stylesheets="@styles.css" text="Dosage:" />
+            <Label layoutX="17.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="Start Date:" />
+            <Label layoutX="303.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Frequency:" />
+            <TextField fx:id="mednameField" layoutX="121.0" layoutY="34.0" />
+            <TextField fx:id="dosageField" layoutX="118.0" layoutY="82.0" />
+            <DatePicker fx:id="startdateField" layoutX="114.0" layoutY="139.0" prefHeight="25.0" prefWidth="176.0" />
+            <ComboBox fx:id="frequencyField" layoutX="412.0" layoutY="34.0" prefWidth="150.0" />
+            <TextArea fx:id="notesField" layoutX="317.0" layoutY="218.0" prefHeight="75.0" prefWidth="241.0" />
+            <Button fx:id="addButton" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#addMedication" styleClass="addbutton" stylesheets="@styles.css" text="Add Medication" />
+            <Button fx:id="deleteButton" layoutX="40.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteMedication" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
+            <Button fx:id="updateButton" layoutX="166.0" layoutY="198.0" mnemonicParsing="false" styleClass="updatebutton" stylesheets="@styles.css" text="Update" />
+            <Button fx:id="clearButton" layoutX="166.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearEntry" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
+            <Label layoutX="317.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="End Date:" />
+            <DatePicker fx:id="enddateField" layoutX="406.0" layoutY="139.0" prefHeight="25.0" prefWidth="176.0" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="MedicationTable" layoutX="194.0" layoutY="432.0" prefHeight="249.0" prefWidth="746.0">
+        <columns>
+          <TableColumn fx:id="medNameColumn" prefWidth="130.0" text="Medication Name" />
+          <TableColumn fx:id="dosageColumn" prefWidth="94.0" text="Dosage" />
+            <TableColumn fx:id="frequencyColumn" prefWidth="125.0" text="Frequency" />
+            <TableColumn fx:id="startdateColumn" prefWidth="134.0" text="Start Date" />
+            <TableColumn fx:id="enddateColumn" prefWidth="119.0" text="End Date" />
+            <TableColumn fx:id="notesColumn" prefWidth="141.0" text="Notes" />
+        </columns>
+      </TableView>
    </children>
 </Pane>
