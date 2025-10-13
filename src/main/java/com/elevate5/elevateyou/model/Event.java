@@ -5,33 +5,37 @@ import java.time.LocalTime;
 
 public class Event {
 
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
     private String eventName;
     private String eventDescription;
 
 
-    public Event(LocalDate date, LocalTime time, String eventName, String eventDescription){
+    public Event(){
+
+    }
+
+    public Event(String date, String time, String eventName, String eventDescription){
         this.date = date;
         this.time = time;
         this.eventName = eventName;
         this.eventDescription = eventDescription;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = date.toString();
     }
 
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
     public void setTime(LocalTime time) {
-        this.time = time;
+        this.time = time.toString();
     }
 
     public String getEventName() {
