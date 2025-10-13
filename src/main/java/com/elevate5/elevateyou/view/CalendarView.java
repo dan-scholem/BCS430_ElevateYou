@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou.view;
 
+import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.Dashboard;
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.CalendarModel;
@@ -7,6 +8,11 @@ import com.elevate5.elevateyou.model.Event;
 import com.elevate5.elevateyou.model.EventManager;
 import com.elevate5.elevateyou.model.calendardata.DayData;
 import com.elevate5.elevateyou.model.calendardata.WeekData;
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.WriteResult;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,9 +32,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class CalendarView extends Application {
 
@@ -73,6 +77,8 @@ public class CalendarView extends Application {
 
     private final ArrayList<TableColumn<WeekData,DayData>> columns = new ArrayList<>();
 
+    private Session session;
+
     @FXML
     private void initialize(){
 
@@ -105,16 +111,30 @@ public class CalendarView extends Application {
 
         //selection = calendarTableView.getSelectionModel().getSelectedItems();
 
-        //sample events for testing
-        LocalDate sampleDate = LocalDate.of(2025,10,7);
-        LocalTime sampleTime = LocalTime.of(16,30);
-        Event sampleEvent = new Event(sampleDate, sampleTime, "Dr Appointment", "Appointment");
-        Event sample2 = new Event(LocalDate.of(2025, 10, 7), LocalTime.of(15, 00), "Take Meds", "Advil 20mg");
-        eventManager.addEvent(sampleEvent.getDate(), sampleEvent);
-        eventManager.addEvent(sample2.getDate(), sample2);
-        Collections.sort(eventManager.getEvents().get(sampleEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-        Event sample3 = new Event(LocalDate.of(2025, 11, 15), LocalTime.of(12, 00), "Workout", "Back and Biceps");
-        eventManager.addEvent(sample3.getDate(), sample3);
+        if(SessionManager.getSession() != null){
+            session = SessionManager.getSession();
+        }
+
+
+        if(session != null) {
+
+            eventManager.setEvents(session.getUserEventManager().getEvents());
+
+
+        } else{
+            //sample events for testing
+            LocalDate sampleDate = LocalDate.of(2025,10,7);
+            LocalTime sampleTime = LocalTime.of(16,30);
+            Event sampleEvent = new Event(sampleDate.toString(), sampleTime.toString(), "Dr Appointment", "Appointment");
+            Event sample2 = new Event(LocalDate.of(2025, 10, 7).toString(), LocalTime.of(15, 00).toString(), "Take Meds", "Advil 20mg");
+            eventManager.addEvent(sampleEvent.getDate().toString(), sampleEvent);
+            eventManager.addEvent(sample2.getDate().toString(), sample2);
+            Collections.sort(eventManager.getEvents().get(sampleEvent.getDate().toString()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
+            Event sample3 = new Event(LocalDate.of(2025, 11, 15).toString(), LocalTime.of(12, 00).toString(), "Workout", "Back and Biceps");
+            eventManager.addEvent(sample3.getDate().toString(), sample3);
+        }
+
+
 
         //sets cell behavior within the calendar table
         for(TableColumn<WeekData, DayData> dayCol : columns){
@@ -132,8 +152,11 @@ public class CalendarView extends Application {
 
                                 vbox.getChildren().add(dowLabel);
                                 //checks if there are events for the date in the cell and displays them
-                                if(eventManager.getEvents().containsKey(item.getDate())) {
-                                    for(Event event : eventManager.getEvents().get(item.getDate())) {
+                                if(eventManager.getEvents() != null && eventManager.getEvents().containsKey(item.getDate().toString())) {
+                                    //System.out.println("Events found at: " + item.getDate().toString());
+                                    //System.out.println(eventManager.getEvents().get(item.getDate().toString()).getClass());
+                                    ArrayList<Event> events = (ArrayList<Event>) eventManager.getEvents().get(item.getDate().toString());
+                                    for(Event event : events) {
                                         //dayOfMonth = dayOfMonth + event.toString() + "\n";
                                         Button eventButton = new Button(event.toString());
                                         eventButton.setMaxWidth(Double.MAX_VALUE);
@@ -153,26 +176,26 @@ public class CalendarView extends Application {
                                                 eventName.setText(event.getEventName());
                                                 eventName.setPromptText("Event Name...");
                                                 DatePicker eventDatePicker = new DatePicker();
-                                                eventDatePicker.setValue(event.getDate());
+                                                eventDatePicker.setValue(LocalDate.parse(event.getDate()));
                                                 ComboBox<String> hourBox = new ComboBox<>();
 
 
                                                 ComboBox<String> minuteBox = new ComboBox<>();
-                                                if(event.getTime().getMinute() == 0){
-                                                    minuteBox.setValue(event.getTime().getMinute() + "0");
-                                                } else if(event.getTime().getMinute() < 10){
-                                                    minuteBox.setValue("0" + event.getTime().getMinute());
+                                                if(LocalTime.parse(event.getTime()).getMinute() == 0){
+                                                    minuteBox.setValue(LocalTime.parse(event.getTime()).getMinute() + "0");
+                                                } else if(LocalTime.parse(event.getTime()).getMinute() < 10){
+                                                    minuteBox.setValue("0" + LocalTime.parse(event.getTime()).getMinute());
                                                 } else{
-                                                    minuteBox.setValue(event.getTime().getMinute() + "");
+                                                    minuteBox.setValue(LocalTime.parse(event.getTime()).getMinute() + "");
                                                 }
 
                                                 ComboBox<String> AMorPMBox = new ComboBox<>();
-                                                if(event.getTime().getHour() > 11){
+                                                if(LocalTime.parse(event.getTime()).getHour() > 11){
                                                     AMorPMBox.setValue("PM");
-                                                    hourBox.setValue(event.getTime().getHour() - 12 + "");
+                                                    hourBox.setValue(LocalTime.parse(event.getTime()).getHour() - 12 + "");
                                                 } else{
                                                     AMorPMBox.setValue("AM");
-                                                    hourBox.setValue(event.getTime().getHour() + "");
+                                                    hourBox.setValue(LocalTime.parse(event.getTime()).getHour() + "");
                                                 }
                                                 HBox timeBox = new HBox();
                                                 TextArea eventDescription = new TextArea();
@@ -195,32 +218,59 @@ public class CalendarView extends Application {
                                                 timeBox.setSpacing(5);
                                                 //button for updating event info
                                                 updateEventButton.setOnAction(popEvent -> {
-                                                    LocalDate eventDate = eventDatePicker.getValue();
-                                                    LocalDate oldDate = event.getDate();
-                                                    String name = eventName.getText();
-                                                    String hour = hourBox.getValue();
-                                                    String minute = minuteBox.getValue();
+                                                    try{
+                                                        LocalDate eventDate = eventDatePicker.getValue();
+                                                        if(eventDate.getYear() < LocalDate.now().getYear()) {
+                                                            eventDate = eventDate.withYear(2025);
+                                                        }
+                                                        LocalDate oldDate = LocalDate.parse(event.getDate());
+                                                        String name = eventName.getText();
+                                                        String hour = hourBox.getValue();
+                                                        String minute = minuteBox.getValue();
 
-                                                    if (AMorPMBox.getValue().equals("PM")) {
-                                                        hour = Integer.parseInt(hour) + 12 + "";
+                                                        if (AMorPMBox.getValue().equals("PM") && Integer.parseInt(hour) < 12) {
+                                                            hour = Integer.parseInt(hour) + 12 + "";
+                                                        }
+                                                        if(AMorPMBox.getValue().equals("AM") && Integer.parseInt(hour) == 12) {
+                                                            hour = "00";
+                                                        }
+                                                        if (hour.length() == 1) {
+                                                            hour = "0" + hour;
+                                                        }
+                                                        if(minute.length() == 1){
+                                                            minute = "0" +  minute;
+                                                        }
+                                                        String time = hour + ":" + minute;
+                                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                                                        LocalTime eventTime = LocalTime.parse(time, formatter);
+                                                        String description = eventDescription.getText();
+                                                        //System.out.println(name + "\n" + item.getDate() + "\n" + time + "\n" + description);
+                                                        event.setDate(eventDate);
+                                                        event.setTime(eventTime);
+                                                        event.setEventName(name);
+                                                        event.setEventDescription(description);
+                                                        eventManager.getEvents().get(oldDate.toString()).remove(event);
+                                                        eventManager.addEvent(event.getDate(), event);
+                                                        Collections.sort(eventManager.getEvents().get(event.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
+                                                        if(session != null) {
+                                                            if (!session.getUserEventManager().getEvents().isEmpty()) {
+                                                                try {
+                                                                    updateFirestore(eventManager, event, session);
+                                                                } catch (IOException ex) {
+                                                                    throw new RuntimeException(ex);
+                                                                }
+                                                            }
+                                                        }
+                                                        calendarTableView.refresh();
+                                                        popup.hide();
+                                                    } catch (Exception ex) {
+                                                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                                                        alert.setTitle("Error");
+                                                        alert.setHeaderText("Error");
+                                                        alert.setContentText("Invalid Date or Time");
+                                                        alert.showAndWait();
                                                     }
-                                                    if (hour.length() == 1) {
-                                                        hour = "0" + hour;
-                                                    }
-                                                    String time = hour + ":" + minute;
-                                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                                                    LocalTime eventTime = LocalTime.parse(time, formatter);
-                                                    String description = eventDescription.getText();
-                                                    System.out.println(name + "\n" + item.getDate() + "\n" + time + "\n" + description);
-                                                    event.setDate(eventDate);
-                                                    event.setTime(eventTime);
-                                                    event.setEventName(name);
-                                                    event.setEventDescription(description);
-                                                    eventManager.getEvents().get(oldDate).remove(event);
-                                                    eventManager.addEvent(event.getDate(), event);
-                                                    Collections.sort(eventManager.getEvents().get(event.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-                                                    calendarTableView.refresh();
-                                                    popup.hide();
+
                                                 });
                                                 //button for canceling popup
                                                 cancelEventButton.setOnAction(popEvent -> {
@@ -234,6 +284,15 @@ public class CalendarView extends Application {
                                                     deleteAlert.setContentText("Are you sure you want to delete this event? " + event.toString());
                                                     if(deleteAlert.showAndWait().get() == ButtonType.OK){
                                                         eventManager.getEvents().get(event.getDate()).remove(event);
+                                                        if(session != null) {
+                                                            if (!session.getUserEventManager().getEvents().isEmpty()) {
+                                                                try {
+                                                                    updateFirestore(eventManager, event, session);
+                                                                } catch (IOException ex) {
+                                                                    throw new RuntimeException(ex);
+                                                                }
+                                                            }
+                                                        }
                                                         calendarTableView.refresh();
                                                         popup.hide();
                                                     }else{
@@ -307,26 +366,53 @@ public class CalendarView extends Application {
 
                         //button functionality for adding a new event
                         addEventButton.setOnAction(popEvent -> {
-                            LocalDate eventDate = eventDatePicker.getValue();
-                            String name = eventName.getText();
-                            String hour = hourBox.getValue();
-                            String minute = minuteBox.getValue();
-                            if (AMorPMBox.getValue().equals("PM")) {
-                                hour = (Integer.parseInt(hourBox.getValue()) + 12) + "";
+                            try {
+                                LocalDate eventDate = eventDatePicker.getValue();
+                                if(eventDate.getYear() < LocalDate.now().getYear()) {
+                                    eventDate = eventDate.withYear(2025);
+                                }
+                                String name = eventName.getText();
+                                String hour = hourBox.getValue();
+                                String minute = minuteBox.getValue();
+                                if (AMorPMBox.getValue().equals("PM") && Integer.parseInt(hour) < 12) {
+                                    hour = Integer.parseInt(hour) + 12 + "";
+                                }
+                                if (AMorPMBox.getValue().equals("AM") && Integer.parseInt(hour) == 12) {
+                                    hour = "00";
+                                }
+                                if (hour.length() == 1) {
+                                    hour = "0" + hour;
+                                }
+                                if (minute.length() == 1) {
+                                    minute = "0" + minute;
+                                }
+                                String time = hour + ":" + minute;
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                                LocalTime eventTime = LocalTime.parse(time, formatter);
+                                String description = eventDescription.getText();
+                                System.out.println(name + "\n" + cell.getItem().getDate() + "\n" + time + "\n" + description);
+                                Event newEvent = new Event(eventDate.toString(), eventTime.toString(), name, description);
+                                eventManager.addEvent(newEvent.getDate(), newEvent);
+                                System.out.println(eventManager.getEvents().keySet());
+                                Collections.sort(eventManager.getEvents().get(newEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
+                                if (session != null) {
+                                    if (eventManager.getEvents() != null) {
+                                        try {
+                                            updateFirestore(eventManager, newEvent, session);
+                                        } catch (IOException ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+                                    }
+                                }
+                                calendarTableView.refresh();
+                                popup.hide();
+                            }catch (Exception ex) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText("Error");
+                                alert.setContentText(ex.getMessage() + "Invalid Date or Time");
+                                alert.showAndWait();
                             }
-                            if (hour.length() == 1) {
-                                hour = "0" + hour;
-                            }
-                            String time = hour + ":" + minute;
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                            LocalTime eventTime = LocalTime.parse(time, formatter);
-                            String description = eventDescription.getText();
-                            System.out.println(name + "\n" + cell.getItem().getDate() + "\n" + time + "\n" + description);
-                            Event newEvent = new Event(eventDate, eventTime, name, description);
-                            eventManager.addEvent(newEvent.getDate(), newEvent);
-                            Collections.sort(eventManager.getEvents().get(newEvent.getDate()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-                            calendarTableView.refresh();
-                            popup.hide();
                         });
 
                         //button functionality for canceling action
@@ -445,6 +531,21 @@ public class CalendarView extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public static void updateFirestore(EventManager eventManager, Event newEvent, Session session) throws IOException {
+        DocumentReference eventDocRef = App.fstore.collection("Events").document(session.getUserID());
+        //Map<String, Object> eventData = new HashMap<>();
+        //eventData.put(newEvent.getDate(), newEvent);
+        try{
+            ApiFuture<WriteResult> result = eventDocRef.set(eventManager);
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "!!!");
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }
 
