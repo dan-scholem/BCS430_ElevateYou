@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import javafx.collections.FXCollections;
@@ -27,6 +28,9 @@ public class MedicationController {
 
     @FXML
     private Button medButton;
+
+    @FXML
+    private Button calendarButton;
 
     @FXML
     private Button addButton;
@@ -410,4 +414,17 @@ public class MedicationController {
         }
     }
 
+    @FXML
+    protected void calendarButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) calendarButton.getScene().getWindow();
+            CalendarView.loadCalendarScene(stage);
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 }
+
+

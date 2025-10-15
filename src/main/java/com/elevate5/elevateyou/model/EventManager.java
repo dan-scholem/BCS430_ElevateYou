@@ -7,25 +7,36 @@ import java.util.Map;
 
 public class EventManager {
 
-    private final Map<LocalDate, ArrayList<Event>> events;
+    private Map<String, ArrayList<Event>> events;
 
     public EventManager() {
-        this.events = new HashMap<>();
+        this.events = new HashMap<String, ArrayList<Event>>();
     }
 
-    public void addEvent(LocalDate date, Event event) {
-        if(this.events.containsKey(date)) {
+    public EventManager(Map<String, ArrayList<Event>> events) {
+        this.events = events;
+    }
+
+    public void addEvent(String date, Event event) {
+        if(this.events != null && this.events.containsKey(date)) {
             this.events.get(date).add(event);
         }else{
             ArrayList<Event> list = new ArrayList<>();
             list.add(event);
+            if(this.events == null){
+                this.events = new HashMap<String, ArrayList<Event>>();
+            }
             events.put(date, list);
         }
         //events.get(date).add(event);
     }
 
-    public Map<LocalDate, ArrayList<Event>> getEvents() {
+    public Map<String, ArrayList<Event>> getEvents() {
         return events;
+    }
+
+    public void setEvents(Map<String, ArrayList<Event>> events) {
+        this.events = events;
     }
 
 }
