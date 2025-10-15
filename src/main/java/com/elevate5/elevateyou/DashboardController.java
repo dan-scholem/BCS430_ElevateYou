@@ -60,7 +60,7 @@ public class DashboardController {
     private Button tutorialsButton;
 
     @FXML
-    private Button notificationsButton;
+    private HBox topRightBar;
 
 
     private Session session;
@@ -147,6 +147,28 @@ public class DashboardController {
             CalendarView.loadCalendarScene(stage);
         } catch (IOException e){
             throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void setNotificationsButton() {
+        try {
+            // Get current UID (fallback to dev uid for development)
+            String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
+                    ? SessionManager.getSession().getUserID()
+                    : "";
+
+            NotificationService svc = new NotificationService(uid);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Notification.fxml"));
+            Node bell = loader.load();
+
+            NotificationController ctrl = loader.getController();
+            ctrl.setService(svc);
+
+            topRightBar.getChildren().add(bell);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
