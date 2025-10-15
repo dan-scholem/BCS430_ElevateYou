@@ -44,7 +44,7 @@ public class DashboardController {
     private Button foodButton;
 
     @FXML
-    private Button freindsButton;
+    private Button friendsButton;
 
     @FXML
     private Button journalButton;
@@ -69,7 +69,7 @@ public class DashboardController {
     @FXML
     private HBox topRightBar;
 
-
+/**
     private Session session;
 
     @FXML
@@ -92,6 +92,7 @@ public class DashboardController {
         setNotificationsButton();
 
     }
+    **/
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
@@ -159,6 +160,20 @@ public class DashboardController {
         } catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML

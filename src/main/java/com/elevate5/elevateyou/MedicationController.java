@@ -33,6 +33,9 @@ public class MedicationController {
     private Button calendarButton;
 
     @FXML
+    private Button journalButton;
+
+    @FXML
     private Button addButton;
 
     @FXML
@@ -413,6 +416,21 @@ public class MedicationController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     @FXML
     protected void calendarButtonClick() throws IOException {
