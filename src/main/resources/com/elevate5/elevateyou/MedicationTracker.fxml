@@ -14,15 +14,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="782.0" prefWidth="1026.0" style="-fx-background-color: #EDF6F9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.MedicationController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="782.0" prefWidth="1115.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.MedicationController">
    <children>
-      <AnchorPane layoutX="281.0" layoutY="113.0" prefHeight="306.0" prefWidth="602.0" style="-fx-background-color: #006d77;">
+      <AnchorPane layoutX="334.0" layoutY="115.0" prefHeight="306.0" prefWidth="602.0" style="-fx-background-color: #006d77;">
          <children>
             <Label layoutX="14.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Medication:" />
             <Label layoutX="324.0" layoutY="186.0" styleClass="medlabel" stylesheets="@styles.css" text="Notes:" />
             <Label layoutX="15.0" layoutY="82.0" styleClass="medlabel" stylesheets="@styles.css" text="Dosage:" />
             <Label layoutX="17.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="Start Date:" />
-            <Label layoutX="303.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Frequency:" />
+            <Label layoutX="303.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Frequency:">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="13.0" />
+               </font></Label>
             <TextField fx:id="mednameField" layoutX="121.0" layoutY="34.0" />
             <TextField fx:id="dosageField" layoutX="118.0" layoutY="82.0" />
             <DatePicker fx:id="startdateField" layoutX="114.0" layoutY="139.0" prefHeight="25.0" prefWidth="176.0" />
@@ -30,20 +33,20 @@
             <TextArea fx:id="notesField" layoutX="317.0" layoutY="218.0" prefHeight="75.0" prefWidth="241.0" />
             <Button fx:id="addButton" layoutX="15.0" layoutY="198.0" mnemonicParsing="false" onAction="#addMedication" styleClass="addbutton" stylesheets="@styles.css" text="Add Medication" />
             <Button fx:id="deleteButton" layoutX="40.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteMedication" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
-            <Button fx:id="updateButton" layoutX="166.0" layoutY="198.0" mnemonicParsing="false" styleClass="updatebutton" stylesheets="@styles.css" text="Update" />
+            <Button fx:id="updateButton" layoutX="166.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateMedication" styleClass="updatebutton" stylesheets="@styles.css" text="Update" />
             <Button fx:id="clearButton" layoutX="166.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearEntry" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
             <Label layoutX="317.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="End Date:" />
             <DatePicker fx:id="enddateField" layoutX="406.0" layoutY="139.0" prefHeight="25.0" prefWidth="176.0" />
          </children>
       </AnchorPane>
-      <TableView fx:id="MedicationTable" layoutX="244.0" layoutY="429.0" prefHeight="259.0" prefWidth="742.0">
+      <TableView fx:id="MedicationTable" layoutX="233.0" layoutY="463.0" onMouseClicked="#medrowClicked" prefHeight="259.0" prefWidth="820.0">
         <columns>
           <TableColumn fx:id="medNameColumn" prefWidth="130.0" text="Medication Name" />
           <TableColumn fx:id="dosageColumn" prefWidth="94.0" text="Dosage" />
             <TableColumn fx:id="frequencyColumn" prefWidth="125.0" text="Frequency" />
             <TableColumn fx:id="startdateColumn" prefWidth="134.0" text="Start Date" />
             <TableColumn fx:id="enddateColumn" prefWidth="119.0" text="End Date" />
-            <TableColumn fx:id="notesColumn" prefWidth="141.0" text="Notes" />
+            <TableColumn fx:id="notesColumn" prefWidth="217.0" text="Notes" />
         </columns>
       </TableView>
       <Pane layoutY="-8.0" prefHeight="793.0" prefWidth="211.0" style="-fx-background-color: #006D77;">
@@ -123,7 +126,7 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+            <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
@@ -133,7 +136,7 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <ImageView fitHeight="199.0" fitWidth="204.0" layoutX="25.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="199.0" fitWidth="204.0" layoutX="15.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/elevateyoulogo.png" />
                </image>
@@ -145,7 +148,7 @@
             </ImageView>
             <Button fx:id="dashButton" layoutX="77.0" layoutY="171.0" mnemonicParsing="false" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI Semibold" size="13.0" />
                </font>
             </Button>
             <Button fx:id="medButton" layoutX="73.0" layoutY="220.0" mnemonicParsing="false" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
@@ -183,9 +186,14 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Label layoutX="72.0" layoutY="99.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+            <Label layoutX="47.0" layoutY="104.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
-      <Label layoutX="520.0" layoutY="61.0" styleClass="trackerlabel" stylesheets="@styles.css" text="💊 Medication Tracker" />
+      <Label layoutX="520.0" layoutY="61.0" styleClass="trackerlabel" stylesheets="@styles.css" text=" Medication Tracker" />
+      <ImageView fitHeight="37.0" fitWidth="33.0" layoutX="480.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/pillimage.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
