@@ -113,14 +113,23 @@ public class DashboardController {
 
 
     @FXML
-    public void initialize() {
+    public void setNotificationsButton() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notification.fxml"));
+            // Get current UID (fallback to dev uid for development)
+            String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
+                    ? SessionManager.getSession().getUserID()
+                    : "";
+
+            NotificationService svc = new NotificationService(uid);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Notification.fxml"));
             Node bell = loader.load();
-            topRightBar.getChildren().clear();
+
+            NotificationController ctrl = loader.getController();
+            ctrl.setService(svc);
+
             topRightBar.getChildren().add(bell);
-            topRightBar.toFront();
-        } catch (IOException e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
