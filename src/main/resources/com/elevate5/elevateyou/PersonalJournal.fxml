@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.JournalEntryController">
    <children>
       <Pane prefHeight="794.0" prefWidth="211.0" style="-fx-background-color: #006D77;">
          <children>
@@ -24,7 +24,7 @@
                   <Image url="@images/friendsicon.png" />
                </image>
             </ImageView>
-            <Button fx:id="freindsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+            <Button fx:id="friendsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
@@ -116,7 +116,7 @@
             </Button>
             <Button fx:id="medButton" layoutX="73.0" layoutY="220.0" mnemonicParsing="false" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
@@ -129,7 +129,7 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
@@ -152,7 +152,7 @@
             <Label layoutX="47.0" layoutY="104.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
-      <Label layoutX="480.0" layoutY="40.0" styleClass="jorunallabel" stylesheets="@styles.css" text="Personal Journal" />
+      <Label layoutX="480.0" layoutY="40.0" styleClass="journallabel" stylesheets="@styles.css" text="Personal Journal" />
       <ListView layoutX="265.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" />
       <TextArea layoutX="265.0" layoutY="429.0" prefHeight="200.0" prefWidth="200.0" />
       <ImageView fitHeight="150.0" fitWidth="44.0" layoutX="420.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">

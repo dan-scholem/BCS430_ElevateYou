@@ -44,7 +44,7 @@ public class DashboardController {
     private Button foodButton;
 
     @FXML
-    private Button freindsButton;
+    private Button friendsButton;
 
     @FXML
     private Button journalButton;
@@ -157,6 +157,20 @@ public class DashboardController {
         } catch (IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML

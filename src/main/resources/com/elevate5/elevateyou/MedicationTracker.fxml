@@ -63,7 +63,7 @@
             </ImageView>
             <Button fx:id="freindsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <ImageView fitHeight="50.0" fitWidth="55.0" layoutX="7.0" layoutY="751.0" pickOnBounds="true" preserveRatio="true">
@@ -123,17 +123,17 @@
             </ImageView>
             <Button fx:id="appointmentsButton" layoutX="67.0" layoutY="483.0" mnemonicParsing="false" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="tutorialsButton" layoutX="69.0" layoutY="534.0" mnemonicParsing="false" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <ImageView fitHeight="199.0" fitWidth="204.0" layoutX="15.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
@@ -148,7 +148,7 @@
             </ImageView>
             <Button fx:id="dashButton" layoutX="77.0" layoutY="171.0" mnemonicParsing="false" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
                <font>
-                  <Font name="Segoe UI Semibold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="medButton" layoutX="73.0" layoutY="220.0" mnemonicParsing="false" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
@@ -158,32 +158,32 @@
             </Button>
             <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="exerciseButton" layoutX="72.0" layoutY="327.0" mnemonicParsing="false" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
             <Button fx:id="chatButton" layoutX="56.0" layoutY="664.0" mnemonicParsing="false" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="reviewsButton" layoutX="59.0" layoutY="713.0" mnemonicParsing="false" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Button fx:id="sleepButton" layoutX="69.0" layoutY="382.0" mnemonicParsing="false" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <Label layoutX="47.0" layoutY="104.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />

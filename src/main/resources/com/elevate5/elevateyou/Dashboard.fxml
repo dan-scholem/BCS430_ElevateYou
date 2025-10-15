@@ -23,7 +23,7 @@
                   <Image url="@images/friendsicon.png" />
                </image>
             </ImageView>
-            <Button fx:id="freindsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+            <Button fx:id="friendsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
@@ -128,7 +128,7 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+            <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
