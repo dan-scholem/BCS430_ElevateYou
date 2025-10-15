@@ -2,6 +2,9 @@ package com.elevate5.elevateyou.model;
 
 import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.UserLogin;
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.gson.Gson;
@@ -11,6 +14,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutionException;
 
 public class LogInModel {
 
@@ -51,6 +55,7 @@ public class LogInModel {
 
             if(connection.getResponseCode() == 200){
                 user = App.fauth.getUserByEmail(email);
+                SessionManager.setSession(new Session(user));
                 return true;
             } else{
                 System.out.println(connection.getResponseMessage() + connection.getResponseCode());
@@ -63,6 +68,8 @@ public class LogInModel {
             System.out.println("Error reading file: " + e.getMessage());
         } catch(FirebaseAuthException e){
             System.out.println("Firebase auth error: " + e.getMessage());
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println("Execution Error: " + e.getMessage());
         }
         return false;
 
