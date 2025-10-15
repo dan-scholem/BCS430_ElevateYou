@@ -69,7 +69,7 @@ public class DashboardController {
     @FXML
     private HBox topRightBar;
 
-
+/**
     private Session session;
 
     @FXML
@@ -89,6 +89,7 @@ public class DashboardController {
         setNotificationsButton();
 
     }
+    **/
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML

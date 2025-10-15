@@ -3,12 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -152,7 +152,13 @@
             <Label layoutX="47.0" layoutY="104.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
-      <Label layoutX="465.0" layoutY="86.0" styleClass="foodbutton" stylesheets="@styles.css" text="Personal Journal" />
+      <Label layoutX="480.0" layoutY="40.0" styleClass="jorunallabel" stylesheets="@styles.css" text="Personal Journal" />
       <ListView layoutX="265.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea layoutX="265.0" layoutY="429.0" prefHeight="200.0" prefWidth="200.0" />
+      <ImageView fitHeight="150.0" fitWidth="44.0" layoutX="420.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/journalimage.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
