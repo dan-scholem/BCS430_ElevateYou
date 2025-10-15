@@ -6,12 +6,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CaloriesWaterIntake {
+public final class CaloriesWaterIntake {
+    private CaloriesWaterIntake() {}
 
     public static void loadCaloriesWaterIntakeScene(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("CaloriesWaterIntake.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
-        stage.setTitle("Calories & Water Intake");
+        FXMLLoader fxml = new FXMLLoader(App.class.getResource("CaloriesWaterIntake.fxml"));
+        Scene scene = new Scene(fxml.load());
+        stage.setTitle("Nutrition");
         stage.setScene(scene);
         stage.show();
     }

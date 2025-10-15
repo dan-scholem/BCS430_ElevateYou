@@ -119,10 +119,12 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
+            <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0"
+                    mnemonicParsing="false"
+                    onAction="#foodButtonClick"
+                    styleClass="foodbutton" stylesheets="@styles.css"
+                    text="Nutrition">
+               <font><Font name="Poppins ExtraBold" size="13.0"/></font>
             </Button>
             <Button fx:id="exerciseButton" layoutX="72.0" layoutY="327.0" mnemonicParsing="false" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
                <font>

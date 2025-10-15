@@ -1,20 +1,21 @@
 package com.elevate5.elevateyou;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 public class CaloriesWaterIntakeController {
 
-    // ===== inputs =====
+    // ===== Inputs =====
     @FXML private DatePicker calDate;
     @FXML private TextField foodText;
     @FXML private TextField caloriesText;
@@ -22,216 +23,226 @@ public class CaloriesWaterIntakeController {
     @FXML private DatePicker waterDate;
     @FXML private TextField waterOunces;
 
-    // ===== calories table =====
-    @FXML private TableView<CalRow> caloriesTable;
-    @FXML private TableColumn<CalRow, String> colCalDate;
-    @FXML private TableColumn<CalRow, String> colFood;
-    @FXML private TableColumn<CalRow, String> colCals;
-    @FXML private Label lblCalTotal;
-    @FXML private BarChart<String, Number> caloriesChart;
+    // ===== Tables + columns =====
+    @FXML private TableView<CalorieEntry> caloriesTable;
+    @FXML private TableColumn<CalorieEntry, LocalDate> colCalDate;
+    @FXML private TableColumn<CalorieEntry, String> colFood;
+    @FXML private TableColumn<CalorieEntry, Integer> colCals;
 
-    // ===== water table =====
-    @FXML private TableView<WaterRow> waterTable;
-    @FXML private TableColumn<WaterRow, String> colWaterDate;
-    @FXML private TableColumn<WaterRow, String> colOunces;
+    @FXML private TableView<WaterEntry> waterTable;
+    @FXML private TableColumn<WaterEntry, LocalDate> colWaterDate;
+    @FXML private TableColumn<WaterEntry, Integer> colOunces;
+
+    // ===== UI bits =====
+    @FXML private Label lblCalTotal;
     @FXML private Label lblWaterTotal;
 
-    // ===== advice =====
-    @FXML private Label lblAdvice;
+    // ===== Sidebar buttons (only needed for onAction handlers that exist here) =====
+    @FXML private Button dashButton;
+    @FXML private Button medButton;
+    @FXML private Button foodButton;
+    @FXML private Button calendarButton;
+    @FXML private Button logoutButton;
 
-    private final ObservableList<CalRow> calRows = FXCollections.observableArrayList();
-    private final ObservableList<WaterRow> waterRows = FXCollections.observableArrayList();
-    private final DateTimeFormatter DF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    // simple suggestions (not a dropdown control)
-    private final Map<String, Integer> foodCals = new LinkedHashMap<>();
+    private final ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
+    private final ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
+        // Defaults
         calDate.setValue(LocalDate.now());
         waterDate.setValue(LocalDate.now());
 
-        // seed foods (you can edit freely)
-        foodCals.put("Chicken (4 oz)", 185);
-        foodCals.put("Rice (1 cup cooked)", 205);
-        foodCals.put("Steak (4 oz)", 275);
-        foodCals.put("Peanut Butter (2 tbsp)", 190);
-        foodCals.put("Protein Powder (1 scoop)", 120);
-        foodCals.put("Shrimp (4 oz)", 120);
-        foodCals.put("Salad (2 cups)", 80);
-        foodCals.put("Apple (1 medium)", 95);
+        // Calories table
+        colCalDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colFood.setCellValueFactory(new PropertyValueFactory<>("food"));
+        colCals.setCellValueFactory(new PropertyValueFactory<>("calories"));
+        caloriesTable.setItems(calorieData);
 
-        // tables
-        colCalDate.setCellValueFactory(d -> d.getValue().dateProperty());
-        colFood.setCellValueFactory(d -> d.getValue().foodProperty());
-        colCals.setCellValueFactory(d -> d.getValue().calProperty());
-        caloriesTable.setItems(calRows);
+        // Water table
+        colWaterDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colOunces.setCellValueFactory(new PropertyValueFactory<>("ounces"));
+        waterTable.setItems(waterData);
 
-        colWaterDate.setCellValueFactory(d -> d.getValue().dateProperty());
-        colOunces.setCellValueFactory(d -> d.getValue().ozProperty());
-        waterTable.setItems(waterRows);
+        // Totals update when selection changes (or you can compute on whole table)
+        caloriesTable.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> updateCalorieTotal());
+        waterTable.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> updateWaterTotal());
 
-        // numeric guards
-        caloriesText.setTextFormatter(numericFormatter(false)); // ints only
-        waterOunces.setTextFormatter(numericFormatter(false));
-
-        // auto-fill calories if the food matches our simple map
-        foodText.textProperty().addListener((obs, old, text) -> {
-            if (text == null || text.isBlank()) return;
-            foodCals.entrySet().stream()
-                    .filter(e -> e.getKey().toLowerCase().startsWith(text.toLowerCase()))
-                    .findFirst()
-                    .ifPresent(e -> caloriesText.setText(String.valueOf(e.getValue())));
-        });
-
-        // recompute totals when the selected date changes
-        calDate.valueProperty().addListener((obs, o, n) -> updateCalorieTotal());
-        waterDate.valueProperty().addListener((obs, o, n) -> updateWaterTotal());
-
-        refreshChartsAndAdvice();
+        updateCalorieTotal();
+        updateWaterTotal();
     }
 
-    // ===== add entries =====
+    // ===== Calories handlers =====
     @FXML
     private void addCalories() {
-        var date = calDate.getValue();
-        var food = foodText.getText().trim();
-        var calsText = caloriesText.getText().trim();
+        LocalDate d = calDate.getValue();
+        String food = foodText.getText().trim();
+        String calsStr = caloriesText.getText().trim();
 
-        if (date == null || food.isBlank() || calsText.isBlank()) {
-            info("Please fill date, food, and calories.");
+        if (d == null || food.isEmpty() || calsStr.isEmpty()) {
+            alert("Please enter date, food and calories.");
             return;
         }
         int cals;
-        try {
-            cals = Integer.parseInt(calsText);
-            if (cals <= 0) throw new NumberFormatException();
-        } catch (Exception e) {
-            info("Calories must be a positive number.");
-            return;
-        }
+        try { cals = Integer.parseInt(calsStr); }
+        catch (NumberFormatException ex) { alert("Calories must be a number."); return; }
 
-        calRows.add(new CalRow(DF.format(date), food, String.valueOf(cals)));
-        foodText.clear();
-        caloriesText.clear();
-
+        calorieData.add(new CalorieEntry(d, food, cals));
+        clearCaloriesInputs();
         updateCalorieTotal();
-        refreshChartsAndAdvice();
     }
 
     @FXML
-    private void addWater() {
-        var date = waterDate.getValue();
-        var ozText = waterOunces.getText().trim();
-
-        if (date == null || ozText.isBlank()) {
-            info("Please fill date and ounces.");
-            return;
-        }
-        int oz;
-        try {
-            oz = Integer.parseInt(ozText);
-            if (oz <= 0) throw new NumberFormatException();
-        } catch (Exception e) {
-            info("Ounces must be a positive integer.");
-            return;
-        }
-
-        waterRows.add(new WaterRow(DF.format(date), String.valueOf(oz)));
-        waterOunces.clear();
-
-        updateWaterTotal();
-        refreshChartsAndAdvice();
+    private void deleteSelectedCalorie() {
+        CalorieEntry sel = caloriesTable.getSelectionModel().getSelectedItem();
+        if (sel == null) { alert("Select a calorie row to delete."); return; }
+        calorieData.remove(sel);
+        updateCalorieTotal();
     }
 
-    // ===== totals =====
+    @FXML
+    private void clearCaloriesInputs() {
+        foodText.clear();
+        caloriesText.clear();
+        calDate.setValue(LocalDate.now());
+    }
+
     private void updateCalorieTotal() {
-        String d = DF.format(calDate.getValue());
-        int sum = calRows.stream()
-                .filter(r -> r.dateProperty().get().equals(d))
-                .mapToInt(r -> Integer.parseInt(r.calProperty().get()))
-                .sum();
-        lblCalTotal.setText(String.valueOf(sum));
+        CalorieEntry sel = caloriesTable.getSelectionModel().getSelectedItem();
+        if (sel != null) {
+            // total for the selected row's date
+            int total = calorieData.stream()
+                    .filter(e -> e.getDate().equals(sel.getDate()))
+                    .mapToInt(CalorieEntry::getCalories)
+                    .sum();
+            lblCalTotal.setText(Integer.toString(total));
+        } else {
+            lblCalTotal.setText("0");
+        }
+    }
+
+    // ===== Water handlers =====
+    @FXML
+    private void addWater() {
+        LocalDate d = waterDate.getValue();
+        String ozStr = waterOunces.getText().trim();
+        if (d == null || ozStr.isEmpty()) { alert("Please enter date and ounces."); return; }
+        int oz;
+        try { oz = Integer.parseInt(ozStr); }
+        catch (NumberFormatException ex) { alert("Ounces must be a number."); return; }
+
+        waterData.add(new WaterEntry(d, oz));
+        clearWaterInputs();
+        updateWaterTotal();
+    }
+
+    @FXML
+    private void deleteSelectedWater() {
+        WaterEntry sel = waterTable.getSelectionModel().getSelectedItem();
+        if (sel == null) { alert("Select a water row to delete."); return; }
+        waterData.remove(sel);
+        updateWaterTotal();
+    }
+
+    @FXML
+    private void clearWaterInputs() {
+        waterOunces.clear();
+        waterDate.setValue(LocalDate.now());
     }
 
     private void updateWaterTotal() {
-        String d = DF.format(waterDate.getValue());
-        int sum = waterRows.stream()
-                .filter(r -> r.dateProperty().get().equals(d))
-                .mapToInt(r -> Integer.parseInt(r.ozProperty().get()))
-                .sum();
-        lblWaterTotal.setText(String.valueOf(sum));
+        WaterEntry sel = waterTable.getSelectionModel().getSelectedItem();
+        if (sel != null) {
+            int total = waterData.stream()
+                    .filter(e -> e.getDate().equals(sel.getDate()))
+                    .mapToInt(WaterEntry::getOunces)
+                    .sum();
+            lblWaterTotal.setText(Integer.toString(total));
+        } else {
+            lblWaterTotal.setText("0");
+        }
     }
 
-    // ===== chart + advice =====
-    private void refreshChartsAndAdvice() {
-        // aggregate calories by date
-        Map<String, Integer> perDay = new TreeMap<>();
-        for (CalRow r : calRows) {
-            perDay.merge(r.dateProperty().get(), Integer.parseInt(r.calProperty().get()), Integer::sum);
+    // ===== Sidebar navigation =====
+    @FXML
+    private void dashboardButtonClick() {
+        try {
+            Stage stage = (Stage) dashButton.getScene().getWindow();
+            Dashboard.loadDashboardScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void medicationButtonClick() {
+        try {
+            Stage stage = (Stage) medButton.getScene().getWindow();
+            Medication.loadMedTrackerScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void nutritionButtonClick() {
+        // already here; do nothing (keeps sidebar consistent)
+    }
+
+    @FXML
+    private void calendarButtonClick() {
+        // no-op to avoid CalendarView dependency; keeps the sidebar identical without breaking anything
+    }
+
+    @FXML
+    private void logoutUser() {
+        try {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            UserLogin.loadUserLoginScene(stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void alert(String msg) {
+        new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
+    }
+
+    // ===== simple models (table rows) =====
+    public static class CalorieEntry {
+        private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
+        private final StringProperty food = new SimpleStringProperty();
+        private final IntegerProperty calories = new SimpleIntegerProperty();
+
+        public CalorieEntry(LocalDate date, String food, int calories) {
+            this.date.set(date);
+            this.food.set(food);
+            this.calories.set(calories);
         }
 
-        caloriesChart.getData().clear();
-        XYChart.Series<String, Number> s = new XYChart.Series<>();
-        s.setName("Daily Calories");
-        perDay.forEach((date, total) -> s.getData().add(new XYChart.Data<>(date, total)));
-        caloriesChart.getData().add(s);
+        public LocalDate getDate() { return date.get(); }
+        public ObjectProperty<LocalDate> dateProperty() { return date; }
 
-        // very simple advice
-        int todayCals = perDay.getOrDefault(DF.format(LocalDate.now()), 0);
-        int todayWater = waterRows.stream()
-                .filter(w -> w.dateProperty().get().equals(DF.format(LocalDate.now())))
-                .mapToInt(w -> Integer.parseInt(w.ozProperty().get()))
-                .sum();
+        public String getFood() { return food.get(); }
+        public StringProperty foodProperty() { return food; }
 
-        StringBuilder tip = new StringBuilder();
-        int CAL_GOAL = 2000;
-        int WATER_GOAL = 64;
-
-        if (todayCals < CAL_GOAL - 200) tip.append("You're below your calorie goal; add a protein snack.\n");
-        else if (todayCals > CAL_GOAL + 200) tip.append("You're above your calorie goal; consider a lighter dinner.\n");
-        else tip.append("Nice! You're close to your calorie goal.\n");
-
-        if (todayWater < WATER_GOAL) tip.append("Drink more water (goal ≈ ").append(WATER_GOAL).append(" oz).");
-        else tip.append("Great hydration today!");
-
-        lblAdvice.setText(tip.toString());
+        public int getCalories() { return calories.get(); }
+        public IntegerProperty caloriesProperty() { return calories; }
     }
 
-    // ===== helpers =====
-    private TextFormatter<String> numericFormatter(boolean allowDecimal) {
-        return new TextFormatter<>(chg -> {
-            if (chg.isDeleted()) return chg;
-            String s = chg.getControlNewText();
-            return s.matches(allowDecimal ? "\\d*(\\.\\d*)?" : "\\d*") ? chg : null;
-        });
-    }
-    private void info(String m) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(m);
-        a.showAndWait();
-    }
+    public static class WaterEntry {
+        private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
+        private final IntegerProperty ounces = new SimpleIntegerProperty();
 
-    // ===== tiny row classes (kept inside controller so you don't need extra files) =====
-    public static class CalRow {
-        private final SimpleStringProperty date = new SimpleStringProperty();
-        private final SimpleStringProperty food = new SimpleStringProperty();
-        private final SimpleStringProperty cal  = new SimpleStringProperty();
-        public CalRow(String date, String food, String cal) {
-            this.date.set(date); this.food.set(food); this.cal.set(cal);
+        public WaterEntry(LocalDate date, int ounces) {
+            this.date.set(date);
+            this.ounces.set(ounces);
         }
-        public SimpleStringProperty dateProperty() { return date; }
-        public SimpleStringProperty foodProperty() { return food; }
-        public SimpleStringProperty calProperty()  { return cal;  }
-    }
-    public static class WaterRow {
-        private final SimpleStringProperty date = new SimpleStringProperty();
-        private final SimpleStringProperty oz   = new SimpleStringProperty();
-        public WaterRow(String date, String oz) {
-            this.date.set(date); this.oz.set(oz);
-        }
-        public SimpleStringProperty dateProperty() { return date; }
-        public SimpleStringProperty ozProperty()   { return oz;   }
+
+        public LocalDate getDate() { return date.get(); }
+        public ObjectProperty<LocalDate> dateProperty() { return date; }
+
+        public int getOunces() { return ounces.get(); }
+        public IntegerProperty ouncesProperty() { return ounces; }
     }
 }

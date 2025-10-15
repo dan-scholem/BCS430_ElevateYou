@@ -66,7 +66,7 @@ public class DashboardController {
     private Session session;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         session = SessionManager.getSession();
         String uid = session.getUser().getUid();
         try {
@@ -145,7 +145,17 @@ public class DashboardController {
         try {
             Stage stage = (Stage) calendarButton.getScene().getWindow();
             CalendarView.loadCalendarScene(stage);
-        } catch (IOException e){
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void foodButtonClick() {
+        try {
+            Stage stage = (Stage) foodButton.getScene().getWindow();
+            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
