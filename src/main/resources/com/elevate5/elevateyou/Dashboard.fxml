@@ -149,7 +149,7 @@
                   <Font name="Poppins ExtraBold" size="13.0" />
                </font>
             </Button>
-            <Label layoutX="72.0" layoutY="99.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+            <Label layoutX="59.0" layoutY="98.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
       <AnchorPane layoutX="219.0" prefHeight="62.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
@@ -164,61 +164,33 @@
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good morning User">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="89.0" layoutY="95.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
          </children></Pane>
       <Pane layoutX="479.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="10.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calories Burned">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="18.0" layoutY="54.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories Burned" />
          </children></Pane>
       <Pane layoutX="719.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #FFDDD2; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="26.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sleep">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="12.0" layoutY="49.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
          </children></Pane>
       <Pane layoutX="961.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="45.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medications">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="12.0" layoutY="45.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
          </children></Pane>
       <Pane layoutX="254.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Steps Taken">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="17.0" layoutY="68.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Steps Taken" />
          </children>
       </Pane>
       <Pane layoutX="254.0" layoutY="531.0" prefHeight="190.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Activity">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="26.0" layoutY="66.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Recent Activity" />
          </children>
       </Pane>
       <Pane layoutX="675.0" layoutY="523.0" prefHeight="190.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly Goals">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
+            <Label layoutX="14.0" layoutY="58.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Weekly Goals" />
          </children>
       </Pane>
    </children>

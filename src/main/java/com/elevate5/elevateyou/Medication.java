@@ -9,13 +9,14 @@ import java.time.LocalDate;
 
 public class Medication {
 
+        private String documentID;
         private String medicationName;
         private String dosage;
         private LocalDate startDate;
         private LocalDate endDate;
         private String frequency;
         private String notes;
-        private String userID;
+
 
         /** Getters and setters **/
         public String getMedicationName() {
@@ -66,13 +67,24 @@ public class Medication {
             this.notes = notes;
         }
 
-        public Medication(String medicationName, String dosage, String frequency, LocalDate startDate, LocalDate endDate, String notes) {
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
+    }
+
+
+    public Medication(String documentID, String medicationName, String dosage, String frequency, LocalDate startDate, LocalDate endDate, String notes) {
+            this.documentID = documentID;
             this.medicationName = medicationName;
             this.dosage = dosage;
             this.startDate = startDate;
             this.endDate = endDate;
             this.frequency = frequency;
             this.notes = notes;
+
         }
 
         /** Loads the medication tracker scene **/

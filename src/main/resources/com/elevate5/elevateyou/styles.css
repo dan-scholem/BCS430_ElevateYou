@@ -1,4 +1,6 @@
 .dashbutton, .medbutton, .foodbutton, .exercisebutton, .sleepbutton, .journalbutton {
+    -fx-font-family: Segoe UI;
+    -fx-font-weight: bold;
     -fx-background-color: #E29578;
     -fx-background-radius: 30px;
     -fx-text-fill: #000000;
@@ -12,61 +14,80 @@
     -fx-text-fill: #000000;
     -fx-border-color: #FFDDD2;
     -fx-border-radius: 25px;
+    -fx-font-family: Segoe UI;
+    -fx-font-weight: bold;
 }
 
 .medlabel {
-    -fx-font-family: Poppins;
-    -fx-font-size: 16px;
+    -fx-font-family: Segoe UI;
+    -fx-font-size: 17px;
     -fx-text-fill: #FFDDD2;
+    -fx-font-weight: bold;
 }
 
 .wellnesslabel {
-    -fx-font-family: Poppins;
+    -fx-font-family: Segoe UI;
     -fx-font-size: 20px;
     -fx-text-fill: #FFDDD2;
+    -fx-font-weight: bold;
 }
 
 .descriptionlabel {
-    -fx-font-family: Poppins;
-    -fx-font-size: 22px;
+    -fx-font-family: Segoe UI;
+    -fx-font-size: 26px;
     -fx-text-fill: #FFDDD2;
+    -fx-font-weight: bold;
 }
 
 .elevatelabel {
-    -fx-font-family: Poppins;
+    -fx-font-family: Segoe UI;
     -fx-font-size: 24px;
-    -fx-text-fill: #e29578
+    -fx-text-fill: #e29578;
+    -fx-font-weight: bold;
 }
 
 .emaillabel, .passwordlabel {
-    -fx-font-family: Poppins;
+    -fx-font-family: Segoe UI;
     -fx-font-size: 22px;
     -fx-text-fill: #e29578;
+    -fx-font-weight: bold;
 }
 
 .signinbutton, .createaccountbutton {
     -fx-background-color: #E29578;
     -fx-text-fill: #006D77;
+    -fx-font-family: Segoe UI;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
 }
 
 .accountlabel, .forgotpass {
     -fx-text-fill: #000000;
+    -fx-font-family: Segoe UI;
 }
 
 .dashlabel {
-    -fx-font-family: Poppins;
-    -fx-font-size: 18px;
+    -fx-font-family: Segoe UI;
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
     -fx-text-fill: #EDF6F9;
 }
 
 .trackerlabel {
     -fx-text-fill: #000000;
-    -fx-font-family: Poppins;
+    -fx-font-family: Segoe UI;
     -fx-font-size: 24px;
+    -fx-font-weight: 700;
 }
 
 .sidebackground {
     -fx-background-color: #EDF6F9;
+}
+
+.dashboardarea {
+    -fx-font-family: Segoe UI;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
 }
 
 .addbutton, .updatebutton, .deletebutton, .clearbutton {
@@ -75,6 +96,7 @@
     -fx-text-fill: #000000;
     -fx-border-color: #FFDDD2;
     -fx-border-radius: 25px;
+    -fx-font-family: Segoe UI;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
