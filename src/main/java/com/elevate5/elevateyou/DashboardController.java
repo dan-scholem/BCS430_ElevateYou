@@ -1,18 +1,23 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+//import com.sun.webkit.BackForwardList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 
 import java.io.IOException;
 
@@ -39,7 +44,7 @@ public class DashboardController {
     private Button foodButton;
 
     @FXML
-    private Button freindsButton;
+    private Button friendsButton;
 
     @FXML
     private Button journalButton;
@@ -61,8 +66,10 @@ public class DashboardController {
 
     @FXML
     private Button notificationsButton;
+    @FXML
+    private HBox topRightBar;
 
-
+/**
     private Session session;
 
     @FXML
@@ -74,13 +81,18 @@ public class DashboardController {
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot doc = future.get();
             String name = (String) doc.get("FirstName");
-            welcometext.setText("Good Morning, " + name);
+            if(name != null){
+                welcometext.setText("Good Morning, " + name);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        setNotificationsButton();
 
     }
+    **/
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
@@ -157,6 +169,42 @@ public class DashboardController {
             CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    public void setNotificationsButton() {
+        try {
+            // Get current UID (fallback to dev uid for development)
+            String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
+                    ? SessionManager.getSession().getUserID()
+                    : "";
+
+            NotificationService svc = new NotificationService(uid);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Notification.fxml"));
+            Node bell = loader.load();
+
+            NotificationController ctrl = loader.getController();
+            ctrl.setService(svc);
+
+            topRightBar.getChildren().add(bell);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
