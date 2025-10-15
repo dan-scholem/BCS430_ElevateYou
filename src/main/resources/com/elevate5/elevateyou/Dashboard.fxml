@@ -160,6 +160,13 @@
                </font>
             </Text>
             <TextField layoutX="593.0" layoutY="19.0" text="Search" />
+            <HBox fx:id="topRightBar"
+                  spacing="8"
+                  AnchorPane.rightAnchor="24.0"
+                  AnchorPane.topAnchor="15.0"
+                  alignment="CENTER_RIGHT"
+                  style="-fx-background-color: transparent;">
+            </HBox>
          </children>
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
