@@ -78,4 +78,13 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
+.notif-item {
+    -fx-background-color: #f9f9f9;
+    -fx-background-radius: 6;
+    -fx-padding: 6 10;
+}
 
+.notif-item:hover {
+    -fx-background-color: #eeeeee;
+    -fx-cursor: hand;
+}
