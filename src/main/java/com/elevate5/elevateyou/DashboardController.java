@@ -81,7 +81,10 @@ public class DashboardController {
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot doc = future.get();
             String name = (String) doc.get("FirstName");
-            welcometext.setText("Good Morning, " + name);
+            if(name != null){
+                welcometext.setText("Good Morning, " + name);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
