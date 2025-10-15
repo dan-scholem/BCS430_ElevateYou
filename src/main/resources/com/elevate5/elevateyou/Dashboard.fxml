@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="809.0" prefWidth="1218.0" style="-fx-background-color: edede9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
    <children>
@@ -154,17 +153,13 @@
       </Pane>
       <AnchorPane layoutX="219.0" prefHeight="62.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Text layoutX="51.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
-            </Text>
             <TextField layoutX="593.0" layoutY="19.0" text="Search" />
+            <Label layoutX="40.0" layoutY="22.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Dashboard" />
          </children>
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Label layoutX="89.0" layoutY="95.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+            <Label layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
          </children></Pane>
       <Pane layoutX="479.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
          <children>
