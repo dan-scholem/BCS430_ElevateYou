@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.elevate5.elevateyou.NotificationController">
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.elevate5.elevateyou.NotificationController"
+            prefHeight="40" prefWidth="40">
     <children>
-        <Button fx:id="bellButton" text="🔔" onAction="#onBellClicked" AnchorPane.topAnchor="10"
-                AnchorPane.rightAnchor="150"/>
-        <Label fx:id="badgeLabel" text="" visible="false" managed="false" AnchorPane.rightAnchor="145"
-               style="-fx-background-color: red; -fx-text-fill: white; -fx-padding: 2,6; -fx-background-radius: 10;"/>
+        <Button fx:id="bellButton"
+                text="Notify"
+                onAction="#onBellClicked"
+                style="-fx-background-color: transparent;
+               -fx-font-size: 18px;
+               -fx-cursor: hand;"
+                prefWidth="32" prefHeight="32"/>
 
-        <VBox fx:id="dropdownList" layoutX="0" layoutY="30" visible="false" managed="false"
-              style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0,15), 8,0,0,2);">
-            <Label text="No notification"/>
-            <Button fx:id="markAllButton" text="Mark all as read" onAction="#onMarkAllClicked"/>
+        <!-- Badge: hidden when no items -->
+        <Label fx:id="badgeLabel"
+               layoutX="22" layoutY="-4"
+               text="3"
+               visible="false" managed="false"
+               style="-fx-background-color: red;
+              -fx-text-fill: white;
+              -fx-font-size: 11px;
+              -fx-font-weight: bold;
+              -fx-background-radius: 9999;
+              -fx-padding: 2 5;"
+        />
+
+        <!-- Dropdown list -->
+        <VBox fx:id="dropdownList"
+              layoutX="-180" layoutY="36"
+              spacing="6"
+              visible="false" managed="false"
+              style="-fx-background-color: white;
+             -fx-border-color: rgba(0,0,0,0.12);
+             -fx-border-radius: 8;
+             -fx-background-radius: 8;
+             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+             -fx-padding: 10;">
         </VBox>
     </children>
 </AnchorPane>
