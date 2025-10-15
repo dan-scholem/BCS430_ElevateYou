@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public final class CaloriesWaterIntake {
-    private CaloriesWaterIntake() {}
+    public CaloriesWaterIntake() {}
 
     public static void loadCaloriesWaterIntakeScene(Stage stage) throws IOException {
         FXMLLoader fxml = new FXMLLoader(App.class.getResource("CaloriesWaterIntake.fxml"));
