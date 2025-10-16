@@ -18,13 +18,13 @@
    <children>
       <AnchorPane layoutX="334.0" layoutY="115.0" prefHeight="306.0" prefWidth="602.0" style="-fx-background-color: #006d77;">
          <children>
-            <Label layoutX="14.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Medication:" />
-            <Label layoutX="324.0" layoutY="186.0" styleClass="medlabel" stylesheets="@styles.css" text="Notes:" />
-            <Label layoutX="15.0" layoutY="82.0" styleClass="medlabel" stylesheets="@styles.css" text="Dosage:" />
-            <Label layoutX="17.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="Start Date:" />
-            <Label layoutX="303.0" layoutY="34.0" styleClass="medlabel" stylesheets="@styles.css" text="Frequency:">
+            <Label layoutX="14.0" layoutY="34.0" styleClass="medicationlabel" stylesheets="@styles.css" text="Medication:" />
+            <Label layoutX="324.0" layoutY="186.0" styleClass="medicationlabel" stylesheets="@styles.css" text="Notes:" />
+            <Label layoutX="15.0" layoutY="82.0" styleClass="medicationlabel" stylesheets="@styles.css" text="Dosage:" />
+            <Label layoutX="17.0" layoutY="140.0" styleClass="medicationlabel" stylesheets="@styles.css" text="Start Date:" />
+            <Label layoutX="303.0" layoutY="34.0" styleClass="medicationlabel" stylesheets="@styles.css" text="Frequency:">
                <font>
-                  <Font name="Microsoft Sans Serif" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font></Label>
             <TextField fx:id="mednameField" layoutX="121.0" layoutY="34.0" />
             <TextField fx:id="dosageField" layoutX="118.0" layoutY="82.0" />
@@ -35,7 +35,7 @@
             <Button fx:id="deleteButton" layoutX="40.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteMedication" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
             <Button fx:id="updateButton" layoutX="166.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateMedication" styleClass="updatebutton" stylesheets="@styles.css" text="Update" />
             <Button fx:id="clearButton" layoutX="166.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearEntry" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
-            <Label layoutX="317.0" layoutY="140.0" styleClass="medlabel" stylesheets="@styles.css" text="End Date:" />
+            <Label layoutX="317.0" layoutY="140.0" styleClass="medicationlabel" stylesheets="@styles.css" text="End Date:" />
             <DatePicker fx:id="enddateField" layoutX="406.0" layoutY="139.0" prefHeight="25.0" prefWidth="176.0" />
          </children>
       </AnchorPane>
@@ -61,7 +61,7 @@
                   <Image url="@images/friendsicon.png" />
                </image>
             </ImageView>
-            <Button fx:id="freindsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+            <Button fx:id="friendsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -73,7 +73,7 @@
             </ImageView>
             <Button fx:id="logoutButton" layoutX="62.0" layoutY="755.0" mnemonicParsing="false" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
                <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
+                  <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
             <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="1.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
@@ -126,7 +126,7 @@
                   <Font name="Segoe UI" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="calendarButton" onAction="#calendarButtonClick" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+            <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
                <font>
                   <Font name="Segoe UI" size="13.0" />
                </font>
@@ -189,7 +189,7 @@
             <Label layoutX="47.0" layoutY="104.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
-      <Label layoutX="520.0" layoutY="61.0" styleClass="trackerlabel" stylesheets="@styles.css" text=" Medication Tracker" />
+      <Label layoutX="520.0" layoutY="61.0" styleClass="tracklabel" stylesheets="@styles.css" text=" Medication Tracker" />
       <ImageView fitHeight="37.0" fitWidth="33.0" layoutX="480.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/pillimage.png" />
