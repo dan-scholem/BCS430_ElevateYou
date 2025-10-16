@@ -65,11 +65,10 @@ public class DashboardController {
     private Button tutorialsButton;
 
     @FXML
-    private Button notificationsButton;
-    @FXML
     private HBox topRightBar;
 
-/**
+
+
     private Session session;
 
     @FXML
@@ -92,7 +91,7 @@ public class DashboardController {
         setNotificationsButton();
 
     }
-    **/
+
 
     // This event is called to log the user out of the application and returns the user to the login screen
     @FXML
@@ -193,8 +192,11 @@ public class DashboardController {
             String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
                     ? SessionManager.getSession().getUserID()
                     : "";
+            String email = (SessionManager.getSession() != null && SessionManager.getSession().getUser() != null)
+                    ? SessionManager.getSession().getUser().getEmail()
+                    : "";
 
-            NotificationService svc = new NotificationService(uid);
+            NotificationService svc = new NotificationService(uid, email);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Notification.fxml"));
             Node bell = loader.load();

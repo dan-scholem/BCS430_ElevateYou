@@ -5,6 +5,7 @@ import com.elevate5.elevateyou.model.NotificationModel;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import javafx.geometry.NodeOrientation;
 
 import java.time.*;
 import java.util.*;
@@ -20,16 +21,22 @@ public class NotificationService {
 
     private final NotificationDao dao;
     private final String uid;
+    private final String email;
 
-    public NotificationService(String uid) {
+    public NotificationService(String uid, String email, NotificationDao dao) {
         this.dao = new NotificationDao();
         // Defensive fallback: if uid is null/blank, try from SessionManager; else dev fallback
         this.uid = normalizeUid(uid);
+        this.email = (email != null && !email.isBlank()) ? email : null;
     }
 
     public NotificationService(String uid, NotificationDao dao) {
         this.dao = dao;
         this.uid = normalizeUid(uid);
+        this.email = null;
+    }
+    public NotificationService(String uid, String email) {
+        this(uid, email, new NotificationDao());
     }
 
     private String normalizeUid(String u) {
@@ -59,14 +66,18 @@ public class NotificationService {
     private List<NotificationModel> fromMedications()
             throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
-        List<QueryDocumentSnapshot> docs = dao.getMedications(uid);
+
+        final boolean useEmail = (email != null && !email.isBlank());
+        List<QueryDocumentSnapshot> docs = useEmail
+                ? dao.getMedications(email)
+                : dao.getMedications(uid);
 
         for (QueryDocumentSnapshot d : docs) {
             String medName = d.getString("medicationName");
             String dueDate = d.getString("startDate"); // adjust if you have a dedicated due field
 
             String title = "Medication";
-            String body  = "You have " + safe(medName) + " due at " + safe(dueDate);
+            String body  = "You have " + safe(medName) + " need to take due at " + safe(dueDate);
 
             String id = "Medications/" + uid + "/UserMedications/" + d.getId();
 
@@ -95,7 +106,7 @@ public class NotificationService {
                                 String name = asString(m.get("eventName"));
                                 String time = asString(m.get("time")); // HH:mm
 
-                                String title = "Appointment";
+                                String title = "Events";
                                 String body  = "You have " + safe(name) + " at " + safe(date + (time != null ? " " + time : ""));
 
                                 // compose a unique id for this item
