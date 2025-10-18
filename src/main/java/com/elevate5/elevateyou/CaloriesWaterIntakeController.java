@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.view.CalendarView;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +44,7 @@ public class CaloriesWaterIntakeController {
     @FXML private Button foodButton;
     @FXML private Button calendarButton;
     @FXML private Button logoutButton;
+    @FXML private Button journalButton;
 
     private final ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
     private final ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
@@ -185,13 +187,38 @@ public class CaloriesWaterIntakeController {
     }
 
     @FXML
-    private void nutritionButtonClick() {
-        // already here; do nothing (keeps sidebar consistent)
+    protected void foodButtonClick() {
+        try {
+            Stage stage = (Stage) foodButton.getScene().getWindow();
+            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
     private void calendarButtonClick() {
         // no-op to avoid CalendarView dependency; keeps the sidebar identical without breaking anything
+        try {
+            Stage stage = (Stage) calendarButton.getScene().getWindow();
+            CalendarView.loadCalendarScene(stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

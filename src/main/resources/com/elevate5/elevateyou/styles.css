@@ -189,6 +189,20 @@
     -fx-font-weight: bold;
 }
 
+.createaccountlabel {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E29578;
+}
+
+.journaltitles {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E29578;
+}
+
 .notif-item {
     -fx-background-color: #f9f9f9;
     -fx-background-radius: 6;
