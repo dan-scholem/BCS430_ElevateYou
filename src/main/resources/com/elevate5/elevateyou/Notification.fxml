@@ -12,7 +12,7 @@
             prefHeight="40" prefWidth="40">
     <children>
         <Button fx:id="bellButton"
-                text="Notify"
+                text="🔔"
                 onAction="#onBellClicked"
                 style="-fx-background-color: transparent;
                -fx-font-size: 18px;
