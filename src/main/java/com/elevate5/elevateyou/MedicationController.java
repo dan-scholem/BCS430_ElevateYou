@@ -33,6 +33,12 @@ public class MedicationController {
     private Button calendarButton;
 
     @FXML
+    private Button journalButton;
+
+    @FXML
+    private Button foodButton;
+
+    @FXML
     private Button addButton;
 
     @FXML
@@ -92,9 +98,7 @@ public class MedicationController {
 
         frequencyField.setItems(FXCollections.observableArrayList("As needed", "Once a day", "Twice a day", "Three times a day"));
 
-
         loadMedications();
-
     }
 
     private void loadMedications() {
@@ -415,12 +419,36 @@ public class MedicationController {
     }
 
     @FXML
+    protected void journalButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) journalButton.getScene().getWindow();
+
+            JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
     protected void calendarButtonClick() throws IOException {
 
         try {
             Stage stage = (Stage) calendarButton.getScene().getWindow();
             CalendarView.loadCalendarScene(stage);
         } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void foodButtonClick() {
+        try {
+            Stage stage = (Stage) foodButton.getScene().getWindow();
+            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

@@ -26,36 +26,19 @@
              </ImageView>
             <Label layoutX="35.0" layoutY="246.0" prefHeight="23.0" prefWidth="78.0" styleClass="emaillabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
                <font>
-                  <Font name="Poppins ExtraBold" size="22.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
             <Label layoutX="35.0" layoutY="357.0" prefHeight="32.0" prefWidth="144.0" styleClass="passwordlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
-               <font>
-                  <Font name="Poppins ExtraBold" size="22.0" />
-               </font>
             </Label>
             <TextField fx:id="userEmail" layoutX="35.0" layoutY="303.0" prefHeight="25.0" prefWidth="274.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="35.0" layoutY="411.0" prefHeight="25.0" prefWidth="274.0" />
             <Button fx:id="signInButton" layoutX="72.0" layoutY="457.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="39.0" prefWidth="214.0" style="-fx-background-color: #E29578;" styleClass="signinbutton" stylesheets="@styles.css" text="Sign In">
-               <font>
-                  <Font name="Poppins ExtraBold" size="18.0" />
-               </font>
             </Button>
             <Label layoutX="24.0" layoutY="523.0" prefHeight="17.0" prefWidth="178.0" styleClass="accountlabel" stylesheets="@styles.css" text="Don't have an account?">
-               <font>
-                  <Font name="Poppins ExtraBold" size="14.0" />
-               </font>
             </Label>
             <Button fx:id="createAccountButton" layoutX="24.0" layoutY="566.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="40.0" prefWidth="144.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
-               <font>
-                  <Font name="Poppins ExtraBold" size="13.0" />
-               </font>
             </Button>
-            <Label layoutX="226.0" layoutY="523.0" prefHeight="20.0" prefWidth="133.0" styleClass="forgotpass" stylesheets="@styles.css" text="Forgot password?">
-               <font>
-                  <Font name="Poppins ExtraBold" size="14.0" />
-               </font>
-            </Label>
             <Label layoutX="110.0" layoutY="169.0" styleClass="elevatelabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </AnchorPane>

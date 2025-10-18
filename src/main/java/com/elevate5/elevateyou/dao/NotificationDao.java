@@ -20,10 +20,10 @@ public class NotificationDao {
 
     private final Firestore db = App.fstore;
 
-    public List<QueryDocumentSnapshot> getMedications(String uid)
+    public List<QueryDocumentSnapshot> getMedications(String email)
             throws ExecutionException, InterruptedException {
         return db.collection("Medications")
-                .document(uid)
+                .document(email)
                 .collection("UserMedications")
                 .get().get().getDocuments();
     }
