@@ -82,6 +82,12 @@ public class JournalEntryController implements Initializable {
     @FXML
     private Button updateEntryButton;
 
+    @FXML
+    private Button clearEntryButton;
+
+    @FXML
+    private ComboBox<String> moodOptions;
+
     private final ObservableList<JournalEntry> journalentries = FXCollections.observableArrayList();
 
     @Override
@@ -89,6 +95,8 @@ public class JournalEntryController implements Initializable {
         entryDate.setValue(LocalDate.now());
 
         EntryList.setItems(journalentries);
+
+        moodOptions.setItems(FXCollections.observableArrayList("😊 Happy", "🙁 Sad", "😰 Nervous", "😌 Calm", "😄 Excited", "🥱 Tired"));
 
         loadEntries();
     }
@@ -112,6 +120,7 @@ public class JournalEntryController implements Initializable {
                 String journaltitle = document.getString("title");
                 String entry = document.getString("entry");
                 String entryDateStr = document.getString("entryDate");
+                String mood = document.getString("mood");
 
                 LocalDate entryDate = null;
 
@@ -120,7 +129,7 @@ public class JournalEntryController implements Initializable {
                     entryDate = LocalDate.parse(entryDateStr);
                 }
 
-                    JournalEntry journalentry = new JournalEntry(docID, journaltitle, entryDate, entry);
+                    JournalEntry journalentry = new JournalEntry(docID, journaltitle, entryDate, entry, mood);
 
                     journalentries.add(journalentry);
 
@@ -141,6 +150,7 @@ public class JournalEntryController implements Initializable {
         String title = entryTitle.getText();
         String journalText = entryTextArea.getText();
         LocalDate date = entryDate.getValue();
+        String mood = moodOptions.getValue();
 
         if (journalText.isEmpty() || title.isEmpty() || date == null) {
 
@@ -159,6 +169,7 @@ public class JournalEntryController implements Initializable {
             entries.put("title", entryTitle.getText());
             entries.put("entryDate", entryDate.getValue().toString());
             entries.put("entry", entryTextArea.getText());
+            entries.put("mood", moodOptions.getValue());
 
             try {
 
@@ -170,12 +181,15 @@ public class JournalEntryController implements Initializable {
 
                 String journalDocID = journalDocRef.getId();
 
-                JournalEntry newentry = new JournalEntry(journalDocID, title, date, journalText);
+                JournalEntry newentry = new JournalEntry(journalDocID, title, date, journalText, mood);
 
                 EntryList.getItems().add(newentry);
 
                 entryTitle.clear();
                 entryTextArea.clear();
+                moodOptions.setValue(null);
+
+
 
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("New Entry");
@@ -204,12 +218,14 @@ public class JournalEntryController implements Initializable {
                 this.selectedEntry.setTitle(entryTitle.getText());
                 this.selectedEntry.setEntryDate(entryDate.getValue());
                 this.selectedEntry.setEntryContent(entryTextArea.getText());
+                this.selectedEntry.setMood(moodOptions.getValue());
 
                 Map<String, Object> journalupdates = new HashMap<>();
 
                 journalupdates.put("title", entryTitle.getText());
                 journalupdates.put("entry", entryTextArea.getText());
                 journalupdates.put("entryDate", entryDate.getValue().toString());
+                journalupdates.put("mood", moodOptions.getValue());
 
                 DocumentReference docRef = App.fstore.collection("Journal Entries").document(App.theUser.getEmail())
                         .collection("UserJournals").document(this.selectedEntry.getDocumentID());
@@ -246,6 +262,7 @@ public class JournalEntryController implements Initializable {
             entryTitle.setText(clickedEntry.toString());
             entryTextArea.setText(clickedEntry.getEntryContent());
             entryDate.setValue(clickedEntry.getEntryDate());
+            moodOptions.setValue(clickedEntry.getMood());
         }
 
         else {
@@ -294,6 +311,7 @@ public class JournalEntryController implements Initializable {
                 chosenEntry.setTitle(entryTitle.getText());
                 chosenEntry.setEntryContent(entryTextArea.getText());
                 chosenEntry.setEntryDate(entryDate.getValue());
+                chosenEntry.setMood(moodOptions.getValue());
 
                 Alert deletealert = new Alert(Alert.AlertType.INFORMATION);
                 deletealert.setTitle("Delete Journal Entry");
@@ -314,6 +332,14 @@ public class JournalEntryController implements Initializable {
             System.out.println("Deletion cancelled");
         }
 
+    }
+
+    /** Clears the fields **/
+    @FXML
+    protected void clearEntry (ActionEvent event) {
+        entryTitle.clear();
+        entryTextArea.clear();
+        moodOptions.setValue(null);
     }
 
     // This event is called to log the user out of the application and returns the user to the login screen

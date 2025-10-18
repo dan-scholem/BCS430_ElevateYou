@@ -55,12 +55,12 @@ public class JournalEntry {
         this.mood = mood;
     }
 
-    public JournalEntry(String documentID, String title, LocalDate entrydate, String entrycontent) {
+    public JournalEntry(String documentID, String title, LocalDate entrydate, String entrycontent, String mood) {
         this.documentID = documentID;
         this.journaltitle = title;
         this.entryDate = entrydate;
         this.entrycontent = entrycontent;
-       // this.mood = mood;
+        this.mood = mood;
     }
 
     public static void loadJournalScene(Stage stage) throws IOException {
