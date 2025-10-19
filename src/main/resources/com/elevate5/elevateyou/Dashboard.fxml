@@ -123,9 +123,7 @@
                     mnemonicParsing="false"
                     onAction="#foodButtonClick"
                     styleClass="foodbutton" stylesheets="@styles.css"
-                    text="Nutrition">
-               <font><Font name="Poppins ExtraBold" size="13.0"/></font>
-            </Button>
+                    text="Nutrition"/>
             <Button fx:id="exerciseButton" layoutX="72.0" layoutY="327.0" mnemonicParsing="false" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
                <font>
                   <Font name="Poppins ExtraBold" size="13.0" />

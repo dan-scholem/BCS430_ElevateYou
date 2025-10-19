@@ -1,100 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
 
     <!-- LEFT RAIL (teal + salmon buttons; no icons) -->
     <left>
         <StackPane prefWidth="218" style="-fx-background-color:#006D77;">
             <children>
-                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
-                            style="-fx-background-color:transparent; -fx-background-insets:0;">
-                    <content>
-                        <VBox spacing="14" alignment="TOP_CENTER" prefWidth="218"
-                              style="-fx-background-color:transparent;">
-                            <padding><Insets top="18" right="10" bottom="22" left="10"/></padding>
-
-                            <Label text="ElevateYou" styleClass="dashlabel" stylesheets="@styles.css"/>
-
-                            <Button fx:id="dashButton" text="Dashboard"
-                                    onAction="#dashboardButtonClick"
-                                    styleClass="dashbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="medButton" text="Medications"
-                                    onAction="#medicationButtonClick"
-                                    styleClass="medbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="foodButton" text="Nutrition"
-                                    onAction="#nutritionButtonClick"
-                                    styleClass="foodbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="exerciseButton" text="Exercise"
-                                    styleClass="exercisebutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="sleepButton" text="Sleep"
-                                    styleClass="sleepbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="journalButton" text="Journal"
-                                    styleClass="journalbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="appointmentsButton" text="Appointments"
-                                    styleClass="apppointmentbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="tutorialsButton" text="Tutorials"
-                                    styleClass="tutorialsbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="calendarButton" text="Calendar"
-                                    onAction="#calendarButtonClick"
-                                    styleClass="calendarbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="freindsButton" text="Refer Friends"
-                                    styleClass="friendsbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="chatButton" text="Live Chat"
-                                    styleClass="chatbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="reviewsButton" text="Reviews"
-                                    styleClass="reviewsbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-
-                            <Button fx:id="logoutButton" text="Log Out"
-                                    onAction="#logoutUser"
-                                    styleClass="logoutbutton" stylesheets="@styles.css">
-                                <font><Font name="Poppins ExtraBold" size="13"/></font>
-                            </Button>
-                        </VBox>
-                    </content>
-                </ScrollPane>
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color:transparent; -fx-background-insets:0;" vbarPolicy="AS_NEEDED" />
+            <Pane prefHeight="809.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
+               <children>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/pillicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/friendsicon.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="friendsButton" layoutX="72.0" layoutY="620.0" mnemonicParsing="false" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="50.0" fitWidth="55.0" layoutX="7.0" layoutY="751.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logouticon.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="logoutButton" layoutX="62.0" layoutY="755.0" mnemonicParsing="false" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="1.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/tutorialsicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="76.0" fitWidth="79.0" layoutX="4.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/exerciseicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/nutritionicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="7.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/sleepicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="14.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/journalicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="7.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/appointment.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="572.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/calendaricon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutY="699.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/reviewsicon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="51.0" layoutX="7.0" layoutY="663.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/chaticon.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="appointmentsButton" layoutX="67.0" layoutY="483.0" mnemonicParsing="false" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="calendarButton" layoutX="69.0" layoutY="576.0" mnemonicParsing="false" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="tutorialsButton" layoutX="69.0" layoutY="534.0" mnemonicParsing="false" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="199.0" fitWidth="204.0" layoutX="25.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/elevateyoulogo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="11.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/dashboard.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="dashButton" layoutX="77.0" layoutY="171.0" mnemonicParsing="false" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="medButton" layoutX="73.0" layoutY="220.0" mnemonicParsing="false" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="foodButton" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="exerciseButton" layoutX="72.0" layoutY="327.0" mnemonicParsing="false" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="journalButton" layoutX="72.0" layoutY="432.0" mnemonicParsing="false" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="chatButton" layoutX="56.0" layoutY="664.0" mnemonicParsing="false" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reviewsButton" layoutX="59.0" layoutY="713.0" mnemonicParsing="false" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sleepButton" layoutX="69.0" layoutY="382.0" mnemonicParsing="false" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="59.0" layoutY="98.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+               </children>
+            </Pane>
             </children>
         </StackPane>
     </left>
@@ -104,10 +179,10 @@
         <AnchorPane prefHeight="62" style="-fx-background-color:#FFFFFF;">
             <children>
                 <Text layoutX="51" layoutY="38">
-                    <font><Font name="Poppins ExtraBold" size="18"/></font>
+                    <font><Font name="Poppins ExtraBold" size="18" /></font>
                     Nutrition
                 </Text>
-                <TextField layoutX="870" layoutY="19" promptText="Search"/>
+                <TextField layoutX="870" layoutY="19" promptText="Search" />
             </children>
         </AnchorPane>
     </top>
@@ -115,100 +190,102 @@
     <!-- MAIN CONTENT (Calorie + Water) -->
     <center>
         <VBox spacing="16" BorderPane.alignment="CENTER">
-            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <padding><Insets bottom="16" left="16" right="16" top="16" /></padding>
 
             <!-- Calorie Intake -->
-            <TitledPane text="Calorie Intake" expanded="true" style="-fx-background-color:transparent;">
+            <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Calorie Intake">
                 <content>
                     <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
-                        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                        <padding><Insets bottom="12" left="12" right="12" top="12" /></padding>
 
                         <GridPane hgap="10" vgap="8">
                             <columnConstraints>
-                                <ColumnConstraints halignment="RIGHT" minWidth="70"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
-                                <ColumnConstraints halignment="RIGHT" minWidth="70"/>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
 
-                            <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <DatePicker fx:id="calDate" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <DatePicker fx:id="calDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Food:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <TextField fx:id="foodText" promptText="e.g. Chicken and Rice"
-                                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Food:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="foodText" promptText="e.g. Chicken and Rice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Calories:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                            <TextField fx:id="caloriesText" promptText="e.g. 350"
-                                       GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                            <Label text="Calories:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <TextField fx:id="caloriesText" promptText="e.g. 350" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                            <HBox spacing="8" alignment="CENTER_RIGHT"
-                                  GridPane.rowIndex="1" GridPane.columnIndex="4" GridPane.columnSpan="2">
-                                <Button text="Add"    onAction="#addCalories"          styleClass="addbutton"    stylesheets="@styles.css"/>
-                                <Button text="Delete" onAction="#deleteSelectedCalorie" styleClass="deletebutton" stylesheets="@styles.css"/>
-                                <Button text="Clear"  onAction="#clearCaloriesInputs"   styleClass="clearbutton"  stylesheets="@styles.css"/>
+                            <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                <Button onAction="#addCalories" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
+                                <Button onAction="#deleteSelectedCalorie" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
+                                <Button onAction="#clearCaloriesInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
                             </HBox>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                         </GridPane>
 
                         <TableView fx:id="caloriesTable" prefHeight="260">
                             <columns>
-                                <TableColumn fx:id="colCalDate" text="Date" prefWidth="160"/>
-                                <TableColumn fx:id="colFood"   text="Food" prefWidth="360"/>
-                                <TableColumn fx:id="colCals"   text="Calories" prefWidth="140"/>
+                                <TableColumn fx:id="colCalDate" prefWidth="160" text="Date" />
+                                <TableColumn fx:id="colFood" prefWidth="360" text="Food" />
+                                <TableColumn fx:id="colCals" prefWidth="140" text="Calories" />
                             </columns>
                         </TableView>
 
-                        <HBox spacing="10" alignment="CENTER_RIGHT">
-                            <Label text="Total calories on selected date:"/>
-                            <Label fx:id="lblCalTotal" text="0"/>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <Label text="Total calories on selected date:" />
+                            <Label fx:id="lblCalTotal" text="0" />
                         </HBox>
                     </VBox>
                 </content>
             </TitledPane>
 
             <!-- Water Intake -->
-            <TitledPane text="Water Intake" expanded="true" style="-fx-background-color:transparent;">
+            <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Water Intake">
                 <content>
                     <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
-                        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                        <padding><Insets bottom="12" left="12" right="12" top="12" /></padding>
 
                         <GridPane hgap="10" vgap="8">
                             <columnConstraints>
-                                <ColumnConstraints halignment="RIGHT" minWidth="70"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
-                                <ColumnConstraints halignment="RIGHT" minWidth="70"/>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
 
-                            <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <DatePicker fx:id="waterDate" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <DatePicker fx:id="waterDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Ounces:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                            <TextField fx:id="waterOunces" promptText="e.g. 16"
-                                       GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                            <Label text="Ounces:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <TextField fx:id="waterOunces" promptText="e.g. 16" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                            <HBox spacing="8" alignment="CENTER_RIGHT"
-                                  GridPane.rowIndex="0" GridPane.columnIndex="4" GridPane.columnSpan="2">
-                                <Button text="Add"    onAction="#addWater"             styleClass="addbutton"    stylesheets="@styles.css"/>
-                                <Button text="Delete" onAction="#deleteSelectedWater"   styleClass="deletebutton" stylesheets="@styles.css"/>
-                                <Button text="Clear"  onAction="#clearWaterInputs"      styleClass="clearbutton"  stylesheets="@styles.css"/>
+                            <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="0">
+                                <Button onAction="#addWater" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
+                                <Button onAction="#deleteSelectedWater" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
+                                <Button onAction="#clearWaterInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
                             </HBox>
+                     <rowConstraints>
+                        <RowConstraints />
+                     </rowConstraints>
                         </GridPane>
 
                         <TableView fx:id="waterTable" prefHeight="220">
                             <columns>
-                                <TableColumn fx:id="colWaterDate" text="Date"   prefWidth="160"/>
-                                <TableColumn fx:id="colOunces"    text="Ounces" prefWidth="140"/>
+                                <TableColumn fx:id="colWaterDate" prefWidth="160" text="Date" />
+                                <TableColumn fx:id="colOunces" prefWidth="140" text="Ounces" />
                             </columns>
                         </TableView>
 
-                        <HBox spacing="10" alignment="CENTER_RIGHT">
-                            <Label text="Total ounces on selected date:"/>
-                            <Label fx:id="lblWaterTotal" text="0"/>
+                        <HBox alignment="CENTER_RIGHT" spacing="10">
+                            <Label text="Total ounces on selected date:" />
+                            <Label fx:id="lblWaterTotal" text="0" />
                         </HBox>
                     </VBox>
                 </content>

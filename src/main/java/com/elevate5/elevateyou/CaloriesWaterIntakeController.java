@@ -47,6 +47,7 @@ public class CaloriesWaterIntakeController {
     private final ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
     private final ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
 
+
     @FXML
     private void initialize() {
         // Defaults
@@ -185,8 +186,13 @@ public class CaloriesWaterIntakeController {
     }
 
     @FXML
-    private void nutritionButtonClick() {
-        // already here; do nothing (keeps sidebar consistent)
+    protected void foodButtonClick() {
+        try {
+            Stage stage = (Stage) foodButton.getScene().getWindow();
+            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
