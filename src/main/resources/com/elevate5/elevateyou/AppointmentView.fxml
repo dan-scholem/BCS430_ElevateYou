@@ -2,21 +2,123 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AppointmentView">
+<AnchorPane prefHeight="738.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AppointmentView">
    <children>
-      <BorderPane prefHeight="400.0" prefWidth="600.0">
+      <BorderPane prefHeight="738.0" prefWidth="1218.0">
          <top>
-            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" style="-fx-background-color: #006D77;" BorderPane.alignment="CENTER">
                <children>
-                  <TextField promptText="Search..." />
+                  <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fitHeight="104.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/elevateyoulogo.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="85.0" prefWidth="264.0" HBox.hgrow="ALWAYS" spacing="10">
+                     <Button fx:id="addAppointmentButton" styleClass="docaddbutton" stylesheets="styles.css" text="Add"/>
+                     <Button fx:id="deleteAppointmentButton" styleClass="docdeletebutton" stylesheets="styles.css" text="Delete"/>
+                     <Button fx:id="searchDoctorsButton" text="Search" />
+                  </HBox>
                </children>
                <padding>
                   <Insets right="20.0" />
                </padding>
             </HBox>
          </top>
+         <center>
+            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Date" />
+                <TableColumn prefWidth="75.0" text="Time" />
+                 <TableColumn prefWidth="100" text="Doctor" />
+                 <TableColumn prefWidth="150" text="Type" />
+                 <TableColumn prefWidth="200" text="Address" />
+                 <TableColumn prefWidth="150" text="Phone" />
+                 <TableColumn prefWidth="200" text="Notes" />
+              </columns>
+            </TableView>
+         </center>
+         <left>
+            <VBox alignment="BOTTOM_CENTER" layoutY="154.0" prefHeight="559.0" prefWidth="145.0" spacing="14" style="-fx-background-color: #006D77;">
+               <padding>
+                  <Insets bottom="22" left="10" right="10" top="18" />
+               </padding>
+               <children>
+                  <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+                  <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
       </BorderPane>
    </children>
 </AnchorPane>
