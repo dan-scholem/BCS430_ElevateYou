@@ -76,6 +76,8 @@ public class CreateAccountController {
 
             userEmail.clear();
             userPassword.clear();
+            firstName.clear();
+            lastName.clear();
 
         } else {
 
