@@ -488,6 +488,9 @@ public class CalendarView extends Application {
         int firstDayAsInt = currDate.getDayOfWeek().getValue();
         int dayOfMonthCounter = 1;
         int daysInMonth = CalendarModel.getDaysInMonth().get(date.getMonth().toString());
+        if(date.getYear() % 4 == 0 && date.getMonth().toString().equals("FEBRUARY")) {
+            daysInMonth++;
+        }
 
         for(int row = 0; row < 6; row++){
             WeekData week = new WeekData();
