@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class DashboardController {
 
     @FXML
-    public Text welcometext;
+    public Label welcometext;
     @FXML
     private Button appointmentsButton;
 
