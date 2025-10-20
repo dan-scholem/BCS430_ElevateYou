@@ -6,14 +6,15 @@ import javafx.beans.property.StringProperty;
 public class AppointmentViewModel {
 
     private final StringProperty docName = new SimpleStringProperty();
-    private final StringProperty description = new SimpleStringProperty();
+    private final StringProperty type = new SimpleStringProperty();
     private final StringProperty date = new SimpleStringProperty();
-    private final StringProperty time = new SimpleStringProperty();
-    private final StringProperty location = new SimpleStringProperty();
+    private final StringProperty timeHour = new SimpleStringProperty();
+    private final StringProperty timeMinute = new SimpleStringProperty();
+    private final StringProperty timeAMPM = new SimpleStringProperty();
+    private final StringProperty address = new SimpleStringProperty();
     private final StringProperty notes = new SimpleStringProperty();
+    private final StringProperty phone = new SimpleStringProperty();
 
-
-    public AppointmentViewModel(String docName, String description, String date, String time, String location, String notes) {}
 
     public String getDocName() {
         return docName.get();
@@ -23,12 +24,12 @@ public class AppointmentViewModel {
         return docName;
     }
 
-    public String getDescription() {
-        return description.get();
+    public String getType() {
+        return type.get();
     }
 
-    public StringProperty descriptionProperty() {
-        return description;
+    public StringProperty typeProperty() {
+        return type;
     }
 
     public String getDate() {
@@ -39,20 +40,44 @@ public class AppointmentViewModel {
         return date;
     }
 
-    public String getTime() {
-        return time.get();
+    public String getTimeHour() {
+        return timeHour.get();
     }
 
-    public StringProperty timeProperty() {
-        return time;
+    public StringProperty timeHourProperty() {
+        return timeHour;
     }
 
-    public String getLocation() {
-        return location.get();
+    public String getTimeMinute() {
+        return timeMinute.get();
     }
 
-    public StringProperty locationProperty() {
-        return location;
+    public StringProperty timeMinuteProperty() {
+        return timeMinute;
+    }
+
+    public String getTimeAMPM() {
+        return timeAMPM.get();
+    }
+
+    public StringProperty timeAMPMProperty() {
+        return timeAMPM;
+    }
+
+    public String getAddress() {
+        return address.get();
+    }
+
+    public StringProperty addressProperty() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone.get();
+    }
+
+    public StringProperty phoneProperty() {
+        return phone;
     }
 
     public String getNotes() {

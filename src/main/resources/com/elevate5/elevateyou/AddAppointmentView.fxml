@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AddAppointmentView">
    <children>
       <HBox alignment="CENTER" prefHeight="300.0" prefWidth="500.0">
@@ -25,23 +24,23 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="250.0" spacing="10.0">
                <children>
-                  <DatePicker />
+                  <DatePicker fx:id="appointmentDate" />
                   <HBox prefWidth="200.0">
                      <children>
-                        <ComboBox prefWidth="150.0" />
-                        <ComboBox prefWidth="150.0" />
-                        <ComboBox prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeHour" editable="true" prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeMinute" editable="true" prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeAMPM" prefWidth="150.0" />
                      </children>
                   </HBox>
-                  <TextField />
-                  <TextField />
-                  <TextField />
-                  <TextField />
-                  <TextArea minHeight="-Infinity" prefHeight="100.0" prefWidth="250.0" />
+                  <TextField fx:id="appointmentDoctorName" />
+                  <TextField fx:id="appointmentDoctorType" />
+                  <TextField fx:id="appointmentDoctorPhone" />
+                  <TextField fx:id="appointmentDoctorAddress" />
+                  <TextArea fx:id="appointmentNotes" minHeight="-Infinity" prefHeight="100.0" prefWidth="250.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Add" />
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="addNewAppointmentButton" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="cancelNewAppointmentButton" mnemonicParsing="false" text="Cancel" />
                      </children>
                      <padding>
                         <Insets left="10.0" top="10.0" />

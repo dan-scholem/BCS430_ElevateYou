@@ -2,36 +2,38 @@ package com.elevate5.elevateyou.model;
 
 public class AppointmentModel {
 
-    private String category;
-    private String description;
+    private String type;
+    private String notes;
     private String date;
     private String time;
     private String location;
     private String docName;
+    private String docPhone;
 
-    public AppointmentModel(String category, String description, String date, String time, String location, String docName) {
-        this.category = category;
-        this.description = description;
+    public AppointmentModel(String type, String notes, String date, String time, String location, String docName, String docPhone) {
+        this.type = type;
+        this.notes = notes;
         this.date = date;
         this.time = time;
         this.location = location;
         this.docName = docName;
+        this.docPhone = docPhone;
     }
 
-    public String getCategory() {
-        return category;
+    public String getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getDate() {
@@ -64,5 +66,12 @@ public class AppointmentModel {
 
     public void setDoctorName(String docName) {
         this.docName = docName;
+    }
+
+    public String getDoctorPhone() {
+        return docPhone;
+    }
+    public void setDoctorPhone(String docPhone) {
+        this.docPhone = docPhone;
     }
 }
