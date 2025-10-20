@@ -76,8 +76,6 @@ public class CreateAccountController {
 
             userEmail.clear();
             userPassword.clear();
-            firstName.clear();
-            lastName.clear();
 
         } else {
 
@@ -90,12 +88,13 @@ public class CreateAccountController {
                     App.theUser.setFirstName(firstName.getText());
                     App.theUser.setLastName(lastName.getText());
 
+                    firstName.clear();
+                    lastName.clear();
                     userEmail.clear();
                     userPassword.clear();
 
                     user = App.fauth.getUserByEmail(App.theUser.getEmail());
                     SessionManager.setSession(new Session(user));
-
 
                     Stage stage = (Stage) createAccountButton.getScene().getWindow();
 
