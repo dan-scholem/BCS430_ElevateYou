@@ -1,6 +1,7 @@
 package com.elevate5.elevateyou.viewmodel;
 
 import com.elevate5.elevateyou.model.AppointmentModel;
+import com.elevate5.elevateyou.session.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -15,9 +16,10 @@ public class AppointmentViewModel {
     private final StringProperty address = new SimpleStringProperty();
     private final StringProperty notes = new SimpleStringProperty();
     private final StringProperty phone = new SimpleStringProperty();
+    private Session session;
 
 
-    public void addAppointment() {
+    public void addAppointment(Session session) {
         String docName = getDocName();
         String type = getType();
         String date = getDate();
@@ -27,7 +29,8 @@ public class AppointmentViewModel {
         String address = getAddress();
         String notes = getNotes();
         String phone = getPhone();
-        AppointmentModel.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes);
+        this.session = session;
+        AppointmentModel.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes, session);
     }
 
 

@@ -1,34 +1,94 @@
 package com.elevate5.elevateyou.model;
 
+import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.session.Session;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.SetOptions;
+import com.google.cloud.firestore.WriteResult;
+import javafx.scene.control.Alert;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Map;
+
 public class AppointmentModel {
 
     private String type;
     private String notes;
     private String date;
     private String time;
-    private String location;
+    private String address;
     private String docName;
     private String docPhone;
+    //private String uid;
 
-    public AppointmentModel(String type, String notes, String date, String time, String location, String docName, String docPhone) {
+    public AppointmentModel(String type, String notes, String date, String time, String address, String docName, String docPhone) {
         this.type = type;
         this.notes = notes;
         this.date = date;
         this.time = time;
-        this.location = location;
+        this.address = address;
         this.docName = docName;
         this.docPhone = docPhone;
     }
 
-    public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes) {
+    public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes, Session session) {
         String time = "";
         if(timeAMPM.equals("PM") && Integer.parseInt(timeHour) != 12){
-            time += (Integer.parseInt(timeHour) + 12);
+            timeHour = Integer.toString(Integer.parseInt(timeHour) + 12);
         }
-        time += ":" + timeMinute;
+        if(timeAMPM.equals("AM") && Integer.parseInt(timeHour) == 12){
+            timeHour = "00";
+        }
+        if(timeMinute.length() == 1){
+            timeMinute = "0" + timeMinute;
+        }
+        if(timeHour.length() == 1){
+            timeHour = "0" + timeHour;
+        }
+        time = timeHour + ":" + timeMinute;
 
-        AppointmentModel newAppointment = new AppointmentModel(docType, notes, date, time, docAddress, docName, docPhone);
-        System.out.println(newAppointment);
+
+        try{
+            LocalDate testDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            LocalTime testTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+            try{
+                AppointmentModel newAppointment = new AppointmentModel(docType, notes, date, time, docAddress, docName, docPhone);
+                System.out.println(newAppointment);
+                DocumentReference eventDocRef = App.fstore.collection("Appointments").document(session.getUserID());
+                Map<String, Object> newEntry = Map.of(
+                    "date", date,
+                    "doctorName", docName,
+                        "doctorPhone", docPhone,
+                        "address", docAddress,
+                        "notes", notes,
+                        "time", time,
+                        "type", docType
+                );
+                session.getUserAppointments().addAppointment(newAppointment);
+                ApiFuture<WriteResult> result = eventDocRef.set(session.getUserAppointments());
+            } catch(Exception ex){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText(ex.getMessage());
+                alert.showAndWait();
+            }
+
+        } catch(DateTimeParseException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Invalid Date or Time");
+            alert.showAndWait();
+        }
+
+
+
+
     }
 
     public String getType() {
@@ -63,12 +123,12 @@ public class AppointmentModel {
         this.time = time;
     }
 
-    public String getLocation() {
-        return location;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDoctorName() {
@@ -88,6 +148,6 @@ public class AppointmentModel {
 
     @Override
     public String toString() {
-        return this.docName + " " + this.docPhone + " " + this.time + " " + this.location;
+        return this.docName + " " + this.docPhone + " " + this.time + " " + this.address;
     }
 }
