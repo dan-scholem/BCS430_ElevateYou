@@ -24,7 +24,7 @@
       </AnchorPane>
       <Pane layoutX="254.0" layoutY="84.0" prefHeight="190.0" prefWidth="528.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Label layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+            <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
          </children></Pane>
       <Pane layoutX="479.0" layoutY="351.0" prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
          <children>
