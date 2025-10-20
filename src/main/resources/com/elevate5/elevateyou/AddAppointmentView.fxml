@@ -29,7 +29,7 @@
                      <children>
                         <ComboBox fx:id="appointmentTimeHour" editable="true" prefWidth="150.0" />
                         <ComboBox fx:id="appointmentTimeMinute" editable="true" prefWidth="150.0" />
-                        <ComboBox fx:id="appointmentTimeAMPM" prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeAMPM" editable="true" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <TextField fx:id="appointmentDoctorName" />
@@ -39,8 +39,8 @@
                   <TextArea fx:id="appointmentNotes" minHeight="-Infinity" prefHeight="100.0" prefWidth="250.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
-                        <Button fx:id="addNewAppointmentButton" mnemonicParsing="false" text="Add" />
-                        <Button fx:id="cancelNewAppointmentButton" mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="addNewAppointmentButton" onAction="#addNewAppointment" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="cancelNewAppointmentButton" onAction="#cancelNewAppointment" mnemonicParsing="false" text="Cancel" />
                      </children>
                      <padding>
                         <Insets left="10.0" top="10.0" />

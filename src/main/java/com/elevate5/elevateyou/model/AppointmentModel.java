@@ -20,6 +20,17 @@ public class AppointmentModel {
         this.docPhone = docPhone;
     }
 
+    public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes) {
+        String time = "";
+        if(timeAMPM.equals("PM") && Integer.parseInt(timeHour) != 12){
+            time += (Integer.parseInt(timeHour) + 12);
+        }
+        time += ":" + timeMinute;
+
+        AppointmentModel newAppointment = new AppointmentModel(docType, notes, date, time, docAddress, docName, docPhone);
+        System.out.println(newAppointment);
+    }
+
     public String getType() {
         return type;
     }
@@ -73,5 +84,10 @@ public class AppointmentModel {
     }
     public void setDoctorPhone(String docPhone) {
         this.docPhone = docPhone;
+    }
+
+    @Override
+    public String toString() {
+        return this.docName + " " + this.docPhone + " " + this.time + " " + this.location;
     }
 }

@@ -79,6 +79,8 @@ public class AppointmentView {
         Stage addAppointmentStage = new Stage();
         addAppointmentStage.initOwner(((Node)event.getSource()).getScene().getWindow());
         addAppointmentStage.setScene(addAppointmentScene);
+        addAppointmentStage.setResizable(false);
+        addAppointmentStage.setTitle("Add Appointment");
         addAppointmentStage.show();
 
 

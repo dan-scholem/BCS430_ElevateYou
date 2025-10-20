@@ -1,7 +1,9 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.viewmodel.AppointmentViewModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -43,8 +45,18 @@ public class AddAppointmentView {
         appointmentDoctorAddress.textProperty().bindBidirectional(appointmentViewModel.addressProperty());
         appointmentNotes.textProperty().bindBidirectional(appointmentViewModel.notesProperty());
 
-
+        appointmentTimeAMPM.getItems().add("AM");
+        appointmentTimeAMPM.getItems().add("PM");
 
     }
 
+    @FXML
+    public void addNewAppointment(ActionEvent event) {
+        appointmentViewModel.addAppointment();
+    }
+
+    @FXML
+    public void cancelNewAppointment(ActionEvent event) {
+        ((Node)event.getSource()).getScene().getWindow().hide();
+    }
 }
