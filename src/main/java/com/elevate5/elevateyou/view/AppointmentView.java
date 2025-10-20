@@ -1,72 +1,103 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.*;
+import com.elevate5.elevateyou.model.AppointmentModel;
+import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.viewmodel.AppointmentViewModel;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class AppointmentView {
 
     @FXML
     private Button appointmentsButton;
-
     @FXML
     private Button calendarButton;
-
     @FXML
     private Button chatButton;
-
     @FXML
     private Button dashButton;
-
     @FXML
     private Button exerciseButton;
-
     @FXML
     private Button foodButton;
-
     @FXML
     private Button friendsButton;
-
     @FXML
     private Button journalButton;
-
     @FXML
     private Button logoutButton;
-
     @FXML
     private Button medButton;
-
     @FXML
     private Button reviewsButton;
-
     @FXML
     private Button sleepButton;
-
     @FXML
     private Button tutorialsButton;
-
     @FXML
     private Button addAppointmentButton;
-
     @FXML
     private Button deleteAppointmentButton;
-
     @FXML
     private Button searchDoctorsButton;
+    @FXML
+    private TableView<AppointmentModel> appointmentTable;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptDateCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptTimeCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptDocNameCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptTypeCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptPhoneCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptAddressCol;
+    @FXML
+    private TableColumn<AppointmentModel, String> apptNotesCol;
+
+    private ObservableList<AppointmentModel> appointmentData;
+    private Property<ObservableList<AppointmentModel>> appointmentProperty = new SimpleObjectProperty<>(appointmentData);
+    private Session session;
 
     @FXML
     public void initialize() {
+        session = SessionManager.getSession();
+
+        appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
+
+        for(AppointmentModel appointmentModel : appointmentData) {
+            System.out.println(appointmentModel.toString());
+        }
+
+        //appointmentTable = new TableView<>();
+
+        //appointmentTable.itemsProperty().bind(appointmentProperty);
+
+        apptDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        apptTimeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+        apptDocNameCol.setCellValueFactory(new PropertyValueFactory<>("docName"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptPhoneCol.setCellValueFactory(new PropertyValueFactory<>("docPhone"));
+        apptAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        apptNotesCol.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+        appointmentTable.setItems(appointmentData);
 
     }
 

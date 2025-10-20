@@ -33,15 +33,15 @@
             </HBox>
          </top>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="appointmentTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="75.0" text="Date" />
-                <TableColumn prefWidth="75.0" text="Time" />
-                 <TableColumn prefWidth="100" text="Doctor" />
-                 <TableColumn prefWidth="150" text="Type" />
-                 <TableColumn prefWidth="200" text="Address" />
-                 <TableColumn prefWidth="150" text="Phone" />
-                 <TableColumn prefWidth="200" text="Notes" />
+                <TableColumn fx:id="apptDateCol" prefWidth="75.0" text="Date" />
+                <TableColumn fx:id="apptTimeCol" prefWidth="75.0" text="Time" />
+                 <TableColumn fx:id="apptDocNameCol" prefWidth="100" text="Doctor" />
+                 <TableColumn fx:id="apptTypeCol" prefWidth="150" text="Type" />
+                 <TableColumn fx:id="apptPhoneCol" prefWidth="200" text="Phone" />
+                 <TableColumn fx:id="apptAddressCol" prefWidth="150" text="Address" />
+                 <TableColumn fx:id="apptNotesCol" prefWidth="200" text="Notes" />
               </columns>
             </TableView>
          </center>

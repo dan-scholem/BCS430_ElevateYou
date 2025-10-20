@@ -11,10 +11,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -24,7 +20,7 @@ public class Session {
     private final UserRecord user;
     private final String userID;
     private EventManager userEventManager = new EventManager();
-    private AppointmentManager userAppointments = new AppointmentManager();
+    private AppointmentManager userAppointmentManager = new AppointmentManager();
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -76,8 +72,8 @@ public class Session {
                     String docType = (String) data.get("type");
                     String notes =  (String) data.get("notes");
                     String address = (String) data.get("address");
-                    AppointmentModel appointment = new AppointmentModel(docType, notes, date, time, address, docName, docPhone);
-                    userAppointments.addAppointment(appointment);
+                    AppointmentModel appointment = new AppointmentModel(date, time, docName, docType, docPhone, address, notes);
+                    userAppointmentManager.addAppointment(appointment);
                 }
             }
 
@@ -88,7 +84,7 @@ public class Session {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
-            userAppointments = doc.toObject(AppointmentManager.class);
+            userAppointmentManager = doc.toObject(AppointmentManager.class);
 
         }
 
@@ -110,7 +106,7 @@ public class Session {
         this.userEventManager = userEventManager;
     }
 
-    public AppointmentManager getUserAppointments() {
-        return userAppointments;
+    public AppointmentManager getUserAppointmentManager() {
+        return userAppointmentManager;
     }
 }

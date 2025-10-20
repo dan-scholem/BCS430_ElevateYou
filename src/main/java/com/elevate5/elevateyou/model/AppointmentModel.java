@@ -4,7 +4,6 @@ import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.session.Session;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 import javafx.scene.control.Alert;
 
@@ -12,27 +11,25 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Map;
 
 public class AppointmentModel {
 
-    private String type;
-    private String notes;
     private String date;
     private String time;
-    private String address;
     private String docName;
+    private String type;
     private String docPhone;
-    //private String uid;
+    private String address;
+    private String notes;
 
-    public AppointmentModel(String type, String notes, String date, String time, String address, String docName, String docPhone) {
-        this.type = type;
-        this.notes = notes;
+    public AppointmentModel(String date, String time, String docName, String type, String docPhone, String address, String notes) {
         this.date = date;
         this.time = time;
-        this.address = address;
         this.docName = docName;
+        this.type = type;
         this.docPhone = docPhone;
+        this.address = address;
+        this.notes = notes;
     }
 
     public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes, Session session) {
@@ -59,17 +56,8 @@ public class AppointmentModel {
                 AppointmentModel newAppointment = new AppointmentModel(docType, notes, date, time, docAddress, docName, docPhone);
                 System.out.println(newAppointment);
                 DocumentReference eventDocRef = App.fstore.collection("Appointments").document(session.getUserID());
-                Map<String, Object> newEntry = Map.of(
-                    "date", date,
-                    "doctorName", docName,
-                        "doctorPhone", docPhone,
-                        "address", docAddress,
-                        "notes", notes,
-                        "time", time,
-                        "type", docType
-                );
-                session.getUserAppointments().addAppointment(newAppointment);
-                ApiFuture<WriteResult> result = eventDocRef.set(session.getUserAppointments());
+                session.getUserAppointmentManager().addAppointment(newAppointment);
+                ApiFuture<WriteResult> result = eventDocRef.set(session.getUserAppointmentManager());
             } catch(Exception ex){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
@@ -131,18 +119,18 @@ public class AppointmentModel {
         this.address = address;
     }
 
-    public String getDoctorName() {
+    public String getDocName() {
         return docName;
     }
 
-    public void setDoctorName(String docName) {
+    public void setDocName(String docName) {
         this.docName = docName;
     }
 
-    public String getDoctorPhone() {
+    public String getDocPhone() {
         return docPhone;
     }
-    public void setDoctorPhone(String docPhone) {
+    public void setDocPhone(String docPhone) {
         this.docPhone = docPhone;
     }
 
