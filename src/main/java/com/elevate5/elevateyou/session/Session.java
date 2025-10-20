@@ -1,6 +1,8 @@
 package com.elevate5.elevateyou.session;
 
 import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.model.AppointmentManager;
+import com.elevate5.elevateyou.model.AppointmentModel;
 import com.elevate5.elevateyou.model.Event;
 import com.elevate5.elevateyou.model.EventManager;
 import com.google.api.core.ApiFuture;
@@ -22,6 +24,7 @@ public class Session {
     private final UserRecord user;
     private final String userID;
     private EventManager userEventManager = new EventManager();
+    private AppointmentManager userAppointments = new AppointmentManager();
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -58,6 +61,37 @@ public class Session {
             System.out.println("Doc doesn't exist, document created");
         }
 
+        docRef = App.fstore.collection("Appointments").document(this.userID);
+        future = docRef.get();
+        doc = future.get();
+
+        if(doc.exists()) {
+            List<Map<String, Object>> appointmentsMap = (List<Map<String, Object>>) doc.get("appointments");
+            if(appointmentsMap != null) {
+                for(Map<String, Object> data : appointmentsMap) {
+                    String date = (String) data.get("date");
+                    String time = (String) data.get("time");
+                    String docName = (String) data.get("doctorName");
+                    String docPhone = (String) data.get("doctorPhone");
+                    String docType = (String) data.get("type");
+                    String notes =  (String) data.get("notes");
+                    String address = (String) data.get("address");
+                    AppointmentModel appointment = new AppointmentModel(docType, notes, date, time, address, docName, docPhone);
+                    userAppointments.addAppointment(appointment);
+                }
+            }
+
+        }else{
+            AppointmentManager newAppointmentData = new AppointmentManager();
+            try{
+                ApiFuture<WriteResult> future1 = docRef.set(newAppointmentData);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            userAppointments = doc.toObject(AppointmentManager.class);
+
+        }
+
     }
 
     public UserRecord getUser() {
@@ -74,5 +108,9 @@ public class Session {
 
     public void setUserEventManager(EventManager userEventManager) {
         this.userEventManager = userEventManager;
+    }
+
+    public AppointmentManager getUserAppointments() {
+        return userAppointments;
     }
 }
