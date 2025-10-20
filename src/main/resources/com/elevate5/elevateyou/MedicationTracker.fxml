@@ -136,6 +136,7 @@
                   <Image url="@images/elevateyoulogo.png" />
                </image>
             </ImageView>
+            <Label layoutX="27.0" layoutY="133.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
    </children>
