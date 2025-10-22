@@ -41,6 +41,11 @@ public class AppointmentManager {
         try{
             LocalDate testDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
             LocalTime testTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+            Long.parseLong(docPhone);
+            if(docPhone.length() != 10){
+                throw new RuntimeException("Invalid phone number");
+            }
+            docPhone = "(" + docPhone.substring(0, 3) + ")" + docPhone.substring(3, 6) + "-" + docPhone.substring(6);
             try{
                 AppointmentModel newAppointment = new AppointmentModel(date, time, docName, docType, docPhone, docAddress, notes);
                 //System.out.println(newAppointment);
@@ -60,6 +65,12 @@ public class AppointmentManager {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText("Invalid Date or Time");
+            alert.showAndWait();
+        } catch(NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Invalid Phone Number");
             alert.showAndWait();
         }
     }
