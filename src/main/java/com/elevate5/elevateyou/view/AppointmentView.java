@@ -72,7 +72,7 @@ public class AppointmentView {
     private TableColumn<AppointmentModel, String> apptNotesCol;
 
     private ObservableList<AppointmentModel> appointmentData;
-    private Property<ObservableList<AppointmentModel>> appointmentProperty = new SimpleObjectProperty<>(appointmentData);
+    private AppointmentViewModel  appointmentViewModel = new AppointmentViewModel();
     private Session session;
 
     @FXML
@@ -80,10 +80,6 @@ public class AppointmentView {
         session = SessionManager.getSession();
 
         appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
-
-        for(AppointmentModel appointmentModel : appointmentData) {
-            System.out.println(appointmentModel.toString());
-        }
 
         //appointmentTable = new TableView<>();
 
@@ -112,8 +108,22 @@ public class AppointmentView {
         addAppointmentStage.setScene(addAppointmentScene);
         addAppointmentStage.setResizable(false);
         addAppointmentStage.setTitle("Add Appointment");
-        addAppointmentStage.show();
+        addAppointmentStage.showAndWait();
 
+        appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
+        appointmentTable.setItems(appointmentData);
+        appointmentTable.refresh();
+
+
+    }
+
+    @FXML
+    public void deleteAppointment(ActionEvent event) throws IOException {
+
+        AppointmentModel selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+        appointmentViewModel.deleteAppointment(selectedAppointment, session);
+        appointmentData.remove(selectedAppointment);
+        appointmentTable.refresh();
 
     }
 

@@ -1,9 +1,12 @@
 package com.elevate5.elevateyou.viewmodel;
 
+import com.elevate5.elevateyou.model.AppointmentManager;
 import com.elevate5.elevateyou.model.AppointmentModel;
 import com.elevate5.elevateyou.session.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import java.io.IOException;
 
 public class AppointmentViewModel {
 
@@ -29,8 +32,12 @@ public class AppointmentViewModel {
         String address = getAddress();
         String notes = getNotes();
         String phone = getPhone();
-        this.session = session;
-        AppointmentModel.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes, session);
+        //this.session = session;
+        AppointmentManager.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes, session);
+    }
+
+    public void deleteAppointment(AppointmentModel selectedAppointment, Session session) throws IOException {
+        AppointmentManager.deleteAppointment(selectedAppointment, session);
     }
 
 
