@@ -67,8 +67,8 @@ public class Session {
                 for(Map<String, Object> data : appointmentsMap) {
                     String date = (String) data.get("date");
                     String time = (String) data.get("time");
-                    String docName = (String) data.get("doctorName");
-                    String docPhone = (String) data.get("doctorPhone");
+                    String docName = (String) data.get("docName");
+                    String docPhone = (String) data.get("docPhone");
                     String docType = (String) data.get("type");
                     String notes =  (String) data.get("notes");
                     String address = (String) data.get("address");
