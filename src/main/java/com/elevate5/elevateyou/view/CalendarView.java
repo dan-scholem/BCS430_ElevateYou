@@ -122,7 +122,7 @@ public class CalendarView extends Application {
 
 
         } else{
-            //sample events for testing
+            /*
             LocalDate sampleDate = LocalDate.of(2025,10,7);
             LocalTime sampleTime = LocalTime.of(16,30);
             Event sampleEvent = new Event(sampleDate.toString(), sampleTime.toString(), "Dr Appointment", "Appointment");
@@ -132,6 +132,8 @@ public class CalendarView extends Application {
             Collections.sort(eventManager.getEvents().get(sampleEvent.getDate().toString()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
             Event sample3 = new Event(LocalDate.of(2025, 11, 15).toString(), LocalTime.of(12, 00).toString(), "Workout", "Back and Biceps");
             eventManager.addEvent(sample3.getDate().toString(), sample3);
+
+             */
         }
 
 

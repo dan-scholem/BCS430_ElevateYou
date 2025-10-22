@@ -22,7 +22,7 @@ public class AppointmentViewModel {
     private Session session;
 
 
-    public void addAppointment(Session session) {
+    public void addAppointment() {
         String docName = getDocName();
         String type = getType();
         String date = getDate();
@@ -32,12 +32,11 @@ public class AppointmentViewModel {
         String address = getAddress();
         String notes = getNotes();
         String phone = getPhone();
-        //this.session = session;
-        AppointmentManager.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes, session);
+        AppointmentManager.createAppointment(docName, phone, address, date, timeHour, timeMinute, timeAMPM, type, notes);
     }
 
-    public void deleteAppointment(AppointmentModel selectedAppointment, Session session) throws IOException {
-        AppointmentManager.deleteAppointment(selectedAppointment, session);
+    public void deleteAppointment(AppointmentModel selectedAppointment) throws IOException {
+        AppointmentManager.deleteAppointment(selectedAppointment);
     }
 
 

@@ -60,7 +60,7 @@ public class AddAppointmentView {
 
     @FXML
     public void addNewAppointment(ActionEvent event) {
-        appointmentViewModel.addAppointment(session);
+        appointmentViewModel.addAppointment();
         appointmentNotes.getScene().getWindow().hide();
     }
 

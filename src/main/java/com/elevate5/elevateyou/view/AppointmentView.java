@@ -121,7 +121,7 @@ public class AppointmentView {
     public void deleteAppointment(ActionEvent event) throws IOException {
 
         AppointmentModel selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
-        appointmentViewModel.deleteAppointment(selectedAppointment, session);
+        appointmentViewModel.deleteAppointment(selectedAppointment);
         appointmentData.remove(selectedAppointment);
         appointmentTable.refresh();
 

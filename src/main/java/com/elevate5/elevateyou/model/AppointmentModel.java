@@ -78,6 +78,6 @@ public class AppointmentModel {
 
     @Override
     public String toString() {
-        return this.docName + " " + this.docPhone + " " + this.time + " " + this.date;
+        return this.docName + "\n" + this.type + "\n" + this.address + "\n" + this.notes;
     }
 }

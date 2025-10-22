@@ -2,6 +2,7 @@ package com.elevate5.elevateyou.model;
 
 import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
@@ -21,7 +22,7 @@ public class AppointmentManager {
         this.appointments = new ArrayList<AppointmentModel>();
     }
 
-    public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes, Session session) {
+    public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes) {
         String time = "";
         if(timeAMPM.equals("PM") && Integer.parseInt(timeHour) != 12){
             timeHour = Integer.toString(Integer.parseInt(timeHour) + 12);
@@ -49,9 +50,13 @@ public class AppointmentManager {
             try{
                 AppointmentModel newAppointment = new AppointmentModel(date, time, docName, docType, docPhone, docAddress, notes);
                 //System.out.println(newAppointment);
-                DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(session.getUserID());
-                session.getUserAppointmentManager().addAppointment(newAppointment);
-                ApiFuture<WriteResult> result = appointmentDocRef.set(session.getUserAppointmentManager());
+                DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(SessionManager.getSession().getUserID());
+                SessionManager.getSession().getUserAppointmentManager().addAppointment(newAppointment);
+                ApiFuture<WriteResult> result = appointmentDocRef.set(SessionManager.getSession().getUserAppointmentManager());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                SessionManager.getSession().getUserEventManager().addEvent(newAppointment.getDate(), new Event(LocalDate.parse(newAppointment.getDate(), formatter).toString(), newAppointment.getTime(), newAppointment.getType() + " Appointment", newAppointment.toString()));
+                DocumentReference eventDocRef = App.fstore.collection("Events").document(SessionManager.getSession().getUserID());
+                result =  eventDocRef.set(SessionManager.getSession().getUserEventManager());
             } catch(Exception ex){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
@@ -75,11 +80,26 @@ public class AppointmentManager {
         }
     }
 
-    public static void deleteAppointment(AppointmentModel appointment, Session session) {
-        session.getUserAppointmentManager().removeAppointment(appointment);
+    public static void deleteAppointment(AppointmentModel appointment) {
+        SessionManager.getSession().getUserAppointmentManager().removeAppointment(appointment);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        ArrayList<Event> eventDateArray = SessionManager.getSession().getUserEventManager().getEvents().get(LocalDate.parse(appointment.getDate(), formatter).toString());
+        Event apptEvent = null;
+        if(!eventDateArray.isEmpty()){
+            for(Event event : eventDateArray){
+                if(event.getDate().equals(appointment.getNotes())){
+                    apptEvent = event;
+                }
+            }
+            if(apptEvent != null){
+                SessionManager.getSession().getUserEventManager().getEvents().get(apptEvent.getDate()).remove(apptEvent);
+            }
+        }
         try{
-            DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(session.getUserID());
-            ApiFuture<WriteResult> result = appointmentDocRef.set(session.getUserAppointmentManager());
+            DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(SessionManager.getSession().getUserID());
+            ApiFuture<WriteResult> result = appointmentDocRef.set(SessionManager.getSession().getUserAppointmentManager());
+            DocumentReference eventDocRef = App.fstore.collection("Events").document(SessionManager.getSession().getUserID());
+            result =  eventDocRef.set(SessionManager.getSession().getUserEventManager());
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
