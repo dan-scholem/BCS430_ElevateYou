@@ -81,10 +81,6 @@ public class AppointmentView {
 
         appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
 
-        //appointmentTable = new TableView<>();
-
-        //appointmentTable.itemsProperty().bind(appointmentProperty);
-
         apptDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         apptTimeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
         apptDocNameCol.setCellValueFactory(new PropertyValueFactory<>("docName"));

@@ -22,8 +22,9 @@ public class AppointmentManager {
         this.appointments = new ArrayList<AppointmentModel>();
     }
 
+    //creates a user appointment, adds to appointment table and adds to user calendar
     public static void createAppointment(String docName, String docPhone, String docAddress, String date, String timeHour, String timeMinute, String timeAMPM, String docType, String notes) {
-        String time = "";
+        String time;
         if(timeAMPM.equals("PM") && Integer.parseInt(timeHour) != 12){
             timeHour = Integer.toString(Integer.parseInt(timeHour) + 12);
         }
@@ -39,26 +40,25 @@ public class AppointmentManager {
         time = timeHour + ":" + timeMinute;
 
 
-        try{
+        try{ //input validation
             LocalDate testDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
             LocalTime testTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
             Long.parseLong(docPhone);
             if(docPhone.length() != 10){
                 throw new RuntimeException("Invalid phone number");
             }
-            docPhone = "(" + docPhone.substring(0, 3) + ")" + docPhone.substring(3, 6) + "-" + docPhone.substring(6);
-            try{
+            docPhone = "(" + docPhone.substring(0, 3) + ") " + docPhone.substring(3, 6) + "-" + docPhone.substring(6);
+
+            try{ //updates Firestore db with new appointment and corresponding calendar event
                 AppointmentModel newAppointment = new AppointmentModel(date, time, docName, docType, docPhone, docAddress, notes);
-                //System.out.println(newAppointment);
                 DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(SessionManager.getSession().getUserID());
                 SessionManager.getSession().getUserAppointmentManager().addAppointment(newAppointment);
                 ApiFuture<WriteResult> result = appointmentDocRef.set(SessionManager.getSession().getUserAppointmentManager());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                 DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate dateLocal = LocalDate.parse(date, formatter);
-                LocalDate dateFormatted = LocalDate.parse(formatter2.format(dateLocal));
-                System.out.println(dateFormatted.toString());
-                SessionManager.getSession().getUserEventManager().addEvent(newAppointment.getDate(), new Event(dateFormatted.toString(), newAppointment.getTime(), newAppointment.getType() + " Appointment", newAppointment.toString()));
+                formatter2.format(dateLocal);
+                SessionManager.getSession().getUserEventManager().addEvent(dateLocal.toString(), new Event(dateLocal.toString(), newAppointment.getTime(), newAppointment.getType() + " Appointment", newAppointment.toString()));
                 DocumentReference eventDocRef = App.fstore.collection("Events").document(SessionManager.getSession().getUserID());
                 result =  eventDocRef.set(SessionManager.getSession().getUserEventManager());
             } catch(Exception ex){
@@ -84,27 +84,28 @@ public class AppointmentManager {
         }
     }
 
+    //deletes user appointment from table and calendar
     public static void deleteAppointment(AppointmentModel appointment) {
         SessionManager.getSession().getUserAppointmentManager().removeAppointment(appointment);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate dateLocal = LocalDate.parse(appointment.getDate(), formatter);
-        LocalDate dateFormatted = LocalDate.parse(formatter2.format(dateLocal));
+        formatter2.format(dateLocal);
         ArrayList<Event> eventDateArray = SessionManager.getSession().getUserEventManager().getEvents().get(dateLocal.toString());
         Event apptEvent = null;
-        if(!eventDateArray.isEmpty()){
+        //checks if appointment is in user calendar and if found removes from calendar
+        if(eventDateArray != null && !eventDateArray.isEmpty()){
             for(Event event : eventDateArray){
-                if(event.getDate().equals(appointment.getNotes())){
+                if(event.getEventDescription().equals(appointment.toString())){
                     System.out.println("Match!");
                     apptEvent = event;
                 }
             }
             if(apptEvent != null){
-                System.out.println(apptEvent);
                 SessionManager.getSession().getUserEventManager().getEvents().get(apptEvent.getDate()).remove(apptEvent);
             }
         }
-        try{
+        try{ //update Firestore db
             DocumentReference appointmentDocRef = App.fstore.collection("Appointments").document(SessionManager.getSession().getUserID());
             ApiFuture<WriteResult> result = appointmentDocRef.set(SessionManager.getSession().getUserAppointmentManager());
             DocumentReference eventDocRef = App.fstore.collection("Events").document(SessionManager.getSession().getUserID());
@@ -114,10 +115,12 @@ public class AppointmentManager {
         }
     }
 
+    //adds appointment to list data structure
     public void addAppointment(AppointmentModel appointment){
         this.appointments.add(appointment);
     }
 
+    //removes appointment from list data structure
     public void removeAppointment(AppointmentModel appointment){
         this.appointments.remove(appointment);
     }

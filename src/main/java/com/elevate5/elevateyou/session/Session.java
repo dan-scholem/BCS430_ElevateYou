@@ -57,6 +57,7 @@ public class Session {
             System.out.println("Doc doesn't exist, document created");
         }
 
+        //Load appointment data from Firestore db
         docRef = App.fstore.collection("Appointments").document(this.userID);
         future = docRef.get();
         doc = future.get();

@@ -6,10 +6,7 @@ import com.elevate5.elevateyou.viewmodel.AppointmentViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class AddAppointmentView {
 
@@ -60,8 +57,16 @@ public class AddAppointmentView {
 
     @FXML
     public void addNewAppointment(ActionEvent event) {
-        appointmentViewModel.addAppointment();
-        appointmentNotes.getScene().getWindow().hide();
+        if(appointmentDoctorPhone.getText().length() != 10){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid Phone Number");
+            alert.setHeaderText("Invalid Phone Number");
+            alert.setContentText("Please enter a valid Phone Number: Must Be 10 Digits");
+            alert.showAndWait();
+        }else {
+            appointmentViewModel.addAppointment();
+            appointmentNotes.getScene().getWindow().hide();
+        }
     }
 
     @FXML
