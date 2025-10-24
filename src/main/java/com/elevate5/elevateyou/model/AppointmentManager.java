@@ -54,7 +54,11 @@ public class AppointmentManager {
                 SessionManager.getSession().getUserAppointmentManager().addAppointment(newAppointment);
                 ApiFuture<WriteResult> result = appointmentDocRef.set(SessionManager.getSession().getUserAppointmentManager());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                SessionManager.getSession().getUserEventManager().addEvent(newAppointment.getDate(), new Event(LocalDate.parse(newAppointment.getDate(), formatter).toString(), newAppointment.getTime(), newAppointment.getType() + " Appointment", newAppointment.toString()));
+                DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate dateLocal = LocalDate.parse(date, formatter);
+                LocalDate dateFormatted = LocalDate.parse(formatter2.format(dateLocal));
+                System.out.println(dateFormatted.toString());
+                SessionManager.getSession().getUserEventManager().addEvent(newAppointment.getDate(), new Event(dateFormatted.toString(), newAppointment.getTime(), newAppointment.getType() + " Appointment", newAppointment.toString()));
                 DocumentReference eventDocRef = App.fstore.collection("Events").document(SessionManager.getSession().getUserID());
                 result =  eventDocRef.set(SessionManager.getSession().getUserEventManager());
             } catch(Exception ex){
@@ -83,15 +87,20 @@ public class AppointmentManager {
     public static void deleteAppointment(AppointmentModel appointment) {
         SessionManager.getSession().getUserAppointmentManager().removeAppointment(appointment);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        ArrayList<Event> eventDateArray = SessionManager.getSession().getUserEventManager().getEvents().get(LocalDate.parse(appointment.getDate(), formatter).toString());
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateLocal = LocalDate.parse(appointment.getDate(), formatter);
+        LocalDate dateFormatted = LocalDate.parse(formatter2.format(dateLocal));
+        ArrayList<Event> eventDateArray = SessionManager.getSession().getUserEventManager().getEvents().get(dateLocal.toString());
         Event apptEvent = null;
         if(!eventDateArray.isEmpty()){
             for(Event event : eventDateArray){
                 if(event.getDate().equals(appointment.getNotes())){
+                    System.out.println("Match!");
                     apptEvent = event;
                 }
             }
             if(apptEvent != null){
+                System.out.println(apptEvent);
                 SessionManager.getSession().getUserEventManager().getEvents().get(apptEvent.getDate()).remove(apptEvent);
             }
         }
