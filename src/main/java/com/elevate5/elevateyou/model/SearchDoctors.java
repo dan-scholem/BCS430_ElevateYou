@@ -1,10 +1,8 @@
 package com.elevate5.elevateyou.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,41 +13,47 @@ import java.util.ArrayList;
 
 public class SearchDoctors {
 
-    private final String docAPI = "https://npiregistry.cms.hhs.gov/api/?version=2.1";
-    private String name;
-    private String location;
-    private String taxonomy;
-    private String searchStr;
+    private static final String apiURL = "https://npiregistry.cms.hhs.gov/api/?version=2.1";
+    //private String searchStr;
 
-    public SearchDoctors(String name, String location, String taxonomy) {
-        this.name = name;
-        this.location = location;
-        this.taxonomy = taxonomy;
+    public static void search(String firstName, String lastName, String location, String taxonomy_desc){
+        try{
+            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&city=" + location + "&taxonomy_descricption=" + taxonomy_desc;
+            URL url = new URL(searchString);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("Search response code: " + responseCode);
+
+            if(responseCode == 200){
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+                StringBuilder sb = new StringBuilder();
+
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+                br.close();
+
+                System.out.println(sb);
+            }else{
+                System.out.println("Error");
+            }
+            conn.disconnect();
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public ArrayList<ArrayList<String>> buildQuery(String name, String zip, String taxonomy) throws IOException {
-        searchStr = docAPI + "&first_name" + name + "&postal_code" + zip + "&taxonomy_description" + taxonomy;
-        URL url = new URL(searchStr);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        System.out.println("Response code: " + conn.getResponseCode());
-        InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream());
-        JsonObject response = new Gson().fromJson(inputStreamReader, JsonObject.class);
-        JsonArray results = response.getAsJsonArray("results");
-        ArrayList<ArrayList<String>> doctors = new ArrayList<>();
-        for(JsonElement result : results){
-            ArrayList<String> docInfo = new ArrayList<>();
-            JsonObject doc = result.getAsJsonObject();
-            JsonObject basicInfo = doc.getAsJsonObject("basic");
-            String docName = basicInfo.get("first_name").getAsString() + " " + basicInfo.get("last_name").getAsString();
+    public static void main(String[] args){
 
-            JsonArray taxonomies = doc.getAsJsonArray("taxonomies");
-            String specialty = taxonomies.get(0).getAsJsonObject().get("desc").getAsString();
-            docInfo.add(docName);
-            docInfo.add(specialty);
-            doctors.add(docInfo);
-        }
-        return doctors;
+        search("Dean", "Lumley", "", "");
     }
 
 }
