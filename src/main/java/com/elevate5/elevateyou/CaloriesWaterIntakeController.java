@@ -58,8 +58,9 @@ public class CaloriesWaterIntakeController {
     @FXML private Button journalButton;
 
     private ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
-    private final ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
+    private ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
     Map<String, ObservableList<CalorieEntry>> calorieDataMap = new HashMap<>();
+    Map<String, ObservableList<WaterEntry>> waterDataMap = new HashMap<>();
 
     @FXML
     private void initialize() {
@@ -87,6 +88,23 @@ public class CaloriesWaterIntakeController {
                 }
                 calorieData = calorieDataMap.get(LocalDate.now().toString());
             }
+            docRef = App.fstore.collection("Water").document(SessionManager.getSession().getUserID());
+            future = docRef.get();
+            doc = future.get();
+            if(doc.exists()) {
+                for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
+                    List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                    ObservableList<WaterEntry> loadedWaterData = FXCollections.observableArrayList();
+                    for (int i = 0; i < data.size(); i++) {
+                        String date = data.get(i).get("date").toString();
+                        int ounces = Integer.parseInt(data.get(i).get("ounces").toString());
+                        WaterEntry loadedWaterEntry = new WaterEntry(date, ounces);
+                        loadedWaterData.add(loadedWaterEntry);
+                        waterDataMap.put(date, loadedWaterData);
+                    }
+                }
+                waterData = waterDataMap.get(LocalDate.now().toString());
+            }
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -96,28 +114,69 @@ public class CaloriesWaterIntakeController {
         colFood.setCellValueFactory(new PropertyValueFactory<>("food"));
         colCals.setCellValueFactory(new PropertyValueFactory<>("calories"));
         caloriesTable.setItems(calorieData);
+        if(calorieData == null || calorieData.isEmpty()) {
+            caloriesTable.setPlaceholder(new Label("No Food Entries on " + calDate.getValue().toString() + " Yet!"));
+        }
 
         // Water table
         colWaterDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colOunces.setCellValueFactory(new PropertyValueFactory<>("ounces"));
         waterTable.setItems(waterData);
+        if(waterData == null || waterData.isEmpty()) {
+            waterTable.setPlaceholder(new Label("No Water Entries on " + waterDate.getValue().toString() + " Yet!"));
+        }
 
         // Totals update when selection changes (or you can compute on whole table)
         caloriesTable.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> updateCalorieTotal());
         waterTable.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> updateWaterTotal());
 
         //Listens for changed dates and updates table
-        calDate.valueProperty().addListener((obs, o, newDate) -> {
+        calDate.valueProperty().addListener((obs, oldDate, newDate) -> {
+            if(oldDate != null && caloriesTable.getItems() != null) {
+                calorieDataMap.put(oldDate.toString(), FXCollections.observableArrayList(caloriesTable.getItems()));
+            }
             if(calorieDataMap.containsKey(newDate.toString())) {
                 calorieData = calorieDataMap.get(newDate.toString());
-                if(calorieData != null) {
+                if(!calorieData.isEmpty()) {
                     caloriesTable.setItems(calorieData);
                 }else{
-                    caloriesTable.setItems(null);
+                    caloriesTable.getItems().clear();
+                    caloriesTable.setPlaceholder(new Label("No Food Entries on " + newDate + " Yet!"));
+                }
+            }else{
+                if(caloriesTable.getItems() == null){
+                    caloriesTable.setPlaceholder(new Label("No Food Entries on " + newDate + " Yet!"));
+                }else{
+                    caloriesTable.getItems().clear();
+                    caloriesTable.setPlaceholder(new Label("No Food Entries on " + newDate + " Yet!"));
                 }
             }
             caloriesTable.refresh();
         });
+
+        waterDate.valueProperty().addListener((obs, oldDate, newDate) -> {
+            if(oldDate != null && waterTable.getItems() != null) {
+                waterDataMap.put(oldDate.toString(), FXCollections.observableArrayList(waterTable.getItems()));
+            }
+           if(waterDataMap.containsKey(newDate.toString())) {
+               waterData = waterDataMap.get(newDate.toString());
+               if(waterData != null){
+                   waterTable.setItems(waterData);
+               }else{
+                   waterTable.getItems().clear();
+                   waterTable.setPlaceholder(new Label("No Water Entries on " + newDate + " Yet!"));
+               }
+           }else{
+               if(waterTable.getItems() == null){
+                   waterTable.setPlaceholder(new Label("No Water Entries on " + newDate + " Yet!"));
+               }else{
+                   waterTable.getItems().clear();
+                   waterTable.setPlaceholder(new Label("No Water Entries on " + newDate + " Yet!"));
+               }
+           }
+           waterTable.refresh();
+        });
+
         updateCalorieTotal();
         updateWaterTotal();
     }
@@ -138,18 +197,16 @@ public class CaloriesWaterIntakeController {
         catch (NumberFormatException ex) { alert("Calories must be a number."); return; }
 
         if(!calorieDataMap.containsKey(d.toString())) {
-            ObservableList<CalorieEntry> newCalorieData = FXCollections.observableArrayList();
-            newCalorieData.add(new CalorieEntry(d.toString(), food, cals));
-            calorieDataMap.put(d.toString(), newCalorieData);
+            calorieData = FXCollections.observableArrayList();
         }else{
-            ObservableList<CalorieEntry> existingCalorieData = calorieDataMap.get(d.toString());
-            existingCalorieData.add(new CalorieEntry(d.toString(), food, cals));
+            calorieData = calorieDataMap.get(d.toString());
         }
-        calorieData = calorieDataMap.get(d.toString());
-        caloriesTable.setItems(calorieData);
-        caloriesTable.refresh();
+        calorieData.add(new CalorieEntry(d.toString(), food, cals));
+        calorieDataMap.put(d.toString(), calorieData);
         DocumentReference calorieDocRef = App.fstore.collection("Calories").document(SessionManager.getSession().getUserID());
         ApiFuture<WriteResult> result = calorieDocRef.set(calorieDataMap);
+        caloriesTable.setItems(calorieData);
+        caloriesTable.refresh();
         clearCaloriesInputs();
         updateCalorieTotal();
     }
@@ -199,7 +256,19 @@ public class CaloriesWaterIntakeController {
         try { oz = Integer.parseInt(ozStr); }
         catch (NumberFormatException ex) { alert("Ounces must be a number."); return; }
 
-        waterData.add(new WaterEntry(d, oz));
+        if(!waterDataMap.containsKey(d.toString())) {
+            waterData = FXCollections.observableArrayList();
+        }else{
+            waterData = waterDataMap.get(d.toString());
+        }
+        waterData.add(new WaterEntry(d.toString(), oz));
+        waterDataMap.put(d.toString(), waterData);
+
+        DocumentReference waterDocRef = App.fstore.collection("Water").document(SessionManager.getSession().getUserID());
+        ApiFuture<WriteResult> result = waterDocRef.set(waterDataMap);
+        waterData = waterDataMap.get(d.toString());
+        waterTable.setItems(waterData);
+        waterTable.refresh();
         clearWaterInputs();
         updateWaterTotal();
     }
@@ -209,13 +278,19 @@ public class CaloriesWaterIntakeController {
         WaterEntry sel = waterTable.getSelectionModel().getSelectedItem();
         if (sel == null) { alert("Select a water row to delete."); return; }
         waterData.remove(sel);
+        waterDataMap.put(sel.getDate(), waterData);
+        try{
+            DocumentReference docRef = App.fstore.collection("Water").document(SessionManager.getSession().getUserID());
+            ApiFuture<WriteResult> result = docRef.set(waterDataMap);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         updateWaterTotal();
     }
 
     @FXML
     private void clearWaterInputs() {
         waterOunces.clear();
-        waterDate.setValue(LocalDate.now());
     }
 
     private void updateWaterTotal() {
@@ -324,16 +399,16 @@ public class CaloriesWaterIntakeController {
     }
 
     public static class WaterEntry {
-        private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
+        private final StringProperty date = new SimpleStringProperty();
         private final IntegerProperty ounces = new SimpleIntegerProperty();
 
-        public WaterEntry(LocalDate date, int ounces) {
+        public WaterEntry(String date, int ounces) {
             this.date.set(date);
             this.ounces.set(ounces);
         }
 
-        public LocalDate getDate() { return date.get(); }
-        public ObjectProperty<LocalDate> dateProperty() { return date; }
+        public String getDate() { return date.get(); }
+        public StringProperty dateProperty() { return date; }
 
         public int getOunces() { return ounces.get(); }
         public IntegerProperty ouncesProperty() { return ounces; }
