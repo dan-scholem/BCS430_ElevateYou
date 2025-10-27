@@ -22,6 +22,7 @@ module com.elevate5.elevateyou {
     requires java.desktop;
     requires org.jetbrains.annotations;
     requires org.checkerframework.checker.qual;
+    requires tools.jackson.databind;
     //requires com.elevate5.elevateyou;
     //requires com.elevate5.elevateyou;
 
