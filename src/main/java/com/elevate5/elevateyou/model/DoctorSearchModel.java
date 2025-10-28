@@ -1,34 +1,41 @@
 package com.elevate5.elevateyou.model;
 
-import com.google.gson.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ArrayNode;
-import tools.jackson.databind.node.ObjectNode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
 
-public class SearchDoctors {
+public class DoctorSearchModel {
 
     private static final String apiURL = "https://npiregistry.cms.hhs.gov/api/?version=2.1";
-    //private String searchStr;
 
-    public static ObservableList<String> search(String firstName, String lastName, String location, String taxonomy_desc){
+    public static ObservableList<DoctorModel> search(String firstName, String lastName, String location, String taxonomy_desc){
         try{
-            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&city=" + location + "&taxonomy_description=" + taxonomy_desc;
+            if(firstName == null){
+                firstName = "";
+            }
+            if(lastName == null){
+                lastName = "";
+            }
+            if(location == null){
+                location = "";
+            }
+            if(taxonomy_desc == null){
+                taxonomy_desc = "";
+            }
+            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&city=" + location + "&taxonomy_description=" + taxonomy_desc + "&limit=50";
             URL url = new URL(searchString);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            System.out.println(searchString);
 
             conn.setRequestMethod("GET");
 
@@ -52,7 +59,7 @@ public class SearchDoctors {
                 JsonNode root = mapper.readTree(jsonString);
 
                 ArrayNode results = (ArrayNode) root.path("results");
-                ObservableList<String> resultsList = FXCollections.observableArrayList();
+                ObservableList<DoctorModel> doctors = FXCollections.observableArrayList();
                 String pattern = "^\"|\"$";
                 for(JsonNode node: results) {
 
@@ -74,13 +81,12 @@ public class SearchDoctors {
                     }else {
                         telephone = node.path("addresses").get(1).get("telephone_number").toString().replaceAll(pattern, "");
                     }
-                    String result = firstNameMatch + " " + lastNameMatch + ";" + address + " " + city + ", " + state + " " + zip + ";" + telephone + ";" + desc;
-
-                    resultsList.add(result);
+                    DoctorModel doctorModel = new DoctorModel(firstNameMatch, lastNameMatch, desc, telephone, address + " " + city + ", " + state + " " + zip);
+                    doctors.add(doctorModel);
 
                 }
                 conn.disconnect();
-                return resultsList;
+                return doctors;
 
             }else{
                 System.out.println("Error");
@@ -91,14 +97,9 @@ public class SearchDoctors {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public static void main(String[] args){
-
-        ObservableList<String> results = search("", "Lefkowitz", "", "cardio");
-        for(String result: results){
-            System.out.println(result);
+        } catch(ClassCastException e){
+            System.out.println(e.getMessage());
+            throw e;
         }
     }
 
