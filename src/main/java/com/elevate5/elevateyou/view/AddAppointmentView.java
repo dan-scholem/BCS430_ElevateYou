@@ -57,7 +57,7 @@ public class AddAppointmentView {
         if(session != null && session.getSelectedDoctor() != null) {
             appointmentDoctorName.setText(session.getSelectedDoctor().getFirstName() +  " " + session.getSelectedDoctor().getLastName());
             appointmentDoctorAddress.setText(session.getSelectedDoctor().getAddress());
-            appointmentDoctorPhone.setText(session.getSelectedDoctor().getPhoneNumber());
+            appointmentDoctorPhone.setText(session.getSelectedDoctor().getPhoneNumber().replace("-", ""));
             appointmentDoctorType.setText(session.getSelectedDoctor().getSpecialty());
         }
 

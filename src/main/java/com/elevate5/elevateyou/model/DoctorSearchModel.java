@@ -16,7 +16,7 @@ public class DoctorSearchModel {
 
     private static final String apiURL = "https://npiregistry.cms.hhs.gov/api/?version=2.1";
 
-    public static ObservableList<DoctorModel> search(String firstName, String lastName, String location, String taxonomy_desc){
+    public static ObservableList<DoctorModel> search(String firstName, String lastName, LocationEntryModel location, String taxonomy_desc){
         try{
             if(firstName == null){
                 firstName = "";
@@ -24,13 +24,16 @@ public class DoctorSearchModel {
             if(lastName == null){
                 lastName = "";
             }
+            String postalCode;
             if(location == null){
-                location = "";
+                postalCode = "";
+            }else{
+                postalCode = location.getPostalCode();
             }
             if(taxonomy_desc == null){
                 taxonomy_desc = "";
             }
-            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&city=" + location + "&taxonomy_description=" + taxonomy_desc + "&limit=50";
+            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&postal_code=" + postalCode + "&taxonomy_description=" + taxonomy_desc + "&limit=50";
             URL url = new URL(searchString);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -129,10 +130,14 @@ public class AppointmentView {
         Scene searchDoctorsScene = new Scene(fxmlLoader.load(),900,400);
         Stage searchDoctorsStage = new Stage();
         searchDoctorsStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+        searchDoctorsStage.initModality(Modality.WINDOW_MODAL);
         searchDoctorsStage.setScene(searchDoctorsScene);
-        //searchDoctorsStage.setResizable(false);
         searchDoctorsStage.setTitle("Search Doctors");
         searchDoctorsStage.showAndWait();
+
+        appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
+        appointmentTable.setItems(appointmentData);
+        appointmentTable.refresh();
 
     }
 
