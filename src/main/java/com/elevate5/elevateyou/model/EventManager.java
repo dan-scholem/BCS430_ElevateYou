@@ -1,5 +1,12 @@
 package com.elevate5.elevateyou.model;
 
+import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.session.Session;
+import com.elevate5.elevateyou.session.SessionManager;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.WriteResult;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +36,12 @@ public class EventManager {
             events.put(date, list);
         }
         //events.get(date).add(event);
+    }
+
+    public void deleteEvent(String date, Event event) {
+        if(this.events != null && this.events.containsKey(date)) {
+            this.events.get(date).remove(event);
+        }
     }
 
     public Map<String, ArrayList<Event>> getEvents() {
