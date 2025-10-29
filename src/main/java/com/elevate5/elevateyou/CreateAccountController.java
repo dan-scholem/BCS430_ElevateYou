@@ -204,6 +204,3 @@ private void showAlert (Alert.AlertType alertType, String message) {
 }
 
 }
-
-
-

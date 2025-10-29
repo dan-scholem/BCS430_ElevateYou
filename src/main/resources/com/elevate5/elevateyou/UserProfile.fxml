@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.UserProfileController">
+   <children>
+      <VBox alignment="BOTTOM_CENTER" layoutY="140.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
+         <padding>
+            <Insets bottom="22" left="10" right="10" top="18" />
+         </padding>
+         <children>
+            <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <Pane layoutY="-19.0" prefHeight="190.0" prefWidth="198.0" style="-fx-background-color: #006D77;">
+         <children>
+            <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/elevateyoulogo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+         </children>
+      </Pane>
+      <Label layoutX="546.0" layoutY="32.0" styleClass="settingslabel" stylesheets="@styles.css" text="Profile Settings" />
+      <Label layoutX="229.0" layoutY="186.0" styleClass="settingslabel" stylesheets="@styles.css" text="First Name" />
+      <Label layoutX="230.0" layoutY="229.0" styleClass="settingslabel" stylesheets="@styles.css" text="Last Name" />
+      <Label layoutX="215.0" layoutY="591.0" styleClass="changeimage" stylesheets="@styles.css" text="Change Profile Picture:" />
+      <Button layoutX="572.0" layoutY="660.0" mnemonicParsing="false" onAction="#updateProfile" styleClass="savebutton" stylesheets="@styles.css" text="Save Changes" />
+      <TextField fx:id="firstnameField" layoutX="350.0" layoutY="186.0" promptText="First Name" />
+      <TextField fx:id="lastnameField" layoutX="350.0" layoutY="229.0" promptText="Last Name" />
+      <Button layoutX="447.0" layoutY="588.0" mnemonicParsing="false" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
+      <Label layoutX="233.0" layoutY="282.0" styleClass="settingslabel" stylesheets="@styles.css" text="Age" />
+      <Label layoutX="227.0" layoutY="394.0" styleClass="settingslabel" stylesheets="@styles.css" text="Height" />
+      <Label layoutX="225.0" layoutY="448.0" styleClass="settingslabel" stylesheets="@styles.css" text="Weight" />
+      <TextField fx:id="ageField" layoutX="297.0" layoutY="281.0" prefHeight="25.0" prefWidth="99.0" promptText="Enter your age" />
+      <TextField fx:id="feetField" layoutX="311.0" layoutY="394.0" prefHeight="25.0" prefWidth="52.0" promptText="Feet" />
+      <Label layoutX="225.0" layoutY="339.0" styleClass="settingslabel" stylesheets="@styles.css" text="Gender" />
+      <TextField fx:id="weightField" layoutX="311.0" layoutY="447.0" prefHeight="25.0" prefWidth="74.0" promptText="Weight" />
+      <RadioButton fx:id="malegenButton" layoutX="305.0" layoutY="340.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="settingslabel" stylesheets="@styles.css" text="Male">
+         <toggleGroup>
+            <ToggleGroup fx:id="gender" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="femalegenButton" layoutX="407.0" layoutY="340.0" mnemonicParsing="false" styleClass="settingslabel" stylesheets="@styles.css" text="Female" toggleGroup="$gender" />
+      <TextField fx:id="inchesField" layoutX="405.0" layoutY="394.0" prefHeight="25.0" prefWidth="52.0" promptText="Inches" />
+      <Label layoutX="377.0" layoutY="394.0" styleClass="settingslabel" stylesheets="@styles.css" text="ft" />
+      <Label layoutX="466.0" layoutY="394.0" prefHeight="24.0" prefWidth="27.0" styleClass="settingslabel" stylesheets="@styles.css" text="in" />
+      <Label layoutX="390.0" layoutY="451.0" styleClass="settingslabel" stylesheets="@styles.css" text="lbs" />
+      <Label layoutX="227.0" layoutY="502.0" styleClass="settingslabel" stylesheets="@styles.css" text="Bio" />
+      <TextArea fx:id="userbioTextField" layoutX="279.0" layoutY="493.0" prefHeight="66.0" prefWidth="277.0" promptText="Tell us about you" />
+      <Button fx:id="profileButton" layoutX="871.0" layoutY="44.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="54.0" prefWidth="87.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;">
+         <graphic>
+            <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/profileicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>
