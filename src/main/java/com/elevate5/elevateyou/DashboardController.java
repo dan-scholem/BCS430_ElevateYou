@@ -211,4 +211,13 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    public void sleepButtonClick() {
+        try {
+            Stage s = (Stage) sleepButton.getScene().getWindow();
+            Sleep.loadSleepScene(s);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
 }
