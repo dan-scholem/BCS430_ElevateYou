@@ -248,6 +248,11 @@ public class UserProfileController {
         showAlert(Alert.AlertType.CONFIRMATION,"Your profile has been updated successfully!");
     }
 
+    @FXML
+    protected void uploadProfilePhoto(ActionEvent event) {
+
+    }
+
     private void showAlert (Alert.AlertType alertType, String message) {
 
         Alert alert = new Alert(alertType);
