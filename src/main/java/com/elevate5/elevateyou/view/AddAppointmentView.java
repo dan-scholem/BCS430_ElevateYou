@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class AddAppointmentView {
 
@@ -29,7 +30,7 @@ public class AddAppointmentView {
     @FXML
     private TextArea appointmentNotes;
 
-    private AppointmentViewModel appointmentViewModel = new AppointmentViewModel();
+    private final AppointmentViewModel appointmentViewModel = new AppointmentViewModel();
 
     Session session;
 
@@ -53,10 +54,17 @@ public class AddAppointmentView {
         appointmentTimeAMPM.getItems().addAll("AM", "PM");
         appointmentTimeAMPM.setValue("AM");
 
+        if(session != null && session.getSelectedDoctor() != null) {
+            appointmentDoctorName.setText(session.getSelectedDoctor().getFirstName() +  " " + session.getSelectedDoctor().getLastName());
+            appointmentDoctorAddress.setText(session.getSelectedDoctor().getAddress());
+            appointmentDoctorPhone.setText(session.getSelectedDoctor().getPhoneNumber());
+            appointmentDoctorType.setText(session.getSelectedDoctor().getSpecialty());
+        }
+
     }
 
     @FXML
-    public void addNewAppointment(ActionEvent event) {
+    private void addNewAppointment(ActionEvent event) {
         if(appointmentDoctorPhone.getText().length() != 10){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Invalid Phone Number");
@@ -65,12 +73,17 @@ public class AddAppointmentView {
             alert.showAndWait();
         }else {
             appointmentViewModel.addAppointment();
-            appointmentNotes.getScene().getWindow().hide();
+            if(session.getSelectedDoctor() != null) {
+                session.setSelectedDoctor(null);
+            }
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.close();
         }
     }
 
     @FXML
-    public void cancelNewAppointment(ActionEvent event) {
-        ((Node)event.getSource()).getScene().getWindow().hide();
+    private void cancelNewAppointment(ActionEvent event) {
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

@@ -1,10 +1,7 @@
 package com.elevate5.elevateyou.session;
 
 import com.elevate5.elevateyou.App;
-import com.elevate5.elevateyou.model.AppointmentManager;
-import com.elevate5.elevateyou.model.AppointmentModel;
-import com.elevate5.elevateyou.model.Event;
-import com.elevate5.elevateyou.model.EventManager;
+import com.elevate5.elevateyou.model.*;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -21,6 +18,7 @@ public class Session {
     private final String userID;
     private EventManager userEventManager = new EventManager();
     private AppointmentManager userAppointmentManager = new AppointmentManager();
+    private DoctorModel selectedDoctor;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -109,5 +107,13 @@ public class Session {
 
     public AppointmentManager getUserAppointmentManager() {
         return userAppointmentManager;
+    }
+
+    public DoctorModel getSelectedDoctor() {
+        return selectedDoctor;
+    }
+
+    public void setSelectedDoctor(DoctorModel selectedDoctor) {
+        this.selectedDoctor = selectedDoctor;
     }
 }

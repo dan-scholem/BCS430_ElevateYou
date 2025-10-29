@@ -5,8 +5,6 @@ import com.elevate5.elevateyou.model.AppointmentModel;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.AppointmentViewModel;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -94,7 +92,7 @@ public class AppointmentView {
     }
 
     @FXML
-    public void addAppointment(ActionEvent event) throws IOException {
+    private void addAppointmentButtonAction(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("AddAppointmentView.fxml"));
 
@@ -114,12 +112,27 @@ public class AppointmentView {
     }
 
     @FXML
-    public void deleteAppointment(ActionEvent event) throws IOException {
+    private void deleteAppointmentButtonAction(ActionEvent event) throws IOException {
 
         AppointmentModel selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         appointmentViewModel.deleteAppointment(selectedAppointment);
         appointmentData.remove(selectedAppointment);
         appointmentTable.refresh();
+
+    }
+
+    @FXML
+    private void searchDoctorsButtonAction(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("DoctorSearchView.fxml"));
+
+        Scene searchDoctorsScene = new Scene(fxmlLoader.load(),900,400);
+        Stage searchDoctorsStage = new Stage();
+        searchDoctorsStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+        searchDoctorsStage.setScene(searchDoctorsScene);
+        //searchDoctorsStage.setResizable(false);
+        searchDoctorsStage.setTitle("Search Doctors");
+        searchDoctorsStage.showAndWait();
 
     }
 

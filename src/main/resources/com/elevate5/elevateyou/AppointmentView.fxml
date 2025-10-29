@@ -22,9 +22,9 @@
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="85.0" prefWidth="264.0" HBox.hgrow="ALWAYS" spacing="10">
-                     <Button fx:id="addAppointmentButton" onAction="#addAppointment"  text="Add"/>
-                     <Button fx:id="deleteAppointmentButton" onAction="#deleteAppointment" text="Delete"/>
-                     <Button fx:id="searchDoctorsButton" text="Search" />
+                     <Button fx:id="addAppointmentButton" onAction="#addAppointmentButtonAction"  text="Add"/>
+                     <Button fx:id="deleteAppointmentButton" onAction="#deleteAppointmentButtonAction" text="Delete"/>
+                     <Button fx:id="searchDoctorsButton" onAction="#searchDoctorsButtonAction" text="Search" />
                   </HBox>
                </children>
                <padding>

@@ -35,12 +35,12 @@ public class DoctorSearchModel {
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            System.out.println(searchString);
+            //System.out.println(searchString);
 
             conn.setRequestMethod("GET");
 
             int responseCode = conn.getResponseCode();
-            System.out.println("Search response code: " + responseCode);
+            //System.out.println("Search response code: " + responseCode);
 
             if(responseCode == 200){
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));

@@ -2,6 +2,7 @@ package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.DoctorModel;
+import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.DoctorSearchViewModel;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
@@ -61,7 +63,6 @@ public class DoctorSearchView extends Application {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
 
-
     }
 
 
@@ -70,6 +71,31 @@ public class DoctorSearchView extends Application {
         searchResults = FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors());
         resultsTable.setItems(searchResults);
         resultsTable.refresh();
+    }
+
+
+    @FXML
+    private void bookButtonAction(ActionEvent event) throws IOException {
+        if(SessionManager.getSession() != null) {
+            SessionManager.getSession().setSelectedDoctor(resultsTable.getSelectionModel().getSelectedItem());
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("AddAppointmentView.fxml"));
+
+        Scene addAppointmentScene = new Scene(fxmlLoader.load(),500,500);
+        Stage addAppointmentStage = new Stage();
+        addAppointmentStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+        addAppointmentStage.setScene(addAppointmentScene);
+        addAppointmentStage.setResizable(false);
+        addAppointmentStage.setTitle("Add Appointment");
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+        addAppointmentStage.show();
+    }
+
+    @FXML
+    private void backButtonAction(ActionEvent event) throws IOException {
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
 
