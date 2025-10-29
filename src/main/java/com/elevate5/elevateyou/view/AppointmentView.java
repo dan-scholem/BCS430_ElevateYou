@@ -78,7 +78,10 @@ public class AppointmentView {
     public void initialize() {
         session = SessionManager.getSession();
 
-        appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
+        if(session.getUserAppointmentManager() != null){
+            appointmentData = FXCollections.observableArrayList(session.getUserAppointmentManager().getAppointments());
+        }
+
 
         apptDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         apptTimeCol.setCellValueFactory(new PropertyValueFactory<>("time"));

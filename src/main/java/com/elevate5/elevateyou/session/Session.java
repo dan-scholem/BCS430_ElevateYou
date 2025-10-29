@@ -51,7 +51,8 @@ public class Session {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            userEventManager = doc.toObject(EventManager.class);
+            //userEventManager = doc.toObject(EventManager.class);
+            userEventManager =  new EventManager();
             System.out.println("Doc doesn't exist, document created");
         }
 
@@ -83,7 +84,8 @@ public class Session {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
-            userAppointmentManager = doc.toObject(AppointmentManager.class);
+            //userAppointmentManager = doc.toObject(AppointmentManager.class);
+            userAppointmentManager = new AppointmentManager();
 
         }
 
