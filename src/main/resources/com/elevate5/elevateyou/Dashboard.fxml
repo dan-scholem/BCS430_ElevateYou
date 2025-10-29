@@ -78,7 +78,7 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+            <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
@@ -132,6 +132,7 @@
                   <Image url="@images/elevateyoulogo.png" />
                </image>
             </ImageView>
+            <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
          </children>
       </Pane>
    </children>
