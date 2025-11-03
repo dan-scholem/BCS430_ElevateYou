@@ -21,8 +21,13 @@ module com.elevate5.elevateyou {
     requires com.google.gson;
     requires java.desktop;
     requires org.jetbrains.annotations;
+    requires org.checkerframework.checker.qual;
+    requires tools.jackson.databind;
+    requires javafx.graphics;
+    //requires com.elevate5.elevateyou;
+    //requires com.elevate5.elevateyou;
 
-    opens com.elevate5.elevateyou to javafx.fxml;
+    opens com.elevate5.elevateyou;
     exports com.elevate5.elevateyou;
 
     opens com.elevate5.elevateyou.view to javafx.fxml;

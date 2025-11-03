@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AddAppointmentView">
+   <children>
+      <HBox alignment="CENTER" prefHeight="300.0" prefWidth="500.0">
+         <children>
+            <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="18.0">
+               <children>
+                  <Label text="Date" />
+                  <Label text="Time" />
+                  <Label text="Doctor Name" />
+                  <Label text="Type" />
+                  <Label text="Phone Number" />
+                  <Label text="Address" />
+                  <Label text="Notes" />
+               </children>
+               <padding>
+                  <Insets right="10.0" top="5.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="250.0" spacing="10.0">
+               <children>
+                  <DatePicker fx:id="appointmentDate" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="appointmentTimeHour" editable="true" prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeMinute" editable="true" prefWidth="150.0" />
+                        <ComboBox fx:id="appointmentTimeAMPM" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <TextField fx:id="appointmentDoctorName" />
+                  <TextField fx:id="appointmentDoctorType" />
+                  <TextField fx:id="appointmentDoctorPhone" />
+                  <TextField fx:id="appointmentDoctorAddress" />
+                  <TextArea fx:id="appointmentNotes" minHeight="-Infinity" prefHeight="100.0" prefWidth="250.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="addNewAppointmentButton" onAction="#addNewAppointment" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="cancelNewAppointmentButton" onAction="#cancelNewAppointment" mnemonicParsing="false" text="Cancel" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

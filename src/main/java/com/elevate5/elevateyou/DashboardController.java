@@ -3,6 +3,7 @@ package com.elevate5.elevateyou;
 import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -23,21 +24,54 @@ import java.io.IOException;
 
 public class DashboardController {
 
-    @FXML public Label welcometext;
-    @FXML private Button appointmentsButton;
-    @FXML private Button calendarButton;
-    @FXML private Button chatButton;
-    @FXML private Button dashButton;
-    @FXML private Button exerciseButton;
-    @FXML private Button foodButton;
-    @FXML private Button friendsButton;
-    @FXML private Button journalButton;
-    @FXML private Button logoutButton;
-    @FXML private Button medButton;
-    @FXML private Button reviewsButton;
-    @FXML private Button sleepButton;
-    @FXML private Button tutorialsButton;
-    @FXML private HBox topRightBar;
+    @FXML
+    public Label welcometext;
+    @FXML
+    private Button appointmentsButton;
+
+    @FXML
+    private Button calendarButton;
+
+    @FXML
+    private Button chatButton;
+
+    @FXML
+    private Button dashButton;
+
+    @FXML
+    private Button exerciseButton;
+
+    @FXML
+    private Button foodButton;
+
+    @FXML
+    private Button friendsButton;
+
+    @FXML
+    private Button journalButton;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button medButton;
+
+    @FXML
+    private Button profileButton;
+
+    @FXML
+    private Button reviewsButton;
+
+    @FXML
+    private Button sleepButton;
+
+    @FXML
+    private Button tutorialsButton;
+
+    @FXML
+    private HBox topRightBar;
+
+
 
     private Session session;
 
@@ -136,6 +170,20 @@ public class DashboardController {
     }
 
     @FXML
+    protected void settingsButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) profileButton.getScene().getWindow();
+
+            UserProfile.loadSettingsScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
     public void setNotificationsButton() {
         try {
             String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
@@ -178,6 +226,25 @@ public class DashboardController {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to open Exercise:\n" + e.getMessage()).showAndWait();
+        }
+    }
+    @FXML
+    public void appointmentButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
+            AppointmentView.loadAppointmentScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void sleepButtonClick() {
+        try {
+            Stage s = (Stage) sleepButton.getScene().getWindow();
+            Sleep.loadSleepScene(s);
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
     }
 }

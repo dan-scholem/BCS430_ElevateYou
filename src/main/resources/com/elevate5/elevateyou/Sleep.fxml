@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1056.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.SleepController">
+
+   <children>
+
+      <Label layoutX="516.0" layoutY="38.0" styleClass="journallabel" text="Sleep Tracker" />
+      <ImageView fitHeight="150.0" fitWidth="44.0" layoutX="451.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/bed.png" />
+         </image>
+      </ImageView>
+
+      <Pane layoutY="-21.0" prefHeight="190.0" prefWidth="198.0" style="-fx-background-color: #006D77;">
+         <children>
+            <ImageView fitHeight="213.0" fitWidth="220.0" layoutX="-14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/elevateyoulogo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="32.0" layoutY="140.0" styleClass="dashlabel" text="ElevateYou" />
+         </children>
+      </Pane>
+
+      <VBox alignment="CENTER" layoutY="169.0" prefHeight="591.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
+         <padding><Insets bottom="22" left="10" right="10" top="18" /></padding>
+         <children>
+            <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" text="Dashboard" />
+            <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" text="Medications" />
+            <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" text="Nutrition" />
+            <Button fx:id="exerciseButton" styleClass="exercisebutton" text="Exercise" />
+            <Button fx:id="sleepButton" styleClass="sleepbutton" text="Sleep" />
+            <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" text="Journal" />
+            <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" text="Appointments" />
+            <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" text="Tutorials" />
+            <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" text="Calendar" />
+            <Button fx:id="friendsButton" styleClass="friendsbutton" text="Refer Friends" />
+            <Button fx:id="chatButton" styleClass="chatbutton" text="Live Chat" />
+            <Button fx:id="reviewsButton" styleClass="reviewsbutton" text="Reviews" />
+            <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" text="Log Out" />
+         </children>
+      </VBox>
+
+      <Label layoutX="210.0" layoutY="137.0" styleClass="journaltitles" text="Start At:" />
+      <Label layoutX="210.0" layoutY="188.0" styleClass="journaltitles" text="End At:" />
+
+      <DatePicker fx:id="startDatePicker" layoutX="310.0" layoutY="138.0" />
+      <TextField fx:id="startHourField" layoutX="497.0" layoutY="138.0" prefWidth="36.0" promptText="HH" />
+      <Label layoutX="534.0" layoutY="142.0" text=":" />
+      <TextField fx:id="startMinuteField" layoutX="542.0" layoutY="138.0" prefWidth="36.0" promptText="mm" />
+      <Button fx:id="useNowStart" layoutX="590.0" layoutY="138.0" onAction="#onUseNowStart" prefWidth="125.0" text="Use current time" />
+
+      <DatePicker fx:id="endDatePicker" layoutX="310.0" layoutY="192.0" />
+      <TextField fx:id="endHourField" layoutX="497.0" layoutY="192.0" prefWidth="36.0" promptText="HH" />
+      <Label layoutX="534.0" layoutY="196.0" text=":" />
+      <TextField fx:id="endMinuteField" layoutX="542.0" layoutY="192.0" prefWidth="36.0" promptText="mm" />
+      <Button fx:id="useNowEnd" layoutX="590.0" layoutY="192.0" onAction="#onUseNowEnd" prefWidth="125.0" text="Use current time" />
+
+      <Label layoutX="210.0" layoutY="490.0" styleClass="journaltitles" text="Factors for sleep:" />
+      <Label layoutX="220.0" layoutY="535.0" styleClass="journaltitles" text="Fragmented" />
+      <CheckBox fx:id="fragmented" layoutX="360.0" layoutY="540.0" text="(Check if you ≥ 2 times a night)" />
+
+      <Label layoutX="235.0" layoutY="576.0" styleClass="journaltitles" text="Exercise" />
+      <CheckBox fx:id="lateExercise" layoutX="360.0" layoutY="580.0" text="(Check if you do before 2 hours your sleep)" />
+
+      <Label layoutX="785.0" layoutY="192.0" styleClass="journaltitles" text="Sleep Article" />
+      <TextArea fx:id="entryTextArea" layoutX="224.0" layoutY="236.0" prefHeight="229.0" prefWidth="406.0" wrapText="true"/>
+
+      <ListView fx:id="EntryList" layoutX="688.0" layoutY="236.0" onMouseClicked="#onEntryRowClicked" prefHeight="423.0" prefWidth="298.0" />
+
+      <Button fx:id="addEntry" layoutX="229.0" layoutY="703.0" onAction="#addEntry" styleClass="addbutton" text="Add Time" />
+      <Button fx:id="updateEntry" layoutX="328.0" layoutY="703.0" onAction="#updateEntry" styleClass="updatebutton" text="Update" />
+      <Button fx:id="deleteEntry" layoutX="407.0" layoutY="703.0" onAction="#deleteEntry" styleClass="deletebutton" text="Delete" />
+      <Button fx:id="clearEntry" layoutX="481.0" layoutY="703.0" onAction="#clearEntry" styleClass="clearbutton" text="Clear" />
+      <TextField fx:id="napMinutesField" layoutX="360.0" layoutY="620.0" prefHeight="26.0" prefWidth="48.0" promptText="min" />
+      <Label layoutX="229.0" layoutY="620.0" styleClass="journaltitles" text="Total Nap" />
+
+   </children>
+</AnchorPane>
