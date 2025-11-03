@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.elevate5.elevateyou.ui.ExerciseController"
+            prefWidth="800" prefHeight="500">
+
+    <top>
+        <VBox spacing="5.0" alignment="CENTER">
+            <children>
+                <Label text="Exercise" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                <Label text="Choose a workout and press Start" />
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="15.0">
+
+            <!-- Workout Options -->
+            <GridPane fx:id="exerciseGrid" hgap="15" vgap="15" alignment="CENTER">
+                <children>
+                    <ToggleButton fx:id="treadmillBtn" text="Treadmill" onAction="#onChoice" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <ToggleButton fx:id="weightsBtn"   text="Weights"   onAction="#onChoice" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <ToggleButton fx:id="bicycleBtn"   text="Bicycle"   onAction="#onChoice" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <ToggleButton fx:id="swimmingBtn"  text="Swimming"  onAction="#onChoice" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                </children>
+            </GridPane>
+
+            <!-- Exercise Info -->
+            <HBox spacing="10" alignment="CENTER">
+                <children>
+                    <Label text="Selected:" />
+                    <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;" />
+                </children>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <children>
+                    <Label text="Duration:" />
+                    <Label fx:id="timeLabel" text="00:00:00" />
+                </children>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <children>
+                    <Label text="Calories:" />
+                    <Label fx:id="caloriesLabel" text="0 kcal" />
+                </children>
+            </HBox>
+
+            <!-- Action Buttons -->
+            <HBox spacing="15" alignment="CENTER">
+                <children>
+                    <Button fx:id="startButton" text="Start" onAction="#onStart"/>
+                    <Button fx:id="stopButton"  text="Stop"  onAction="#onStop"/>
+                    <Button fx:id="resetButton" text="Reset" onAction="#onReset"/>
+                </children>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
