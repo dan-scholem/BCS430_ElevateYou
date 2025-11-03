@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -67,6 +68,8 @@ public class MedicationController {
 
     @FXML
     private Button updateButton;
+
+    @FXML private Button appointmentsButton;
 
     @FXML
     private TableView<Medication> MedicationTable;
@@ -448,6 +451,16 @@ public class MedicationController {
         try {
             Stage stage = (Stage) foodButton.getScene().getWindow();
             CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void appointmentButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
+            AppointmentView.loadAppointmentScene(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
