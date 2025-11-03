@@ -100,9 +100,6 @@ public class DoctorSearchModel {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch(ClassCastException e){
-            System.out.println(e.getMessage());
-            throw e;
         }
     }
 
