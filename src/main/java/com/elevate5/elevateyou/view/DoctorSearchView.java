@@ -144,12 +144,14 @@ public class DoctorSearchView extends Application {
     private void searchButtonAction(ActionEvent event) {
         searchResults = FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors());
         try{
-           double searchRadius = Double.parseDouble(distanceField.getText());
-           selectedLocation = locationBox.valueProperty().get();
-            ObservableList<LocationEntryModel> otherLocations = LocationUtil.getLocationsWithinRadius(selectedLocation, searchRadius, locations);
-            for(LocationEntryModel location : otherLocations){
-                locationBox.setValue(location);
-                searchResults.addAll(FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors()));
+            if(!distanceField.getText().isEmpty()){
+                double searchRadius = Double.parseDouble(distanceField.getText());
+                selectedLocation = locationBox.valueProperty().get();
+                ObservableList<LocationEntryModel> otherLocations = LocationUtil.getLocationsWithinRadius(selectedLocation, searchRadius, locations);
+                for(LocationEntryModel location : otherLocations){
+                    locationBox.setValue(location);
+                    searchResults.addAll(FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors()));
+                }
             }
             locationBox.setValue(null);
 
@@ -158,6 +160,12 @@ public class DoctorSearchView extends Application {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText("Please enter a valid distance");
+            alert.showAndWait();
+        } catch (NullPointerException e){
+            Alert alert = new  Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select a valid location");
             alert.showAndWait();
         }
         //DoctorModel firstResult = searchResults.getFirst();

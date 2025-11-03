@@ -46,31 +46,27 @@ public class DoctorSearchModel {
             //System.out.println("Search response code: " + responseCode);
 
             if(responseCode == 200){
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                StringBuilder sb = new StringBuilder();
-
-                while ((line = br.readLine()) != null) {
-                    sb.append(line);
-                }
-                br.close();
-
-                String jsonString = sb.toString();
-
-                ObjectMapper mapper = new ObjectMapper();
-
-                JsonNode root = mapper.readTree(jsonString);
-
-                ArrayNode results = (ArrayNode) root.path("results");
+                ArrayNode results = getJsonNodes(conn);
                 ObservableList<DoctorModel> doctors = FXCollections.observableArrayList();
                 String pattern = "^\"|\"$";
                 for(JsonNode node: results) {
 
                     String firstNameMatch = node.path("basic").path("first_name").toString().replaceAll(pattern, "");
-                    String lastNameMatch = node.path("basic").path("last_name").toString().replaceAll(pattern, "");
-                    String desc = node.path("taxonomies").get(0).get("desc").toString().replaceAll(pattern, "");
 
-                    String address = node.path("addresses").get(1).get("address_1").toString().replaceAll(pattern, "");
+                    String lastNameMatch = node.path("basic").path("last_name").toString().replaceAll(pattern, "");
+
+                    String desc = node.path("taxonomies").get(0).get("desc").toString().replaceAll(pattern, "");
+                    if(!desc.toLowerCase().contains(taxonomy_desc.toLowerCase())){
+                        desc = "";
+                    }
+
+                    String address;
+                    JsonNode addressPath = node.path("addresses").get(1);
+                    if(addressPath.get("address_purpose").toString().replaceAll(pattern, "").equals("LOCATION") && addressPath.get("postal_code").toString().replaceAll(pattern, "").contains(postalCode)){
+                        address = node.path("addresses").get(1).get("address_1").toString().replaceAll(pattern, "");
+                    }else{
+                        address = "";
+                    }
 
                     String city = node.path("addresses").get(1).get("city").toString().replaceAll(pattern, "");
 
@@ -84,7 +80,8 @@ public class DoctorSearchModel {
                     }else {
                         telephone = node.path("addresses").get(1).get("telephone_number").toString().replaceAll(pattern, "");
                     }
-                    if(!firstNameMatch.isEmpty() && !lastNameMatch.isEmpty()){
+
+                    if(!firstNameMatch.isEmpty() && !lastNameMatch.isEmpty() && !address.isEmpty() && !desc.isEmpty()){
                         DoctorModel doctorModel = new DoctorModel(firstNameMatch, lastNameMatch, desc, telephone, address + " " + city + ", " + state + " " + zip);
                         doctors.add(doctorModel);
                     }
@@ -107,6 +104,25 @@ public class DoctorSearchModel {
             System.out.println(e.getMessage());
             throw e;
         }
+    }
+
+    private static ArrayNode getJsonNodes(HttpURLConnection conn) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        StringBuilder sb = new StringBuilder();
+
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+        br.close();
+
+        String jsonString = sb.toString();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonNode root = mapper.readTree(jsonString);
+
+        return (ArrayNode) root.path("results");
     }
 
 }
