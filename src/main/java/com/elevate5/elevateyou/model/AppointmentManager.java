@@ -40,6 +40,11 @@ public class AppointmentManager {
             }
             time = timeHour + ":" + timeMinute;
 
+            String[] checkDateFormat = date.split("/");
+            if(checkDateFormat[1].length() == 1){
+                checkDateFormat[1] = "0" + checkDateFormat[1];
+                date = checkDateFormat[0] + "/" + checkDateFormat[1] + "/" + checkDateFormat[2];
+            }
 
             try{ //input validation
                 LocalDate testDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
@@ -88,6 +93,13 @@ public class AppointmentManager {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText("Invalid Time");
+            alert.showAndWait();
+        } catch(DateTimeParseException _){
+        } catch(ArrayIndexOutOfBoundsException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Invalid Date");
             alert.showAndWait();
         }
     }
