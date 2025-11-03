@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.DoctorSearchView">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="900.0">
+         <top>
+            <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Name:" />
+                  <TextField fx:id="firstNameField" prefHeight="25.0" prefWidth="78.0" promptText="First..." />
+                  <TextField fx:id="lastNameField" prefHeight="25.0" prefWidth="80.0" promptText="Last..." />
+                  <Label text="Specialty:" />
+                  <TextField fx:id="specialtyField" prefHeight="25.0" prefWidth="98.0" promptText="Specialty..." />
+                  <Label text="Location:" />
+                  <ComboBox fx:id="locationBox" prefHeight="25.0" prefWidth="107.0" promptText="Location..." />
+                  <Label text="Distance:" />
+                  <TextField fx:id="distanceField" prefHeight="25.0" prefWidth="52.0" promptText="Miles..." />
+                  <Button mnemonicParsing="false" onAction="#searchButtonAction" text="Go!" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <TableView fx:id="resultsTable" prefHeight="304.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="firstNameColumn" prefWidth="124.20001524686813" text="First Name" />
+                  <TableColumn fx:id="lastNameColumn" prefWidth="126.19998168945312" text="Last Name" />
+                <TableColumn fx:id="specialtyColumn" prefWidth="150" text="Specialty" />
+                  <TableColumn fx:id="phoneNumberColumn" prefWidth="120.0" text="Phone Number" />
+                  <TableColumn fx:id="addressColumn" prefWidth="264.0" text="Address" />
+              </columns>
+            </TableView>
+         </center>
+         <bottom>
+             <HBox alignment="CENTER" spacing="50.0">
+                 <Button mnemonicParsing="false" onAction="#bookButtonAction" text="Book!" />
+               <Button mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+             </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

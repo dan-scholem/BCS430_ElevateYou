@@ -3,6 +3,7 @@ package com.elevate5.elevateyou;
 import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -228,4 +229,23 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    public void appointmentButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
+            AppointmentView.loadAppointmentScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void sleepButtonClick() {
+        try {
+            Stage s = (Stage) sleepButton.getScene().getWindow();
+            Sleep.loadSleepScene(s);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
 }

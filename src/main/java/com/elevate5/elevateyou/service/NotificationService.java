@@ -62,7 +62,7 @@ public class NotificationService {
 
     // ---------- Sources ----------
 
-    // Medications/{uid}/UserMedications/*
+    // Medications/{email}/UserMedications/*
     private List<NotificationModel> fromMedications()
             throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
@@ -74,10 +74,14 @@ public class NotificationService {
 
         for (QueryDocumentSnapshot d : docs) {
             String medName = d.getString("medicationName");
-            String dueDate = d.getString("startDate"); // adjust if you have a dedicated due field
+            String dueDate = d.getString("endDate");
+            String frequency = d.getString("frequency");
+            Instant due = instantFromDate(dueDate); // Hide the overdue items.
+
+            if (due.isBefore(Instant.now())) continue;
 
             String title = "Medication";
-            String body  = "You have " + safe(medName) + " need to take due at " + safe(dueDate);
+            String body  = "You have " + safe(medName) + " need to take " + safe(frequency) +" and due at " + safe(dueDate);
 
             String id = "Medications/" + uid + "/UserMedications/" + d.getId();
 
@@ -104,7 +108,10 @@ public class NotificationService {
                         for (Object raw : items) {
                             if (raw instanceof Map<?, ?> m) {
                                 String name = asString(m.get("eventName"));
-                                String time = asString(m.get("time")); // HH:mm
+                                String time = asString(m.get("time"));
+
+                                Instant due = instantFromDate(time);
+                                if (due.isBefore(Instant.now())) continue;
 
                                 String title = "Events";
                                 String body  = "You have " + safe(name) + " at " + safe(date + (time != null ? " " + time : ""));
