@@ -74,7 +74,7 @@
     -fx-background-color: #EDF6F9;
 }
 
-.addbutton, .updatebutton, .deletebutton, .clearbutton {
+.addbutton, .updatebutton, .deletebutton, .clearbutton, .savebutton, .uploadbutton {
     -fx-background-color: #E29578;
     -fx-background-radius: 30px;
     -fx-text-fill: #000000;
@@ -123,9 +123,9 @@
     -fx-font-weight: bold;
 }
 
-.emaillabel, .passwordlabel {
+.emaillabel, .passwordlabel, .changeimage, .settingslabel {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 22px;
+    -fx-font-size: 20px;
     -fx-text-fill: #e29578;
     -fx-font-weight: bold;
 }
@@ -201,6 +201,12 @@
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #E29578;
+}
+
+#profileimage {
+    -fx-background-image: url('images/profileicon.png');
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
 }
 
 .notif-item {

@@ -58,6 +58,9 @@ public class DashboardController {
     private Button medButton;
 
     @FXML
+    private Button profileButton;
+
+    @FXML
     private Button reviewsButton;
 
     @FXML
@@ -180,6 +183,20 @@ public class DashboardController {
             Stage stage = (Stage) journalButton.getScene().getWindow();
 
             JournalEntry.loadJournalScene(stage);
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @FXML
+    protected void settingsButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) profileButton.getScene().getWindow();
+
+            UserProfile.loadSettingsScene(stage);
         } catch (IOException e) {
 
             throw new RuntimeException(e);
