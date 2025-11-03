@@ -84,8 +84,11 @@ public class DoctorSearchModel {
                     }else {
                         telephone = node.path("addresses").get(1).get("telephone_number").toString().replaceAll(pattern, "");
                     }
-                    DoctorModel doctorModel = new DoctorModel(firstNameMatch, lastNameMatch, desc, telephone, address + " " + city + ", " + state + " " + zip);
-                    doctors.add(doctorModel);
+                    if(!firstNameMatch.isEmpty() && !lastNameMatch.isEmpty()){
+                        DoctorModel doctorModel = new DoctorModel(firstNameMatch, lastNameMatch, desc, telephone, address + " " + city + ", " + state + " " + zip);
+                        doctors.add(doctorModel);
+                    }
+
 
                 }
                 conn.disconnect();

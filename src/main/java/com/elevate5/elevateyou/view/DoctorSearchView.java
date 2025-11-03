@@ -4,6 +4,7 @@ import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.DoctorModel;
 import com.elevate5.elevateyou.model.LocationEntryModel;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.util.LocationUtil;
 import com.elevate5.elevateyou.viewmodel.DoctorSearchViewModel;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -83,9 +84,16 @@ public class DoctorSearchView extends Application {
             String line;
             while((line = reader.readLine()) != null){
                 String[] location = line.split(",");
-                LocationEntryModel entry =  new LocationEntryModel(location[0].replaceAll("^\"|\"$",""), location[3].replaceAll("^\"|\"$",""), location[4].replaceAll("^\"|\"$",""));
+                //System.out.println(location[1].replaceAll("^\"|\"$","") + ", " + location[2].replaceAll("^\"|\"$",""));
+                LocationEntryModel entry =  new LocationEntryModel(
+                        location[0].replaceAll("^\"|\"$",""),
+                        location[3].replaceAll("^\"|\"$",""),
+                        location[4].replaceAll("^\"|\"$",""),
+                        Double.parseDouble(location[1].replaceAll("^\"|\"$","")),
+                        Double.parseDouble(location[2].replaceAll("^\"|\"$",""))
+                );
+                //System.out.println(entry + ": " +entry.getLatitude() + ", " + entry.getLongitude());
                 locations.add(entry);
-                //System.out.println(entry);
             }
 
         } catch (IOException e) {
@@ -135,6 +143,25 @@ public class DoctorSearchView extends Application {
     @FXML
     private void searchButtonAction(ActionEvent event) {
         searchResults = FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors());
+        try{
+           double searchRadius = Double.parseDouble(distanceField.getText());
+           selectedLocation = locationBox.valueProperty().get();
+            ObservableList<LocationEntryModel> otherLocations = LocationUtil.getLocationsWithinRadius(selectedLocation, searchRadius, locations);
+            for(LocationEntryModel location : otherLocations){
+                locationBox.setValue(location);
+                searchResults.addAll(FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors()));
+            }
+            locationBox.setValue(null);
+
+        }catch (NumberFormatException e){
+            Alert alert = new  Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please enter a valid distance");
+            alert.showAndWait();
+        }
+        //DoctorModel firstResult = searchResults.getFirst();
+        //System.out.println("First Result: " + firstResult);
         resultsTable.setItems(searchResults);
         resultsTable.refresh();
         locationBox.getSelectionModel().clearSelection();
