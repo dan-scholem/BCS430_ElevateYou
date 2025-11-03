@@ -4,6 +4,7 @@ import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.DoctorModel;
 import com.elevate5.elevateyou.model.LocationEntryModel;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.util.LocationUtil;
 import com.elevate5.elevateyou.viewmodel.DoctorSearchViewModel;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -83,9 +84,14 @@ public class DoctorSearchView extends Application {
             String line;
             while((line = reader.readLine()) != null){
                 String[] location = line.split(",");
-                LocationEntryModel entry =  new LocationEntryModel(location[0].replaceAll("^\"|\"$",""), location[3].replaceAll("^\"|\"$",""), location[4].replaceAll("^\"|\"$",""));
+                LocationEntryModel entry =  new LocationEntryModel(
+                        location[0].replaceAll("^\"|\"$",""),
+                        location[3].replaceAll("^\"|\"$",""),
+                        location[4].replaceAll("^\"|\"$",""),
+                        Double.parseDouble(location[1].replaceAll("^\"|\"$","")),
+                        Double.parseDouble(location[2].replaceAll("^\"|\"$",""))
+                );
                 locations.add(entry);
-                //System.out.println(entry);
             }
 
         } catch (IOException e) {
@@ -134,10 +140,58 @@ public class DoctorSearchView extends Application {
 
     @FXML
     private void searchButtonAction(ActionEvent event) {
-        searchResults = FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors());
+        String firstNameTextField = firstNameField.getText();
+        String lastNameTextField = lastNameField.getText();
+        String specialtyTextField = specialtyField.getText();
+        String locationBoxText =  locationBox.getEditor().getText();
+        if((firstNameTextField != null && !firstNameTextField.isEmpty()) || (lastNameTextField != null && !lastNameTextField.isEmpty()) || (specialtyTextField != null && !specialtyTextField.isEmpty()) || (locationBoxText != null && !locationBoxText.isEmpty())) {
+            try {
+                searchResults = doctorSearchViewModel.searchDoctors();
+                selectedLocation = locationBox.valueProperty().get();
+                if (!distanceField.getText().isEmpty() && selectedLocation != null) {
+                    double searchRadius = Double.parseDouble(distanceField.getText());
+                    ObservableList<LocationEntryModel> otherLocations = LocationUtil.getLocationsWithinRadius(selectedLocation, searchRadius, locations);
+                    for (LocationEntryModel location : otherLocations) {
+                        locationBox.setValue(location);
+                        searchResults.addAll(FXCollections.observableArrayList(doctorSearchViewModel.searchDoctors()));
+                    }
+                }
+
+                if(searchResults.isEmpty()) {
+                    resultsTable.setPlaceholder(new Label("No results found. Please refine your search."));
+                    resultsTable.getItems().clear();
+                    resultsTable.setItems(null);
+                    resultsTable.getSelectionModel().clearSelection();
+                    resultsTable.refresh();
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please enter a valid distance");
+                alert.showAndWait();
+            } catch (NullPointerException | ClassCastException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please select a valid location");
+                alert.showAndWait();
+            }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Please fill at least one field");
+            alert.showAndWait();
+        }
+        if(selectedLocation != null){
+            locationBox.setValue(selectedLocation);
+        }else{
+            locationBox.getSelectionModel().clearSelection();
+        }
         resultsTable.setItems(searchResults);
         resultsTable.refresh();
-        locationBox.getSelectionModel().clearSelection();
+
     }
 
 

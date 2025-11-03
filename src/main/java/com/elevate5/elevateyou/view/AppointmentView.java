@@ -71,7 +71,7 @@ public class AppointmentView {
     private TableColumn<AppointmentModel, String> apptNotesCol;
 
     private ObservableList<AppointmentModel> appointmentData;
-    private AppointmentViewModel  appointmentViewModel = new AppointmentViewModel();
+    private final AppointmentViewModel  appointmentViewModel = new AppointmentViewModel();
     private Session session;
 
     @FXML

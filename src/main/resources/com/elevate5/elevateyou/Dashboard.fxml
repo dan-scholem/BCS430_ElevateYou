@@ -81,7 +81,8 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+            <!-- EDITED: added onAction -->
+            <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>

@@ -41,7 +41,7 @@
             </Button>
             <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
             </Button>
-            <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+            <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
             </Button>
             <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
             </Button>
