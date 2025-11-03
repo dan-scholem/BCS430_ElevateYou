@@ -40,7 +40,7 @@
       </AnchorPane>
       <Pane layoutX="216.0" layoutY="113.0" prefHeight="102.0" prefWidth="515.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
          <children>
-            <Label layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+            <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
          </children>
          <effect>
             <DropShadow />
