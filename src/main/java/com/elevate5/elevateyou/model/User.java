@@ -8,6 +8,12 @@ public class User {
     private String email;
     private String password;
     //private String passwordHash;
+    private Integer userAge;
+    private String userGender;
+    private Integer feetHeight;
+    private Integer inchesHeight;
+    private Integer weight;
+    private String userBio;
     private String profileImageURL;
 
     public User(){
@@ -15,6 +21,12 @@ public class User {
         this.firstName = "";
         this.lastName = "";
         this.email = "";
+        this.userAge = 0;
+        this.userGender = "";
+        this.feetHeight = 0;
+        this.inchesHeight = 0;
+        this.weight = 0;
+        this.userBio = "";
         this.profileImageURL = "";
     }
 
@@ -25,6 +37,12 @@ public class User {
         this.email = email;
         //this.passwordHash = passwordHash;
         this.profileImageURL = profileImageURL;
+        this.userAge = 0;
+        this.userGender = "";
+        this.feetHeight = 0;
+        this.inchesHeight = 0;
+        this.weight = 0;
+        this.userBio = "";
     }
 
     public int getUserID() {
@@ -54,6 +72,54 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    public Integer getUserAge() {
+        return userAge;
+    }
+
+    public void setUserAge(Integer userAge) {
+        this.userAge = userAge;
+    }
+
+    public String getUserGender() {
+        return userGender;
+    }
+
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public Integer getHeight() {
+        return feetHeight;
+    }
+
+    public void setHeight(Integer height) {
+        this.feetHeight  = height;
+    }
+
+    public Integer getInchesHeight() {
+        return inchesHeight;
+    }
+
+    public void setInchesHeight(Integer inchesHeight) {
+        this.inchesHeight = inchesHeight;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public String getUserBio() {
+        return userBio;
+    }
+
+    public void setUserBio(String userBio) {
+        this.userBio = userBio;
+    }
+
     /*
     public String getPasswordHash() {
         return passwordHash;
@@ -73,6 +139,5 @@ public class User {
         if (firstName == null || firstName.isBlank()) return lastName;
         return firstName + " " + lastName;
     }
-
 
 }

@@ -11,26 +11,26 @@
    <children>
       <AnchorPane layoutX="47.0" layoutY="31.0" prefHeight="567.0" prefWidth="776.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 30;">
          <children>
-            <Label layoutX="69.0" layoutY="112.0" prefHeight="28.0" prefWidth="124.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="First Name" textFill="#e29578">
+            <Label layoutX="69.0" layoutY="102.0" prefHeight="28.0" prefWidth="124.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="First Name" textFill="#e29578">
             </Label>
-            <Label layoutX="406.0" layoutY="112.0" prefHeight="29.0" prefWidth="155.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Last Name" textFill="#e29578">
+            <Label layoutX="69.0" layoutY="181.0" prefHeight="29.0" prefWidth="155.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Last Name" textFill="#e29578">
             </Label>
             <Label layoutX="284.0" layoutY="30.0" prefHeight="40.0" prefWidth="245.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Create Your Account " textFill="#e29578">
             </Label>
-            <TextField fx:id="firstName" layoutX="69.0" layoutY="169.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
-            <PasswordField fx:id="userPassword" layoutX="394.0" layoutY="323.0" prefHeight="25.0" prefWidth="284.0" />
-            <Button fx:id="createAccountButton" layoutX="246.0" layoutY="430.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
+            <TextField fx:id="firstName" layoutX="69.0" layoutY="138.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <PasswordField fx:id="userPassword" layoutX="69.0" layoutY="410.0" prefHeight="25.0" prefWidth="284.0" />
+            <Button fx:id="createAccountButton" layoutX="265.0" layoutY="470.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
             </Button>
-            <Label layoutX="406.0" layoutY="527.0" prefHeight="27.0" prefWidth="172.0" styleClass="accountlabel" stylesheets="@styles.css" text=" Have an account?">
+            <Label layoutX="437.0" layoutY="527.0" prefHeight="27.0" prefWidth="172.0" styleClass="accountlabel" stylesheets="@styles.css" text=" Have an account?">
             </Label>
-            <Button fx:id="signInButton" layoutX="609.0" layoutY="506.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #006D77;" styleClass="passwordlabel" stylesheets="@styles.css" text="Sign In" textFill="#ffddd2">
+            <Button fx:id="signInButton" layoutX="618.0" layoutY="506.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #006D77;" styleClass="passwordlabel" stylesheets="@styles.css" text="Sign In" textFill="#ffddd2">
             </Button>
-            <TextField fx:id="lastName" layoutX="407.0" layoutY="169.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
-            <Label layoutX="406.0" layoutY="263.0" prefHeight="29.0" prefWidth="143.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
+            <TextField fx:id="lastName" layoutX="69.0" layoutY="220.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <Label layoutX="69.0" layoutY="365.0" prefHeight="29.0" prefWidth="143.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
             </Label>
-            <Label layoutX="69.0" layoutY="263.0" prefHeight="28.0" prefWidth="92.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
+            <Label layoutX="69.0" layoutY="269.0" prefHeight="28.0" prefWidth="92.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
             </Label>
-            <TextField fx:id="userEmail" layoutX="69.0" layoutY="323.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <TextField fx:id="userEmail" layoutX="69.0" layoutY="312.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
          </children>
       </AnchorPane>
    </children>
