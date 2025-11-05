@@ -1,12 +1,14 @@
 package com.elevate5.elevateyou.model;
 
+import java.util.ArrayList;
+
 public class User {
 
     private int userID;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+    //private String password;
     //private String passwordHash;
     private Integer userAge;
     private String userGender;
@@ -15,6 +17,7 @@ public class User {
     private Integer weight;
     private String userBio;
     private String profileImageURL;
+    private ArrayList<String> friendsList;
 
     public User(){
         this.userID = 0;
@@ -69,9 +72,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    /*
     public void setPassword(String password) {
         this.password = password;
     }
+     */
     public Integer getUserAge() {
         return userAge;
     }
@@ -140,4 +145,11 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public ArrayList<String> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(ArrayList<String> friendsList) {
+        this.friendsList = friendsList;
+    }
 }

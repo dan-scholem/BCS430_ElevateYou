@@ -122,7 +122,7 @@ public class UserLoginController {
                     if (logInModel.passwordAuth(enteredEmail, enteredPassword)) {
                         App.theUser = new User();
                         App.theUser.setEmail(enteredEmail);
-                        App.theUser.setPassword(enteredPassword);
+                        //App.theUser.setPassword(enteredPassword);
 
                         Stage stage = (Stage) signInButton.getScene().getWindow();
 
