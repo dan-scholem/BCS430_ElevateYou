@@ -29,7 +29,6 @@
                            <Font name="Poppins ExtraBold" size="13" />
                        </font>
                    </Button>
-                   <!-- EDITED: added onAction -->
                    <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
                        <font>
                            <Font name="Poppins ExtraBold" size="13" />
@@ -92,9 +91,10 @@
             </TableView>
          </center>
          <top>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <Button mnemonicParsing="false" text="Add Friend" />
+                  <TextField fx:id="searchField" promptText="Search..." />
+                  <Button fx:id="searchButton" onAction="#searchButtonClick" mnemonicParsing="false" text="Searxh" />
                </children>
                <padding>
                   <Insets right="20.0" />

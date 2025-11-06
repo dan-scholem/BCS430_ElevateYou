@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    private int userID;
+    private String userID;
     private String firstName;
     private String lastName;
     private String email;
@@ -20,7 +20,7 @@ public class User {
     private ArrayList<String> friendsList;
 
     public User(){
-        this.userID = 0;
+        this.userID = "0";
         this.firstName = "";
         this.lastName = "";
         this.email = "";
@@ -33,8 +33,7 @@ public class User {
         this.profileImageURL = "";
     }
 
-    public User(int userID, String firstName, String lastName, String email, String passwordHash, String profileImageURL) {
-        this.userID = userID;
+    public User(String firstName, String lastName, String email, String profileImageURL, String userID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -46,12 +45,13 @@ public class User {
         this.inchesHeight = 0;
         this.weight = 0;
         this.userBio = "";
+        this.userID = userID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
     public String getFirstName() {
@@ -151,5 +151,10 @@ public class User {
 
     public void setFriendsList(ArrayList<String> friendsList) {
         this.friendsList = friendsList;
+    }
+
+    @Override
+    public String toString() {
+        return fullName() + " " + getEmail();
     }
 }

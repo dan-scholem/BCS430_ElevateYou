@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class FriendsListView extends Application {
 
-    private ArrayList<User> users;
+    private ArrayList<User> friends;
     @FXML
     private Button appointmentsButton;
 
@@ -46,6 +47,27 @@ public class FriendsListView extends Application {
 
     @FXML
     private Button sleepButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private void searchButtonClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("AddFriendView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
+        Stage addFriendStage = new Stage();
+        AddFriendView controller = fxmlLoader.getController();
+        if(searchField.getText().isEmpty()){
+            searchField.setText("");
+        }
+        controller.initData(searchField.getText());
+        addFriendStage.setTitle("Search Users");
+        addFriendStage.setScene(scene);
+        addFriendStage.show();
+    }
 
 
     @FXML

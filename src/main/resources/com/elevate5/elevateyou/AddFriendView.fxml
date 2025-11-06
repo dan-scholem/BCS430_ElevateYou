@@ -4,28 +4,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AddFriendView">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.AddFriendView">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="300.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <TextField maxWidth="200.0" prefWidth="200.0" promptText="Search..." />
-                  <Button fx:id="userSearchButton" onAction="#userSearchButtonClick" mnemonicParsing="false" text="Search" />
+                  <TextField fx:id="searchField" maxWidth="200.0" prefWidth="200.0" promptText="Search..." />
+                  <Button fx:id="userSearchButton" mnemonicParsing="false" onAction="#userSearchButtonClick" text="Search" />
                </children>
                <padding>
                   <Insets right="10.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <ScrollPane prefHeight="400.0">
+              <content>
+                <AnchorPane prefWidth="780.0">
+                     <children>
+                        <VBox fx:id="searchResultBox" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="0.0" spacing="20.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children></AnchorPane>
+              </content>
+            </ScrollPane>
+            <HBox alignment="CENTER" prefWidth="600.0" spacing="20.0">
                <children>
                   <Button mnemonicParsing="false" text="Add" />
                   <Button mnemonicParsing="false" text="Back" />
                </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
             </HBox>
          </children>
          <padding>
-            <Insets top="40.0" />
+            <Insets top="20.0" />
          </padding>
       </VBox>
    </children>
