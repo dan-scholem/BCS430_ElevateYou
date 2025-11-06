@@ -56,10 +56,10 @@ public class FriendsListView extends Application {
 
     @FXML
     private void searchButtonClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("AddFriendView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("SearchUsersView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
         Stage addFriendStage = new Stage();
-        AddFriendView controller = fxmlLoader.getController();
+        SearchUsersView controller = fxmlLoader.getController();
         if(searchField.getText().isEmpty()){
             searchField.setText("");
         }

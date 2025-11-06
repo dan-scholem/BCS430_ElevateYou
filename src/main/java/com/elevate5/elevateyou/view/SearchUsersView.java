@@ -1,6 +1,5 @@
 package com.elevate5.elevateyou.view;
 
-import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.FirestoreContext;
 import com.elevate5.elevateyou.model.User;
@@ -8,7 +7,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class AddFriendView extends Application {
+public class SearchUsersView extends Application {
 
     public static Firestore fstore;
     private final FirestoreContext contxtFirebase = new FirestoreContext();
@@ -128,7 +126,7 @@ public class AddFriendView extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("AddFriendView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("SearchUsersView.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
         stage.setTitle("Search Users");
