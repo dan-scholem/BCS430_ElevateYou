@@ -8,15 +8,6 @@
    <children>
       <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="600.0" spacing="10.0">
-               <children>
-                  <TextField fx:id="searchField" maxWidth="200.0" prefWidth="200.0" promptText="Search..." />
-                  <Button fx:id="userSearchButton" mnemonicParsing="false" onAction="#userSearchButtonClick" text="Search" />
-               </children>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-            </HBox>
             <ScrollPane prefHeight="400.0">
               <content>
                 <AnchorPane prefWidth="780.0">
@@ -25,15 +16,6 @@
                      </children></AnchorPane>
               </content>
             </ScrollPane>
-            <HBox alignment="CENTER" prefWidth="600.0" spacing="20.0">
-               <children>
-                  <Button mnemonicParsing="false" text="Add" />
-                  <Button mnemonicParsing="false" text="Back" />
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
          </children>
          <padding>
             <Insets top="20.0" />

@@ -83,22 +83,33 @@
            </VBox>
        </left>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
+            <BorderPane fx:id="friendViewPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <bottom>
+                  <ButtonBar prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <buttons>
+                      <Button mnemonicParsing="false" prefHeight="40.0" text="Friends" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" text="Requests" />
+                    </buttons>
+                     <padding>
+                        <Insets bottom="10.0" right="40.0" top="10.0" />
+                     </padding>
+                  </ButtonBar>
+               </bottom>
+               <top>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="searchField" promptText="Search..." />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
+                     </children>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </HBox>
+               </top>
+            </BorderPane>
          </center>
          <top>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
-               <children>
-                  <TextField fx:id="searchField" promptText="Search..." />
-                  <Button fx:id="searchButton" onAction="#searchButtonClick" mnemonicParsing="false" text="Searxh" />
-               </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </top>
        </BorderPane>
    </children>

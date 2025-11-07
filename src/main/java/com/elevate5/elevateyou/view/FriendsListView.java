@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -55,18 +56,23 @@ public class FriendsListView extends Application {
     private TextField searchField;
 
     @FXML
+    private BorderPane friendViewPane;
+
+    @FXML
     private void searchButtonClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("SearchUsersView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
-        Stage addFriendStage = new Stage();
+
+        //Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
+        //Stage addFriendStage = new Stage();
+        friendViewPane.setCenter(fxmlLoader.load());
         SearchUsersView controller = fxmlLoader.getController();
         if(searchField.getText().isEmpty()){
             searchField.setText("");
         }
         controller.initData(searchField.getText());
-        addFriendStage.setTitle("Search Users");
-        addFriendStage.setScene(scene);
-        addFriendStage.show();
+        //addFriendStage.setTitle("Search Users");
+        //addFriendStage.setScene(scene);
+        //addFriendStage.show();
     }
 
 

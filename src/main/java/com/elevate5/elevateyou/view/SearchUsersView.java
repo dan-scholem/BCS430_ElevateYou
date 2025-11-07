@@ -28,10 +28,9 @@ public class SearchUsersView extends Application {
     private final FirestoreContext contxtFirebase = new FirestoreContext();
 
     @FXML
-    private TextField searchField;
-
-    @FXML
     private VBox searchResultBox;
+
+    private String searchString;
 
 
     @FXML
@@ -45,20 +44,18 @@ public class SearchUsersView extends Application {
 
 
     public void initData(String searchString){
-        searchField.setText(searchString);
-        searchField.textProperty().setValue(searchString);
-        displaySearchResults();
+        this.searchString = searchString.toLowerCase();
+        displaySearchResults(this.searchString);
     }
 
 
     @FXML
     private void userSearchButtonClick(ActionEvent event) {
-        displaySearchResults();
+        displaySearchResults(this.searchString);
     }
 
-    public void displaySearchResults(){
+    public void displaySearchResults(String searchString){
         searchResultBox.getChildren().clear();
-        String searchString = searchField.getText().toLowerCase();
         ApiFuture<QuerySnapshot> future = fstore.collection("Users").get();
 
         // future.get() blocks on response
@@ -100,7 +97,7 @@ public class SearchUsersView extends Application {
         Button resultButton = new Button();
         resultButton.wrapTextProperty().setValue(true);
         resultButton.setPrefWidth(searchResultBox.getWidth());
-        resultButton.setUserData(new User(docFirstName, docLastName, docEmail, "", docUserId));
+        resultButton.setUserData(new User(docFirstName, docLastName, docEmail, docProfilePicUrl, docUserId));
         resultButton.setText("            " + docFirstName + " " + docLastName);
         resultButton.setAlignment(Pos.TOP_LEFT);
         resultButton.setStyle("-fx-background-color: white;" +
