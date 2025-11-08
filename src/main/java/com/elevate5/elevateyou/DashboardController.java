@@ -5,6 +5,7 @@ import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
+import com.elevate5.elevateyou.view.FriendsListView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -245,6 +246,16 @@ public class DashboardController {
             Sleep.loadSleepScene(s);
         } catch (Exception e) {
             throw new RuntimeException();
+        }
+    }
+
+    @FXML
+    protected void friendsButtonClick() {
+        try {
+            Stage stage = (Stage) friendsButton.getScene().getWindow();
+            FriendsListView.loadFriendsScene(stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
