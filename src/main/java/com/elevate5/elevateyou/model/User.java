@@ -18,6 +18,8 @@ public class User {
     private String userBio;
     private String profileImageURL;
     private ArrayList<String> friendsList;
+    private ArrayList<FriendRequestModel> friendRequestsList;
+    private ArrayList<String> blockList;
 
     public User(){
         this.userID = "0";
@@ -151,6 +153,30 @@ public class User {
 
     public void setFriendsList(ArrayList<String> friendsList) {
         this.friendsList = friendsList;
+    }
+
+    public Integer getFeetHeight() {
+        return feetHeight;
+    }
+
+    public void setFeetHeight(Integer feetHeight) {
+        this.feetHeight = feetHeight;
+    }
+
+    public ArrayList<FriendRequestModel> getFriendRequestsList() {
+        return friendRequestsList;
+    }
+
+    public void setFriendRequestsList(ArrayList<FriendRequestModel> friendRequestsList) {
+        this.friendRequestsList = friendRequestsList;
+    }
+
+    public ArrayList<String> getBlockList() {
+        return blockList;
+    }
+
+    public void setBlockList(ArrayList<String> blockList) {
+        this.blockList = blockList;
     }
 
     @Override
