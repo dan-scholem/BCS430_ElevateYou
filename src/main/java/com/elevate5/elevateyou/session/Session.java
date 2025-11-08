@@ -19,6 +19,7 @@ public class Session {
     private EventManager userEventManager = new EventManager();
     private AppointmentManager userAppointmentManager = new AppointmentManager();
     private DoctorModel selectedDoctor;
+    private User currUser;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -89,6 +90,21 @@ public class Session {
 
         }
 
+        docRef = App.fstore.collection("Users").document(this.userID);
+        future = docRef.get();
+        doc = future.get();
+
+        if(doc.exists()) {
+            String firstName = (String) doc.get("FirstName");
+            String lastName = (String) doc.get("LastName");
+            String email = (String) doc.get("Email");
+            String profilePicUrl = (String) doc.get("ProfilePicUrl");
+            this.currUser = new User(firstName, lastName, email, profilePicUrl, userID);
+            System.out.println("Current User: " + this.currUser);
+        }else{
+            System.out.println("User doesn't exist");
+        }
+
     }
 
     public UserRecord getUser() {
@@ -117,5 +133,13 @@ public class Session {
 
     public void setSelectedDoctor(DoctorModel selectedDoctor) {
         this.selectedDoctor = selectedDoctor;
+    }
+
+    public User getCurrUser() {
+        return currUser;
+    }
+
+    public void setCurrUser(User currUser) {
+        this.currUser = currUser;
     }
 }
