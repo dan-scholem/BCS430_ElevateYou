@@ -8,6 +8,7 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import javafx.geometry.NodeOrientation;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -53,6 +54,8 @@ public class NotificationService {
         try {
             out.addAll(fromMedications());
             out.addAll(fromEvents());
+            out.addAll(fromAppointments());
+            out.addAll(fromWater());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +133,103 @@ public class NotificationService {
         }
         return list;
     }
-    // TODO: other data's catch are continue on here
+
+    // Appointments/{uid} with the map
+    private List<NotificationModel> fromAppointments()
+            throws ExecutionException, InterruptedException {
+
+        List<NotificationModel> list = new ArrayList<>();
+
+        DocumentSnapshot doc = dao.getAppointment(uid);
+        if (!doc.exists()) return list;
+
+        Object arr = doc.get("appointments");
+        if (!(arr instanceof List<?> items)) return list;
+
+        for (Object raw : items) {
+            if (!(raw instanceof Map<?, ?> m)) continue;
+
+            String date = asString(m.get("date"));     // "MM/dd/yyyy"
+            String time = asString(m.get("time"));     // "HH:mm"
+            String doctor = asString(m.get("docName"));
+            String type = asString(m.get("docType"));
+
+            Instant due = instantFromUsDate(date, time);
+            if (due.isBefore(Instant.now())) continue;
+
+            String title = "Appointment";
+            String body = "You have a " + safe(type)
+                    + " appointment with Dr. " + safe(doctor)
+                    + " at " + safe(date + " " + time);
+
+            String id = "Appointments/" + uid + "#" + safe(date) + "#" + safe(time);
+
+            list.add(new NotificationModel(id, title, body, due));
+        }
+
+        return list;
+    }
+    private List<NotificationModel> fromWater() throws ExecutionException, InterruptedException {
+        List<NotificationModel> list = new ArrayList<>();
+
+        // 业务规则（可以后做成用户设置）：
+        final int goalOz = 64;             // 每日总目标（oz），默认 64
+        final int slots = 8;               // 16 小时 / 每 2 小时 = 8 槽
+        final int perSlot = Math.max(1, (int) Math.round(goalOz / (double) slots));
+        final LocalTime startAt = LocalTime.of(8, 0); // 每天从 08:00 开始计 16 小时
+        final ZoneId zone = ZoneId.systemDefault();
+        final LocalDate today = LocalDate.now(zone);
+
+        // 读取今天已喝（从 Water/{uid}）
+        int consumedToday = 0;
+        DocumentSnapshot waterDoc = dao.getWater(uid);
+        if (waterDoc.exists()) {
+            Object raw = waterDoc.getData() != null ? waterDoc.getData().get(today.toString()) : null;
+            if (raw instanceof List<?> arr) {
+                for (Object o : arr) {
+                    if (o instanceof Map<?, ?> m) {
+                        Object oz = m.get("ounces");
+                        if (oz instanceof Number n) consumedToday += n.intValue();
+                        else {
+                            try { consumedToday += Integer.parseInt(String.valueOf(oz)); } catch (Exception ignore) {}
+                        }
+                    }
+                }
+            }
+        }
+
+        List<ZonedDateTime> slotTimes = new ArrayList<>(slots);
+        ZonedDateTime base = today.atTime(startAt).atZone(zone);
+        for (int i = 0; i < slots; i++) slotTimes.add(base.plusHours(2L * i));
+
+        ZonedDateTime now = ZonedDateTime.now(zone);
+        int nextIdx = -1;
+        for (int i = 0; i < slotTimes.size(); i++) {
+            if (now.isBefore(slotTimes.get(i))) { nextIdx = i; break; }
+        }
+        if (nextIdx == -1) {
+            return list;
+        }
+
+        int expectedByNext = perSlot * (nextIdx + 1);
+        int behind = Math.max(0, expectedByNext - consumedToday);
+
+        String id = "Water/" + uid + "#" + today + "#slot" + (nextIdx + 1);
+        String title = "Hydration";
+        String body  = "Slot " + (nextIdx + 1) + "/8 at " +
+                slotTimes.get(nextIdx).toLocalTime() +
+                " — Drink ~" + perSlot + " oz. " +
+                "(Today: " + consumedToday + "/" + goalOz + " oz" +
+                (behind > 0 ? ", behind ~" + behind + " oz" : "") + ")";
+
+        list.add(new NotificationModel(
+                id,
+                title,
+                body,
+                slotTimes.get(nextIdx).toInstant()
+        ));
+        return list;
+    }
     // ---------- utils ----------
 
     private static String asString(Object o) { return o == null ? null : String.valueOf(o); }
@@ -149,6 +248,17 @@ public class NotificationService {
                 return d.atTime(t).atZone(ZoneId.systemDefault()).toInstant();
             }
             return d.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        } catch (Exception e) {
+            return Instant.now();
+        }
+    }
+    private static Instant instantFromUsDate(String mmddyyyy, String hm) {
+        try {
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDate d = LocalDate.parse(mmddyyyy, df);
+
+            LocalTime t = LocalTime.parse(hm); // "HH:mm"
+            return d.atTime(t).atZone(ZoneId.systemDefault()).toInstant();
         } catch (Exception e) {
             return Instant.now();
         }
