@@ -1,23 +1,30 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.*;
+import com.elevate5.elevateyou.model.FirestoreContext;
+import com.elevate5.elevateyou.model.FriendRequestModel;
 import com.elevate5.elevateyou.model.User;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class FriendsListView extends Application {
 
@@ -59,20 +66,157 @@ public class FriendsListView extends Application {
     private BorderPane friendViewPane;
 
     @FXML
-    private void searchButtonClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("SearchUsersView.fxml"));
+    private VBox friendsBox;
 
-        //Scene scene = new Scene(fxmlLoader.load(), 800 , 500);
-        //Stage addFriendStage = new Stage();
-        friendViewPane.setCenter(fxmlLoader.load());
-        SearchUsersView controller = fxmlLoader.getController();
-        if(searchField.getText().isEmpty()){
-            searchField.setText("");
+    public static Firestore fstore;
+    private final FirestoreContext contxtFirebase = new FirestoreContext();
+
+    private final ArrayList<String> friendUids = new ArrayList<>();
+
+
+    @FXML
+    public void initialize() {
+        try {
+            fstore = contxtFirebase.firebase();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        controller.initData(searchField.getText());
-        //addFriendStage.setTitle("Search Users");
-        //addFriendStage.setScene(scene);
-        //addFriendStage.show();
+
+        if(fstore!=null){
+            friendUids.add("C0UElqfKSSU1MNqwjxQobBLctg62");
+            friendUids.add("NrpEXOpnWYXQx6IkMY2aZfSfTD42");
+        }
+
+        displayFriendsList();
+
+    }
+
+
+    @FXML
+    private void friendsListButtonClick(ActionEvent event) {
+        displayFriendsList();
+    }
+
+
+    private void displayFriendsList(){
+        searchField.clear();
+        friendsBox.getChildren().clear();
+        try {
+                for (String id : friendUids) {
+                    DocumentReference docRef;
+                    if(fstore == null){
+                        docRef = App.fstore.collection("Users").document(id);
+                    }else{
+                        docRef = fstore.collection("Users").document(id);
+                    }
+
+                    ApiFuture<DocumentSnapshot> future = docRef.get();
+                    DocumentSnapshot document = future.get();
+                    updateFriendsBox(document);
+                }
+
+        }catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
+
+        HBox userBox = new HBox();
+        userBox.setAlignment(Pos.CENTER_LEFT);
+        userBox.setSpacing(10);
+        userBox.setStyle("-fx-border-color: black; -fx-padding: 10;");
+
+        Button resultButton = generateResultButton(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
+        userBox.getChildren().add(resultButton);
+
+        if(!friendUids.contains(docUserId)){
+            Button requestFriendButton = generateRequestButton(docUserId);
+            userBox.getChildren().add(requestFriendButton);
+        }
+        return userBox;
+    }
+
+    private Button generateResultButton(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
+        Button resultButton = new Button();
+        resultButton.wrapTextProperty().setValue(true);
+        resultButton.setPrefWidth(friendsBox.getWidth());
+        resultButton.setUserData(new User(docFirstName, docLastName, docEmail, docProfilePicUrl, docUserId));
+        resultButton.setTooltip(new Tooltip(docUserId));
+        resultButton.setText("    " + docFirstName + " " + docLastName);
+        resultButton.setAlignment(Pos.TOP_LEFT);
+        resultButton.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: white;" +
+                "-fx-border-radius: 0px;" +
+                "-fx-font-size: 30px;" +
+                "-fx-pref-height: 40px;" +
+                "-fx-pref-width: 500px; " +
+                "-fx-padding: 0px 0px 0px 100px;" +
+                "-fx-graphic: url('" + docProfilePicUrl + "');"
+        );
+        resultButton.setOnAction((e) -> {
+            System.out.println(resultButton.getUserData().toString());
+        });
+        return resultButton;
+    }
+
+    private Button generateRequestButton(String docUserId){
+        Button requestFriendButton = new Button();
+        requestFriendButton.setText("Request Friend");
+        requestFriendButton.setOnAction((event) -> {
+            FriendRequestModel friendRequest = new FriendRequestModel(SessionManager.getSession().getUserID(),  docUserId);
+            System.out.println("Sender: " + friendRequest.getSenderID() + ", Receiver: " + friendRequest.getReceiverID());
+        });
+        return requestFriendButton;
+    }
+
+    @FXML
+    private void searchButtonClick(ActionEvent event) throws IOException {
+        friendsBox.getChildren().clear();
+        ApiFuture<QuerySnapshot> future;
+        if(fstore == null){
+            future = App.fstore.collection("Users").get();
+        }else{
+            future = fstore.collection("Users").get();
+        }
+
+        // future.get() blocks on response
+        List<QueryDocumentSnapshot> documents;
+
+        try {
+            documents = future.get().getDocuments();
+
+            if (!documents.isEmpty()) {
+
+                for (QueryDocumentSnapshot document : documents) {
+                    updateFriendsBox(document);
+
+                }
+            }
+        }catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void updateFriendsBox(DocumentSnapshot document){
+        String docFirstName = document.getString("FirstName");
+        String docLastName = document.getString("LastName");
+        String docEmail = document.getString("Email");
+        String docUserId = document.getId();
+        String docProfilePicUrl = document.getString("ProfilePicUrl");
+        if(docProfilePicUrl == null){
+            docProfilePicUrl = "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png";
+        }
+        assert docFirstName != null;
+        assert docLastName != null;
+        if(docFirstName.toLowerCase().contains(searchField.getText().toLowerCase()) ||
+                docLastName.toLowerCase().contains(searchField.getText().toLowerCase())){
+            //
+            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
+
+            friendsBox.getChildren().add(resultBox);
+        }
     }
 
 
@@ -181,6 +325,15 @@ public class FriendsListView extends Application {
         } catch (Exception e) {
             throw new RuntimeException();
         }
+    }
+
+    public static void loadFriendsScene(Stage stage) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("FriendsListView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Friends");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

@@ -84,10 +84,31 @@
        </left>
          <center>
             <BorderPane fx:id="friendViewPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <center>
+                    <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+                        <children>
+                            <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                    <ScrollPane prefHeight="400.0">
+                                        <content>
+                                            <AnchorPane prefWidth="780.0">
+                                                <children>
+                                                    <VBox fx:id="friendsBox" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="0.0" spacing="20.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children></AnchorPane>
+                                        </content>
+                                    </ScrollPane>
+                                </children>
+                                <padding>
+                                    <Insets top="20.0" />
+                                </padding>
+                            </VBox>
+                        </children>
+                    </AnchorPane>
+                </center>
                <bottom>
                   <ButtonBar prefHeight="60.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <buttons>
-                      <Button mnemonicParsing="false" prefHeight="40.0" text="Friends" />
+                      <Button fx:id="friendsListButton" onAction="#friendsListButtonClick" mnemonicParsing="false" prefHeight="40.0" text="Friends" />
                         <Button mnemonicParsing="false" prefHeight="40.0" text="Requests" />
                     </buttons>
                      <padding>
