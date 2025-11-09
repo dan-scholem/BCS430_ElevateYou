@@ -8,6 +8,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -100,7 +101,13 @@ public class Session {
             String email = (String) doc.get("Email");
             String profilePicUrl = (String) doc.get("ProfilePicUrl");
             this.currUser = new User(firstName, lastName, email, profilePicUrl, userID);
-            System.out.println("Current User: " + this.currUser);
+            ArrayList<String> friendsList;
+            if(doc.get("Friends") != null) {
+                friendsList = new ArrayList<>((List<String>) doc.get("Friends"));
+            }else{
+                friendsList = new ArrayList<>();
+            }
+            this.currUser.setFriendsList(friendsList);
         }else{
             System.out.println("User doesn't exist");
         }

@@ -23,7 +23,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class FriendsListView extends Application {
@@ -71,7 +73,7 @@ public class FriendsListView extends Application {
     public static Firestore fstore;
     private final FirestoreContext contxtFirebase = new FirestoreContext();
 
-    private final ArrayList<String> friendUids = new ArrayList<>();
+    private ArrayList<String> friendUids = new ArrayList<>();
 
 
     @FXML
@@ -85,6 +87,8 @@ public class FriendsListView extends Application {
         if(fstore!=null){
             friendUids.add("C0UElqfKSSU1MNqwjxQobBLctg62");
             friendUids.add("NrpEXOpnWYXQx6IkMY2aZfSfTD42");
+        }else{
+            friendUids = SessionManager.getSession().getCurrUser().getFriendsList();
         }
 
         displayFriendsList();
@@ -109,7 +113,6 @@ public class FriendsListView extends Application {
                     }else{
                         docRef = fstore.collection("Users").document(id);
                     }
-
                     ApiFuture<DocumentSnapshot> future = docRef.get();
                     DocumentSnapshot document = future.get();
                     updateFriendsBox(document);
@@ -166,6 +169,26 @@ public class FriendsListView extends Application {
         requestFriendButton.setOnAction((event) -> {
             FriendRequestModel friendRequest = new FriendRequestModel(SessionManager.getSession().getUserID(),  docUserId);
             System.out.println("Sender: " + friendRequest.getSenderID() + ", Receiver: " + friendRequest.getReceiverID());
+            DocumentReference senderDocRef;
+            DocumentReference receiverDocRef;
+            if(fstore == null){
+                System.out.println("fstore not null");
+                ArrayList<String> senderFriendsList = new ArrayList<>();
+                senderFriendsList.add(friendRequest.getReceiverID());
+                Map<String, Object> senderFriendsMap = new HashMap<>();
+                senderFriendsMap.put("Friends", senderFriendsList);
+
+                ArrayList<String> receiverFriendsList = new ArrayList<>();
+                receiverFriendsList.add(friendRequest.getSenderID());
+                Map<String, Object> receiverFriendsMap = new HashMap<>();
+                receiverFriendsMap.put("Friends", receiverFriendsList);
+
+                senderDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
+                receiverDocRef = App.fstore.collection("Users").document(docUserId);
+
+                senderDocRef.update(senderFriendsMap);
+                receiverDocRef.update(receiverFriendsMap);
+            }
         });
         return requestFriendButton;
     }
