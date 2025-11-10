@@ -108,6 +108,27 @@ public class Session {
                 friendsList = new ArrayList<>();
             }
             this.currUser.setFriendsList(friendsList);
+            ArrayList<String> receivedFriendRequestsList;
+            if(doc.get("ReceivedFriendRequests") != null) {
+                receivedFriendRequestsList = new ArrayList<>((List<String>) doc.get("ReceivedFriendRequests"));
+            }else{
+                receivedFriendRequestsList = new ArrayList<>();
+            }
+            this.currUser.setReceivedFriendRequestsList(receivedFriendRequestsList);
+            ArrayList<String> sentFriendRequestsList;
+            if(doc.get("SentFriendRequests") != null) {
+                sentFriendRequestsList = new ArrayList<>((List<String>) doc.get("SentFriendRequests"));
+            }else{
+                sentFriendRequestsList = new ArrayList<>();
+            }
+            this.currUser.setSentFriendRequestsList(sentFriendRequestsList);
+            ArrayList<String> blockList;
+            if(doc.get("BlockedUsers") != null) {
+                blockList = new ArrayList<>((List<String>) doc.get("BlockedUsers"));
+            }else {
+                blockList = new ArrayList<>();
+            }
+            this.currUser.setBlockList(blockList);
         }else{
             System.out.println("User doesn't exist");
         }
