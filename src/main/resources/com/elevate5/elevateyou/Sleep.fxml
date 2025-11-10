@@ -45,7 +45,7 @@
             <Button fx:id="exerciseButton" styleClass="exercisebutton" text="Exercise" />
             <Button fx:id="sleepButton" styleClass="sleepbutton" text="Sleep" />
             <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" text="Journal" />
-            <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" text="Appointments" />
+            <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" text="Appointments" />
             <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" text="Tutorials" />
             <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" text="Calendar" />
             <Button fx:id="friendsButton" styleClass="friendsbutton" text="Refer Friends" />

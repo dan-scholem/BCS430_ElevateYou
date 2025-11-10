@@ -193,4 +193,15 @@ public class ExerciseController {
             e.printStackTrace();
         }
     }
+
+    //button for going back to the app dashboard
+    @FXML
+    private void dashboardButtonClick(ActionEvent event) {
+        try {
+            Stage stage = (Stage) dashboardButton.getScene().getWindow();
+            Dashboard.loadDashboardScene(stage);
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -85,6 +85,7 @@
                 <Button text="Save Goal / Progress" style="-fx-font-weight: bold;" onAction="#onSave"/>
                 <Button text="← Back to Dashboard" onAction="#onBackToDashboard"/>
             </HBox>
+         <Button fx:id="dashboardButton" onAction="#dashboardButtonClick" mnemonicParsing="false" text="Dashboard" />
 
             <Label fx:id="statusLabel" text=""/>
         </VBox>

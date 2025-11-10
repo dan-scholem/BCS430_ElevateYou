@@ -3,6 +3,7 @@ package com.elevate5.elevateyou;
 import com.elevate5.elevateyou.model.SleepModel;
 import com.elevate5.elevateyou.service.SleepArticleService;
 import com.elevate5.elevateyou.service.SleepService;
+import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,6 +39,7 @@ public class SleepController {
     @FXML private Button calendarButton;
     @FXML private Button logoutButton;
     @FXML private Button journalButton;
+    @FXML private Button appointmentsButton;
 
     private final SleepService sleepService = new SleepService();
     private final SleepArticleService articleService = new SleepArticleService();
@@ -218,6 +220,16 @@ public class SleepController {
             Stage stage = (Stage) calendarButton.getScene().getWindow();
             CalendarView.loadCalendarScene(stage);
         } catch (IOException e) { throw new RuntimeException(e); }
+    }
+
+    @FXML
+    public void appointmentButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
+            AppointmentView.loadAppointmentScene(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
