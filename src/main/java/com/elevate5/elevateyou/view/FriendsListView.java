@@ -29,7 +29,6 @@ import java.util.concurrent.ExecutionException;
 
 public class FriendsListView extends Application {
 
-    private ArrayList<User> friends;
     @FXML
     private Button appointmentsButton;
 
@@ -58,16 +57,13 @@ public class FriendsListView extends Application {
     private Button sleepButton;
 
     @FXML
-    private Button searchButton;
-
-    @FXML
     private TextField searchField;
 
     @FXML
-    private BorderPane friendViewPane;
+    private VBox friendsBox;
 
     @FXML
-    private VBox friendsBox;
+    private Label numRequestsLabel;
 
     public static Firestore fstore;
     private final FirestoreContext contxtFirebase = new FirestoreContext();
@@ -92,6 +88,7 @@ public class FriendsListView extends Application {
             requestUids = SessionManager.getSession().getCurrUser().getReceivedFriendRequestsList();
         }
 
+        updateNumRequestsLabel();
         displayFriendsList();
 
     }
@@ -116,6 +113,15 @@ public class FriendsListView extends Application {
         displayList(requestUids);
     }
 
+    private void updateNumRequestsLabel(){
+        if(!requestUids.isEmpty()){
+            numRequestsLabel.setText(String.valueOf(requestUids.size()));
+            numRequestsLabel.setVisible(true);
+        }else{
+            numRequestsLabel.setVisible(false);
+        }
+    }
+
     private void displayList(ArrayList<String> idList) {
         searchField.clear();
         friendsBox.getChildren().clear();
@@ -135,6 +141,7 @@ public class FriendsListView extends Application {
         }catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+        updateNumRequestsLabel();
     }
 
     public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, DocumentSnapshot document) {
@@ -266,6 +273,7 @@ public class FriendsListView extends Application {
                 senderFriendRequestsList.add(friendRequest.getReceiverID());
                 Map<String, Object> senderFriendsMap = new HashMap<>();
                 senderFriendsMap.put("SentFriendRequests", senderFriendRequestsList);
+                SessionManager.getSession().getCurrUser().setSentFriendRequestsList(senderFriendRequestsList);
 
                 receiverDocRef = App.fstore.collection("Users").document(docUserId);
                 ApiFuture<DocumentSnapshot> future = receiverDocRef.get();
@@ -288,6 +296,10 @@ public class FriendsListView extends Application {
                 displayFriendsList();
             }
         });
+        if(SessionManager.getSession().getCurrUser().getSentFriendRequestsList().contains(docUserId)){
+            requestFriendButton.setDisable(true);
+            requestFriendButton.setText("Request Sent!");
+        }
 
         return requestFriendButton;
     }
