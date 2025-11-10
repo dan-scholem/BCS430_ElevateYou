@@ -1,24 +1,19 @@
 package com.elevate5.elevateyou.ui;
 
-import com.elevate5.elevateyou.Dashboard;
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class ExerciseController {
 
     @FXML private GridPane exerciseGrid;
     @FXML private ToggleButton treadmillBtn, weightsBtn, bicycleBtn, swimmingBtn;
     @FXML private Label selectedExerciseLabel, timeLabel, caloriesLabel;
-    @FXML private Button startButton, stopButton, resetButton, dashboardButton;
+    @FXML private Button startButton, stopButton, resetButton;
 
     private final ToggleGroup choiceGroup = new ToggleGroup();
     private String currentExercise = null;
@@ -107,16 +102,5 @@ public class ExerciseController {
         // Simple placeholder calorie math (~20 kcal/min => 0.33 kcal/sec)
         long kcal = Math.round(elapsedSec * 0.33);
         caloriesLabel.setText(kcal + " kcal");
-    }
-
-    //button for going back to the app dashboard
-    @FXML
-    private void dashboardButtonClick(ActionEvent event) {
-        try {
-            Stage stage = (Stage) dashboardButton.getScene().getWindow();
-            Dashboard.loadDashboardScene(stage);
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
     }
 }
