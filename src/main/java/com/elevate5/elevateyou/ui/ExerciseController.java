@@ -184,10 +184,10 @@ public class ExerciseController {
     @FXML
     private void onBackToDashboard(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ui/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Dashboard.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 900, 600));
+            stage.setScene(new Scene(root, 1218, 738));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

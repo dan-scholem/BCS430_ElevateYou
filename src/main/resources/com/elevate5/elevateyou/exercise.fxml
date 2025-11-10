@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.elevate5.elevateyou.ui.ExerciseController"
-            prefWidth="920" prefHeight="600">
+<BorderPane prefHeight="600" prefWidth="920" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.ui.ExerciseController">
 
     <!-- Header -->
     <top>
         <VBox spacing="4" style="-fx-padding: 16">
-            <Label text="Exercise Goals" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-            <Label text="Choose a workout, set a goal, and update progress as you go."/>
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Exercise Goals" />
+            <Label text="Choose a workout, set a goal, and update progress as you go." />
         </VBox>
     </top>
 
     <!-- Left: Workout choices -->
     <left>
         <VBox spacing="10" style="-fx-padding: 16">
-            <Label text="Workouts" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Workouts" />
             <GridPane fx:id="exerciseGrid" hgap="12" vgap="12">
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="50"/>
-                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50" />
+                    <ColumnConstraints percentWidth="50" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints percentHeight="50"/>
-                    <RowConstraints percentHeight="50"/>
+                    <RowConstraints percentHeight="50" />
+                    <RowConstraints percentHeight="50" />
                 </rowConstraints>
 
                 <!-- Row 0 -->
-                <ToggleButton fx:id="treadmillBtn" text="Treadmill" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                <ToggleButton fx:id="weightsBtn"   text="Weights"   GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                <ToggleButton fx:id="treadmillBtn" text="Treadmill" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="weightsBtn" text="Weights" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                 <!-- Row 1 -->
-                <ToggleButton fx:id="bicycleBtn"   text="Bicycle"    GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                <ToggleButton fx:id="swimmingBtn"  text="Swimming"  GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                <ToggleButton fx:id="bicycleBtn" text="Bicycle" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <ToggleButton fx:id="swimmingBtn" text="Swimming" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </GridPane>
         </VBox>
     </left>
@@ -45,40 +41,41 @@
     <center>
         <VBox spacing="12" style="-fx-padding: 16">
             <HBox spacing="10">
-                <Label text="Selected:"/>
-                <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;"/>
+                <Label text="Selected:" />
+                <Label fx:id="selectedExerciseLabel" style="-fx-font-weight: bold;" text="—" />
             </HBox>
 
-            <Label text="Goal Title"/>
-            <TextField fx:id="goalTitleField" promptText="e.g., Back day — 10 sets across variations"/>
+            <Label text="Goal Title" />
+            <TextField fx:id="goalTitleField" promptText="e.g., Back day — 10 sets across variations" />
 
-            <Label text="Notes (optional)"/>
-            <TextArea fx:id="goalNotesArea" promptText="Add details (exercises, weights, etc.)" prefRowCount="3"/>
+            <Label text="Notes (optional)" />
+            <TextArea fx:id="goalNotesArea" prefRowCount="3" promptText="Add details (exercises, weights, etc.)" />
 
-            <HBox spacing="16" alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="16">
                 <VBox spacing="6">
-                    <Label text="Target Sets"/>
-                    <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140"/>
+                    <Label text="Target Sets" />
+                    <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140" />
                 </VBox>
 
                 <VBox spacing="6">
-                    <Label text="Completed Sets"/>
-                    <HBox spacing="6" alignment="CENTER_LEFT">
-                        <Button text="−" onAction="#onDecCompleted"/>
-                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140"/>
-                        <Button text="+" onAction="#onIncCompleted"/>
+                    <Label text="Completed Sets" />
+                    <HBox alignment="CENTER_LEFT" spacing="6">
+                        <Button onAction="#onDecCompleted" text="−" />
+                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140" />
+                        <Button onAction="#onIncCompleted" text="+" />
                     </HBox>
                 </VBox>
 
-                <VBox spacing="6" prefWidth="240">
-                    <Label text="Progress"/>
-                    <ProgressBar fx:id="progressBar" prefWidth="240"/>
+                <VBox prefWidth="240" spacing="6">
+                    <Label text="Progress" />
+                    <ProgressBar fx:id="progressBar" prefWidth="240" />
                 </VBox>
             </HBox>
 
             <HBox spacing="10">
-                <Button text="Reset" onAction="#onReset"/>
-                <Button text="Save Goal / Progress" style="-fx-font-weight: bold;" onAction="#onSave"/>
+                <Button onAction="#onReset" text="Reset" />
+                <Button onAction="#onSave" style="-fx-font-weight: bold;" text="Save Goal / Progress" />
+            <Button onAction="#onBackToDashboard" mnemonicParsing="false" text="Dashboard" />
             </HBox>
 
             <Label fx:id="statusLabel" text="" />
