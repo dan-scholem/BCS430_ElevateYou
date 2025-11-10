@@ -7,10 +7,16 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +56,7 @@ public class ExerciseController {
         });
 
         // Spinners
-        targetSetsSpinner.setValueFactory(new IntegerSpinnerValueFactory(1, 500, 10)); // default 10
+        targetSetsSpinner.setValueFactory(new IntegerSpinnerValueFactory(1, 500, 10));
         completedSetsSpinner.setValueFactory(new IntegerSpinnerValueFactory(0, 500, 0));
 
         // Progress binding
@@ -113,11 +119,10 @@ public class ExerciseController {
         int done = Math.min(safe(completedSetsSpinner.getValue()), target);
         double pct = (target > 0) ? (double) done / target : 0.0;
 
-        // Build record
         Map<String, Object> data = new HashMap<>();
-        data.put("workout", workout);                 // e.g., Weights
-        data.put("goalTitle", goalTitle);             // user text
-        data.put("notes", goalNotesArea.getText());   // optional
+        data.put("workout", workout);
+        data.put("goalTitle", goalTitle);
+        data.put("notes", goalNotesArea.getText());
         data.put("targetSets", target);
         data.put("completedSets", done);
         data.put("progress", pct);
@@ -125,7 +130,6 @@ public class ExerciseController {
         data.put("updatedAt", Instant.now().toString());
         data.put("createdAt", Instant.now().toString());
 
-        // attach authenticated user
         String uid = null, email = null;
         if (SessionManager.getSession() != null && SessionManager.getSession().getUser() != null) {
             uid = SessionManager.getSession().getUser().getUid();
@@ -135,18 +139,16 @@ public class ExerciseController {
         data.put("email", email);
 
         try {
-            // /users/{uid}/workoutGoals/{autoId}
             if (uid == null || uid.isEmpty()) {
                 toast("No logged-in user — cannot save.");
                 return;
             }
             DocumentReference doc = App.fstore
                     .collection("users").document(uid)
-                    .collection("workoutGoals").document(); // auto id
+                    .collection("workoutGoals").document();
 
             ApiFuture<WriteResult> future = doc.set(data);
-            future.get(); // wait; fine for desktop app small writes
-
+            future.get();
             toast("Saved ✔  (" + done + "/" + target + " sets)");
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,20 +156,23 @@ public class ExerciseController {
         }
     }
 
-    private void toast(String msg) {
-        statusLabel.setText(msg);
-    }
-
     @FXML
     private void onBackToDashboard(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ui/dashboard.fxml"));
-            Parent root = loader.load();
+            // NOTE: adjust the path if your dashboard FXML lives elsewhere.
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/com/elevate5/elevateyou/Dashboard.fxml")
+            );
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 900, 600));
+            stage.setScene(new Scene(root, 1218, 738));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            toast("Failed to open Dashboard: " + e.getMessage());
         }
     }
 
+    private void toast(String msg) {
+        statusLabel.setText(msg);
+    }
+}
