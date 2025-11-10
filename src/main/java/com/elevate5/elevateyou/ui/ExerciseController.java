@@ -193,7 +193,7 @@ public class ExerciseController {
             e.printStackTrace();
         }
     }
-
+/*
     //button for going back to the app dashboard
     @FXML
     private void dashboardButtonClick(ActionEvent event) {
@@ -204,4 +204,6 @@ public class ExerciseController {
             throw new RuntimeException(e);
         }
     }
+
+ */
 }
