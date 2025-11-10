@@ -211,10 +211,10 @@ public class DashboardController {
     @FXML
     private void exerciseButtonClick(ActionEvent event) {
         System.out.println("[NAV] Exercise clicked"); // visibility in console
-
+        FXMLLoader loader;
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml")
+            loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/exercise.fxml")
             );
             Node view = loader.load();
 

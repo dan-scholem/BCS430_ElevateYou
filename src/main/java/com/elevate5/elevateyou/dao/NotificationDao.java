@@ -1,9 +1,11 @@
 package com.elevate5.elevateyou.dao;
 
 import com.elevate5.elevateyou.App;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import org.w3c.dom.ranges.DocumentRange;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -31,6 +33,20 @@ public class NotificationDao {
     public DocumentSnapshot getEventsDoc(String uid)
             throws ExecutionException, InterruptedException {
         return db.collection("Events")
+                .document(uid)
+                .get().get();
+    }
+
+    public DocumentSnapshot getAppointment(String uid)
+            throws ExecutionException, InterruptedException {
+        return db.collection("Appointments")
+                .document(uid)
+                .get().get();
+    }
+
+    public DocumentSnapshot getWater(String uid)
+            throws ExecutionException, InterruptedException{
+        return db.collection("Calories")
                 .document(uid)
                 .get().get();
     }

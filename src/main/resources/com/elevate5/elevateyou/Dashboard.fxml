@@ -21,7 +21,7 @@
          <children>
             <Label layoutX="40.0" layoutY="22.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Dashboard" />
 
-            <HBox fx:id="topRightBar" alignment="CENTER_RIGHT" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="15.0">
+            <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="20.0">
             </HBox>
             <Button fx:id="profileButton" layoutX="813.0" layoutY="18.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="51.0" prefWidth="80.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;">
                <graphic>
