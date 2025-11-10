@@ -7,10 +7,16 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,19 +24,30 @@ import java.util.Map;
 public class ExerciseController {
 
     // Workout buttons
-    @FXML private ToggleButton treadmillBtn;
-    @FXML private ToggleButton weightsBtn;
-    @FXML private ToggleButton bicycleBtn;
-    @FXML private ToggleButton swimmingBtn;
+    @FXML
+    private ToggleButton treadmillBtn;
+    @FXML
+    private ToggleButton weightsBtn;
+    @FXML
+    private ToggleButton bicycleBtn;
+    @FXML
+    private ToggleButton swimmingBtn;
 
     // Goal UI
-    @FXML private Label selectedExerciseLabel;
-    @FXML private TextField goalTitleField;
-    @FXML private TextArea goalNotesArea;
-    @FXML private Spinner<Integer> targetSetsSpinner;
-    @FXML private Spinner<Integer> completedSetsSpinner;
-    @FXML private ProgressBar progressBar;
-    @FXML private Label statusLabel;
+    @FXML
+    private Label selectedExerciseLabel;
+    @FXML
+    private TextField goalTitleField;
+    @FXML
+    private TextArea goalNotesArea;
+    @FXML
+    private Spinner<Integer> targetSetsSpinner;
+    @FXML
+    private Spinner<Integer> completedSetsSpinner;
+    @FXML
+    private ProgressBar progressBar;
+    @FXML
+    private Label statusLabel;
 
     private ToggleGroup exerciseGroup;
 
@@ -67,7 +84,9 @@ public class ExerciseController {
         progressBar.setProgress(pct);
     }
 
-    private int safe(Integer v) { return v == null ? 0 : v; }
+    private int safe(Integer v) {
+        return v == null ? 0 : v;
+    }
 
     private String getSelectedExercise() {
         Toggle t = exerciseGroup.getSelectedToggle();
@@ -76,17 +95,20 @@ public class ExerciseController {
     }
 
     // UI actions
-    @FXML private void onIncCompleted() {
+    @FXML
+    private void onIncCompleted() {
         int v = safe(completedSetsSpinner.getValue());
         completedSetsSpinner.getValueFactory().setValue(v + 1);
     }
 
-    @FXML private void onDecCompleted() {
+    @FXML
+    private void onDecCompleted() {
         int v = safe(completedSetsSpinner.getValue());
         if (v > 0) completedSetsSpinner.getValueFactory().setValue(v - 1);
     }
 
-    @FXML private void onReset() {
+    @FXML
+    private void onReset() {
         exerciseGroup.selectToggle(null);
         selectedExerciseLabel.setText("—");
         goalTitleField.clear();
@@ -97,7 +119,8 @@ public class ExerciseController {
         statusLabel.setText("");
     }
 
-    @FXML private void onSave() {
+    @FXML
+    private void onSave() {
         String workout = getSelectedExercise();
         if (workout == null) {
             toast("Please choose a workout.");
@@ -170,4 +193,4 @@ public class ExerciseController {
             e.printStackTrace();
         }
     }
-
+}

@@ -11,7 +11,7 @@
 
     <!-- Header -->
     <top>
-        <VBox spacing="4" padding="16">
+        <VBox spacing="4" style="-fx-padding: 16">
             <Label text="Exercise Goals" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
             <Label text="Choose a workout, set a goal, and update progress as you go."/>
         </VBox>
@@ -19,7 +19,7 @@
 
     <!-- Left: Workout choices -->
     <left>
-        <VBox spacing="10" padding="16">
+        <VBox spacing="10" style="-fx-padding: 16">
             <Label text="Workouts" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
             <GridPane fx:id="exerciseGrid" hgap="12" vgap="12">
                 <columnConstraints>
@@ -43,7 +43,7 @@
 
     <!-- Center: Goal details -->
     <center>
-        <VBox spacing="12" padding="16">
+        <VBox spacing="12" style="-fx-padding: 16">
             <HBox spacing="10">
                 <Label text="Selected:"/>
                 <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;"/>
