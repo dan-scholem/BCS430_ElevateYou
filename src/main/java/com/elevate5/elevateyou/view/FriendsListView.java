@@ -11,7 +11,6 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -123,7 +122,7 @@ public class FriendsListView extends Application {
         }
     }
 
-    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
+    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, DocumentSnapshot document) {
 
         HBox userBox = new HBox();
         userBox.setAlignment(Pos.CENTER_LEFT);
@@ -136,7 +135,11 @@ public class FriendsListView extends Application {
         if(!friendUids.contains(docUserId)){
             Button requestFriendButton = generateRequestButton(docUserId);
             userBox.getChildren().add(requestFriendButton);
+        }else {
+            Button removeFriendButton = generateRemoveFriendButton(docUserId);
+            userBox.getChildren().add(removeFriendButton);
         }
+
         return userBox;
     }
 
@@ -160,6 +163,7 @@ public class FriendsListView extends Application {
         resultButton.setOnAction((e) -> {
             System.out.println(resultButton.getUserData().toString());
         });
+
         return resultButton;
     }
 
@@ -172,25 +176,67 @@ public class FriendsListView extends Application {
             DocumentReference senderDocRef;
             DocumentReference receiverDocRef;
             if(fstore == null){
-                System.out.println("fstore not null");
-                ArrayList<String> senderFriendsList = new ArrayList<>();
-                senderFriendsList.add(friendRequest.getReceiverID());
-                Map<String, Object> senderFriendsMap = new HashMap<>();
-                senderFriendsMap.put("Friends", senderFriendsList);
-
-                ArrayList<String> receiverFriendsList = new ArrayList<>();
-                receiverFriendsList.add(friendRequest.getSenderID());
-                Map<String, Object> receiverFriendsMap = new HashMap<>();
-                receiverFriendsMap.put("Friends", receiverFriendsList);
 
                 senderDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
+                ArrayList<String> senderFriendRequestsList = SessionManager.getSession().getCurrUser().getSentFriendRequestsList();
+                senderFriendRequestsList.add(friendRequest.getReceiverID());
+                Map<String, Object> senderFriendsMap = new HashMap<>();
+                senderFriendsMap.put("SentFriendRequests", senderFriendRequestsList);
+
                 receiverDocRef = App.fstore.collection("Users").document(docUserId);
+                ApiFuture<DocumentSnapshot> future = receiverDocRef.get();
+                ArrayList<String> receiverFriendRequestsList = new ArrayList<>();
+                try {
+                    DocumentSnapshot receiverDoc = future.get();
+                    receiverFriendRequestsList = new ArrayList<>((List<String>) receiverDoc.get("ReceivedFriendRequests"));
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }catch(NullPointerException e){
+                    System.out.println("NullPointerException");
+                }
+                receiverFriendRequestsList.add(friendRequest.getSenderID());
+                Map<String, Object> receiverFriendsMap = new HashMap<>();
+                receiverFriendsMap.put("ReceivedFriendRequests", receiverFriendRequestsList);
 
                 senderDocRef.update(senderFriendsMap);
                 receiverDocRef.update(receiverFriendsMap);
+
+                displayFriendsList();
             }
         });
+
         return requestFriendButton;
+    }
+
+    private Button generateRemoveFriendButton(String docUserId){
+
+        Button removeFriendButton = new Button("Remove Friend");
+        removeFriendButton.setOnAction((event) -> {
+
+            SessionManager.getSession().getCurrUser().getFriendsList().remove(docUserId);
+            Map<String, Object> senderFriendsMap = new HashMap<>();
+            senderFriendsMap.put("Friends", SessionManager.getSession().getCurrUser().getFriendsList());
+            DocumentReference senderDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
+            senderDocRef.update(senderFriendsMap);
+
+            DocumentReference receiverDocRef = App.fstore.collection("Users").document(docUserId);
+            ApiFuture<DocumentSnapshot> future = receiverDocRef.get();
+            DocumentSnapshot receiverDoc;
+            try {
+                receiverDoc = future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+            ArrayList<String> docFriendsList = new ArrayList<>((List<String>) receiverDoc.get("Friends"));
+            docFriendsList.remove(SessionManager.getSession().getUserID());
+            Map<String, Object> docFriendsMap = new HashMap<>();
+            docFriendsMap.put("Friends", docFriendsList);
+            receiverDocRef.update(docFriendsMap);
+
+            displayFriendsList();
+        });
+
+        return removeFriendButton;
     }
 
     @FXML
@@ -236,7 +282,7 @@ public class FriendsListView extends Application {
         if(docFirstName.toLowerCase().contains(searchField.getText().toLowerCase()) ||
                 docLastName.toLowerCase().contains(searchField.getText().toLowerCase())){
             //
-            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
+            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, document);
 
             friendsBox.getChildren().add(resultBox);
         }
