@@ -226,6 +226,40 @@ public class FriendsListView extends Application {
 
     private Button generateDenyRequestButton(String docUserId) {
         Button denyRequestButton = new Button("Deny");
+        denyRequestButton.setOnAction(event -> {
+           FriendRequestModel friendRequest = new FriendRequestModel(docUserId, SessionManager.getSession().getUserID());
+            DocumentReference senderDocRef;
+            DocumentReference receiverDocRef;
+            if(fstore == null){
+
+                receiverDocRef = App.fstore.collection("Users").document(friendRequest.getReceiverID());
+                ArrayList<String> receiverFriendRequestsList = SessionManager.getSession().getCurrUser().getReceivedFriendRequestsList();
+                receiverFriendRequestsList.remove(friendRequest.getSenderID());
+                requestUids = receiverFriendRequestsList;
+                Map<String, Object> receiverFriendsMap = new HashMap<>();
+                receiverFriendsMap.put("ReceivedFriendRequests", receiverFriendRequestsList);
+
+                senderDocRef = App.fstore.collection("Users").document(friendRequest.getSenderID());
+                ApiFuture<DocumentSnapshot> future = senderDocRef.get();
+                ArrayList<String> senderFriendRequestsList = new ArrayList<>();
+                try {
+                    DocumentSnapshot senderDoc = future.get();
+                    senderFriendRequestsList = new ArrayList<>((List<String>) senderDoc.get("SentFriendRequests"));
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }catch(NullPointerException e){
+                    System.out.println("NullPointerException");
+                }
+                senderFriendRequestsList.remove(friendRequest.getReceiverID());
+                Map<String, Object> senderFriendsMap = new HashMap<>();
+                senderFriendsMap.put("SentFriendRequests", senderFriendRequestsList);
+
+                senderDocRef.update(senderFriendsMap);
+                receiverDocRef.update(receiverFriendsMap);
+
+                displayRequestsList();
+            }
+        });
 
 
 
