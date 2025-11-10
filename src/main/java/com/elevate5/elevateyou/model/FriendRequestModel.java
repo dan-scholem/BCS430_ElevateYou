@@ -4,12 +4,10 @@ public class FriendRequestModel {
 
     private String senderID;
     private String receiverID;
-    private boolean requestAccepted;
 
     public FriendRequestModel(String senderID, String receiverID) {
         this.senderID = senderID;
         this.receiverID = receiverID;
-        this.requestAccepted = false;
     }
 
     public String getSenderID() {
@@ -28,11 +26,4 @@ public class FriendRequestModel {
         this.receiverID = receiverID;
     }
 
-    public boolean isRequestAccepted() {
-        return requestAccepted;
-    }
-
-    public void setRequestAccepted(boolean requestAccepted) {
-        this.requestAccepted = requestAccepted;
-    }
 }
