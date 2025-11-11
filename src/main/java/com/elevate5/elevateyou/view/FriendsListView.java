@@ -1,12 +1,9 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.*;
-import com.elevate5.elevateyou.model.FirestoreContext;
-import com.elevate5.elevateyou.model.FriendRequestModel;
 import com.elevate5.elevateyou.model.User;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
-import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -16,16 +13,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class FriendsListView extends Application {
@@ -55,69 +48,49 @@ public class FriendsListView extends Application {
     @FXML
     private Label numRequestsLabel;
 
-    //private Label friendUidData;
-    //private Label requestUidData;
-
     private FriendsListViewModel friendsListViewModel;
 
 
     @FXML
     public void initialize() {
 
-
-
-        if (SessionManager.getSession() != null) {
-            //friendUidData = new Label();
-            //friendUidData.setUserData(friendUids);
-            //requestUidData = new Label();
-            //requestUidData.setUserData(requestUids);
-        }
-
-
-
     }
 
-
     @FXML
-    private void friendsListButtonClick(ActionEvent event) {
+    private void friendsListButtonClick(ActionEvent event) throws ExecutionException, InterruptedException {
         displayFriendsList();
     }
 
     @FXML
-    private void requestsButtonClick(ActionEvent event) {
+    private void requestsButtonClick(ActionEvent event) throws ExecutionException, InterruptedException {
         displayRequestsList();
     }
 
     @FXML
     private void searchButtonClick(ActionEvent event) throws IOException {
+        displaySearchResults();
+    }
+
+
+    private void displayFriendsList() throws ExecutionException, InterruptedException {
         friendsBox.getChildren().clear();
-        ApiFuture<QuerySnapshot> future = App.fstore.collection("Users").get();
-
-        // future.get() blocks on response
-        List<QueryDocumentSnapshot> documents;
-
-        try {
-            documents = future.get().getDocuments();
-
-            if (!documents.isEmpty()) {
-
-                for (QueryDocumentSnapshot document : documents) {
-                    updateFriendsBox(document);
-
-                }
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        ArrayList<DocumentSnapshot> friendsList = friendsListViewModel.getUserDocs(friendsListViewModel.getFriendUids());
+        displayList(friendsList);
+        searchField.clear();
     }
 
-
-    private void displayFriendsList() {
-        displayList(friendsListViewModel.getFriendUids());
+    private void displayRequestsList() throws ExecutionException, InterruptedException {
+        friendsBox.getChildren().clear();
+        ArrayList<DocumentSnapshot> requestsList = friendsListViewModel.getUserDocs(friendsListViewModel.getRequestUids());
+        displayList(requestsList);
+        searchField.clear();
     }
 
-    private void displayRequestsList() {
-        displayList(friendsListViewModel.getRequestUids());
+    private void displaySearchResults(){
+        friendsBox.getChildren().clear();
+        ArrayList<DocumentSnapshot> searchResultsList = friendsListViewModel.searchUsers();
+        displayList(searchResultsList);
+        searchField.clear();
     }
 
     private void updateNumRequestsLabel() {
@@ -130,42 +103,26 @@ public class FriendsListView extends Application {
         }
     }
 
-    private void displayList(ArrayList<String> idList) {
-        searchField.clear();
-        friendsBox.getChildren().clear();
-        try {
-            for (String id : idList) {
-                DocumentReference docRef = App.fstore.collection("Users").document(id);
-                ApiFuture<DocumentSnapshot> future = docRef.get();
-                DocumentSnapshot document = future.get();
-                updateFriendsBox(document);
+    private void displayList(ArrayList<DocumentSnapshot> documents) {
+        for (DocumentSnapshot doc : documents) {
+            String docFirstName = doc.getString("FirstName");
+            String docLastName = doc.getString("LastName");
+            String docEmail = doc.getString("Email");
+            String docUserId = doc.getId();
+            String docProfilePicUrl = doc.getString("ProfilePicUrl");
+            if (docProfilePicUrl == null) {
+                docProfilePicUrl = "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png";
             }
-
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-        updateNumRequestsLabel();
-    }
-
-    private void updateFriendsBox(DocumentSnapshot document) {
-        String docFirstName = document.getString("FirstName");
-        String docLastName = document.getString("LastName");
-        String docEmail = document.getString("Email");
-        String docUserId = document.getId();
-        String docProfilePicUrl = document.getString("ProfilePicUrl");
-        if (docProfilePicUrl == null) {
-            docProfilePicUrl = "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png";
-        }
-        assert docFirstName != null;
-        assert docLastName != null;
-        if ((docFirstName.toLowerCase().contains(searchField.getText().toLowerCase()) ||
-                docLastName.toLowerCase().contains(searchField.getText().toLowerCase())) &&
-                !SessionManager.getSession().getCurrUser().getUserID().equals(docUserId)) {
-            //
-            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, document);
+            assert docFirstName != null;
+            assert docLastName != null;
+            if(SessionManager.getSession().getCurrUser().getUserID().equals(docUserId)) {
+                return;
+            }
+            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, doc);
 
             friendsBox.getChildren().add(resultBox);
         }
+        updateNumRequestsLabel();
     }
 
     public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, DocumentSnapshot document) {
@@ -178,19 +135,17 @@ public class FriendsListView extends Application {
         Button resultButton = generateResultButton(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
         userBox.getChildren().add(resultButton);
 
-        if (!friendsListViewModel.containsFriendUid(docUserId) &&
-                !friendsListViewModel.containsSentFriendRequestUid(docUserId) &&
-                !friendsListViewModel.containsReceivedFriendRequestUid(docUserId)) {
-            Button requestFriendButton = generateRequestButton(docUserId);
-            userBox.getChildren().add(requestFriendButton);
+        if (friendsListViewModel.containsFriendUid(docUserId)) {
+            Button removeFriendButton = generateRemoveFriendButton(docUserId);
+            userBox.getChildren().add(removeFriendButton);
         } else if (friendsListViewModel.containsReceivedFriendRequestUid(docUserId)) {
             Button acceptRequestButton = generateAcceptRequestButton(docUserId);
             userBox.getChildren().add(acceptRequestButton);
             Button denyRequestButton = generateDenyRequestButton(docUserId);
             userBox.getChildren().add(denyRequestButton);
-        } else if(friendsListViewModel.containsFriendUid(docUserId)) {
-            Button removeFriendButton = generateRemoveFriendButton(docUserId);
-            userBox.getChildren().add(removeFriendButton);
+        } else if(friendsListViewModel.containsSentFriendRequestUid(docUserId)) {
+            Button requestFriendButton = generateRequestButton(docUserId);
+            userBox.getChildren().add(requestFriendButton);
         } else{
             Button requestFriendButton = generateRequestButton(docUserId);
             userBox.getChildren().add(requestFriendButton);
@@ -229,9 +184,14 @@ public class FriendsListView extends Application {
         requestFriendButton.setOnAction((event) -> {
 
             friendsListViewModel.sendFriendRequest(docUserId);
-            displayFriendsList();
+            try {
+                displayFriendsList();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         });
+
         if (friendsListViewModel.containsSentFriendRequestUid(docUserId)) {
             requestFriendButton.setDisable(true);
             requestFriendButton.setText("Request Sent!");
@@ -246,7 +206,11 @@ public class FriendsListView extends Application {
         acceptRequestButton.setOnAction(event -> {
 
             friendsListViewModel.acceptFriendRequest(docUserId);
-            displayFriendsList();
+            try {
+                displayFriendsList();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         });
 
@@ -258,7 +222,11 @@ public class FriendsListView extends Application {
         denyRequestButton.setOnAction(event -> {
 
             friendsListViewModel.denyFriendRequest(docUserId);
-            displayRequestsList();
+            try {
+                displayRequestsList();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         });
 
@@ -272,7 +240,11 @@ public class FriendsListView extends Application {
         removeFriendButton.setOnAction((event) -> {
 
             friendsListViewModel.removeFriend(docUserId);
-            displayFriendsList();
+            try {
+                displayFriendsList();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         });
 
@@ -280,7 +252,7 @@ public class FriendsListView extends Application {
     }
 
 
-    public void setViewModel(FriendsListViewModel friendsListViewModel) {
+    public void setViewModel(FriendsListViewModel friendsListViewModel) throws ExecutionException, InterruptedException {
         this.friendsListViewModel = friendsListViewModel;
         updateNumRequestsLabel();
         displayFriendsList();

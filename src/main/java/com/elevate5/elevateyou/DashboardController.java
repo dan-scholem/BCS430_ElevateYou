@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class DashboardController {
 
@@ -261,7 +262,7 @@ public class DashboardController {
             stage.setTitle("Friends");
             stage.setScene(scene);
             stage.show();
-        } catch (IOException e) {
+        } catch (IOException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

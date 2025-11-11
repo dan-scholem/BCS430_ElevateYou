@@ -5,12 +5,14 @@ import com.elevate5.elevateyou.model.FriendsListModel;
 import com.elevate5.elevateyou.model.UserSearchModel;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class FriendsListViewModel {
 
@@ -22,38 +24,45 @@ public class FriendsListViewModel {
 
     public FriendsListViewModel() {
         DocumentReference currUserDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
-        this.userSearchModel = new UserSearchModel(currUserDocRef);
+        this.userSearchModel = new UserSearchModel();
         this.friendsListModel = new FriendsListModel(currUserDocRef);
     }
 
+    public ArrayList<DocumentSnapshot> searchUsers(){
+        return userSearchModel.searchUsers(searchString.get());
+    }
+
+    public ArrayList<DocumentSnapshot> getUserDocs(ArrayList<String> uids) throws ExecutionException, InterruptedException {
+        return friendsListModel.getUserDocs(uids);
+    }
+
     public boolean containsFriendUid(String uid){
-        return userSearchModel.containsFriend(uid);
+        return friendsListModel.containsFriend(uid);
     }
 
     public boolean containsReceivedFriendRequestUid(String uid){
-        return userSearchModel.containsReceivedFriendRequest(uid);
+        return friendsListModel.containsReceivedFriendRequest(uid);
     }
 
     public boolean containsSentFriendRequestUid(String uid){
-        return userSearchModel.containsSentFriendRequest(uid);
+        return friendsListModel.containsSentFriendRequest(uid);
     }
 
     public void sendFriendRequest(String uid){
-        userSearchModel.sendFriendRequest(uid);
+        friendsListModel.sendFriendRequest(uid);
     }
 
     public void acceptFriendRequest(String uid){
-        userSearchModel.acceptFriendRequest(uid);
+        friendsListModel.acceptFriendRequest(uid);
     }
 
     public void denyFriendRequest(String uid){
-        userSearchModel.denyFriendRequest(uid);
+        friendsListModel.denyFriendRequest(uid);
     }
 
     public void removeFriend(String uid){
-        userSearchModel.removeFriend(uid);
+        friendsListModel.removeFriend(uid);
     }
-
 
     public ArrayList<String> getFriendUids() {
         return friendsListModel.getFriendUids();
@@ -64,7 +73,7 @@ public class FriendsListViewModel {
     }
 
     public ArrayList<String> getRequestUids() {
-        return userSearchModel.getReceivedRequestUids();
+        return friendsListModel.getReceivedRequestUids();
     }
 
     public ObjectProperty<ArrayList<String>> requestUidsProperty() {
