@@ -1,7 +1,10 @@
 package com.elevate5.elevateyou.viewmodel;
 
+import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.model.FriendsListModel;
 import com.elevate5.elevateyou.model.UserSearchModel;
+import com.elevate5.elevateyou.session.SessionManager;
+import com.google.cloud.firestore.DocumentReference;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,8 +21,9 @@ public class FriendsListViewModel {
     private FriendsListModel  friendsListModel;
 
     public FriendsListViewModel() {
-        this.userSearchModel = new UserSearchModel();
-        this.friendsListModel = new FriendsListModel();
+        DocumentReference currUserDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
+        this.userSearchModel = new UserSearchModel(currUserDocRef);
+        this.friendsListModel = new FriendsListModel(currUserDocRef);
     }
 
     public boolean containsFriendUid(String uid){
@@ -52,7 +56,7 @@ public class FriendsListViewModel {
 
 
     public ArrayList<String> getFriendUids() {
-        return friendUids.get();
+        return friendsListModel.getFriendUids();
     }
 
     public ObjectProperty<ArrayList<String>> friendUidsProperty() {
@@ -60,7 +64,7 @@ public class FriendsListViewModel {
     }
 
     public ArrayList<String> getRequestUids() {
-        return requestUids.get();
+        return userSearchModel.getReceivedRequestUids();
     }
 
     public ObjectProperty<ArrayList<String>> requestUidsProperty() {

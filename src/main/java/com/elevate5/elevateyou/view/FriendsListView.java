@@ -58,18 +58,15 @@ public class FriendsListView extends Application {
     //private Label friendUidData;
     //private Label requestUidData;
 
-    private ArrayList<String> friendUids = new ArrayList<>();
-    private ArrayList<String> requestUids = new ArrayList<>();
-
     private FriendsListViewModel friendsListViewModel;
 
 
     @FXML
     public void initialize() {
 
+
+
         if (SessionManager.getSession() != null) {
-            friendUids = SessionManager.getSession().getCurrUser().getFriendsList();
-            requestUids = SessionManager.getSession().getCurrUser().getReceivedFriendRequestsList();
             //friendUidData = new Label();
             //friendUidData.setUserData(friendUids);
             //requestUidData = new Label();
@@ -91,18 +88,42 @@ public class FriendsListView extends Application {
         displayRequestsList();
     }
 
+    @FXML
+    private void searchButtonClick(ActionEvent event) throws IOException {
+        friendsBox.getChildren().clear();
+        ApiFuture<QuerySnapshot> future = App.fstore.collection("Users").get();
+
+        // future.get() blocks on response
+        List<QueryDocumentSnapshot> documents;
+
+        try {
+            documents = future.get().getDocuments();
+
+            if (!documents.isEmpty()) {
+
+                for (QueryDocumentSnapshot document : documents) {
+                    updateFriendsBox(document);
+
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private void displayFriendsList() {
-        displayList(SessionManager.getSession().getCurrUser().getFriendsList());
+        displayList(friendsListViewModel.getFriendUids());
     }
 
     private void displayRequestsList() {
-        displayList(SessionManager.getSession().getCurrUser().getReceivedFriendRequestsList());
+        displayList(friendsListViewModel.getRequestUids());
     }
 
     private void updateNumRequestsLabel() {
-        if (!requestUids.isEmpty()) {
-            numRequestsLabel.setText(String.valueOf(requestUids.size()));
+        if (friendsListViewModel.getRequestUids() != null &&
+                !friendsListViewModel.getRequestUids().isEmpty()) {
+            numRequestsLabel.setText(String.valueOf(friendsListViewModel.getRequestUids().size()));
             numRequestsLabel.setVisible(true);
         } else {
             numRequestsLabel.setVisible(false);
@@ -245,9 +266,6 @@ public class FriendsListView extends Application {
     }
 
 
-
-
-
     private Button generateRemoveFriendButton(String docUserId) {
 
         Button removeFriendButton = new Button("Remove Friend");
@@ -261,33 +279,12 @@ public class FriendsListView extends Application {
         return removeFriendButton;
     }
 
-    @FXML
-    private void searchButtonClick(ActionEvent event) throws IOException {
-        friendsBox.getChildren().clear();
-        ApiFuture<QuerySnapshot> future = App.fstore.collection("Users").get();
-
-        // future.get() blocks on response
-        List<QueryDocumentSnapshot> documents;
-
-        try {
-            documents = future.get().getDocuments();
-
-            if (!documents.isEmpty()) {
-
-                for (QueryDocumentSnapshot document : documents) {
-                    updateFriendsBox(document);
-
-                }
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void setViewModel(FriendsListViewModel friendsListViewModel) {
         this.friendsListViewModel = friendsListViewModel;
         updateNumRequestsLabel();
         displayFriendsList();
+        searchField.textProperty().bindBidirectional(friendsListViewModel.searchStringProperty());
     }
 
 

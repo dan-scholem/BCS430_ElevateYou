@@ -6,6 +6,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 
+import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,18 +18,23 @@ public class UserSearchModel {
     private ArrayList<String> friendUids;
     private ArrayList<String> receivedRequestUids;
     private ArrayList<String> sentRequestUids;
-    private final DocumentReference currUserDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
+    private final DocumentReference currUserDocRef;
 
-    public UserSearchModel() {
+    public UserSearchModel(DocumentReference userDocRef) {
         User currUser = SessionManager.getSession().getCurrUser();
         friendUids = currUser.getFriendsList();
         receivedRequestUids = currUser.getReceivedFriendRequestsList();
         sentRequestUids = currUser.getSentFriendRequestsList();
+        this.currUserDocRef = userDocRef;
+    }
+/*
+    public boolean searchUsersMatch(){
+        DocumentReference docRef = App.fstore.collection("Users").document(id);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
     }
 
-    public void searchUsers(){
-        //UserSearchModel  userSearchModel = new UserSearchModel();
-    }
+ */
 
     public boolean containsFriend(String uid){
         return friendUids.contains(uid);
