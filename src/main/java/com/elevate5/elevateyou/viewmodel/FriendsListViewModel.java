@@ -16,15 +16,13 @@ import java.util.concurrent.ExecutionException;
 
 public class FriendsListViewModel {
 
-    private final ObjectProperty<ArrayList<String>> friendUids = new SimpleObjectProperty<>();
-    private final ObjectProperty<ArrayList<String>> requestUids = new SimpleObjectProperty<>();
     private final StringProperty searchString = new SimpleStringProperty();
     private UserSearchModel userSearchModel;
     private FriendsListModel  friendsListModel;
 
     public FriendsListViewModel() {
         DocumentReference currUserDocRef = App.fstore.collection("Users").document(SessionManager.getSession().getUserID());
-        this.userSearchModel = new UserSearchModel();
+        this.userSearchModel = new UserSearchModel(currUserDocRef);
         this.friendsListModel = new FriendsListModel(currUserDocRef);
     }
 
@@ -68,16 +66,8 @@ public class FriendsListViewModel {
         return friendsListModel.getFriendUids();
     }
 
-    public ObjectProperty<ArrayList<String>> friendUidsProperty() {
-        return friendUids;
-    }
-
     public ArrayList<String> getRequestUids() {
         return friendsListModel.getReceivedRequestUids();
-    }
-
-    public ObjectProperty<ArrayList<String>> requestUidsProperty() {
-        return requestUids;
     }
 
     public String getSearchString() {

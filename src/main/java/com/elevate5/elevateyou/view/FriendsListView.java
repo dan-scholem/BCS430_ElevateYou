@@ -115,11 +115,7 @@ public class FriendsListView extends Application {
             }
             assert docFirstName != null;
             assert docLastName != null;
-            if(SessionManager.getSession().getCurrUser().getUserID().equals(docUserId)) {
-                return;
-            }
             HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, doc);
-
             friendsBox.getChildren().add(resultBox);
         }
         updateNumRequestsLabel();
@@ -367,18 +363,7 @@ public class FriendsListView extends Application {
             throw new RuntimeException();
         }
     }
-/*
-    public static void loadFriendsScene(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("FriendsListView.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Friends");
-        stage.setScene(scene);
-        stage.show();
-    }
-
- */
 
     public static void main(String[] args) {
         launch(args);
