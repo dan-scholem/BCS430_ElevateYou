@@ -220,7 +220,7 @@
     -fx-cursor: hand;
 }
 
-.addaffirmation, .viewaffirmation, .deleteaffirmation, .randomquote, .randomaffirmation {
+.addaffirmation, .viewaffirmation, .deleteaffirmation, .randomquote, .randomaffirmation, .searchquote, .searchaffirmation {
     -fx-font-family: "Segoe UI";
     -fx-font-weight: bold;
     -fx-background-color: #E29578;
@@ -235,4 +235,5 @@
     -fx-font-family: "Segoe UI";
     -fx-font-weight: bold;
     -fx-text-fill: #000000;
+    -fx-font-size: 16px;
 }

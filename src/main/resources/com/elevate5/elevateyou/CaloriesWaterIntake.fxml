@@ -96,6 +96,11 @@
                         <Font name="Poppins ExtraBold" size="13" />
                      </font>
                   </Button>
+                  <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+                     <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                     </font>
+                  </Button>
                   <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
                      <font>
                         <Font name="Poppins ExtraBold" size="13" />
@@ -213,7 +218,7 @@
               </VBox>
             <Pane prefHeight="136.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
                <children>
-                  <ImageView fitHeight="237.0" fitWidth="297.0" layoutX="-9.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="215.0" fitWidth="217.0" layoutX="14.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/elevateyoulogo.png" />
                      </image>

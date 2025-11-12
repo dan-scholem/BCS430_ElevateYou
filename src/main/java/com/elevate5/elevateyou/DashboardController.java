@@ -61,6 +61,9 @@ public class DashboardController {
     private Button profileButton;
 
     @FXML
+    private Button quotesaffirmationBtn;
+
+    @FXML
     private Button reviewsButton;
 
     @FXML
@@ -247,5 +250,21 @@ public class DashboardController {
         } catch (Exception e) {
             throw new RuntimeException();
         }
+    }
+
+    @FXML
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 }

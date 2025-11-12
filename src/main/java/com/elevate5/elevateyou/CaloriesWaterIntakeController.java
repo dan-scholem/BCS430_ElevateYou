@@ -56,6 +56,8 @@ public class CaloriesWaterIntakeController {
     @FXML private Button calendarButton;
     @FXML private Button logoutButton;
     @FXML private Button journalButton;
+    @FXML private Button quotesaffirmationBtn;
+
 
     private ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
     private ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
@@ -361,6 +363,23 @@ public class CaloriesWaterIntakeController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     @FXML
     private void logoutUser() {
