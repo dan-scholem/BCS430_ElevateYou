@@ -285,4 +285,20 @@ public class DashboardController {
         }
 
     }
+
+     @FXML
+    public void chatButtonClick(){
+        try {
+            Stage stage = (Stage) chatButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/LiveChat.fxml")
+            );
+            javafx.scene.Parent root = loader.load();
+            stage.setScene(new Scene(root, 1056, 756));
+            stage.setTitle("Live Chat");
+            stage.show();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to open Live Chat", e);
+        }
+    }
 }
