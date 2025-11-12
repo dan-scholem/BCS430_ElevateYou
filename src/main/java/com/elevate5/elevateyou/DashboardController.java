@@ -269,7 +269,8 @@ public class DashboardController {
             throw new RuntimeException(e);
         }
     }
-  
+
+    @FXML
     protected void quoteaffirmationButtonClick() throws IOException {
 
         try {
