@@ -117,7 +117,7 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+            <Button fx:id="chatButton" onAction="#chatButtonClick" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
