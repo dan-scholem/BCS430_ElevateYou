@@ -87,7 +87,7 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+            <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
@@ -97,7 +97,7 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+            <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
