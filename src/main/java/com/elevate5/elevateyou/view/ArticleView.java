@@ -1,111 +1,50 @@
-package com.elevate5.elevateyou;
+package com.elevate5.elevateyou.view;
 
+import com.elevate5.elevateyou.*;
 import com.elevate5.elevateyou.service.NotificationService;
-import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
-import com.elevate5.elevateyou.view.AppointmentView;
-import com.elevate5.elevateyou.view.CalendarView;
-import com.elevate5.elevateyou.view.FriendsListView;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class DashboardController {
+public class ArticleView extends Application {
 
-    @FXML
-    public Label welcometext;
     @FXML
     private Button appointmentsButton;
-
     @FXML
     private Button calendarButton;
-
-    @FXML
-    private Button chatButton;
-
     @FXML
     private Button dashButton;
-
     @FXML
     private Button exerciseButton;
-
     @FXML
     private Button foodButton;
-
-    @FXML
-    private Button friendsButton;
-
     @FXML
     private Button journalButton;
-
     @FXML
     private Button logoutButton;
-
     @FXML
     private Button medButton;
-
     @FXML
-    private Button profileButton;
-
+    private Button sleepButton;
+    @FXML
+    private Button friendsButton;
     @FXML
     private Button quotesaffirmationBtn;
 
-    @FXML
-    private Button reviewsButton;
-
-    @FXML
-    private Button sleepButton;
-
-    @FXML
-    private Button articlesButton;
-
-    @FXML
-    private HBox topRightBar;
 
 
-
-    private Session session;
-
-    @FXML
-    public void initialize() {
-        session = SessionManager.getSession();
-        String uid = session.getUser().getUid();
-        try {
-            DocumentReference docRef = App.fstore.collection("Users").document(uid);
-            ApiFuture<DocumentSnapshot> future = docRef.get();
-            DocumentSnapshot doc = future.get();
-            String name = (String) doc.get("FirstName");
-            if (name != null) {
-                welcometext.setText("Good Morning, " + name);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        // Fallback wiring in case the FXML 'onAction' was lost
-        if (exerciseButton != null) {
-            exerciseButton.setOnAction(this::exerciseButtonClick);
-        } else {
-            System.out.println("[NAV] exerciseButton is null — check fx:id in Dashboard.fxml");
-        }
-
-        setNotificationsButton();
-    }
 
     // Logout
     @FXML
@@ -174,7 +113,7 @@ public class DashboardController {
             throw new RuntimeException(e);
         }
     }
-
+/*
     @FXML
     protected void settingsButtonClick() throws IOException {
 
@@ -212,6 +151,8 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+ */
 
     // Exercise navigation
     @FXML
@@ -286,18 +227,18 @@ public class DashboardController {
 
     }
 
-    @FXML
-    protected void articlesButtonClick() throws IOException {
-        try {
-            Stage stage = (Stage) articlesButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ArticleView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Articles");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("ArticleView.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 1218, 738);
+        stage.setTitle("Articles");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
