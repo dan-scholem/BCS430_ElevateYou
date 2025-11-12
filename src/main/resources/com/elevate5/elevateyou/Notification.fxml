@@ -1,48 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.elevate5.elevateyou.NotificationController"
-            prefHeight="40" prefWidth="40">
+<AnchorPane prefHeight="40" prefWidth="40" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.NotificationController">
     <children>
-        <Button fx:id="bellButton"
-                text="🔔"
-                onAction="#onBellClicked"
-                style="-fx-background-color: transparent;
-               -fx-font-size: 18px;
-               -fx-cursor: hand;"
-                prefWidth="32" prefHeight="32"/>
+        <Button fx:id="bellButton" onAction="#onBellClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;                -fx-font-size: 18px;                -fx-cursor: hand;" text="🔔" />
 
         <!-- Badge: hidden when no items -->
-        <Label fx:id="badgeLabel"
-               layoutX="22" layoutY="-4"
-               text="3"
-               visible="false" managed="false"
-               style="-fx-background-color: red;
-              -fx-text-fill: white;
-              -fx-font-size: 11px;
-              -fx-font-weight: bold;
-              -fx-background-radius: 9999;
-              -fx-padding: 2 5;"
-        />
+        <Label fx:id="badgeLabel" layoutX="22" layoutY="-4" managed="false" style="-fx-background-color: red;               -fx-text-fill: white;               -fx-font-size: 11px;               -fx-font-weight: bold;               -fx-background-radius: 9999;               -fx-padding: 2 5;" text="3" visible="false" />
 
         <!-- Dropdown list -->
-        <VBox fx:id="dropdownList"
-              layoutX="-180" layoutY="36"
-              spacing="6"
-              visible="false" managed="false"
-              style="-fx-background-color: white;
-             -fx-border-color: rgba(0,0,0,0.12);
-             -fx-border-radius: 8;
-             -fx-background-radius: 8;
-             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
-             -fx-padding: 10;">
+        <VBox fx:id="dropdownList" layoutX="-180" layoutY="36" managed="false" spacing="6" style="-fx-background-color: white;              -fx-border-color: rgba(0,0,0,0.12);              -fx-border-radius: 8;              -fx-background-radius: 8;              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);              -fx-padding: 10;" visible="false">
         </VBox>
     </children>
 </AnchorPane>

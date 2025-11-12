@@ -219,3 +219,21 @@
     -fx-background-color: #eeeeee;
     -fx-cursor: hand;
 }
+
+.addaffirmation, .viewaffirmation, .deleteaffirmation, .randomquote, .randomaffirmation, .searchquote, .searchaffirmation {
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-background-color: #E29578;
+    -fx-background-radius: 30px;
+    -fx-text-fill: #000000;
+    -fx-border-color: #FFDDD2;
+    -fx-border-radius: 20px;
+}
+
+
+.quoteaffirmlabel {
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
+}

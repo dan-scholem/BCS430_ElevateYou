@@ -63,6 +63,9 @@ public class DashboardController {
     private Button profileButton;
 
     @FXML
+    private Button quotesaffirmationBtn;
+
+    @FXML
     private Button reviewsButton;
 
     @FXML
@@ -214,10 +217,10 @@ public class DashboardController {
     @FXML
     private void exerciseButtonClick(ActionEvent event) {
         System.out.println("[NAV] Exercise clicked"); // visibility in console
-
+        FXMLLoader loader;
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml")
+            loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/exercise.fxml")
             );
             Node view = loader.load();
 
@@ -265,5 +268,20 @@ public class DashboardController {
         } catch (IOException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+  
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 }
