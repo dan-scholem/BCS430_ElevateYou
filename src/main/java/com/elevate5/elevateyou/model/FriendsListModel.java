@@ -52,6 +52,10 @@ public class FriendsListModel {
         return sentRequestUids.contains(uid);
     }
 
+    public boolean containsBlockedUser(String uid){
+        return blockedUids.contains(uid);
+    }
+
     public void sendFriendRequest(String uid){
         FriendRequestModel friendRequest = new FriendRequestModel(SessionManager.getSession().getUserID(), uid);
 
@@ -164,6 +168,22 @@ public class FriendsListModel {
         Map<String, Object> removedUserFriendsMap = new HashMap<>();
         removedUserFriendsMap.put("Friends", removedUserFriendsList);
         removedUserDocRef.update(removedUserFriendsMap);
+    }
+
+    public void blockUser(String uid){
+        blockedUids.add(uid);
+        SessionManager.getSession().getCurrUser().setBlockList(blockedUids);
+        Map<String, Object> blockedUsersMap = new HashMap<>();
+        blockedUsersMap.put("BlockedUsers", blockedUids);
+        this.currUserDocRef.update(blockedUsersMap);
+    }
+
+    public void unblockUser(String uid){
+        blockedUids.remove(uid);
+        SessionManager.getSession().getCurrUser().setBlockList(blockedUids);
+        Map<String, Object> blockedUsersMap = new HashMap<>();
+        blockedUsersMap.put("BlockedUsers", blockedUids);
+        this.currUserDocRef.update(blockedUsersMap);
     }
 
 

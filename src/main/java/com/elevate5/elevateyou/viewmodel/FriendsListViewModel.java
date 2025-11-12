@@ -42,6 +42,10 @@ public class FriendsListViewModel {
         return friendsListModel.containsReceivedFriendRequest(uid);
     }
 
+    public boolean containsBlockedUser(String uid){
+        return friendsListModel.containsBlockedUser(uid);
+    }
+
     public boolean containsSentFriendRequestUid(String uid){
         return friendsListModel.containsSentFriendRequest(uid);
     }
@@ -60,6 +64,14 @@ public class FriendsListViewModel {
 
     public void removeFriend(String uid){
         friendsListModel.removeFriend(uid);
+    }
+
+    public void blockUser(String uid){
+        friendsListModel.blockUser(uid);
+    }
+
+    public void unblockUser(String uid){
+        friendsListModel.unblockUser(uid);
     }
 
     public ArrayList<String> getFriendUids() {

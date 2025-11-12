@@ -9,7 +9,9 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -47,6 +49,8 @@ public class FriendsListView extends Application {
     private VBox friendsBox;
     @FXML
     private Label numRequestsLabel;
+    @FXML
+    private Label optionLabel;
 
     private FriendsListViewModel friendsListViewModel;
 
@@ -74,6 +78,7 @@ public class FriendsListView extends Application {
 
     private void displayFriendsList() throws ExecutionException, InterruptedException {
         friendsBox.getChildren().clear();
+        optionLabel.setText("Friends");
         ArrayList<DocumentSnapshot> friendsList = friendsListViewModel.getUserDocs(friendsListViewModel.getFriendUids());
         displayList(friendsList);
         searchField.clear();
@@ -81,6 +86,7 @@ public class FriendsListView extends Application {
 
     private void displayRequestsList() throws ExecutionException, InterruptedException {
         friendsBox.getChildren().clear();
+        optionLabel.setText("Requests");
         ArrayList<DocumentSnapshot> requestsList = friendsListViewModel.getUserDocs(friendsListViewModel.getRequestUids());
         displayList(requestsList);
         searchField.clear();
@@ -88,9 +94,9 @@ public class FriendsListView extends Application {
 
     private void displaySearchResults(){
         friendsBox.getChildren().clear();
+        optionLabel.setText("Search");
         ArrayList<DocumentSnapshot> searchResultsList = friendsListViewModel.searchUsers();
         displayList(searchResultsList);
-        searchField.clear();
     }
 
     private void updateNumRequestsLabel() {
@@ -115,13 +121,17 @@ public class FriendsListView extends Application {
             }
             assert docFirstName != null;
             assert docLastName != null;
-            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, doc);
+            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
             friendsBox.getChildren().add(resultBox);
+        }
+        if(friendsBox.getChildren().size() == 0){
+            HBox noResultBox = generateNoResultBox();
+            friendsBox.getChildren().add(noResultBox);
         }
         updateNumRequestsLabel();
     }
 
-    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, DocumentSnapshot document) {
+    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
 
         HBox userBox = new HBox();
         userBox.setAlignment(Pos.CENTER_LEFT);
@@ -145,6 +155,8 @@ public class FriendsListView extends Application {
         } else{
             Button requestFriendButton = generateRequestButton(docUserId);
             userBox.getChildren().add(requestFriendButton);
+            Button blockUserButton =  generateBlockButton(docUserId);
+            userBox.getChildren().add(blockUserButton);
         }
 
         return userBox;
@@ -158,6 +170,7 @@ public class FriendsListView extends Application {
         resultButton.setTooltip(new Tooltip(docUserId));
         resultButton.setText("    " + docFirstName + " " + docLastName);
         resultButton.setAlignment(Pos.TOP_LEFT);
+        resultButton.setCursor(Cursor.HAND);
         resultButton.setStyle("-fx-background-color: white;" +
                 "-fx-border-color: white;" +
                 "-fx-border-radius: 0px;" +
@@ -169,6 +182,7 @@ public class FriendsListView extends Application {
         );
         resultButton.setOnAction((e) -> {
             System.out.println(resultButton.getUserData().toString());
+            System.out.println("TODO: LINK TO USER PROFILE PAGE");
         });
 
         return resultButton;
@@ -180,17 +194,16 @@ public class FriendsListView extends Application {
         requestFriendButton.setOnAction((event) -> {
 
             friendsListViewModel.sendFriendRequest(docUserId);
-            try {
-                displayFriendsList();
-            } catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            displaySearchResults();
 
         });
 
         if (friendsListViewModel.containsSentFriendRequestUid(docUserId)) {
             requestFriendButton.setDisable(true);
             requestFriendButton.setText("Request Sent!");
+        }
+        if(friendsListViewModel.containsBlockedUser(docUserId)){
+            requestFriendButton.setDisable(true);
         }
 
         return requestFriendButton;
@@ -245,6 +258,38 @@ public class FriendsListView extends Application {
         });
 
         return removeFriendButton;
+    }
+
+    private Button generateBlockButton(String docUserId) {
+
+        Button blockButton = new Button("");
+        blockButton.setPrefWidth(100);
+        if(friendsListViewModel.containsBlockedUser(docUserId)) {
+            blockButton.setText("Unblock");
+        }else{
+            blockButton.setText("Block");
+        }
+        blockButton.setOnAction((event) -> {
+
+            if(friendsListViewModel.containsBlockedUser(docUserId)) {
+                friendsListViewModel.unblockUser(docUserId);
+            }else{
+                friendsListViewModel.blockUser(docUserId);
+            }
+            displaySearchResults();
+
+        });
+
+        return blockButton;
+    }
+
+    private HBox generateNoResultBox(){
+        HBox noResultBox =  new HBox();
+        noResultBox.setAlignment(Pos.CENTER);
+        noResultBox.setPadding(new Insets(50));
+        Label noResultLabel = new Label("Empty!");
+        noResultBox.getChildren().add(noResultLabel);
+        return noResultBox;
     }
 
 
