@@ -5,6 +5,8 @@ import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
+import com.elevate5.elevateyou.view.FriendsListView;
+import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -21,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class DashboardController {
 
@@ -252,6 +255,21 @@ public class DashboardController {
     }
 
     @FXML
+    protected void friendsButtonClick() {
+        try {
+            Stage stage = (Stage) friendsButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/FriendsListView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            FriendsListView controller = fxmlLoader.getController();
+            controller.setViewModel(new FriendsListViewModel());
+            stage.setTitle("Friends");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+  
     protected void quoteaffirmationButtonClick() throws IOException {
 
         try {

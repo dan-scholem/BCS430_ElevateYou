@@ -8,6 +8,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -19,6 +20,7 @@ public class Session {
     private EventManager userEventManager = new EventManager();
     private AppointmentManager userAppointmentManager = new AppointmentManager();
     private DoctorModel selectedDoctor;
+    private User currUser;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -89,6 +91,48 @@ public class Session {
 
         }
 
+        docRef = App.fstore.collection("Users").document(this.userID);
+        future = docRef.get();
+        doc = future.get();
+
+        if(doc.exists()) {
+            String firstName = (String) doc.get("FirstName");
+            String lastName = (String) doc.get("LastName");
+            String email = (String) doc.get("Email");
+            String profilePicUrl = (String) doc.get("ProfilePicUrl");
+            this.currUser = new User(firstName, lastName, email, profilePicUrl, userID);
+            ArrayList<String> friendsList;
+            if(doc.get("Friends") != null) {
+                friendsList = new ArrayList<>((List<String>) doc.get("Friends"));
+            }else{
+                friendsList = new ArrayList<>();
+            }
+            this.currUser.setFriendsList(friendsList);
+            ArrayList<String> receivedFriendRequestsList;
+            if(doc.get("ReceivedFriendRequests") != null) {
+                receivedFriendRequestsList = new ArrayList<>((List<String>) doc.get("ReceivedFriendRequests"));
+            }else{
+                receivedFriendRequestsList = new ArrayList<>();
+            }
+            this.currUser.setReceivedFriendRequestsList(receivedFriendRequestsList);
+            ArrayList<String> sentFriendRequestsList;
+            if(doc.get("SentFriendRequests") != null) {
+                sentFriendRequestsList = new ArrayList<>((List<String>) doc.get("SentFriendRequests"));
+            }else{
+                sentFriendRequestsList = new ArrayList<>();
+            }
+            this.currUser.setSentFriendRequestsList(sentFriendRequestsList);
+            ArrayList<String> blockList;
+            if(doc.get("BlockedUsers") != null) {
+                blockList = new ArrayList<>((List<String>) doc.get("BlockedUsers"));
+            }else {
+                blockList = new ArrayList<>();
+            }
+            this.currUser.setBlockList(blockList);
+        }else{
+            System.out.println("User doesn't exist");
+        }
+
     }
 
     public UserRecord getUser() {
@@ -117,5 +161,13 @@ public class Session {
 
     public void setSelectedDoctor(DoctorModel selectedDoctor) {
         this.selectedDoctor = selectedDoctor;
+    }
+
+    public User getCurrUser() {
+        return currUser;
+    }
+
+    public void setCurrUser(User currUser) {
+        this.currUser = currUser;
     }
 }

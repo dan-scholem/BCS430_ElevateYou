@@ -134,7 +134,7 @@ public class CreateAccountController {
                 if (addUser()) {
 
                     App.theUser.setEmail(userEmail.getText());
-                    App.theUser.setPassword(userPassword.getText());
+                    //App.theUser.setPassword(userPassword.getText());
                     App.theUser.setFirstName(firstName.getText());
                     App.theUser.setLastName(lastName.getText());
 

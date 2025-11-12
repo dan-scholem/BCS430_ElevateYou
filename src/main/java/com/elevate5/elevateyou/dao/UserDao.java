@@ -18,7 +18,7 @@ public class UserDao{
                 if (!rs.next()) return Optional.empty();
 
                 User u = new User();
-                u.setUserID(rs.getInt("user_id"));
+                u.setUserID(rs.getString("user_id"));
 
                 String name = rs.getString("name");
                 if (name != null && name.contains(" ")) {
@@ -45,7 +45,7 @@ public class UserDao{
                 try (ResultSet rs = ps.executeQuery()) {
                     if (!rs.next()) return Optional.empty();
                     return Optional.of(new UserRecord(
-                        rs.getInt("user_id"),
+                        rs.getString("user_id"),
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("hash_pass"),
@@ -67,7 +67,7 @@ public class UserDao{
         }
     }
     
-    public static record UserRecord(int userId, String name, String email, String passwordHash, String profileImageURL) {
+    public static record UserRecord(String userId, String name, String email, String passwordHash, String profileImageURL) {
         public User toUser() {
             User u = new User();
             u.setUserID(userId);
