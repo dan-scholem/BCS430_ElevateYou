@@ -74,7 +74,7 @@ public class FriendsListModel {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
             System.out.println("NullPointerException");
-            return;
+            receiverFriendRequestsList = new ArrayList<>();
         }
         receiverFriendRequestsList.add(friendRequest.getSenderID());
         Map<String, Object> receiverFriendsMap = new HashMap<>();
