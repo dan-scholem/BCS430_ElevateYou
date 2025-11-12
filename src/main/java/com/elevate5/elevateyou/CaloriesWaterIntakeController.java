@@ -1,7 +1,6 @@
 package com.elevate5.elevateyou;
 
 import com.elevate5.elevateyou.session.SessionManager;
-import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiService;
@@ -57,7 +56,8 @@ public class CaloriesWaterIntakeController {
     @FXML private Button calendarButton;
     @FXML private Button logoutButton;
     @FXML private Button journalButton;
-    @FXML private Button appointmentsButton;
+    @FXML private Button quotesaffirmationBtn;
+
 
     private ObservableList<CalorieEntry> calorieData = FXCollections.observableArrayList();
     private ObservableList<WaterEntry> waterData   = FXCollections.observableArrayList();
@@ -365,13 +365,19 @@ public class CaloriesWaterIntakeController {
     }
 
     @FXML
-    public void appointmentButtonClick() throws IOException {
+    protected void quoteaffirmationButtonClick() throws IOException {
+
         try {
-            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
-            AppointmentView.loadAppointmentScene(stage);
-        } catch (Exception e) {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
             throw new RuntimeException(e);
         }
+
     }
 
 

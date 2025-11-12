@@ -72,6 +72,9 @@ public class JournalEntryController implements Initializable {
     private Button medButton;
 
     @FXML
+    private Button quotesaffirmationBtn;
+
+    @FXML
     private Button reviewsButton;
 
     @FXML
@@ -443,6 +446,22 @@ public class JournalEntryController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

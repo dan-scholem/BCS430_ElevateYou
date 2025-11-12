@@ -24,6 +24,7 @@ module com.elevate5.elevateyou {
     requires org.checkerframework.checker.qual;
     requires tools.jackson.databind;
     requires javafx.graphics;
+    requires java.net.http;
     //requires com.elevate5.elevateyou;
     //requires com.elevate5.elevateyou;
 
