@@ -6,15 +6,13 @@ public class ArticleModel {
     private String author;
     private String title;
     private String description;
-    private String content;
     private String articleImageUrl;
 
-    public ArticleModel(String articleUrl, String author, String title, String description, String content, String articleImageUrl) {
+    public ArticleModel(String articleUrl, String author, String title, String description, String articleImageUrl) {
         this.articleUrl = articleUrl;
         this.author = author;
         this.title = title;
         this.description = description;
-        this.content = content;
         this.articleImageUrl = articleImageUrl;
     }
 
@@ -50,14 +48,6 @@ public class ArticleModel {
         this.description = description;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getArticleImageUrl() {
         return articleImageUrl;
     }
@@ -65,4 +55,11 @@ public class ArticleModel {
     public void setArticleImageUrl(String articleImageUrl) {
         this.articleImageUrl = articleImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return this.title + "; " + this.author + "; " + this.description;
+    }
+
+
 }
