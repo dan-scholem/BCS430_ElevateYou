@@ -3,6 +3,7 @@ package com.elevate5.elevateyou.view;
 import com.elevate5.elevateyou.*;
 import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.SessionManager;
+import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -10,12 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
 
 public class ArticleView extends Application {
@@ -42,7 +42,28 @@ public class ArticleView extends Application {
     private Button friendsButton;
     @FXML
     private Button quotesaffirmationBtn;
+    @FXML
+    private ComboBox<String> categoryBox;
+    @FXML
+    private TextField searchField;
 
+    private ArticleViewModel articleViewModel;
+
+    @FXML
+    public void initialize() {
+
+        articleViewModel = new ArticleViewModel();
+
+        categoryBox.valueProperty().bindBidirectional(articleViewModel.categoryProperty());
+        searchField.textProperty().bindBidirectional(articleViewModel.searchStringProperty());
+
+    }
+
+
+    @FXML
+    private void searchButtonClick(ActionEvent event) throws MalformedURLException {
+        articleViewModel.searchArticles();
+    }
 
 
 

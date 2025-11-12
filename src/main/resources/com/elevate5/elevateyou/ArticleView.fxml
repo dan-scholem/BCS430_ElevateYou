@@ -33,7 +33,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                   <children>
-                                      <ComboBox fx:id="catagoryBox" prefWidth="150.0" promptText="General">
+                                      <ComboBox fx:id="categoryBox" prefWidth="150.0" promptText="General">
                                           <items>
                                               <FXCollections fx:factory="observableArrayList">
                                                   <String fx:id="general" fx:value="General" />
@@ -45,7 +45,7 @@
                                           </items>
                                       </ComboBox>
                                       <TextField fx:id="searchField" promptText="Search..." />
-                                      <Button mnemonicParsing="false" text="Search" />
+                                      <Button onAction="#searchButtonClick" mnemonicParsing="false" text="Search" />
                                   </children>
                                   <padding>
                                       <Insets right="20.0" />
