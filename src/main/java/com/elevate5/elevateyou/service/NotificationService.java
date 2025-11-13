@@ -56,6 +56,7 @@ public class NotificationService {
             out.addAll(fromEvents());
             out.addAll(fromAppointments());
             out.addAll(fromWater());
+            out.addAll(fromExercise());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +65,6 @@ public class NotificationService {
     }
 
     // ---------- Sources ----------
-
     // Medications/{email}/UserMedications/*
     private List<NotificationModel> fromMedications()
             throws ExecutionException, InterruptedException {
@@ -76,11 +76,15 @@ public class NotificationService {
                 : dao.getMedications(uid);
 
         for (QueryDocumentSnapshot d : docs) {
+            if (Boolean.TRUE.equals(d.getBoolean("completed"))
+                || "completed".equalsIgnoreCase(String.valueOf(d.get ("status")))
+                || "done".equalsIgnoreCase(String.valueOf(d.get ("status")))) { continue; }
+
             String medName = d.getString("medicationName");
             String dueDate = d.getString("endDate");
             String frequency = d.getString("frequency");
-            Instant due = instantFromDate(dueDate); // Hide the overdue items.
 
+            Instant due = instantFromDate(dueDate); // Hide the overdue items.
             if (due.isBefore(Instant.now())) continue;
 
             String title = "Medication";
@@ -88,9 +92,7 @@ public class NotificationService {
 
             String id = "Medications/" + uid + "/UserMedications/" + d.getId();
 
-            list.add(new NotificationModel(
-                    id, title, body, instantFromDate(dueDate)
-            ));
+            list.add(new NotificationModel(id, title, body, instantFromDate(dueDate)));
         }
         return list;
     }
@@ -99,7 +101,7 @@ public class NotificationService {
     private List<NotificationModel> fromEvents()
             throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
-        DocumentSnapshot evDoc = dao.getEventsDoc(uid);
+        DocumentSnapshot evDoc = dao.getEvents(uid);
 
         if (evDoc.exists() && evDoc.contains("events")) {
             Object evField = evDoc.get("events");
@@ -110,21 +112,21 @@ public class NotificationService {
                     if (arr instanceof List<?> items) {
                         for (Object raw : items) {
                             if (raw instanceof Map<?, ?> m) {
+
+                                if (isCompleted(m)) continue;
+
                                 String name = asString(m.get("eventName"));
                                 String time = asString(m.get("time"));
+                                Instant due = instantFromDateTime(date, time);
 
-                                Instant due = instantFromDate(time);
                                 if (due.isBefore(Instant.now())) continue;
 
                                 String title = "Events";
                                 String body  = "You have " + safe(name) + " at " + safe(date + (time != null ? " " + time : ""));
 
-                                // compose a unique id for this item
                                 String id = "Events/" + uid + "#" + date + "#" + safe(name);
 
-                                list.add(new NotificationModel(
-                                        id, title, body, instantFromDateTime(date, time)
-                                ));
+                                list.add(new NotificationModel(id, title, body, due));
                             }
                         }
                     }
@@ -149,6 +151,8 @@ public class NotificationService {
         for (Object raw : items) {
             if (!(raw instanceof Map<?, ?> m)) continue;
 
+            if (isCompleted(m)) continue;
+
             String date = asString(m.get("date"));     // "MM/dd/yyyy"
             String time = asString(m.get("time"));     // "HH:mm"
             String doctor = asString(m.get("docName"));
@@ -166,7 +170,6 @@ public class NotificationService {
 
             list.add(new NotificationModel(id, title, body, due));
         }
-
         return list;
     }
     private List<NotificationModel> fromWater() throws ExecutionException, InterruptedException {
@@ -195,6 +198,8 @@ public class NotificationService {
                 }
             }
         }
+
+        if (consumedToday >= goalOz) { return list; }
 
         List<ZonedDateTime> slotTimes = new ArrayList<>(slots);
         ZonedDateTime base = today.atTime(startAt).atZone(zone);
@@ -228,8 +233,48 @@ public class NotificationService {
         ));
         return list;
     }
-    // ---------- utils ----------
 
+    private List<NotificationModel> fromExercise() throws ExecutionException, InterruptedException {
+        List<NotificationModel> list = new ArrayList<>();
+
+        List<com.google.cloud.firestore.QueryDocumentSnapshot> docs =
+                dao.getExercise(uid);
+
+        for (var d : docs) {
+            String status     = Optional.ofNullable(d.getString("status")).orElse("").toLowerCase(); // e.g. "in_progress" / "done"
+            long   progress   = asLong(d.get("progress"), 0);
+            long   target     = asLong(d.get("targetSets"), 0);
+            String workout    = Optional.ofNullable(d.getString("workout")).orElse("-");
+            String goalTitle  = Optional.ofNullable(d.getString("goalTitle")).orElse("-");
+            String notes      = Optional.ofNullable(d.getString("notes")).orElse("");
+
+            if ("done".equals(status) || (target > 0 && progress >= target)) {
+                continue;
+            }
+
+            String title = "Support Goal";
+            String body  = String.format(
+                    "%s — %d/%d sets • %s%s",
+                    safe(workout),
+                    progress, target,
+                    (goalTitle.isBlank() ? "Goal" : goalTitle),
+                    (notes.isBlank() ? "" : (" • " + notes))
+            );
+
+            Instant created = parseIsoInstant(d.getString("updatedAt"));
+            if (created == null) created = Instant.now();
+
+            String id = "WorkoutGoals/" + uid + "/" + d.getId();
+
+            list.add(new NotificationModel(id, title, body, created));
+        }
+
+        return list;
+    }
+
+
+
+    // ---------- utils ----------
     private static String asString(Object o) { return o == null ? null : String.valueOf(o); }
     private static String safe(String s) { return (s == null || s.isBlank()) ? "-" : s; }
 
@@ -261,4 +306,41 @@ public class NotificationService {
             return Instant.now();
         }
     }
+
+    @SuppressWarnings("unchecked")
+    private static boolean isCompleted(Object src) {
+        try {
+            if (src instanceof Map<?,?> m) {
+                Object v;
+
+                // completed / done / isDone
+                v = m.get("completed");
+                if (v instanceof Boolean b && b) return true;
+
+                v = m.get("done");
+                if (v instanceof Boolean b2 && b2) return true;
+
+                v = m.get("isDone");
+                if (v instanceof Boolean b3 && b3) return true;
+
+                // status: completed|done
+                v = m.get("status");
+                if (v != null) {
+                    String s = String.valueOf(v).toLowerCase(Locale.ROOT);
+                    if (s.contains("completed") || s.contains("done")) return true;
+                }
+            }
+        } catch (Exception ignore) {}
+        return false;
+    }
+
+    private static long asLong(Object o, long def) {
+        if (o instanceof Number n) return n.longValue();
+        try { return Long.parseLong(String.valueOf(o)); } catch (Exception ignore) { return def; }
+    }
+    private static Instant parseIsoInstant(String s) {
+        if (s == null || s.isBlank()) return null;
+        try { return Instant.parse(s); } catch (Exception e) { return null; }
+    }
+
 }
