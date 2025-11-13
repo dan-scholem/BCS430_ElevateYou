@@ -46,7 +46,7 @@ public class NotificationDao {
 
     public DocumentSnapshot getWater(String uid)
             throws ExecutionException, InterruptedException{
-        return db.collection("Calories")
+        return db.collection("Water")
                 .document(uid)
                 .get().get();
     }

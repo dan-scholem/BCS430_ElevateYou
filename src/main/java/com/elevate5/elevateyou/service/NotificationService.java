@@ -172,15 +172,13 @@ public class NotificationService {
     private List<NotificationModel> fromWater() throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
 
-        // 业务规则（可以后做成用户设置）：
-        final int goalOz = 64;             // 每日总目标（oz），默认 64
-        final int slots = 8;               // 16 小时 / 每 2 小时 = 8 槽
+        final int goalOz = 64;
+        final int slots = 8;
         final int perSlot = Math.max(1, (int) Math.round(goalOz / (double) slots));
-        final LocalTime startAt = LocalTime.of(8, 0); // 每天从 08:00 开始计 16 小时
+        final LocalTime startAt = LocalTime.of(8, 0);
         final ZoneId zone = ZoneId.systemDefault();
         final LocalDate today = LocalDate.now(zone);
 
-        // 读取今天已喝（从 Water/{uid}）
         int consumedToday = 0;
         DocumentSnapshot waterDoc = dao.getWater(uid);
         if (waterDoc.exists()) {
