@@ -1,6 +1,7 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.*;
+import com.elevate5.elevateyou.model.ArticleModel;
 import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
@@ -9,13 +10,22 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ArticleView extends Application {
@@ -46,11 +56,22 @@ public class ArticleView extends Application {
     private ComboBox<String> categoryBox;
     @FXML
     private TextField searchField;
+    @FXML
+    private ScrollPane articleScrollPane;
+    @FXML
+    private BorderPane articleBorderPane;
+    @FXML
+    private TilePane resultsPane;
+
+    private WebView webView;
 
     private ArticleViewModel articleViewModel;
 
     @FXML
     public void initialize() {
+
+        webView = new WebView();
+        webView.getEngine().setJavaScriptEnabled(false);
 
         articleViewModel = new ArticleViewModel();
 
@@ -62,9 +83,86 @@ public class ArticleView extends Application {
 
     @FXML
     private void searchButtonClick(ActionEvent event) throws MalformedURLException {
-        articleViewModel.searchArticles();
+        resultsPane.getChildren().clear();
+        ArrayList<ArticleModel> articles = articleViewModel.searchArticles();
+        for (ArticleModel article : articles) {
+
+            Image articleImage;
+            try{
+                articleImage = new Image(article.getArticleImageUrl(), 150,100,false,false, true);
+                System.out.println(articleImage.getUrl());
+            } catch (IllegalArgumentException e) {
+                articleImage = new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png", 150,100,false,false, true);
+            }
+
+            ImageView articleImageView = new ImageView(articleImage);
+
+            Label title = new Label(article.getTitle());
+            title.setWrapText(true);
+            title.setPrefWidth(200);
+            title.setAlignment(Pos.CENTER);
+
+            VBox resultBox = new VBox(articleImageView, title);
+            resultBox.setAlignment(Pos.CENTER);
+            resultBox.setSpacing(15);
+
+            Button resultButton = new Button();
+            resultButton.setGraphic(resultBox);
+            resultButton.setContentDisplay(ContentDisplay.TOP);
+            resultButton.setGraphicTextGap(5);
+            resultButton.setCursor(Cursor.HAND);
+            resultButton.wrapTextProperty().setValue(true);
+            resultButton.setOnAction(e->{
+                webView.getEngine().load(article.getArticleUrl());
+                Button backButton = getBackButton();
+                Button favoriteButton = getFavoriteButton();
+                StackPane root = new StackPane(webView, backButton, favoriteButton);
+                StackPane.setAlignment(backButton, Pos.TOP_LEFT);
+                StackPane.setAlignment(favoriteButton, Pos.TOP_RIGHT);
+                StackPane.setAlignment(webView, Pos.TOP_CENTER);
+                StackPane.setMargin(backButton, new Insets(20,0,0,20));
+                StackPane.setMargin(favoriteButton, new Insets(20,20,0,0));
+                articleBorderPane.setCenter(root);
+            });
+            resultsPane.getChildren().add(resultButton);
+        }
     }
 
+    private @NotNull Button getBackButton() {
+        Button backButton = new Button("Back");
+        backButton.setPrefSize(70,70);
+        backButton.setCursor(Cursor.HAND);
+        backButton.setStyle("-fx-background-color: white;" +
+                "-fx-background-radius: 50%;" +
+                "-fx-border-color: black;" +
+                "-fx-border-radius: 50%;" +
+                "-fx-border-width: 2");
+        backButton.setOnAction(e2->{
+            articleBorderPane.setCenter(articleScrollPane);
+        });
+        return backButton;
+    }
+
+    private @NotNull Button getFavoriteButton() {
+        Button favoriteButton = new Button();
+        favoriteButton.setPrefSize(40,40);
+        favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
+                "-fx-background-color: white;-fx-border-color: black");
+        favoriteButton.setUserData("false");
+        favoriteButton.setCursor(Cursor.HAND);
+        favoriteButton.setOnAction(e3->{
+            if(favoriteButton.getUserData().equals("false")){
+                favoriteButton.setUserData("true");
+                favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
+                        "-fx-background-color: gold;-fx-border-color: black");
+            }else{
+                favoriteButton.setUserData("false");
+                favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
+                        "-fx-background-color: white;-fx-border-color: black");
+            }
+        });
+        return favoriteButton;
+    }
 
 
     // Logout

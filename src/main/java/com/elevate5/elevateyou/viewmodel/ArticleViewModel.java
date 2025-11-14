@@ -15,13 +15,13 @@ public class ArticleViewModel {
     private ArticleSearchModel articleSearchModel =  new ArticleSearchModel();
 
     public ArticleViewModel() {
-
+        category.setValue("General");
     }
 
 
 
     public ArrayList<ArticleModel> searchArticles() throws MalformedURLException {
-        return articleSearchModel.searchArticles(categoryProperty().get().toLowerCase() + "+\"" + searchStringProperty().get().replaceAll(" ", "+") + "\"");
+        return articleSearchModel.searchArticles((categoryProperty().get().toLowerCase() + "+\"" + searchStringProperty().get() + "\"").replaceAll(" ", "+"));
     }
 
     public String getSearchString() {

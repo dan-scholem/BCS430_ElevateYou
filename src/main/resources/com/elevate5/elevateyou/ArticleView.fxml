@@ -18,7 +18,7 @@
               </HBox>
           </top>
           <center>
-              <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <BorderPane fx:id="articleBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                   <top>
                       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <children>
@@ -45,7 +45,7 @@
                                           </items>
                                       </ComboBox>
                                       <TextField fx:id="searchField" promptText="Search..." />
-                                      <Button onAction="#searchButtonClick" mnemonicParsing="false" text="Search" />
+                                      <Button mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
                                   </children>
                                   <padding>
                                       <Insets right="20.0" />
@@ -55,19 +55,19 @@
                       </HBox>
                   </top>
                   <center>
-                      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                      <ScrollPane fx:id="articleScrollPane" fitToWidth="true" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0">
-                                  <children>
-                                      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                  </children></AnchorPane>
+                              <AnchorPane fx:id="scrollAnchorPane" minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <TilePane fx:id="resultsPane" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
                           </content>
                       </ScrollPane>
                   </center>
               </BorderPane>
           </center>
        <left>
-           <VBox alignment="BOTTOM_CENTER" layoutY="154.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
+           <VBox alignment="TOP_CENTER" layoutY="154.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
                <padding>
                    <Insets bottom="22" left="10" right="10" top="18" />
                </padding>

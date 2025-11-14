@@ -18,10 +18,11 @@ public class ArticleSearchModel {
     private String searchString;
 
     public ArticleSearchModel() {
-        articles = new ArrayList<>();
     }
 
     public ArrayList<ArticleModel> searchArticles(String searchString) throws MalformedURLException {
+
+        articles = new ArrayList<>();
 
         URL url = new URL(buildAPIUrl(searchString));
 
@@ -45,7 +46,8 @@ public class ArticleSearchModel {
                     String articleImage = node.get("urlToImage").toString().replaceAll(pattern, "");
                     String articleAuthor = node.get("author").toString().replaceAll(pattern, "");
                     ArticleModel article = new ArticleModel(articleUrl, articleAuthor, articleTitle, articleDescription, articleImage);
-                    System.out.println(article);
+                    //System.out.println(article);
+                    articles.add(article);
                 }
             }else{
                 System.out.println(responseCode + " Bad Connection");
