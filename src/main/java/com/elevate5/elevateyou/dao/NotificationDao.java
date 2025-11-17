@@ -30,7 +30,7 @@ public class NotificationDao {
                 .get().get().getDocuments();
     }
 
-    public DocumentSnapshot getEventsDoc(String uid)
+    public DocumentSnapshot getEvents(String uid)
             throws ExecutionException, InterruptedException {
         return db.collection("Events")
                 .document(uid)
@@ -46,8 +46,16 @@ public class NotificationDao {
 
     public DocumentSnapshot getWater(String uid)
             throws ExecutionException, InterruptedException{
-        return db.collection("Calories")
+        return db.collection("Water")
                 .document(uid)
                 .get().get();
+    }
+
+    public List<QueryDocumentSnapshot> getExercise(String uid)
+            throws ExecutionException, InterruptedException {
+        return db.collection("user")
+                .document(uid)
+                .collection("workoutGoals")
+                .get().get().getDocuments();
     }
 }

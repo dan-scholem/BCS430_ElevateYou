@@ -5,6 +5,8 @@ import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
+import com.elevate5.elevateyou.view.FriendsListView;
+import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -21,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class DashboardController {
 
@@ -58,6 +61,9 @@ public class DashboardController {
 
     @FXML
     private Button profileButton;
+
+    @FXML
+    private Button quotesaffirmationBtn;
 
     @FXML
     private Button reviewsButton;
@@ -211,10 +217,10 @@ public class DashboardController {
     @FXML
     private void exerciseButtonClick(ActionEvent event) {
         System.out.println("[NAV] Exercise clicked"); // visibility in console
-
+        FXMLLoader loader;
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml")
+            loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/exercise.fxml")
             );
             Node view = loader.load();
 
@@ -245,6 +251,60 @@ public class DashboardController {
             Sleep.loadSleepScene(s);
         } catch (Exception e) {
             throw new RuntimeException();
+        }
+    }
+
+    @FXML
+    protected void friendsButtonClick() {
+        try {
+            Stage stage = (Stage) friendsButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/FriendsListView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            FriendsListView controller = fxmlLoader.getController();
+            controller.setViewModel(new FriendsListViewModel());
+            stage.setTitle("Friends");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            Session session = SessionManager.getSession();
+
+            String userEmail = session.getUser().getEmail();
+
+            System.out.println("User email: " + userEmail);
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+     @FXML
+    public void chatButtonClick(){
+        try {
+            Stage stage = (Stage) chatButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/LiveChat.fxml")
+            );
+            javafx.scene.Parent root = loader.load();
+            stage.setScene(new Scene(root, 1056, 756));
+            stage.setTitle("Live Chat");
+            stage.show();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to open Live Chat", e);
         }
     }
 }

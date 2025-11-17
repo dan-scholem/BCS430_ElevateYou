@@ -122,6 +122,11 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
+            <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
             <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />

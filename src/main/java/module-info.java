@@ -24,8 +24,9 @@ module com.elevate5.elevateyou {
     requires org.checkerframework.checker.qual;
     requires tools.jackson.databind;
     requires javafx.graphics;
-    //requires com.elevate5.elevateyou;
-    //requires com.elevate5.elevateyou;
+    requires java.net.http;
+    requires langchain4j.open.ai;
+    requires langchain4j.core;
 
     opens com.elevate5.elevateyou;
     exports com.elevate5.elevateyou;

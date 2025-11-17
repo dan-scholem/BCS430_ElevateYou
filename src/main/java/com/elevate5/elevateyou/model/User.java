@@ -1,12 +1,14 @@
 package com.elevate5.elevateyou.model;
 
+import java.util.ArrayList;
+
 public class User {
 
-    private int userID;
+    private String userID;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+    //private String password;
     //private String passwordHash;
     private Integer userAge;
     private String userGender;
@@ -15,9 +17,13 @@ public class User {
     private Integer weight;
     private String userBio;
     private String profileImageURL;
+    private ArrayList<String> friendsList;
+    private ArrayList<String> receivedFriendRequestsList;
+    private ArrayList<String> sentFriendRequestsList;
+    private ArrayList<String> blockList;
 
     public User(){
-        this.userID = 0;
+        this.userID = "0";
         this.firstName = "";
         this.lastName = "";
         this.email = "";
@@ -30,8 +36,7 @@ public class User {
         this.profileImageURL = "";
     }
 
-    public User(int userID, String firstName, String lastName, String email, String passwordHash, String profileImageURL) {
-        this.userID = userID;
+    public User(String firstName, String lastName, String email, String profileImageURL, String userID, String userBio) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -42,13 +47,14 @@ public class User {
         this.feetHeight = 0;
         this.inchesHeight = 0;
         this.weight = 0;
-        this.userBio = "";
+        this.userBio = userBio;
+        this.userID = userID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
     public String getFirstName() {
@@ -69,9 +75,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    /*
     public void setPassword(String password) {
         this.password = password;
     }
+     */
     public Integer getUserAge() {
         return userAge;
     }
@@ -140,4 +148,48 @@ public class User {
         return firstName + " " + lastName;
     }
 
+    public ArrayList<String> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(ArrayList<String> friendsList) {
+        this.friendsList = friendsList;
+    }
+
+    public Integer getFeetHeight() {
+        return feetHeight;
+    }
+
+    public void setFeetHeight(Integer feetHeight) {
+        this.feetHeight = feetHeight;
+    }
+
+    public ArrayList<String> getReceivedFriendRequestsList() {
+        return receivedFriendRequestsList;
+    }
+
+    public void setReceivedFriendRequestsList(ArrayList<String> receivedFriendRequestsList) {
+        this.receivedFriendRequestsList = receivedFriendRequestsList;
+    }
+
+    public ArrayList<String> getSentFriendRequestsList() {
+        return sentFriendRequestsList;
+    }
+
+    public void setSentFriendRequestsList(ArrayList<String> sentFriendRequestsList) {
+        this.sentFriendRequestsList = sentFriendRequestsList;
+    }
+
+    public ArrayList<String> getBlockList() {
+        return blockList;
+    }
+
+    public void setBlockList(ArrayList<String> blockList) {
+        this.blockList = blockList;
+    }
+
+    @Override
+    public String toString() {
+        return fullName() + " " + getEmail();
+    }
 }

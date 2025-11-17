@@ -61,7 +61,7 @@
             <DropShadow />
          </effect>
       </Pane>
-      <VBox alignment="BOTTOM_CENTER" layoutY="154.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
+      <VBox alignment="BOTTOM_CENTER" layoutX="-1.0" layoutY="148.0" prefHeight="579.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
          <padding>
             <Insets bottom="22" left="10" right="10" top="18" />
          </padding>
@@ -112,17 +112,22 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+            <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="friendsbutton" stylesheets="@styles.css" text="Friends">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+            <Button fx:id="chatButton" onAction="#chatButtonClick" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
             <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+               <font>
+                  <Font name="Poppins ExtraBold" size="13" />
+               </font>
+            </Button>
+            <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>

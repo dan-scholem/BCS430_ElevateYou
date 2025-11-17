@@ -40,6 +40,9 @@ public class MedicationController {
     private Button foodButton;
 
     @FXML
+    private Button appointmentsButton;
+
+    @FXML
     private Button addButton;
 
     @FXML
@@ -69,7 +72,8 @@ public class MedicationController {
     @FXML
     private Button updateButton;
 
-    @FXML private Button appointmentsButton;
+    @FXML
+    private Button quotesaffirmationBtn;
 
     @FXML
     private TableView<Medication> MedicationTable;
@@ -162,7 +166,7 @@ public class MedicationController {
         LocalDate enddate = enddateField.getValue();
         String notes = notesField.getText();
 
-        if (medname.isEmpty() || dosage.isEmpty() || frequency == null || startdate == null || enddate == null || notes.isEmpty()) {
+        if (medname.isEmpty() || dosage.isEmpty() || frequency == null || startdate == null) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Incomplete Form");
@@ -180,8 +184,22 @@ public class MedicationController {
         meds.put("dosage", dosageField.getText());
         meds.put("frequency", frequencyField.getValue());
         meds.put("startDate", startdateField.getValue().toString());
-        meds.put("endDate", enddateField.getValue().toString());
-        meds.put("notes", notesField.getText());
+
+        if (enddate != null) {
+            meds.put("endDate", enddateField.getValue().toString());
+        }
+
+        else {
+            meds.put("endDate", null);
+        }
+
+        if (notes != null && notes.trim().isEmpty()) {
+            meds.put("notes", notesField.getText());
+        }
+
+        else {
+            meds.put("notes", "");
+        }
 
         DocumentReference docRef = App.fstore.collection("Medications").document(App.theUser.getEmail());
 
@@ -464,6 +482,22 @@ public class MedicationController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    protected void quoteaffirmationButtonClick() throws IOException {
+
+        try {
+            Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
+
+            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+        }
+
+        catch (IOException e) {
+
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

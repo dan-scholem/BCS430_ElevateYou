@@ -219,3 +219,39 @@
     -fx-background-color: #eeeeee;
     -fx-cursor: hand;
 }
+
+.addaffirmation, .viewaffirmation, .deleteaffirmation, .randomquote, .randomaffirmation, .searchquote, .searchaffirmation {
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-background-color: #E29578;
+    -fx-background-radius: 30px;
+    -fx-text-fill: #000000;
+    -fx-border-color: #FFDDD2;
+    -fx-border-radius: 20px;
+}
+
+
+.quoteaffirmlabel {
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
+}
+
+.chat-user {
+    -fx-background-color: #eaf5ff;
+    -fx-padding: 10 12;
+    -fx-background-radius: 12;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.chat-ai {
+    -fx-background-color: #f6f6f6;
+    -fx-padding: 10 12;
+    -fx-background-radius: 12;
+}
+
+.chat-system {
+    -fx-text-fill: #888;
+    -fx-font-size: 11px;
+}
