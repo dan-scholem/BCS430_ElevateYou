@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
@@ -92,14 +93,39 @@ public class QuotesAffirmationsController implements Initializable {
 
         private List<String> customAffirmations;
 
+        private String currentEmail;
+
+        public void setCurrentEmail(String email) {
+            this.currentEmail = email;
+
+            loadCustomAffirmations(email);
+        }
+
         @Override
         public void initialize(URL url, ResourceBundle rb) {
+
+            /** Obtain email from Firebase session **/
+
+            Session usersession = SessionManager.getSession();
+
+            if (usersession != null && usersession.getUser() != null) {
+
+                this.currentEmail = usersession.getUser().getEmail();
+
+                System.out.println("Email from this session: " + currentEmail);
+
+                loadCustomAffirmations(currentEmail);
+            }
+
+            else {
+                System.out.println("User session not found");
+            }
 
                 affirmationthemes.setItems(FXCollections.observableArrayList("Self-Love", "Confidence", "Mindfulness", "Health", "Growth"));
 
                 quotethemes.setItems(FXCollections.observableArrayList("Inspirational","Success", "Motivational"));
 
-                loadCustomAffirmations();
+
 
         }
 
@@ -264,13 +290,18 @@ public class QuotesAffirmationsController implements Initializable {
         @FXML
         private void addAffirmation(ActionEvent event) throws IOException, InterruptedException {
 
-                String personalaffirmation = affirmationField.getText().trim();
+            System.out.println("Current email is: " + currentEmail);
+
+            String personalaffirmation = affirmationField.getText().trim();
 
                 if (!personalaffirmation.isEmpty()) {
                         customAffirmationsList.getItems().add(personalaffirmation);
                         affirmationField.clear();
                         quoteaffirmationArea.setText("Personal affirmation successfully entered!");
-                        saveCustomAffirmations();
+
+                    System.out.println("Saving affirmation: " + personalaffirmation);
+
+                        saveCustomAffirmations(currentEmail);
                 }
 
                 else {
@@ -278,31 +309,72 @@ public class QuotesAffirmationsController implements Initializable {
                 }
         }
 
-        private void saveCustomAffirmations() {
+        private void saveCustomAffirmations(String useremail) {
 
             try {
 
-                List<String> affirmationInfo = new ArrayList<>(customAffirmationsList.getItems());
+                if (useremail == null || useremail.isEmpty()) {
+                    System.out.println("User email is null or empty!");
+                    return;
+                }
 
-                Files.write(Paths.get("src/main/resources/com/elevate5/elevateyou/personalaffirmations.txt"), affirmationInfo);
-            }
+                Path filePath = Paths.get("src/main/resources/com/elevate5/elevateyou/personalaffirmations.txt");
+
+                List<String> affirmationlines = new ArrayList<>();
+
+                if (Files.exists(filePath)) {
+
+                    affirmationlines = new ArrayList<>(Files.readAllLines(filePath));
+
+                }
+
+                affirmationlines.removeIf(line -> line.startsWith(useremail));
+
+                for (String useraffirmation : customAffirmationsList.getItems()) {
+
+                    affirmationlines.add(useremail + ": " + useraffirmation);
+                }
+
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, affirmationlines);
+
+                System.out.println("Affirmations for: " + useremail);
+
+                }
             catch (Exception e) {
 
-                System.out.println("Error saving affirmation to file: " + e.getMessage());
+                    System.out.println("Error saving affirmation to file: " + e.getMessage());
+                }
+
             }
 
-        }
-
-        private void loadCustomAffirmations() {
+            private void loadCustomAffirmations(String useremail) {
 
             try {
+
+                if (useremail == null || useremail.isEmpty()) {
+
+                    System.out.println("User email is null or empty!");
+
+                    return;
+                }
+
                 Path filePath = Paths.get("src/main/resources/com/elevate5/elevateyou/personalaffirmations.txt");
+
+                customAffirmationsList.getItems().clear();
 
                 if (Files.exists(filePath)) {
 
                     List<String> affirmationlines = Files.readAllLines(filePath);
 
-                    customAffirmationsList.getItems().addAll(affirmationlines);
+                    for (String fileline : affirmationlines) {
+                        if (fileline.startsWith(useremail)) {
+                            String customaffirmation = fileline.substring(useremail.length() + 1);
+                            customAffirmationsList.getItems().add(customaffirmation);
+                        }
+                    }
+
+                    System.out.println("Affirmations for user email: " + useremail);
                 }
 
             }
@@ -335,7 +407,8 @@ public class QuotesAffirmationsController implements Initializable {
             if (affirmationChoice >= 0) {
                 customAffirmationsList.getItems().remove(affirmationChoice);
                 quoteaffirmationArea.setText("Affirmation removed from the list.");
-                saveCustomAffirmations();
+
+                saveCustomAffirmations(currentEmail);
             }
 
             else {

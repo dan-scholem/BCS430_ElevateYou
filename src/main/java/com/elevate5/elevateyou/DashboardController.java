@@ -276,6 +276,12 @@ public class DashboardController {
         try {
             Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
 
+            Session session = SessionManager.getSession();
+
+            String userEmail = session.getUser().getEmail();
+
+            System.out.println("User email: " + userEmail);
+
             QuotesAffirmations.loadQuotesAffirmationsScene(stage);
         }
 

@@ -9,10 +9,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,6 +31,9 @@ public class UserLoginController {
 
     @FXML
     private PasswordField userPassword;
+
+    @FXML
+    private Label invalidentry;
 
     @FXML
     public void onCreateAccountButtonClick(ActionEvent actionEvent) {
@@ -102,6 +102,9 @@ public class UserLoginController {
         String enteredPassword = userPassword.getText();
         String documentEmail, documentPassword;
 
+        invalidentry.setText("");
+        invalidentry.setVisible(false);
+
         // asynchronously retrieve all documents
         ApiFuture<QuerySnapshot> future = App.fstore.collection("Users").get();
 
@@ -132,19 +135,41 @@ public class UserLoginController {
                         System.out.println("Sign In Success");
                         showAlert(Alert.AlertType.CONFIRMATION, "Sign in successful!");
 
+                        return true;
+
                     }
 
+                    else {
+
+                        invalidentry.setVisible(true);
+
+                        invalidentry.setText("Invalid email or password. Try again.");
+
+                        invalidentry.setStyle("-fx-text-fill: red;");
+
+                        System.out.println("Invalid credentials");
+
+                        return false;
+
+                    }
 
                 }
 
             }
 
         } catch (InterruptedException | ExecutionException | IOException e) {
-            throw new RuntimeException(e);
+
+            invalidentry.setText("Error occurred. Please enter a valid email and password.");
+
+            invalidentry.setStyle("-fx-text-fill: red;");
+
+            return false;
         }
 
         return false;
     }
+
+
 
     // showAlert method to display alerts
     private void showAlert(Alert.AlertType alertType, String message) {
