@@ -19,19 +19,19 @@
       </ImageView>
       <AnchorPane layoutX="634.0" prefHeight="631.0" prefWidth="374.0" styleClass="sidebackground" stylesheets="@styles.css">
          <children>
-             <ImageView fitHeight="383.0" fitWidth="407.0" layoutX="-11.0" layoutY="-34.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="337.0" fitWidth="333.0" layoutX="21.0" layoutY="-41.0" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@images/elevateyoulogo.png" />
                  </image>
              </ImageView>
-            <Label layoutX="35.0" layoutY="246.0" prefHeight="23.0" prefWidth="78.0" styleClass="emaillabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
+            <Label layoutX="35.0" layoutY="292.0" prefHeight="23.0" prefWidth="78.0" styleClass="emaillabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="35.0" layoutY="357.0" prefHeight="32.0" prefWidth="144.0" styleClass="passwordlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
+            <Label layoutX="35.0" layoutY="365.0" prefHeight="32.0" prefWidth="144.0" styleClass="passwordlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
             </Label>
-            <TextField fx:id="userEmail" layoutX="35.0" layoutY="303.0" prefHeight="25.0" prefWidth="274.0" style="-fx-border-radius: 20;" />
+            <TextField fx:id="userEmail" layoutX="35.0" layoutY="332.0" prefHeight="25.0" prefWidth="274.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="35.0" layoutY="411.0" prefHeight="25.0" prefWidth="274.0" />
             <Button fx:id="signInButton" layoutX="72.0" layoutY="457.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="39.0" prefWidth="214.0" style="-fx-background-color: #E29578;" styleClass="signinbutton" stylesheets="@styles.css" text="Sign In">
             </Button>
@@ -39,7 +39,8 @@
             </Label>
             <Button fx:id="createAccountButton" layoutX="24.0" layoutY="566.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="40.0" prefWidth="144.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
             </Button>
-            <Label layoutX="110.0" layoutY="169.0" styleClass="elevatelabel" stylesheets="@styles.css" text="ElevateYou" />
+            <Label layoutX="117.0" layoutY="145.0" styleClass="elevatelabel" stylesheets="@styles.css" text="ElevateYou" />
+            <Label fx:id="invalidentry" layoutX="107.0" layoutY="296.0" prefHeight="17.0" prefWidth="226.0" text="Label" visible="false" />
          </children>
       </AnchorPane>
       <Label layoutX="14.0" layoutY="82.0" styleClass="wellnesslabel" stylesheets="@styles.css" text="Your Health and Wellness Journey Starts Here" />
