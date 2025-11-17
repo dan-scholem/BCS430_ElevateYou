@@ -85,7 +85,7 @@
          <center>
             <BorderPane fx:id="friendViewPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                 <center>
-                    <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+                    <AnchorPane fx:id="mainPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
                         <children>
                             <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
