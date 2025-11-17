@@ -36,7 +36,7 @@ public class User {
         this.profileImageURL = "";
     }
 
-    public User(String firstName, String lastName, String email, String profileImageURL, String userID) {
+    public User(String firstName, String lastName, String email, String profileImageURL, String userID, String userBio) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,7 +47,7 @@ public class User {
         this.feetHeight = 0;
         this.inchesHeight = 0;
         this.weight = 0;
-        this.userBio = "";
+        this.userBio = userBio;
         this.userID = userID;
     }
 
