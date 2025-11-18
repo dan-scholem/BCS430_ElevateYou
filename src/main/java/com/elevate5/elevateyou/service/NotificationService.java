@@ -172,13 +172,11 @@ public class NotificationService {
         }
         return list;
     }
+        // Water/{uid} with the map
     private List<NotificationModel> fromWater() throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
 
         final int goalOz = 64;
-        final int slots = 8;
-        final int perSlot = Math.max(1, (int) Math.round(goalOz / (double) slots));
-        final LocalTime startAt = LocalTime.of(8, 0);
         final ZoneId zone = ZoneId.systemDefault();
         final LocalDate today = LocalDate.now(zone);
 
@@ -190,50 +188,38 @@ public class NotificationService {
                 for (Object o : arr) {
                     if (o instanceof Map<?, ?> m) {
                         Object oz = m.get("ounces");
-                        if (oz instanceof Number n) consumedToday += n.intValue();
-                        else {
-                            try { consumedToday += Integer.parseInt(String.valueOf(oz)); } catch (Exception ignore) {}
+                        if (oz instanceof Number n) {
+                            consumedToday += n.intValue();
+                        } else {
+                            try {
+                                consumedToday += Integer.parseInt(String.valueOf(oz));
+                            } catch (Exception ignore) {
+                            }
                         }
                     }
                 }
             }
         }
 
-        if (consumedToday >= goalOz) { return list; }
-
-        List<ZonedDateTime> slotTimes = new ArrayList<>(slots);
-        ZonedDateTime base = today.atTime(startAt).atZone(zone);
-        for (int i = 0; i < slots; i++) slotTimes.add(base.plusHours(2L * i));
-
-        ZonedDateTime now = ZonedDateTime.now(zone);
-        int nextIdx = -1;
-        for (int i = 0; i < slotTimes.size(); i++) {
-            if (now.isBefore(slotTimes.get(i))) { nextIdx = i; break; }
-        }
-        if (nextIdx == -1) {
+        if (consumedToday >= goalOz) {
             return list;
         }
 
-        int expectedByNext = perSlot * (nextIdx + 1);
-        int behind = Math.max(0, expectedByNext - consumedToday);
-
-        String id = "Water/" + uid + "#" + today + "#slot" + (nextIdx + 1);
+        String id = "Water/" + uid + "#" + today;
         String title = "Hydration";
-        String body  = "Slot " + (nextIdx + 1) + "/8 at " +
-                slotTimes.get(nextIdx).toLocalTime() +
-                " — Drink ~" + perSlot + " oz. " +
-                "(Today: " + consumedToday + "/" + goalOz + " oz" +
-                (behind > 0 ? ", behind ~" + behind + " oz" : "") + ")";
+        String body = "Today you have drunk " + consumedToday + "/" + goalOz
+                + " oz of water. Don't forget to drink more!";
 
         list.add(new NotificationModel(
                 id,
                 title,
                 body,
-                slotTimes.get(nextIdx).toInstant()
+                Instant.now()
         ));
+
         return list;
     }
-
+    // Water{uid} with the map
     private List<NotificationModel> fromExercise() throws ExecutionException, InterruptedException {
         List<NotificationModel> list = new ArrayList<>();
 
