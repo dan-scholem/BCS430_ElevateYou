@@ -12,82 +12,106 @@
     <!-- Header -->
     <top>
         <VBox spacing="4">
-            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
-            <Label text="Exercise Goals" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-            <Label text="Choose a workout, set a goal, and update progress as you go."/>
+            <padding>
+                <Insets top="16" right="16" bottom="16" left="16"/>
+            </padding>
+            <children>
+                <Label text="Exercise Goals" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                <Label text="Choose a workout, set a goal, and update progress as you go."/>
+            </children>
         </VBox>
     </top>
 
     <!-- Left: Workout choices -->
     <left>
         <VBox spacing="10">
-            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
-            <Label text="Workouts" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-            <GridPane fx:id="exerciseGrid" hgap="12" vgap="12">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="50"/>
-                    <ColumnConstraints percentWidth="50"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints percentHeight="50"/>
-                    <RowConstraints percentHeight="50"/>
-                </rowConstraints>
+            <padding>
+                <Insets top="16" right="16" bottom="16" left="16"/>
+            </padding>
+            <children>
+                <Label text="Workouts" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <GridPane fx:id="exerciseGrid" hgap="12" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints percentHeight="50"/>
+                        <RowConstraints percentHeight="50"/>
+                    </rowConstraints>
 
-                <!-- Row 0 -->
-                <ToggleButton fx:id="treadmillBtn" text="Treadmill" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <ToggleButton fx:id="weightsBtn"   text="Weights"   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <!-- Row 1 -->
-                <ToggleButton fx:id="bicycleBtn"   text="Bicycle"    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <ToggleButton fx:id="swimmingBtn"  text="Swimming"  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-            </GridPane>
+                    <!-- Row 0 -->
+                    <ToggleButton fx:id="treadmillBtn" text="Treadmill" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ToggleButton fx:id="weightsBtn"   text="Weights"   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <!-- Row 1 -->
+                    <ToggleButton fx:id="bicycleBtn"   text="Bicycle"    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ToggleButton fx:id="swimmingBtn"  text="Swimming"  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+            </children>
         </VBox>
     </left>
 
     <!-- Center: Goal details -->
     <center>
         <VBox spacing="12">
-            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+            <padding>
+                <Insets top="16" right="16" bottom="16" left="16"/>
+            </padding>
+            <children>
+                <HBox spacing="10">
+                    <children>
+                        <Label text="Selected:"/>
+                        <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;"/>
+                    </children>
+                </HBox>
 
-            <HBox spacing="10">
-                <Label text="Selected:"/>
-                <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;"/>
-            </HBox>
+                <Label text="Goal Title"/>
+                <TextField fx:id="goalTitleField" promptText="e.g., Back day — 10 sets across variations"/>
 
-            <Label text="Goal Title"/>
-            <TextField fx:id="goalTitleField" promptText="e.g., Back day — 10 sets across variations"/>
+                <Label text="Notes (optional)"/>
+                <TextArea fx:id="goalNotesArea" promptText="Add details (exercises, weights, etc.)" prefRowCount="3"/>
 
-            <Label text="Notes (optional)"/>
-            <TextArea fx:id="goalNotesArea" promptText="Add details (exercises, weights, etc.)" prefRowCount="3"/>
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <children>
+                        <VBox spacing="6">
+                            <children>
+                                <Label text="Target Sets"/>
+                                <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140"/>
+                            </children>
+                        </VBox>
 
-            <HBox spacing="16" alignment="CENTER_LEFT">
-                <VBox spacing="6">
-                    <Label text="Target Sets"/>
-                    <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140"/>
-                </VBox>
+                        <VBox spacing="6">
+                            <children>
+                                <Label text="Completed Sets"/>
+                                <HBox spacing="6" alignment="CENTER_LEFT">
+                                    <children>
+                                        <Button text="−" onAction="#onDecCompleted"/>
+                                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140"/>
+                                        <Button text="+" onAction="#onIncCompleted"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
 
-                <VBox spacing="6">
-                    <Label text="Completed Sets"/>
-                    <HBox spacing="6" alignment="CENTER_LEFT">
-                        <Button text="-" onAction="#onDecCompleted"/>
-                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140"/>
-                        <Button text="+" onAction="#onIncCompleted"/>
-                    </HBox>
-                </VBox>
+                        <VBox spacing="6" prefWidth="240">
+                            <children>
+                                <Label text="Progress"/>
+                                <ProgressBar fx:id="progressBar" prefWidth="240"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
 
-                <VBox spacing="6" prefWidth="240">
-                    <Label text="Progress"/>
-                    <ProgressBar fx:id="progressBar" prefWidth="240"/>
-                </VBox>
-            </HBox>
+                <HBox spacing="10">
+                    <children>
+                        <Button text="Reset" onAction="#onReset"/>
+                        <Button text="Save Goal / Progress" style="-fx-font-weight: bold;" onAction="#onSave"/>
+                        <Button text="<- Back to Dashboard" onAction="#onBacktoDashboard" />
+                    </children>
+                </HBox>
 
-            <HBox spacing="10">
-                <Button text="Reset" onAction="#onReset"/>
-                <Button text="Save Goal / Progress" style="-fx-font-weight: bold;" onAction="#onSave"/>
-                <Button text="← Back to Dashboard" onAction="#onBackToDashboard"/>
-            </HBox>
-         <Button fx:id="dashboardButton" onAction="#dashboardButtonClick" mnemonicParsing="false" text="Dashboard" />
-
-            <Label fx:id="statusLabel" text=""/>
+                <Label fx:id="statusLabel" text=""/>
+            </children>
         </VBox>
     </center>
 </BorderPane>

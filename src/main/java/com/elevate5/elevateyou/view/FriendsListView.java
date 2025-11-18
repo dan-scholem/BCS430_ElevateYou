@@ -13,8 +13,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -51,12 +56,18 @@ public class FriendsListView extends Application {
     private Label numRequestsLabel;
     @FXML
     private Label optionLabel;
+    @FXML
+    private BorderPane friendViewPane;
+    @FXML
+    private AnchorPane mainPane;
 
     private FriendsListViewModel friendsListViewModel;
 
 
     @FXML
     public void initialize() {
+
+
 
     }
 
@@ -79,6 +90,7 @@ public class FriendsListView extends Application {
     private void displayFriendsList() throws ExecutionException, InterruptedException {
         friendsBox.getChildren().clear();
         optionLabel.setText("Friends");
+        friendViewPane.setCenter(mainPane);
         ArrayList<DocumentSnapshot> friendsList = friendsListViewModel.getUserDocs(friendsListViewModel.getFriendUids());
         displayList(friendsList);
         searchField.clear();
@@ -87,6 +99,7 @@ public class FriendsListView extends Application {
     private void displayRequestsList() throws ExecutionException, InterruptedException {
         friendsBox.getChildren().clear();
         optionLabel.setText("Requests");
+        friendViewPane.setCenter(mainPane);
         ArrayList<DocumentSnapshot> requestsList = friendsListViewModel.getUserDocs(friendsListViewModel.getRequestUids());
         displayList(requestsList);
         searchField.clear();
@@ -95,6 +108,7 @@ public class FriendsListView extends Application {
     private void displaySearchResults(){
         friendsBox.getChildren().clear();
         optionLabel.setText("Search");
+        friendViewPane.setCenter(mainPane);
         ArrayList<DocumentSnapshot> searchResultsList = friendsListViewModel.searchUsers();
         displayList(searchResultsList);
     }
@@ -116,12 +130,13 @@ public class FriendsListView extends Application {
             String docEmail = doc.getString("Email");
             String docUserId = doc.getId();
             String docProfilePicUrl = doc.getString("ProfilePicUrl");
+            String docBio = doc.getString("UserBio");
             if (docProfilePicUrl == null) {
                 docProfilePicUrl = "https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png";
             }
             assert docFirstName != null;
             assert docLastName != null;
-            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
+            HBox resultBox = generateSearchResultBox(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, docBio);
             friendsBox.getChildren().add(resultBox);
         }
         if(friendsBox.getChildren().size() == 0){
@@ -131,14 +146,14 @@ public class FriendsListView extends Application {
         updateNumRequestsLabel();
     }
 
-    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
+    public HBox generateSearchResultBox(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, String docBio) {
 
         HBox userBox = new HBox();
         userBox.setAlignment(Pos.CENTER_LEFT);
         userBox.setSpacing(10);
         userBox.setStyle("-fx-border-color: black; -fx-padding: 10;");
 
-        Button resultButton = generateResultButton(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl);
+        Button resultButton = generateResultButton(docFirstName, docLastName, docEmail, docUserId, docProfilePicUrl, docBio);
         userBox.getChildren().add(resultButton);
 
         if (friendsListViewModel.containsFriendUid(docUserId)) {
@@ -162,11 +177,12 @@ public class FriendsListView extends Application {
         return userBox;
     }
 
-    private Button generateResultButton(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl) {
+    private Button generateResultButton(String docFirstName, String docLastName, String docEmail, String docUserId, String docProfilePicUrl, String docBio) {
         Button resultButton = new Button();
         resultButton.wrapTextProperty().setValue(true);
         resultButton.setPrefWidth(friendsBox.getWidth());
-        resultButton.setUserData(new User(docFirstName, docLastName, docEmail, docProfilePicUrl, docUserId));
+        User thisUser = new User(docFirstName, docLastName, docEmail, docProfilePicUrl, docUserId, docBio);
+        resultButton.setUserData(thisUser);
         resultButton.setTooltip(new Tooltip(docUserId));
         resultButton.setText("    " + docFirstName + " " + docLastName);
         resultButton.setAlignment(Pos.TOP_LEFT);
@@ -182,7 +198,16 @@ public class FriendsListView extends Application {
         );
         resultButton.setOnAction((e) -> {
             System.out.println(resultButton.getUserData().toString());
-            System.out.println("TODO: LINK TO USER PROFILE PAGE");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ProfileView.fxml"));
+            try {
+                Parent profileRoot = loader.load();
+                ProfileView profileView = loader.getController();
+                profileView.setUser(thisUser);
+                optionLabel.setText(thisUser.fullName());
+                friendViewPane.setCenter(profileRoot);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         return resultButton;

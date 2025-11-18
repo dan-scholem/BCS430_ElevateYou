@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class LogInModel {
 
     public UserRecord user;
+    public static String OPEN_AI_KEY;
 
 
     public boolean passwordAuth(String email, String password) {
@@ -30,6 +31,9 @@ public class LogInModel {
             try(InputStreamReader reader = new InputStreamReader(jsonIn, StandardCharsets.UTF_8)){
                 config = new Gson().fromJson(reader, JsonObject.class);
                 apiKey = config.get("api_key").getAsString();
+                if (config.has("OPEN_AI_KEY")) {
+                    OPEN_AI_KEY = config.get("OPEN_AI_KEY").getAsString();
+                }
             }
 
             String endpoint = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;

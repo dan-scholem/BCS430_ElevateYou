@@ -25,8 +25,8 @@ module com.elevate5.elevateyou {
     requires tools.jackson.databind;
     requires javafx.graphics;
     requires java.net.http;
-    //requires com.elevate5.elevateyou;
-    //requires com.elevate5.elevateyou;
+    requires langchain4j.open.ai;
+    requires langchain4j.core;
 
     opens com.elevate5.elevateyou;
     exports com.elevate5.elevateyou;

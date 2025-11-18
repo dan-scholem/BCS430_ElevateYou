@@ -100,7 +100,8 @@ public class Session {
             String lastName = (String) doc.get("LastName");
             String email = (String) doc.get("Email");
             String profilePicUrl = (String) doc.get("ProfilePicUrl");
-            this.currUser = new User(firstName, lastName, email, profilePicUrl, userID);
+            String bio = (String) doc.get("UserBio");
+            this.currUser = new User(firstName, lastName, email, profilePicUrl, userID, bio);
             ArrayList<String> friendsList;
             if(doc.get("Friends") != null) {
                 friendsList = new ArrayList<>((List<String>) doc.get("Friends"));
@@ -129,6 +130,9 @@ public class Session {
                 blockList = new ArrayList<>();
             }
             this.currUser.setBlockList(blockList);
+            if(doc.get("UserBio") == null){
+                this.currUser.setUserBio("");
+            }
         }else{
             System.out.println("User doesn't exist");
         }

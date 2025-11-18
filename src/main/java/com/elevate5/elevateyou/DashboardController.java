@@ -276,6 +276,12 @@ public class DashboardController {
         try {
             Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
 
+            Session session = SessionManager.getSession();
+
+            String userEmail = session.getUser().getEmail();
+
+            System.out.println("User email: " + userEmail);
+
             QuotesAffirmations.loadQuotesAffirmationsScene(stage);
         }
 
@@ -300,5 +306,20 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    public void chatButtonClick(){
+        try {
+            Stage stage = (Stage) chatButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/LiveChat.fxml")
+            );
+            javafx.scene.Parent root = loader.load();
+            stage.setScene(new Scene(root, 1056, 756));
+            stage.setTitle("Live Chat");
+            stage.show();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to open Live Chat", e);
+        }
+    }
 
 }
