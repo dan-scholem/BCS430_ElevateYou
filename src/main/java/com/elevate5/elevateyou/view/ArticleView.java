@@ -6,8 +6,10 @@ import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +22,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -68,6 +72,8 @@ public class ArticleView extends Application {
     private TilePane resultsPane;
 
     private WebView webView;
+
+    private Popup favPopup;
 
     private ArticleViewModel articleViewModel;
 
@@ -183,13 +189,39 @@ public class ArticleView extends Application {
                 favoriteButton.setUserData("true");
                 favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
                         "-fx-background-color: gold;-fx-border-color: black");
+                toggleFavoritePopup((String) favoriteButton.getUserData());
             }else{
                 favoriteButton.setUserData("false");
                 favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
                         "-fx-background-color: white;-fx-border-color: black");
+                toggleFavoritePopup((String) favoriteButton.getUserData());
             }
         });
         return favoriteButton;
+    }
+
+    private void toggleFavoritePopup(String text){
+        favPopup = new Popup();
+        StackPane contentPane = new StackPane();
+        contentPane.setStyle("-fx-background-color: gray");
+        Label popupLabel = new Label();
+        popupLabel.setStyle("-fx-background-color: gray;-fx-font-size: 24");
+        if(text.equals("true")){
+            popupLabel.setText("Added to Favorites");
+        }else{
+            popupLabel.setText("Removed from Favorites");
+        }
+        contentPane.getChildren().add(popupLabel);
+        favPopup.getContent().add(contentPane);
+        favPopup.show(articleBorderPane.getScene().getWindow());
+        contentPane.setOpacity(1);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), contentPane);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(1);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition.play();
+        fadeTransition.setOnFinished(e -> favPopup.hide());
     }
 
 
