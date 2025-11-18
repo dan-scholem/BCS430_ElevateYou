@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.model.NotificationModel;
 import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
@@ -17,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.Node;
@@ -24,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class DashboardController {
@@ -103,7 +106,7 @@ public class DashboardController {
             System.out.println("[NAV] exerciseButton is null — check fx:id in Dashboard.fxml");
         }
 
-        setNotificationsButton();
+        setNotificationService();
     }
 
     // Logout
@@ -184,27 +187,65 @@ public class DashboardController {
         }
     }
 
+    @FXML private Button bellButton;
+    @FXML private Label badgeLabel;
+    @FXML private VBox dropdownList;
+
+    private NotificationService service;
+
+    /** Injected by DashboardController after FXML load. */
+    private void setNotificationService() {
+        String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
+                ? SessionManager.getSession().getUserID()
+                : "";
+        String email = (SessionManager.getSession() != null && SessionManager.getSession().getUser() != null)
+                ? SessionManager.getSession().getUser().getEmail()
+                : "";
+
+        this.service = new NotificationService(uid, email);
+        refreshBadge();
+    }
+
+    /** Toggle dropdown; refresh on open. */
     @FXML
-    public void setNotificationsButton() {
-        try {
-            String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
-                    ? SessionManager.getSession().getUserID()
-                    : "";
-            String email = (SessionManager.getSession() != null && SessionManager.getSession().getUser() != null)
-                    ? SessionManager.getSession().getUser().getEmail()
-                    : "";
+    private void onBellClicked() {
+        boolean show = !dropdownList.isVisible();
+        dropdownList.setVisible(show);
+        dropdownList.setManaged(show);
+        if (show) {
+            refreshList();
+        }
+    }
 
-            NotificationService svc = new NotificationService(uid, email);
+    /** Badge shows total count; hidden when zero. */
+    private void refreshBadge() {
+        if (service == null) return;
+        List<NotificationModel> items = service.latest(200);
+        int count = items.size();
+        if (count <= 0) {
+            badgeLabel.setText("");
+            badgeLabel.setVisible(false);
+            badgeLabel.setManaged(false);
+        } else {
+            badgeLabel.setText(String.valueOf(count));
+            badgeLabel.setVisible(true);
+            badgeLabel.setManaged(true);
+        }
+    }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/Notification.fxml"));
-            Node bell = loader.load();
-
-            NotificationController ctrl = loader.getController();
-            ctrl.setService(svc);
-
-            topRightBar.getChildren().add(bell);
-        } catch (Exception e) {
-            e.printStackTrace();
+    /** Render all items (no scroll, so keep list small in service.latest). */
+    private void refreshList() {
+        dropdownList.getChildren().clear();
+        List<NotificationModel> items = service.latest(50);
+        if (items.isEmpty()) {
+            dropdownList.getChildren().add(new Label("No notifications found"));
+            return;
+        }
+        for (NotificationModel n : items) {
+            Label row = new Label(n.title + ": " + n.body); // e.g., "Appointment: You have Dentist at 2025-10-21 09:00"
+            row.setWrapText(true);
+            row.getStyleClass().add("notif-item"); // hook for CSS
+            dropdownList.getChildren().add(row);
         }
     }
 
