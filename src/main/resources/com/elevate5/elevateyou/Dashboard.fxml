@@ -21,8 +21,17 @@
          <children>
             <Label layoutX="40.0" layoutY="22.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Dashboard" />
 
-            <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="20.0">
+            <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="20.0">
+                <children>
+                    <StackPane>
+                        <Button fx:id="bellButton" onAction="#onBellClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-font-size: 18px; -fx-cursor: hand;" text="🔔" />
+                        <Label fx:id="badgeLabel" managed="false" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 9999; -fx-padding: 2 5;" text="3" visible="false" StackPane.alignment="TOP_RIGHT" />
+                    </StackPane>
+                </children>
             </HBox>
+             <!-- Dropdown list -->
+             <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="-fx-background-colosr: white;                      -fx-border-color: rgba(0,0,0,0.12);                      -fx-border-radius: 8;                      -fx-background-radius: 8;                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                      -fx-padding: 10;                      -fx-view-order: -1;" visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
+             </VBox>
             <Button fx:id="profileButton" layoutX="813.0" layoutY="18.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="51.0" prefWidth="80.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;">
                <graphic>
                   <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
