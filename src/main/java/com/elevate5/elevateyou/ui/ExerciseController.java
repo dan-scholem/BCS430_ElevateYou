@@ -23,13 +23,13 @@ import java.util.Map;
 
 public class ExerciseController {
 
-    // Workout buttons
+    @FXML private ToggleButton runningBtn;
     @FXML private ToggleButton treadmillBtn;
-    @FXML private ToggleButton weightsBtn;
     @FXML private ToggleButton bicycleBtn;
+    @FXML private ToggleButton weightsBtn;
     @FXML private ToggleButton swimmingBtn;
+    @FXML private ToggleButton yogaBtn;
 
-    // Goal UI
     @FXML private Label selectedExerciseLabel;
     @FXML private TextField goalTitleField;
     @FXML private TextArea goalNotesArea;
@@ -42,12 +42,15 @@ public class ExerciseController {
 
     @FXML
     private void initialize() {
-        // Toggle group so only one workout is active
+
         exerciseGroup = new ToggleGroup();
+
+        runningBtn.setToggleGroup(exerciseGroup);
         treadmillBtn.setToggleGroup(exerciseGroup);
-        weightsBtn.setToggleGroup(exerciseGroup);
         bicycleBtn.setToggleGroup(exerciseGroup);
+        weightsBtn.setToggleGroup(exerciseGroup);
         swimmingBtn.setToggleGroup(exerciseGroup);
+        yogaBtn.setToggleGroup(exerciseGroup);
 
         exerciseGroup.selectedToggleProperty().addListener((obs, oldT, newT) -> {
             String name = getSelectedExercise();
@@ -55,11 +58,9 @@ public class ExerciseController {
             statusLabel.setText("");
         });
 
-        // Spinners
         targetSetsSpinner.setValueFactory(new IntegerSpinnerValueFactory(1, 500, 10));
         completedSetsSpinner.setValueFactory(new IntegerSpinnerValueFactory(0, 500, 0));
 
-        // Progress binding
         completedSetsSpinner.valueProperty().addListener((o, a, b) -> updateProgress());
         targetSetsSpinner.valueProperty().addListener((o, a, b) -> updateProgress());
 
@@ -81,7 +82,6 @@ public class ExerciseController {
         return ((ToggleButton) t).getText();
     }
 
-    // UI actions
     @FXML private void onIncCompleted() {
         int v = safe(completedSetsSpinner.getValue());
         completedSetsSpinner.getValueFactory().setValue(v + 1);
@@ -103,15 +103,18 @@ public class ExerciseController {
         statusLabel.setText("");
     }
 
-    @FXML private void onSave() {
+    @FXML
+    private void onSave() {
+
         String workout = getSelectedExercise();
         if (workout == null) {
             toast("Please choose a workout.");
             return;
         }
+
         String goalTitle = goalTitleField.getText() == null ? "" : goalTitleField.getText().trim();
         if (goalTitle.isEmpty()) {
-            toast("Please enter a goal title (e.g., Back workout — 10 sets).");
+            toast("Please enter a goal title.");
             return;
         }
 
@@ -135,6 +138,7 @@ public class ExerciseController {
             uid = SessionManager.getSession().getUser().getUid();
             email = SessionManager.getSession().getUser().getEmail();
         }
+
         data.put("uid", uid);
         data.put("email", email);
 
@@ -143,13 +147,15 @@ public class ExerciseController {
                 toast("No logged-in user — cannot save.");
                 return;
             }
+
             DocumentReference doc = App.fstore
                     .collection("users").document(uid)
                     .collection("workoutGoals").document();
 
             ApiFuture<WriteResult> future = doc.set(data);
             future.get();
-            toast("Saved ✔  (" + done + "/" + target + " sets)");
+
+            toast("Saved ✔ (" + done + "/" + target + ")");
         } catch (Exception e) {
             e.printStackTrace();
             toast("Save failed: " + e.getMessage());
@@ -159,7 +165,6 @@ public class ExerciseController {
     @FXML
     private void onBackToDashboard(ActionEvent event) {
         try {
-            // NOTE: adjust the path if your dashboard FXML lives elsewhere.
             Parent root = FXMLLoader.load(
                     getClass().getResource("/com/elevate5/elevateyou/Dashboard.fxml")
             );

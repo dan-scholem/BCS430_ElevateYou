@@ -7,7 +7,8 @@
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.elevate5.elevateyou.ui.ExerciseController"
-            prefWidth="920" prefHeight="600">
+            prefWidth="920" prefHeight="600"
+            stylesheets="@../styles.css">
 
     <!-- Header -->
     <top>
@@ -15,10 +16,9 @@
             <padding>
                 <Insets top="16" right="16" bottom="16" left="16"/>
             </padding>
-            <children>
-                <Label text="Exercise Goals" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-                <Label text="Choose a workout, set a goal, and update progress as you go."/>
-            </children>
+            <Label text="Exercise Goals" styleClass="trackerlabel"/>
+            <Label text="Choose a workout, set a goal, and update progress as you go."
+                   styleClass="dashboardarea"/>
         </VBox>
     </top>
 
@@ -28,26 +28,43 @@
             <padding>
                 <Insets top="16" right="16" bottom="16" left="16"/>
             </padding>
-            <children>
-                <Label text="Workouts" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
-                <GridPane fx:id="exerciseGrid" hgap="12" vgap="12">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints percentHeight="50"/>
-                        <RowConstraints percentHeight="50"/>
-                    </rowConstraints>
 
-                    <!-- Row 0 -->
-                    <ToggleButton fx:id="treadmillBtn" text="Treadmill" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <ToggleButton fx:id="weightsBtn"   text="Weights"   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                    <!-- Row 1 -->
-                    <ToggleButton fx:id="bicycleBtn"   text="Bicycle"    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <ToggleButton fx:id="swimmingBtn"  text="Swimming"  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                </GridPane>
-            </children>
+            <Label text="Workouts" styleClass="dashboardarea"/>
+
+            <!-- Single column list of exercises -->
+            <VBox spacing="12">
+
+                <ToggleButton fx:id="runningBtn"
+                              text="Running"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+
+                <ToggleButton fx:id="treadmillBtn"
+                              text="Treadmill"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+
+                <ToggleButton fx:id="bicycleBtn"
+                              text="Bicycle"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+
+                <ToggleButton fx:id="weightsBtn"
+                              text="Weights"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+
+                <ToggleButton fx:id="swimmingBtn"
+                              text="Swimming"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+
+                <ToggleButton fx:id="yogaBtn"
+                              text="Yoga"
+                              styleClass="exercisebutton"
+                              maxWidth="Infinity"/>
+            </VBox>
+
         </VBox>
     </left>
 
@@ -57,61 +74,60 @@
             <padding>
                 <Insets top="16" right="16" bottom="16" left="16"/>
             </padding>
-            <children>
-                <HBox spacing="10">
-                    <children>
-                        <Label text="Selected:"/>
-                        <Label fx:id="selectedExerciseLabel" text="—" style="-fx-font-weight: bold;"/>
-                    </children>
-                </HBox>
 
-                <Label text="Goal Title"/>
-                <TextField fx:id="goalTitleField" promptText="e.g., Back day — 10 sets across variations"/>
+            <HBox spacing="10">
+                <Label text="Selected:" styleClass="dashboardarea"/>
+                <Label fx:id="selectedExerciseLabel" text="—" styleClass="dashboardarea"/>
+            </HBox>
 
-                <Label text="Notes (optional)"/>
-                <TextArea fx:id="goalNotesArea" promptText="Add details (exercises, weights, etc.)" prefRowCount="3"/>
+            <Label text="Goal Title" styleClass="dashboardarea"/>
+            <TextField fx:id="goalTitleField"
+                       promptText="e.g., Back day — 10 sets across variations"/>
 
-                <HBox spacing="16" alignment="CENTER_LEFT">
-                    <children>
-                        <VBox spacing="6">
-                            <children>
-                                <Label text="Target Sets"/>
-                                <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140"/>
-                            </children>
-                        </VBox>
+            <Label text="Notes (optional)" styleClass="dashboardarea"/>
+            <TextArea fx:id="goalNotesArea"
+                      promptText="Add details (exercises, weights, etc.)"
+                      prefRowCount="3"/>
 
-                        <VBox spacing="6">
-                            <children>
-                                <Label text="Completed Sets"/>
-                                <HBox spacing="6" alignment="CENTER_LEFT">
-                                    <children>
-                                        <Button text="−" onAction="#onDecCompleted"/>
-                                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140"/>
-                                        <Button text="+" onAction="#onIncCompleted"/>
-                                    </children>
-                                </HBox>
-                            </children>
-                        </VBox>
+            <HBox spacing="16" alignment="CENTER_LEFT">
 
-                        <VBox spacing="6" prefWidth="240">
-                            <children>
-                                <Label text="Progress"/>
-                                <ProgressBar fx:id="progressBar" prefWidth="240"/>
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
+                <VBox spacing="6">
+                    <Label text="Target Sets" styleClass="dashboardarea"/>
+                    <Spinner fx:id="targetSetsSpinner" editable="true" prefWidth="140"/>
+                </VBox>
 
-                <HBox spacing="10">
-                    <children>
-                        <Button text="Reset" onAction="#onReset"/>
-                        <Button text="Save Goal / Progress" style="-fx-font-weight: bold;" onAction="#onSave"/>
-                        <Button text="<- Back to Dashboard" onAction="#onBacktoDashboard" />
-                    </children>
-                </HBox>
+                <VBox spacing="6">
+                    <Label text="Completed Sets" styleClass="dashboardarea"/>
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Button text="-" onAction="#onDecCompleted" styleClass="addbutton"/>
+                        <Spinner fx:id="completedSetsSpinner" editable="true" prefWidth="140"/>
+                        <Button text="+" onAction="#onIncCompleted" styleClass="addbutton"/>
+                    </HBox>
+                </VBox>
 
-                <Label fx:id="statusLabel" text=""/>
-            </children>
+                <VBox spacing="6" prefWidth="240">
+                    <Label text="Progress" styleClass="dashboardarea"/>
+                    <ProgressBar fx:id="progressBar" prefWidth="240"/>
+                </VBox>
+
+            </HBox>
+
+            <!-- Buttons -->
+            <HBox spacing="10">
+                <Button text="Reset"
+                        onAction="#onReset"
+                        styleClass="clearbutton"/>
+
+                <Button text="Save Goal / Progress"
+                        onAction="#onSave"
+                        styleClass="savebutton"/>
+
+                <Button text="← Back to Dashboard"
+                        onAction="#onBackToDashboard"
+                        styleClass="logoutbutton"/>
+            </HBox>
+
+            <Label fx:id="statusLabel" text="" styleClass="dashboardarea"/>
         </VBox>
     </center>
 </BorderPane>

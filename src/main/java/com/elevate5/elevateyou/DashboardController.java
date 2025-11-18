@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.Parent;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -76,8 +77,6 @@ public class DashboardController {
 
     @FXML
     private HBox topRightBar;
-
-
 
     private Session session;
 
@@ -177,16 +176,12 @@ public class DashboardController {
 
     @FXML
     protected void settingsButtonClick() throws IOException {
-
         try {
             Stage stage = (Stage) profileButton.getScene().getWindow();
-
             UserProfile.loadSettingsScene(stage);
         } catch (IOException e) {
-
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML
@@ -213,19 +208,18 @@ public class DashboardController {
         }
     }
 
-    // Exercise navigation
+    // Exercise navigation (FIXED PATH)
     @FXML
     private void exerciseButtonClick(ActionEvent event) {
-        System.out.println("[NAV] Exercise clicked"); // visibility in console
-        FXMLLoader loader;
+        System.out.println("[NAV] Exercise clicked");
         try {
-            loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/exercise.fxml")
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml") // <-- NOTE /ui/ here
             );
-            Node view = loader.load();
+            Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene((javafx.scene.Parent) view, 900, 600));
+            stage.setScene(new Scene(root, 900, 600));
             stage.setTitle("Exercise Tracker");
             stage.show();
 
@@ -234,6 +228,7 @@ public class DashboardController {
             new Alert(Alert.AlertType.ERROR, "Failed to open Exercise:\n" + e.getMessage()).showAndWait();
         }
     }
+
     @FXML
     public void appointmentButtonClick() throws IOException {
         try {
