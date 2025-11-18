@@ -24,7 +24,7 @@
                           <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                   <children>
-                                      <Label text="Articles">
+                                      <Label fx:id="activityLabel" text="Daily Articles">
                                           <font>
                                               <Font size="48.0" />
                                           </font>
@@ -33,6 +33,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                   <children>
+                              <Button fx:id="dailyArticlesButton" onAction="#dailyArticlesButtonClick" mnemonicParsing="false" text="Daily Articles" visible="false" />
                                       <ComboBox fx:id="categoryBox" prefWidth="150.0" promptText="General">
                                           <items>
                                               <FXCollections fx:factory="observableArrayList">
@@ -59,7 +60,7 @@
                           <content>
                               <AnchorPane fx:id="scrollAnchorPane" minHeight="0.0" minWidth="0.0">
                            <children>
-                              <TilePane fx:id="resultsPane" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TilePane fx:id="resultsPane" hgap="10.0" prefHeight="200.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children></AnchorPane>
                           </content>
                       </ScrollPane>

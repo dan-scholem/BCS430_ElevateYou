@@ -24,7 +24,12 @@ public class ArticleSearchModel {
 
         articles = new ArrayList<>();
 
-        URL url = new URL(buildAPIUrl(searchString));
+        URL url;
+        if(searchString.equals("")){
+            url = new URL(buildAPIUrl());
+        }else{
+            url = new URL(buildAPIUrl(searchString));
+        }
 
         try {
 
@@ -81,7 +86,12 @@ public class ArticleSearchModel {
 
     public String buildAPIUrl(String searchString) {
 
-        return "https://newsapi.org/v2/everything?q=" + searchString + "&sortBy=popularity&apiKey="+getNewsAPIKey();
+        return "https://newsapi.org/v2/everything?q=" + searchString + "&sortBy=relevancy&apiKey="+getNewsAPIKey();
+    }
+
+    public String buildAPIUrl() {
+
+        return "https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey="+getNewsAPIKey();
     }
 
     private static ArrayNode getJsonNodes(HttpURLConnection conn) throws IOException {

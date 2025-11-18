@@ -24,6 +24,10 @@ public class ArticleViewModel {
         return articleSearchModel.searchArticles((categoryProperty().get().toLowerCase() + "+\"" + searchStringProperty().get() + "\"").replaceAll(" ", "+"));
     }
 
+    public ArrayList<ArticleModel> getDefaultArticles() throws MalformedURLException {
+        return articleSearchModel.searchArticles("");
+    }
+
     public String getSearchString() {
         return searchString.get();
     }

@@ -53,6 +53,10 @@ public class ArticleView extends Application {
     @FXML
     private Button quotesaffirmationBtn;
     @FXML
+    private Button dailyArticlesButton;
+    @FXML
+    private Label activityLabel;
+    @FXML
     private ComboBox<String> categoryBox;
     @FXML
     private TextField searchField;
@@ -68,34 +72,57 @@ public class ArticleView extends Application {
     private ArticleViewModel articleViewModel;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
 
         webView = new WebView();
         webView.getEngine().setJavaScriptEnabled(false);
 
         articleViewModel = new ArticleViewModel();
 
+        displayDefaultArticles();
+
         categoryBox.valueProperty().bindBidirectional(articleViewModel.categoryProperty());
         searchField.textProperty().bindBidirectional(articleViewModel.searchStringProperty());
 
     }
 
+    private void displayDefaultArticles() throws IOException {
+        resultsPane.getChildren().clear();
+        activityLabel.setText("Daily Articles");
+        ArrayList<ArticleModel> articles = articleViewModel.getDefaultArticles();
+        generateArticles(articles);
+        dailyArticlesButton.setVisible(false);
+    }
 
     @FXML
     private void searchButtonClick(ActionEvent event) throws MalformedURLException {
         resultsPane.getChildren().clear();
+        activityLabel.setText(categoryBox.getValue() + " Articles");
         ArrayList<ArticleModel> articles = articleViewModel.searchArticles();
+        generateArticles(articles);
+        dailyArticlesButton.setVisible(true);
+    }
+
+    @FXML
+    private void dailyArticlesButtonClick(ActionEvent event) throws IOException {
+        displayDefaultArticles();
+    }
+
+    private void generateArticles(ArrayList<ArticleModel> articles) {
         for (ArticleModel article : articles) {
 
             Image articleImage;
             try{
-                articleImage = new Image(article.getArticleImageUrl(), 150,100,false,false, true);
-                System.out.println(articleImage.getUrl());
+                articleImage = new Image(article.getArticleImageUrl(), 150,100,true,false, true);
+                //System.out.println(articleImage.getUrl());
             } catch (IllegalArgumentException e) {
                 articleImage = new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png", 150,100,false,false, true);
             }
 
             ImageView articleImageView = new ImageView(articleImage);
+            articleImageView.setFitHeight(100);
+            articleImageView.setFitWidth(150);
+            articleImageView.setPreserveRatio(true);
 
             Label title = new Label(article.getTitle());
             title.setWrapText(true);
@@ -112,6 +139,7 @@ public class ArticleView extends Application {
             resultButton.setGraphicTextGap(5);
             resultButton.setCursor(Cursor.HAND);
             resultButton.wrapTextProperty().setValue(true);
+            resultButton.setStyle("-fx-background-color: white;");
             resultButton.setOnAction(e->{
                 webView.getEngine().load(article.getArticleUrl());
                 Button backButton = getBackButton();
