@@ -15,8 +15,12 @@ import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +94,9 @@ public class CreateAccountController {
     private Button profileButton;
 
     @FXML
+    private Button profileImageButton;
+
+    @FXML
     private Label agemessage;
 
     @FXML
@@ -100,6 +107,11 @@ public class CreateAccountController {
 
     @FXML
     private Label weightmessage;
+
+    @FXML
+    private ImageView userImage;
+
+    private String photoFile;
 
 
     @FXML
@@ -518,10 +530,52 @@ public class CreateAccountController {
         }
 
         @FXML
-        protected void uploadProfilePhoto (ActionEvent event){
+        private void uploadProfilePhoto (ActionEvent event) {
+
+            FileChooser fileChooser = new FileChooser();
+
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png"));
+
+            fileChooser.setTitle("Upload Profile Image");
+
+           File imagefile = fileChooser.showOpenDialog(profileImageButton.getScene().getWindow());
+
+          if (imagefile != null) {
+
+              try {
+                  photoFile = imagefile.toURI().toString();
+
+                  ImageView imageView = new ImageView(photoFile);
+
+                  imageView.setPreserveRatio(true);
+
+                  imageView.setFitWidth(50);
+                  imageView.setFitHeight(50);
+
+                  profileButton.setPrefSize(50, 50);
+
+                  profileButton.setGraphic(imageView);
+
+                  showAlert(Alert.AlertType.INFORMATION, "Profile photo uploaded successfully.");
+              }
+
+              catch (Exception e) {
+
+                 showAlert(Alert.AlertType.ERROR, "Unable to upload profile image." + e.getMessage());
+              }
+
+
+
+          }
 
 
         }
+
+    @FXML
+    private void addPhotoInFirestore (ActionEvent event) {
+
+
+    }
 
         @FXML
         protected void dashboardButtonClick () {
