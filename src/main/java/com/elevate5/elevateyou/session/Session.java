@@ -49,8 +49,6 @@ public class Session {
                     userEventManager.addEvent(date, event);
                 }
             }
-
-            System.out.println("Doc exists");
         }else{ //if document does not exist, create new document for firestore
             EventManager newEventData = new EventManager();
             try{
@@ -145,7 +143,7 @@ public class Session {
         future = savedArticlesDocRef.get();
         doc = future.get();
         if(doc.exists()) {
-            List<Map<String, Object>>  savedArticlesMap = (List<Map<String, Object>>) doc.get("articles");
+            List<Map<String, Object>>  savedArticlesMap = (List<Map<String, Object>>) doc.get("savedArticles");
             if(savedArticlesMap != null) {
                 for(Map<String, Object> data : savedArticlesMap) {
                     String articleTitle = (String) data.get("title");
