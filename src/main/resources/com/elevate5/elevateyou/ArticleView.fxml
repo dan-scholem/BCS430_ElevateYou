@@ -22,7 +22,7 @@
                   <top>
                       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="420.0" HBox.hgrow="SOMETIMES">
                                   <children>
                                       <Label fx:id="activityLabel" text="Daily Articles">
                                           <font>
@@ -33,7 +33,8 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                   <children>
-                              <Button fx:id="dailyArticlesButton" onAction="#dailyArticlesButtonClick" mnemonicParsing="false" text="Daily Articles" visible="false" />
+                              <Button fx:id="dailyArticlesButton" mnemonicParsing="false" onAction="#dailyArticlesButtonClick" text="Daily Articles" visible="false" />
+                              <Button fx:id="savedArticlesButton" onAction="#savedArticlesButtonClick" mnemonicParsing="false" text="Favorites" />
                                       <ComboBox fx:id="categoryBox" prefWidth="150.0" promptText="General">
                                           <items>
                                               <FXCollections fx:factory="observableArrayList">

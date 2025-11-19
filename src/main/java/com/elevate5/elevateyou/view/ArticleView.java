@@ -102,6 +102,14 @@ public class ArticleView extends Application {
         dailyArticlesButton.setVisible(false);
     }
 
+    private void displaySavedArticles() throws IOException {
+        resultsPane.getChildren().clear();
+        activityLabel.setText("Saved Articles");
+        ArrayList<ArticleModel> articles = SessionManager.getSession().getSavedArticlesManager().getSavedArticles();
+        generateArticles(articles);
+        dailyArticlesButton.setVisible(true);
+    }
+
     @FXML
     private void searchButtonClick(ActionEvent event) throws MalformedURLException {
         resultsPane.getChildren().clear();
@@ -114,6 +122,11 @@ public class ArticleView extends Application {
     @FXML
     private void dailyArticlesButtonClick(ActionEvent event) throws IOException {
         displayDefaultArticles();
+    }
+
+    @FXML
+    private void savedArticlesButtonClick(ActionEvent event) throws IOException {
+        displaySavedArticles();
     }
 
     private void generateArticles(ArrayList<ArticleModel> articles) {
@@ -162,6 +175,7 @@ public class ArticleView extends Application {
             });
             resultsPane.getChildren().add(resultButton);
         }
+        articleBorderPane.setCenter(articleScrollPane);
     }
 
     private @NotNull Button getBackButton() {
