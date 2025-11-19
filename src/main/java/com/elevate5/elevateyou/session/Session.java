@@ -19,8 +19,10 @@ public class Session {
     private final String userID;
     private EventManager userEventManager = new EventManager();
     private AppointmentManager userAppointmentManager = new AppointmentManager();
+    private SavedArticlesManager savedArticlesManager = new SavedArticlesManager();
     private DoctorModel selectedDoctor;
     private User currUser;
+    private DocumentReference savedArticlesDocRef;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         this.user = user;
@@ -136,6 +138,29 @@ public class Session {
         }else{
             System.out.println("User doesn't exist");
         }
+        savedArticlesDocRef = App.fstore.collection("SavedArticles").document(this.userID);
+        future = savedArticlesDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            List<Map<String, Object>>  savedArticlesMap = (List<Map<String, Object>>) doc.get("articles");
+            if(savedArticlesMap != null) {
+                for(Map<String, Object> data : savedArticlesMap) {
+                    String articleTitle = (String) data.get("title");
+                    String articleDescription = (String) data.get("description");
+                    String articleAuthor = (String) data.get("author");
+                    String articleUrl = (String)  data.get("articleUrl");
+                    String articleImageUrl = (String)  data.get("articleImageUrl");
+                    ArticleModel article  = new ArticleModel(articleUrl, articleAuthor, articleTitle, articleDescription, articleImageUrl);
+                    savedArticlesManager.addArticle(article);
+                }
+            }
+        }else{
+            try{
+                ApiFuture<WriteResult> future1 = savedArticlesDocRef.set(savedArticlesManager);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
     }
 
@@ -174,4 +199,21 @@ public class Session {
     public void setCurrUser(User currUser) {
         this.currUser = currUser;
     }
+
+    public SavedArticlesManager getSavedArticlesManager() {
+        return savedArticlesManager;
+    }
+
+    public void setSavedArticlesManager(SavedArticlesManager savedArticlesManager) {
+        this.savedArticlesManager = savedArticlesManager;
+    }
+
+    public DocumentReference getSavedArticlesDocRef() {
+        return savedArticlesDocRef;
+    }
+
+    public void setSavedArticlesDocRef(DocumentReference savedArticlesDocRef) {
+        this.savedArticlesDocRef = savedArticlesDocRef;
+    }
+
 }

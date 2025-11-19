@@ -8,6 +8,7 @@ import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -149,7 +151,7 @@ public class ArticleView extends Application {
             resultButton.setOnAction(e->{
                 webView.getEngine().load(article.getArticleUrl());
                 Button backButton = getBackButton();
-                Button favoriteButton = getFavoriteButton();
+                Button favoriteButton = getFavoriteButton(article);
                 StackPane root = new StackPane(webView, backButton, favoriteButton);
                 StackPane.setAlignment(backButton, Pos.TOP_LEFT);
                 StackPane.setAlignment(favoriteButton, Pos.TOP_RIGHT);
@@ -177,23 +179,32 @@ public class ArticleView extends Application {
         return backButton;
     }
 
-    private @NotNull Button getFavoriteButton() {
+    private @NotNull Button getFavoriteButton(ArticleModel article) {
         Button favoriteButton = new Button();
         favoriteButton.setPrefSize(40,40);
         favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
                 "-fx-background-color: white;-fx-border-color: black");
         favoriteButton.setUserData("false");
+        for(ArticleModel articleModel : SessionManager.getSession().getSavedArticlesManager().getSavedArticles()){
+            if(articleModel.getArticleUrl().equals(article.getArticleUrl())){
+                favoriteButton.setUserData("true");
+                favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
+                        "-fx-background-color: gold;-fx-border-color: black");
+            }
+        }
         favoriteButton.setCursor(Cursor.HAND);
         favoriteButton.setOnAction(e3->{
             if(favoriteButton.getUserData().equals("false")){
                 favoriteButton.setUserData("true");
                 favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
                         "-fx-background-color: gold;-fx-border-color: black");
+                SessionManager.getSession().getSavedArticlesManager().saveArticleToFirestore(article);
                 toggleFavoritePopup((String) favoriteButton.getUserData());
             }else{
                 favoriteButton.setUserData("false");
                 favoriteButton.setStyle("-fx-shape: \"M50,15 L61,35 L84,39 L67,55 L71,78 L50,67 L29,78 L33,55 L16,39 L39,35 Z\";" +
                         "-fx-background-color: white;-fx-border-color: black");
+                SessionManager.getSession().getSavedArticlesManager().removeArticleFromFirestore(article);
                 toggleFavoritePopup((String) favoriteButton.getUserData());
             }
         });
