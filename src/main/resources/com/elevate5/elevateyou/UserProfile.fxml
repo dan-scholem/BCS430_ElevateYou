@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
    <children>
       <VBox alignment="BOTTOM_CENTER" layoutY="140.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
          <padding>
@@ -142,6 +142,6 @@
       <Label fx:id="weightmessage" layoutX="432.0" layoutY="455.0" />
       <Label fx:id="heightmessage" layoutX="495.0" layoutY="398.0" />
       <Label fx:id="agemessage" layoutX="407.0" layoutY="286.0" />
-      <Label fx:id="emailmessage" layoutX="478.0" layoutY="243.0" />
+      <Label fx:id="emailmessage" layoutX="478.0" layoutY="243.0" /><Button fx:id="emergencyCardButton" layoutX="244.0" layoutY="643.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" style="-fx-background-radius: 10; -fx-background-color: #83C5BE; -fx-text-fill: white;" text="Emergency Card" />
    </children>
 </AnchorPane>

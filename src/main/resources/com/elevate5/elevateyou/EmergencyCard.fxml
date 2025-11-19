@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600" prefWidth="600" spacing="10" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.EmergencyCardController">
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+    <children>
+        <Label text="Emergency Card">
+            <font>
+                <Font size="20" />
+            </font>
+        </Label>
+        <ScrollPane fitToWidth="true" prefViewportHeight="500">
+            <content>
+                <GridPane hgap="10" prefHeight="814.0" prefWidth="554.0" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" maxWidth="171.0" minWidth="100.0" prefWidth="152.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="439.0" minWidth="373.0" prefWidth="392.0" />
+                    </columnConstraints>
+      
+                          <children>
+                        <Label text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="fullNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      
+                              <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+                              <Label text="Date of Birth:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="dobField" promptText="YYYY-MM-DD" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      
+                              <Label text="Emergency Contact Name:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="emContactNameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+                              <Label text="Emergency Contact Phone:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <TextField fx:id="emContactPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      
+                              <Label text="Medical History:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <TextArea fx:id="conditionsArea" prefHeight="100.0" prefWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      
+                              <Label text="Allergic History:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <TextArea fx:id="allergiesArea" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      
+                              <Label text="Medication History:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <TextArea fx:id="medicationsArea" prefHeight="149.0" prefWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      
+                              <Label text="Surgery History:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                        <TextArea fx:id="surgeryHistoryArea" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      
+                              <Label text="Implanted Devices:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                        <TextArea fx:id="implantsArea" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      
+                              <Label text="Anticoagulant Use:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                        <TextField fx:id="anticoagulantField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      
+                              <Label text="Insurance Information:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                        <TextArea fx:id="insuranceArea" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      
+                          </children>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints maxHeight="28.0" minHeight="22.0" prefHeight="24.0" />
+                  <RowConstraints maxHeight="30.0" minHeight="24.0" prefHeight="28.0" />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints maxHeight="185.5" minHeight="77.5" prefHeight="80.7860107421875" />
+                  <RowConstraints maxHeight="309.5" minHeight="84.54803466796875" prefHeight="84.54803466796875" />
+                  <RowConstraints maxHeight="395.5" minHeight="83.2025146484375" prefHeight="87.88101196289062" />
+                  <RowConstraints maxHeight="490.0638427734375" minHeight="49.16619873046875" prefHeight="85.64300537109375" />
+                  <RowConstraints maxHeight="544.0403442382812" minHeight="0.0" prefHeight="88.85699462890625" />
+                  <RowConstraints maxHeight="238.5" minHeight="11.781494140625" prefHeight="82.405029296875" />
+                  <RowConstraints maxHeight="144.382568359375" minHeight="23.06292724609375" prefHeight="78.594970703125" />
+               </rowConstraints>
+                </GridPane>
+            </content>
+        </ScrollPane>
+        <Separator />
+
+        <HBox spacing="10">
+            <children>
+                <Button fx:id="addButton" onAction="#onAdd" text="Add" />
+                <Button fx:id="updateButton" onAction="#onUpdate" text="Update" />
+                <Button fx:id="exportButton" onAction="#onExport" text="Export" />
+                <Button fx:id="qrButton" onAction="#onGenerateQr" text="Generate QR code" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#onClose" text="Close" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

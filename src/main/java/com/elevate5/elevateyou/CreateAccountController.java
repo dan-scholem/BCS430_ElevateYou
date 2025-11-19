@@ -14,7 +14,11 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -609,5 +613,28 @@ public class CreateAccountController {
             alert.setContentText(message);
             alert.show();
         }
+
+    @FXML
+    private void openEmergencyCard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/EmergencyCard.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage dialog = new Stage();
+            dialog.setTitle("Emergency Card");
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setResizable(false);
+            dialog.setScene(new Scene(root));
+            dialog.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,
+                    "Failed to open Emergency Card:\n" + e.getMessage()
+            ).showAndWait();
+        }
+    }
 
     }
