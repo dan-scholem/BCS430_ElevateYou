@@ -18,9 +18,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,6 +107,11 @@ public class CreateAccountController {
 
     @FXML
     private Label weightmessage;
+
+    @FXML
+    private Button profileImageButton;
+
+    private String photoFile;
 
 
     @FXML
@@ -523,6 +531,42 @@ public class CreateAccountController {
 
         @FXML
         protected void uploadProfilePhoto (ActionEvent event){
+
+            FileChooser fileChooser = new FileChooser();
+
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png"));
+
+            fileChooser.setTitle("Upload Profile Image");
+
+            File imagefile = fileChooser.showOpenDialog(profileImageButton.getScene().getWindow());
+
+            if (imagefile != null) {
+
+                try {
+                    photoFile = imagefile.toURI().toString();
+
+                    ImageView imageView = new ImageView(photoFile);
+
+                    imageView.setPreserveRatio(true);
+
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
+
+                    profileButton.setPrefSize(50, 50);
+
+                    profileButton.setGraphic(imageView);
+
+                    showAlert(Alert.AlertType.INFORMATION, "Profile photo uploaded successfully.");
+                }
+
+                catch (Exception e) {
+
+                    showAlert(Alert.AlertType.ERROR, "Unable to upload profile image." + e.getMessage());
+                }
+
+
+
+            }
 
 
         }
