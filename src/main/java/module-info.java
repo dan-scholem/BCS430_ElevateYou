@@ -27,6 +27,9 @@ module com.elevate5.elevateyou {
     requires java.net.http;
     requires langchain4j.open.ai;
     requires langchain4j.core;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+    requires javafx.swing;
 
     opens com.elevate5.elevateyou;
     exports com.elevate5.elevateyou;

@@ -14,13 +14,13 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,9 +94,6 @@ public class CreateAccountController {
     private Button profileButton;
 
     @FXML
-    private Button profileImageButton;
-
-    @FXML
     private Label agemessage;
 
     @FXML
@@ -107,11 +104,6 @@ public class CreateAccountController {
 
     @FXML
     private Label weightmessage;
-
-    @FXML
-    private ImageView userImage;
-
-    private String photoFile;
 
 
     @FXML
@@ -530,52 +522,10 @@ public class CreateAccountController {
         }
 
         @FXML
-        private void uploadProfilePhoto (ActionEvent event) {
-
-            FileChooser fileChooser = new FileChooser();
-
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png"));
-
-            fileChooser.setTitle("Upload Profile Image");
-
-           File imagefile = fileChooser.showOpenDialog(profileImageButton.getScene().getWindow());
-
-          if (imagefile != null) {
-
-              try {
-                  photoFile = imagefile.toURI().toString();
-
-                  ImageView imageView = new ImageView(photoFile);
-
-                  imageView.setPreserveRatio(true);
-
-                  imageView.setFitWidth(50);
-                  imageView.setFitHeight(50);
-
-                  profileButton.setPrefSize(50, 50);
-
-                  profileButton.setGraphic(imageView);
-
-                  showAlert(Alert.AlertType.INFORMATION, "Profile photo uploaded successfully.");
-              }
-
-              catch (Exception e) {
-
-                 showAlert(Alert.AlertType.ERROR, "Unable to upload profile image." + e.getMessage());
-              }
-
-
-
-          }
+        protected void uploadProfilePhoto (ActionEvent event){
 
 
         }
-
-    @FXML
-    private void addPhotoInFirestore (ActionEvent event) {
-
-
-    }
 
         @FXML
         protected void dashboardButtonClick () {
@@ -663,5 +613,28 @@ public class CreateAccountController {
             alert.setContentText(message);
             alert.show();
         }
+
+    @FXML
+    private void openEmergencyCard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/elevate5/elevateyou/EmergencyCard.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage dialog = new Stage();
+            dialog.setTitle("Emergency Card");
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setResizable(false);
+            dialog.setScene(new Scene(root));
+            dialog.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,
+                    "Failed to open Emergency Card:\n" + e.getMessage()
+            ).showAndWait();
+        }
+    }
 
     }
