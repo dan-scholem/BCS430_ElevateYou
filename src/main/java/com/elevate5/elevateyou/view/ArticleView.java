@@ -82,7 +82,7 @@ public class ArticleView extends Application {
     @FXML
     public void initialize() throws IOException {
 
-        webView = new WebView();
+        webView = SessionManager.getSession().getWebView();
         webView.getEngine().setJavaScriptEnabled(false);
 
         articleViewModel = new ArticleViewModel();

@@ -7,6 +7,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
+import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,10 @@ public class Session {
     private DoctorModel selectedDoctor;
     private User currUser;
     private DocumentReference savedArticlesDocRef;
+    private WebView webView;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
+        webView = new WebView();
         this.user = user;
         this.userID = user.getUid();
         //Load event data from Firestore db
@@ -216,4 +219,11 @@ public class Session {
         this.savedArticlesDocRef = savedArticlesDocRef;
     }
 
+    public WebView getWebView() {
+        return webView;
+    }
+
+    public void setWebView(WebView webView) {
+        this.webView = webView;
+    }
 }
