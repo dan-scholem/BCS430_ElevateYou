@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.ProfileView">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.ProfileView">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,6 +27,23 @@
                   <Font size="24.0" />
                </font>
             </TextArea>
+
+               <Separator prefHeight="0.0" prefWidth="600.0" />
+
+             <VBox prefWidth="480.0" spacing="8.0">
+                 <children>
+                     <Label style="-fx-font-weight: bold;" text="Shared Health Summary:" />
+                     <Label fx:id="friendLastNutritionLabel" text="Calories Intake today: " wrapText="true" />
+                     <Label fx:id="friendLastWaterLabel" text="Water Intake today: " wrapText="true" />
+                     <Label fx:id="friendLastSleepLabel" text="Sleep Score last night: " wrapText="true" />
+                     <Label fx:id="friendEmailLabel" text="You friend email: " wrapText="true" />
+
+                     <Separator />
+
+                     <CheckBox fx:id="shareHealthData" text="Share my health data with this friend" />
+                     <Label style="-fx-font-size: 11; -fx-text-fill: #777;" text="(Nutrition, Water, Sleep score only)" wrapText="true" />
+                 </children>
+             </VBox>
          </children></VBox>
    </children>
 </AnchorPane>
