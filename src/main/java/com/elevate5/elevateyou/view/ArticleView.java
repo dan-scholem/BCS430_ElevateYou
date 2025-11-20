@@ -8,9 +8,7 @@ import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -22,7 +20,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -102,7 +99,7 @@ public class ArticleView extends Application {
         dailyArticlesButton.setVisible(false);
     }
 
-    private void displaySavedArticles() throws IOException {
+    private void displaySavedArticles() {
         resultsPane.getChildren().clear();
         activityLabel.setText("Saved Articles");
         ArrayList<ArticleModel> articles = SessionManager.getSession().getSavedArticlesManager().getSavedArticles();
@@ -135,9 +132,8 @@ public class ArticleView extends Application {
             Image articleImage;
             try{
                 articleImage = new Image(article.getArticleImageUrl(), 150,100,true,false, true);
-                //System.out.println(articleImage.getUrl());
             } catch (IllegalArgumentException e) {
-                articleImage = new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png", 150,100,false,false, true);
+                articleImage = new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png", 150,100,true,false, true);
             }
 
             ImageView articleImageView = new ImageView(articleImage);
