@@ -111,7 +111,7 @@
                   <Font name="Poppins ExtraBold" size="13" />
                </font>
             </Button>
-            <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+            <Button fx:id="articlesButton" onAction="#articlesButtonClick" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Articles">
                <font>
                   <Font name="Poppins ExtraBold" size="13" />
                </font>

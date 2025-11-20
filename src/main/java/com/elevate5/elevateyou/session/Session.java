@@ -7,6 +7,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
+import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,14 @@ public class Session {
     private final String userID;
     private EventManager userEventManager = new EventManager();
     private AppointmentManager userAppointmentManager = new AppointmentManager();
+    private SavedArticlesManager savedArticlesManager = new SavedArticlesManager();
     private DoctorModel selectedDoctor;
     private User currUser;
+    private DocumentReference savedArticlesDocRef;
+    private WebView webView;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
+        webView = new WebView();
         this.user = user;
         this.userID = user.getUid();
         //Load event data from Firestore db
@@ -44,8 +49,6 @@ public class Session {
                     userEventManager.addEvent(date, event);
                 }
             }
-
-            System.out.println("Doc exists");
         }else{ //if document does not exist, create new document for firestore
             EventManager newEventData = new EventManager();
             try{
@@ -136,6 +139,29 @@ public class Session {
         }else{
             System.out.println("User doesn't exist");
         }
+        savedArticlesDocRef = App.fstore.collection("SavedArticles").document(this.userID);
+        future = savedArticlesDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            List<Map<String, Object>>  savedArticlesMap = (List<Map<String, Object>>) doc.get("savedArticles");
+            if(savedArticlesMap != null) {
+                for(Map<String, Object> data : savedArticlesMap) {
+                    String articleTitle = (String) data.get("title");
+                    String articleDescription = (String) data.get("description");
+                    String articleAuthor = (String) data.get("author");
+                    String articleUrl = (String)  data.get("articleUrl");
+                    String articleImageUrl = (String)  data.get("articleImageUrl");
+                    ArticleModel article  = new ArticleModel(articleUrl, articleAuthor, articleTitle, articleDescription, articleImageUrl);
+                    savedArticlesManager.addArticle(article);
+                }
+            }
+        }else{
+            try{
+                ApiFuture<WriteResult> future1 = savedArticlesDocRef.set(savedArticlesManager);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
     }
 
@@ -173,5 +199,29 @@ public class Session {
 
     public void setCurrUser(User currUser) {
         this.currUser = currUser;
+    }
+
+    public SavedArticlesManager getSavedArticlesManager() {
+        return savedArticlesManager;
+    }
+
+    public void setSavedArticlesManager(SavedArticlesManager savedArticlesManager) {
+        this.savedArticlesManager = savedArticlesManager;
+    }
+
+    public DocumentReference getSavedArticlesDocRef() {
+        return savedArticlesDocRef;
+    }
+
+    public void setSavedArticlesDocRef(DocumentReference savedArticlesDocRef) {
+        this.savedArticlesDocRef = savedArticlesDocRef;
+    }
+
+    public WebView getWebView() {
+        return webView;
+    }
+
+    public void setWebView(WebView webView) {
+        this.webView = webView;
     }
 }

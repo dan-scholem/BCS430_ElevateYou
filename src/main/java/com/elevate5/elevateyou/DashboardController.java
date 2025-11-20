@@ -76,7 +76,7 @@ public class DashboardController {
     private Button sleepButton;
 
     @FXML
-    private Button tutorialsButton;
+    private Button articlesButton;
 
     @FXML
     private HBox topRightBar;
@@ -328,7 +328,21 @@ public class DashboardController {
 
     }
 
-     @FXML
+    @FXML
+    protected void articlesButtonClick() throws IOException {
+        try {
+            Stage stage = (Stage) articlesButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ArticleView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Articles");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
     public void chatButtonClick(){
         try {
             Stage stage = (Stage) chatButton.getScene().getWindow();
@@ -343,4 +357,5 @@ public class DashboardController {
             throw new RuntimeException("Failed to open Live Chat", e);
         }
     }
+
 }

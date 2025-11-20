@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="738" prefWidth="1218" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.ArticleView">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <top>
+              <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <HBox prefHeight="100.0" prefWidth="200.0" />
+                  </children>
+              </HBox>
+          </top>
+          <center>
+              <BorderPane fx:id="articleBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <top>
+                      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="420.0" HBox.hgrow="SOMETIMES">
+                                  <children>
+                                      <Label fx:id="activityLabel" text="Daily Articles">
+                                          <font>
+                                              <Font size="48.0" />
+                                          </font>
+                                      </Label>
+                                  </children>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                  <children>
+                              <Button fx:id="dailyArticlesButton" mnemonicParsing="false" onAction="#dailyArticlesButtonClick" text="Daily Articles" visible="false" />
+                              <Button fx:id="savedArticlesButton" onAction="#savedArticlesButtonClick" mnemonicParsing="false" text="Favorites" />
+                                      <ComboBox fx:id="categoryBox" prefWidth="150.0" promptText="General">
+                                          <items>
+                                              <FXCollections fx:factory="observableArrayList">
+                                                  <String fx:id="general" fx:value="General" />
+                                                  <String fx:id="nutrition" fx:value="Nutrition" />
+                                                  <String fx:id="exercise" fx:value="Exercise" />
+                                                  <String fx:id="mentalHealth" fx:value="Mental Health" />
+                                                  <String fx:id="sleep" fx:value="Sleep" />
+                                              </FXCollections>
+                                          </items>
+                                      </ComboBox>
+                                      <TextField fx:id="searchField" promptText="Search..." />
+                                      <Button mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
+                                  </children>
+                                  <padding>
+                                      <Insets right="20.0" />
+                                  </padding>
+                              </HBox>
+                          </children>
+                      </HBox>
+                  </top>
+                  <center>
+                      <ScrollPane fx:id="articleScrollPane" fitToWidth="true" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <content>
+                              <AnchorPane fx:id="scrollAnchorPane" minHeight="0.0" minWidth="0.0">
+                           <children>
+                              <TilePane fx:id="resultsPane" hgap="10.0" prefHeight="200.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children></AnchorPane>
+                          </content>
+                      </ScrollPane>
+                  </center>
+              </BorderPane>
+          </center>
+       <left>
+           <VBox alignment="TOP_CENTER" layoutY="154.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
+               <padding>
+                   <Insets bottom="22" left="10" right="10" top="18" />
+               </padding>
+               <children>
+                   <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+                   <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+                       <font>
+                           <Font name="Poppins ExtraBold" size="13" />
+                       </font>
+                   </Button>
+               </children>
+           </VBox>
+       </left>
+
+       </BorderPane>
+   </children>
+</AnchorPane>
