@@ -122,7 +122,7 @@ public class ArticleView extends Application {
     }
 
     @FXML
-    private void savedArticlesButtonClick(ActionEvent event) throws IOException {
+    private void savedArticlesButtonClick(ActionEvent event) {
         displaySavedArticles();
     }
 
@@ -183,9 +183,7 @@ public class ArticleView extends Application {
                 "-fx-border-color: black;" +
                 "-fx-border-radius: 50%;" +
                 "-fx-border-width: 2");
-        backButton.setOnAction(e2->{
-            articleBorderPane.setCenter(articleScrollPane);
-        });
+        backButton.setOnAction(e2-> articleBorderPane.setCenter(articleScrollPane));
         return backButton;
     }
 
