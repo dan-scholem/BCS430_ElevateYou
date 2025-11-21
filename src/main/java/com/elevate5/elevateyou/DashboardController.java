@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -80,6 +81,9 @@ public class DashboardController {
 
     @FXML
     private HBox topRightBar;
+
+    @FXML
+    private ImageView userImage;
 
     private Session session;
 

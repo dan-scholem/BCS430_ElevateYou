@@ -88,8 +88,8 @@ public class UserLoginController {
         }
 
         else if (signInUser()) {
+
             System.out.println("Sign In Success");
-            showAlert(Alert.AlertType.CONFIRMATION, "Sign in successful!");
 
         }
 
