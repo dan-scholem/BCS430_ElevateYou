@@ -136,6 +136,8 @@
       <Label fx:id="heightmessage" layoutX="495.0" layoutY="398.0" />
       <Label fx:id="agemessage" layoutX="407.0" layoutY="286.0" />
       <Label fx:id="emailmessage" layoutX="478.0" layoutY="243.0" />
-      <Button fx:id="emergencyCardButton" layoutX="244.0" layoutY="643.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" style="-fx-background-radius: 10; -fx-background-color: #83C5BE; -fx-text-fill: white;" text="Emergency Card" />
+      <Button fx:id="emergencyCardButton" layoutX="236.0" layoutY="660.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" styleClass="savebutton" stylesheets="styles.css" text="Emergency Card" />
+      <Button fx:id="importButton" layoutX="810.0" layoutY="660.0" onAction="#onImportAllData" styleClass="savebutton" stylesheets="styles.css" text="Import" />
+      <Button fx:id="exportButton" layoutX="888.0" layoutY="660.0" onAction="#onExportAllData" styleClass="savebutton" stylesheets="styles.css" text="Export" />
    </children>
 </AnchorPane>
