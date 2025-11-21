@@ -680,5 +680,114 @@ public class CreateAccountController {
             ).showAndWait();
         }
     }
+    @FXML private Button exportButton;
+    @FXML private Button importButton;
+    private final UserBackupService backupService = new UserBackupService();
+    private String uid;
+    @FXML
+    public void initialize() {
+        if (SessionManager.getSession() != null &&
+                SessionManager.getSession().getUserID() != null) {
+            uid = SessionManager.getSession().getUserID();
+        } else {
+            uid = "dev-demo-uid";
+        }
 
+        if (uid == null) {
+            if (exportButton != null) exportButton.setDisable(true);
+            if (importButton != null) importButton.setDisable(true);
+        }
     }
+    @FXML
+    private void onExportAllData(ActionEvent event) {
+        if (uid == null) {
+            showAlert(Alert.AlertType.ERROR, "Not logged in", "No user session found.");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Export Data");
+        confirm.setHeaderText("Export all your data?");
+        confirm.setContentText("This will export your profile, medications, events, water, etc. "
+                + "to a JSON file. It does NOT delete anything in the cloud.");
+        if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        try {
+            String json = backupService.exportUserData(uid);
+
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Save Backup File");
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("JSON Files (*.json)", "*.json"),
+                    new FileChooser.ExtensionFilter("All Files (*.*)", "*.*")
+            );
+            chooser.setInitialFileName("ElevateYou-backup-" + uid + ".json");
+
+            Stage stage = (Stage) exportButton.getScene().getWindow();
+            File file = chooser.showSaveDialog(stage);
+            if (file == null) return;
+
+            try (FileWriter fw = new FileWriter(file, false)) {
+                fw.write(json);
+            }
+
+            showAlert(Alert.AlertType.INFORMATION,
+                    "Export finished",
+                    "Backup saved to:\n" + file.getAbsolutePath());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,
+                    "Export failed",
+                    "Error: " + e.getMessage());
+        }
+    }
+    @FXML
+    private void onImportAllData(ActionEvent event) {
+        if (uid == null) {
+            showAlert(Alert.AlertType.ERROR, "Not logged in", "No user session found.");
+            return;
+        }
+
+        Alert warn = new Alert(Alert.AlertType.CONFIRMATION);
+        warn.setTitle("Import Data");
+        warn.setHeaderText("Restore data from backup?");
+        warn.setContentText(
+                "This will OVERWRITE your current data with the contents of the selected backup file.\n\n"
+                        + "Make sure the file was exported by ElevateYou and belongs to you."
+        );
+        if (warn.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+            return;
+        }
+
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Choose Backup File");
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("JSON Files (*.json)", "*.json"),
+                    new FileChooser.ExtensionFilter("All Files (*.*)", "*.*")
+            );
+
+            Stage stage = (Stage) importButton.getScene().getWindow();
+            File file = chooser.showOpenDialog(stage);
+            if (file == null) return;
+
+            String json = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+
+            backupService.importUserData(uid, json);
+
+            showAlert(Alert.AlertType.INFORMATION,
+                    "Import finished",
+                    "Data has been restored from:\n" + file.getAbsolutePath()
+                            + "\n\nYou may need to reopen some screens to see the changes.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,
+                    "Import failed",
+                    "Error: " + e.getMessage());
+        }
+    }
+
+}
