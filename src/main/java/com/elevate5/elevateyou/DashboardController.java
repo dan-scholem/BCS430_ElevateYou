@@ -204,7 +204,6 @@ public class DashboardController {
             mainPane.setCenter(profileRoot);
             Stage stage = (Stage) profileButton.getScene().getWindow();
             stage.setTitle("Profile");
-            //UserProfile.loadSettingsScene(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -275,18 +274,14 @@ public class DashboardController {
     // Exercise navigation (FIXED PATH)
     @FXML
     private void exerciseButtonClick(ActionEvent event) {
-        System.out.println("[NAV] Exercise clicked");
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml") // <-- NOTE /ui/ here
+                    getClass().getResource("ui/exercise.fxml") // <-- NOTE /ui/ here
             );
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 900, 600));
+            Parent exerciseRoot = loader.load();
+            mainPane.setCenter(exerciseRoot);
+            Stage stage = (Stage) exerciseButton.getScene().getWindow();
             stage.setTitle("Exercise Tracker");
-            stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to open Exercise:\n" + e.getMessage()).showAndWait();
