@@ -7,200 +7,174 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
-   <children>
-      <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1280.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
+    <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <top>
             <AnchorPane prefHeight="120.0" prefWidth="1023.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
-               <children>
-                  <Pane prefHeight="190.0" prefWidth="199.0" style="-fx-background-color: #006D77;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="-20.0">
-                     <children>
-                        <ImageView fitHeight="222.0" fitWidth="240.0" layoutX="-10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/elevateyoulogo.png" />
-                           </image>
-                           <rotationAxis>
-                              <Point3D />
-                           </rotationAxis>
-                        </ImageView>
-                        <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="102.0" prefWidth="515.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="40.0">
-                     <children>
-                        <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
-                     </children>
-                     <effect>
+                <Pane prefHeight="190.0" prefWidth="199.0" style="-fx-background-color: #006D77;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="-20.0">
+                    <ImageView fitHeight="222.0" fitWidth="240.0" layoutX="-10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <rotationAxis>
+                            <Point3D />
+                        </rotationAxis>
+                        <Image url="@images/elevateyoulogo.png" />
+                    </ImageView>
+                    <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+                </Pane>
+                <Pane prefHeight="102.0" prefWidth="515.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="20.0">
+                    <effect>
                         <DropShadow />
-                     </effect>
-                  </Pane>
-      
-                  <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="20.0">
-            </HBox>
-                  <Button fx:id="profileButton" layoutX="813.0" layoutY="18.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="51.0" prefWidth="80.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;" AnchorPane.topAnchor="40.0">
-                     <graphic>
+                    </effect>
+                    <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+                </Pane>
+
+                <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="20.0">
+                        <children>
+                            <StackPane>
+                                <Button fx:id="bellButton" onAction="#onBellClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-font-size: 18px; -fx-cursor: hand;" text="🔔" />
+                                <Label fx:id="badgeLabel" managed="false" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 9999; -fx-padding: 2 5;" text="3" visible="false" StackPane.alignment="TOP_RIGHT" />
+                            </StackPane>
+                        </children>
+                    </HBox>
+                    <!-- Dropdown list -->
+                    <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="-fx-background-colosr: white;                      -fx-border-color: rgba(0,0,0,0.12);                      -fx-border-radius: 8;                      -fx-background-radius: 8;                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                      -fx-padding: 10;                      -fx-view-order: -1;" visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
+                    </VBox>
+                <Button fx:id="profileButton" layoutX="813.0" layoutY="18.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="51.0" prefWidth="80.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
+                    <graphic>
                         <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/profileicon.png" />
-                           </image>
+                            <Image url="@images/profileicon.png" />
                         </ImageView>
-                     </graphic>
-                     <effect>
+                    </graphic>
+                    <effect>
                         <DropShadow />
-                     </effect>
-                  </Button>
-      
-               </children>
+                    </effect>
+                </Button>
+
             </AnchorPane>
-         </top>
-         <left>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="579.0" prefWidth="199.0" spacing="14" style="-fx-background-color: #006D77;" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="22.0" left="10.0" right="10.0" top="18.0" />
-               </padding>
-               <children>
-                  <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
-                     <font>
+        </top>
+        <left>
+            <VBox alignment="TOP_CENTER" prefHeight="579.0" prefWidth="199.0" spacing="14" style="-fx-background-color: #006D77;" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <!-- EDITED: added onAction -->
-                  <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
-                     <font>
+                    </font>
+                </Button>
+                <!-- EDITED: added onAction -->
+                <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="articlesButton" onAction="#articlesButtonClick" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Articles">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="articlesButton" onAction="#articlesButtonClick" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Articles">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="friendsbutton" stylesheets="@styles.css" text="Friends">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="friendsbutton" stylesheets="@styles.css" text="Friends">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="chatButton" onAction="#chatButtonClick" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="chatButton" onAction="#chatButtonClick" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
-                     <font>
+                    </font>
+                </Button>
+                <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+                    <font>
                         <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-               </children>
+                    </font>
+                </Button>
             </VBox>
-         </left>
-         <center>
+        </left>
+        <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <GridPane hgap="15.0" prefHeight="244.0" prefWidth="759.0" vgap="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0">
+                <GridPane hgap="15.0" prefHeight="244.0" prefWidth="759.0" vgap="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <Pane prefHeight="120.0" prefWidth="194.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 20;">
-                           <children>
-                              <Label layoutX="14.0" layoutY="20.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Steps Taken" />
-                           </children>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Pane>
-                        <Pane prefHeight="78.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;" GridPane.columnIndex="2">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories Burned" />
-                           </children>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Pane>
-                        <Pane prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #FFDDD2; -fx-background-radius: 20;" GridPane.columnIndex="1">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
-                           </children>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Pane>
-                        <Pane prefHeight="96.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;" GridPane.columnIndex="3">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
-                           </children>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Pane>
-                     </children>
-                  </GridPane>
-                  <Pane prefHeight="190.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0">
-                     <children>
-                        <Label layoutX="20.0" layoutY="26.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Recent Activity" />
-                     </children>
-                     <effect>
+                    <Pane prefHeight="120.0" prefWidth="194.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 20;">
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                        <Label layoutX="14.0" layoutY="20.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Steps Taken" />
+                    </Pane>
+                    <Pane prefHeight="78.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;" GridPane.columnIndex="2">
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories Burned" />
+                    </Pane>
+                    <Pane prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #FFDDD2; -fx-background-radius: 20;" GridPane.columnIndex="1">
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
+                    </Pane>
+                    <Pane prefHeight="96.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;" GridPane.columnIndex="3">
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
+                    </Pane>
+                </GridPane>
+                <Pane prefHeight="190.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="40.0">
+                    <effect>
                         <DropShadow />
-                     </effect>
-                  </Pane>
-                  <Pane prefHeight="190.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="430.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="25.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Weekly Goals" />
-                     </children>
-                     <effect>
+                    </effect>
+                    <Label layoutX="20.0" layoutY="26.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Recent Activity" />
+                </Pane>
+                <Pane prefHeight="190.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="430.0">
+                    <effect>
                         <DropShadow />
-                     </effect>
-                  </Pane>
-               </children>
+                    </effect>
+                    <Label layoutX="14.0" layoutY="25.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Weekly Goals" />
+                </Pane>
             </AnchorPane>
-         </center>
-      </BorderPane>
-   </children>
+        </center>
+    </BorderPane>
 </AnchorPane>
