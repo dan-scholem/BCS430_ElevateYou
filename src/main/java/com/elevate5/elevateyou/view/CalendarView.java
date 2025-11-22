@@ -101,7 +101,7 @@ public class CalendarView extends Application {
 
         calendarTableView.getSelectionModel().setCellSelectionEnabled(true);
         calendarTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        calendarTableView.setFixedCellSize(100);
+        calendarTableView.setFixedCellSize(98);
 
         selectedDate = today;
 
