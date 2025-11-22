@@ -73,9 +73,6 @@ public class DashboardController {
     private Button quotesaffirmationBtn;
 
     @FXML
-    private Button reviewsButton;
-
-    @FXML
     private Button sleepButton;
 
     @FXML
@@ -140,6 +137,7 @@ public class DashboardController {
     protected void dashboardButtonClick() {
         try {
             Stage stage = (Stage) dashButton.getScene().getWindow();
+            stage.setTitle("Dashboard");
             Dashboard.loadDashboardScene(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -175,8 +173,11 @@ public class DashboardController {
     @FXML
     protected void foodButtonClick() {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CaloriesWaterIntake.fxml"));
+            Parent nutritionRoot = fxmlLoader.load();
+            mainPane.setCenter(nutritionRoot);
             Stage stage = (Stage) foodButton.getScene().getWindow();
-            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
+            stage.setTitle("Nutrition Tracker");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
