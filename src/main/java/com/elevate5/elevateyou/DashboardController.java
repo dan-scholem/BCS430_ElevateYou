@@ -149,13 +149,11 @@ public class DashboardController {
     @FXML
     protected void medicationButtonClick() throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/MedicationTracker.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MedicationTracker.fxml"));
             Parent medicationRoot = loader.load();
             mainPane.setCenter(medicationRoot);
-
-            //Stage stage = (Stage) medButton.getScene().getWindow();
-            //Medication.loadMedTrackerScene(stage);
+            Stage stage = (Stage) medButton.getScene().getWindow();
+            stage.setTitle("Medication Tracker");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -164,8 +162,11 @@ public class DashboardController {
     @FXML
     protected void calendarButtonClick() throws IOException {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarView.fxml"));
+            Parent calendarRoot = fxmlLoader.load();
+            mainPane.setCenter(calendarRoot);
             Stage stage = (Stage) calendarButton.getScene().getWindow();
-            CalendarView.loadCalendarScene(stage);
+            stage.setTitle("Calendar");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
