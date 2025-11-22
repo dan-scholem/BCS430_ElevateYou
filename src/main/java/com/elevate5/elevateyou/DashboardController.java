@@ -333,15 +333,11 @@ public class DashboardController {
     protected void quoteaffirmationButtonClick() throws IOException {
 
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("QuotesAffirmations.fxml"));
+            Parent quoteAffirmationsRoot = fxmlLoader.load();
+            mainPane.setCenter(quoteAffirmationsRoot);
             Stage stage = (Stage) quotesaffirmationBtn.getScene().getWindow();
-
-            Session session = SessionManager.getSession();
-
-            String userEmail = session.getUser().getEmail();
-
-            System.out.println("User email: " + userEmail);
-
-            QuotesAffirmations.loadQuotesAffirmationsScene(stage);
+            stage.setTitle("Quotes and Affirmations");
         }
 
         catch (IOException e) {
