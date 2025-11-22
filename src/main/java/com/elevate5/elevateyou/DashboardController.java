@@ -186,8 +186,11 @@ public class DashboardController {
     @FXML
     protected void journalButtonClick() throws IOException {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PersonalJournal.fxml"));
+            Parent journalRoot = fxmlLoader.load();
+            mainPane.setCenter(journalRoot);
             Stage stage = (Stage) journalButton.getScene().getWindow();
-            JournalEntry.loadJournalScene(stage);
+            stage.setTitle("Journal");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
