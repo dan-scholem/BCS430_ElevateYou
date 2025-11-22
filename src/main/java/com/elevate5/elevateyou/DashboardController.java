@@ -317,14 +317,13 @@ public class DashboardController {
     @FXML
     protected void friendsButtonClick() {
         try {
-            Stage stage = (Stage) friendsButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/FriendsListView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FriendsListView.fxml"));
+            Parent friendsListRoot = fxmlLoader.load();
+            mainPane.setCenter(friendsListRoot);
             FriendsListView controller = fxmlLoader.getController();
             controller.setViewModel(new FriendsListViewModel());
+            Stage stage = (Stage) friendsButton.getScene().getWindow();
             stage.setTitle("Friends");
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -6,157 +6,59 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="738.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.FriendsListView">
-   <children>
-      <BorderPane prefHeight="738.0" prefWidth="1218.0">
-       <left>
-           <VBox alignment="BOTTOM_CENTER" layoutY="154.0" prefHeight="586.0" prefWidth="198.0" spacing="14" style="-fx-background-color: #006D77;">
-               <padding>
-                   <Insets bottom="22" left="10" right="10" top="18" />
-               </padding>
-               <children>
-                   <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-                   <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
-                       <font>
-                           <Font name="Poppins ExtraBold" size="13" />
-                       </font>
-                   </Button>
-               </children>
-           </VBox>
-       </left>
-         <center>
-            <BorderPane fx:id="friendViewPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                <center>
-                    <AnchorPane fx:id="mainPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane fx:id="friendViewPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+        <center>
+            <AnchorPane fx:id="mainPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+                <VBox alignment="TOP_CENTER" prefWidth="1198.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
+                    <ScrollPane prefHeight="400.0">
+                        <AnchorPane prefWidth="780.0">
+                            <VBox fx:id="friendsBox" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="0.0" spacing="20.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        </AnchorPane>
+                    </ScrollPane>
+                </VBox>
+            </AnchorPane>
+        </center>
+        <bottom>
+            <ButtonBar prefHeight="60.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                <buttons>
+                    <Button fx:id="friendsListButton" maxWidth="100.0" mnemonicParsing="false" onAction="#friendsListButtonClick" prefHeight="40.0" prefWidth="100.0" text="Friends" />
+                    <StackPane prefHeight="40.0" prefWidth="120.0">
+                        <Button maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" text="Requests" />
+                        <Label fx:id="numRequestsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red; -fx-border-radius: 100; -fx-background-radius: 100; -fx-text-fill: white;" translateX="50.0" translateY="-20.0" />
+                    </StackPane>
+                </buttons>
+                <padding>
+                    <Insets bottom="10.0" right="40.0" top="10.0" />
+                </padding>
+            </ButtonBar>
+        </bottom>
+        <top>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+                <children>
+                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                         <children>
-                            <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <children>
-                                    <ScrollPane prefHeight="400.0">
-                                        <content>
-                                            <AnchorPane prefWidth="780.0">
-                                                <children>
-                                                    <VBox fx:id="friendsBox" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="0.0" spacing="20.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                </children></AnchorPane>
-                                        </content>
-                                    </ScrollPane>
-                                </children>
-                                <padding>
-                                    <Insets top="20.0" />
-                                </padding>
-                            </VBox>
-                        </children>
-                    </AnchorPane>
-                </center>
-               <bottom>
-                  <ButtonBar prefHeight="60.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                    <buttons>
-                      <Button fx:id="friendsListButton" maxWidth="100.0" mnemonicParsing="false" onAction="#friendsListButtonClick" prefHeight="40.0" prefWidth="100.0" text="Friends" />
-                        <StackPane prefHeight="40.0" prefWidth="120.0">
-                           <children>
-                              <Button maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" text="Requests" />
-                              <Label fx:id="numRequestsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red; -fx-border-radius: 100; -fx-background-radius: 100; -fx-text-fill: white;" translateX="50.0" translateY="-20.0" />
-                           </children>
-                        </StackPane>
-                    </buttons>
-                     <padding>
-                        <Insets bottom="10.0" right="40.0" top="10.0" />
-                     </padding>
-                  </ButtonBar>
-               </bottom>
-               <top>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="optionLabel" text="Friends">
-                                 <font>
+                            <Label fx:id="optionLabel" text="Friends">
+                                <font>
                                     <Font size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="263.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <TextField fx:id="searchField" promptText="Search..." />
-                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets right="20.0" />
-                     </padding>
-                  </HBox>
-               </top>
-            </BorderPane>
-         </center>
-         <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
-               </children>
+                                </font>
+                            </Label>
+                        </children>
+                        <padding>
+                            <Insets left="20.0" />
+                        </padding>
+                    </HBox>
+                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="263.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="searchField" promptText="Search..." />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
+                    </HBox>
+                </children>
+                <padding>
+                    <Insets right="20.0" />
+                </padding>
             </HBox>
-         </top>
-       </BorderPane>
-   </children>
+        </top>
+    </BorderPane>
 </AnchorPane>
