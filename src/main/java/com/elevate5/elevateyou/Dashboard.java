@@ -8,12 +8,15 @@ import java.io.IOException;
 
 public class Dashboard  {
 
-    public static void loadDashboardScene(Stage stage) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("Dashboard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Dashboard");
-        stage.setScene(scene);
-        stage.show();
+    public static void loadDashboardScene(Stage stage) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("/com/elevate5/elevateyou/LandingView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Dashboard");
+            stage.setScene(scene);
+            stage.show();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

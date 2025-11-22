@@ -34,6 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 public class DashboardController {
 
+    /**
     @FXML
     public Label welcometext;
     @FXML
@@ -88,9 +89,11 @@ public class DashboardController {
     private BorderPane mainPane;
 
     private Session session;
+     */
 
     @FXML
     public void initialize() {
+        /**
         session = SessionManager.getSession();
         String uid = session.getUser().getUid();
         try {
@@ -113,8 +116,9 @@ public class DashboardController {
         }
 
         setNotificationService();
+         **/
     }
-
+/**
     // Logout
     @FXML
     private void logoutUser(ActionEvent event) throws IOException {
@@ -136,9 +140,12 @@ public class DashboardController {
     @FXML
     protected void dashboardButtonClick() {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+            Parent dashboardRoot = fxmlLoader.load();
+            mainPane.setCenter(dashboardRoot);
             Stage stage = (Stage) dashButton.getScene().getWindow();
             stage.setTitle("Dashboard");
-            Dashboard.loadDashboardScene(stage);
+            //Dashboard.loadDashboardScene(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -215,7 +222,7 @@ public class DashboardController {
 
     private NotificationService service;
 
-    /** Injected by DashboardController after FXML load. */
+    /** Injected by DashboardController after FXML load.
     private void setNotificationService() {
         String uid = (SessionManager.getSession() != null && SessionManager.getSession().getUserID() != null)
                 ? SessionManager.getSession().getUserID()
@@ -228,7 +235,7 @@ public class DashboardController {
         refreshBadge();
     }
 
-    /** Toggle dropdown; refresh on open. */
+    /** Toggle dropdown; refresh on open.
     @FXML
     private void onBellClicked() {
         boolean show = !dropdownList.isVisible();
@@ -239,7 +246,7 @@ public class DashboardController {
         }
     }
 
-    /** Badge shows total count; hidden when zero. */
+    /** Badge shows total count; hidden when zero.
     private void refreshBadge() {
         if (service == null) return;
         List<NotificationModel> items = service.latest(200);
@@ -255,7 +262,7 @@ public class DashboardController {
         }
     }
 
-    /** Render all items (no scroll, so keep list small in service.latest). */
+    /** Render all items (no scroll, so keep list small in service.latest).
     private void refreshList() {
         dropdownList.getChildren().clear();
         List<NotificationModel> items = service.latest(50);
@@ -374,5 +381,6 @@ public class DashboardController {
             throw new RuntimeException("Failed to open Live Chat", e);
         }
     }
+ */
 
 }

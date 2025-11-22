@@ -30,6 +30,7 @@ module com.elevate5.elevateyou {
     requires com.google.zxing;
     requires com.google.zxing.javase;
     requires javafx.swing;
+    requires javafx.base;
 
     opens com.elevate5.elevateyou;
     exports com.elevate5.elevateyou;

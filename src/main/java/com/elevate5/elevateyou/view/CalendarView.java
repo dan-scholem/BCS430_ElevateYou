@@ -517,17 +517,6 @@ public class CalendarView extends Application {
         }
     }
 
-    //button for going back to the app dashboard
-    @FXML
-    private void backToDashboard(ActionEvent event) {
-        try {
-            Stage stage = (Stage) backToDashboardButton.getScene().getWindow();
-            Dashboard.loadDashboardScene(stage);
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     public static void loadCalendarScene(Stage stage) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("CalendarView.fxml"));
