@@ -291,8 +291,11 @@ public class DashboardController {
     @FXML
     public void appointmentButtonClick() throws IOException {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AppointmentView.fxml"));
+            Parent appointmentRoot = fxmlLoader.load();
+            mainPane.setCenter(appointmentRoot);
             Stage stage = (Stage) appointmentsButton.getScene().getWindow();
-            AppointmentView.loadAppointmentScene(stage);
+            stage.setTitle("Appointments");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
