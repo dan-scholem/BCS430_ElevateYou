@@ -199,8 +199,12 @@ public class DashboardController {
     @FXML
     protected void settingsButtonClick() throws IOException {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserProfile.fxml"));
+            Parent profileRoot = fxmlLoader.load();
+            mainPane.setCenter(profileRoot);
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            UserProfile.loadSettingsScene(stage);
+            stage.setTitle("Profile");
+            //UserProfile.loadSettingsScene(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
