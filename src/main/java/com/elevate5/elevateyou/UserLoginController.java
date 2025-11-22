@@ -157,7 +157,7 @@ public class UserLoginController {
 
             }
 
-        } catch (InterruptedException | ExecutionException | IOException e) {
+        } catch (InterruptedException | ExecutionException e) {
 
             invalidentry.setText("Error occurred. Please enter a valid email and password.");
 
