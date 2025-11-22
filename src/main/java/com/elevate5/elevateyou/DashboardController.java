@@ -7,6 +7,7 @@ import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.elevate5.elevateyou.view.FriendsListView;
+import com.elevate5.elevateyou.view.ProfileView;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -85,6 +87,9 @@ public class DashboardController {
     @FXML
     private ImageView userImage;
 
+    @FXML
+    private BorderPane mainPane;
+
     private Session session;
 
     @FXML
@@ -144,8 +149,13 @@ public class DashboardController {
     @FXML
     protected void medicationButtonClick() throws IOException {
         try {
-            Stage stage = (Stage) medButton.getScene().getWindow();
-            Medication.loadMedTrackerScene(stage);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/MedicationTracker.fxml"));
+
+            Parent medicationRoot = loader.load();
+            mainPane.setCenter(medicationRoot);
+
+            //Stage stage = (Stage) medButton.getScene().getWindow();
+            //Medication.loadMedTrackerScene(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
