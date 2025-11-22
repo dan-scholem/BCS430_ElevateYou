@@ -304,8 +304,11 @@ public class DashboardController {
     @FXML
     public void sleepButtonClick() {
         try {
-            Stage s = (Stage) sleepButton.getScene().getWindow();
-            Sleep.loadSleepScene(s);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Sleep.fxml"));
+            Parent sleepRoot = fxmlLoader.load();
+            mainPane.setCenter(sleepRoot);
+            Stage stage = (Stage) sleepButton.getScene().getWindow();
+            stage.setTitle("Sleep Tracker");
         } catch (Exception e) {
             throw new RuntimeException();
         }
