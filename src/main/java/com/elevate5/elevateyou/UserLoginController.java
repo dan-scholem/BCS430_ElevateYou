@@ -129,7 +129,7 @@ public class UserLoginController {
 
                         Stage stage = (Stage) signInButton.getScene().getWindow();
 
-                        stage.close();
+                        //stage.close();
 
                         Dashboard.loadDashboardScene(stage);
                         System.out.println("Sign In Success");
