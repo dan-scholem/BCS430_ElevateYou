@@ -350,12 +350,11 @@ public class DashboardController {
     @FXML
     protected void articlesButtonClick() throws IOException {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ArticleView.fxml"));
+            Parent articlesRoot = fxmlLoader.load();
+            mainPane.setCenter(articlesRoot);
             Stage stage = (Stage) articlesButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/ArticleView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Articles");
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
