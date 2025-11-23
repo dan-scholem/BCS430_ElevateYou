@@ -3,9 +3,11 @@ package com.elevate5.elevateyou;
 import com.elevate5.elevateyou.model.FirestoreContext;
 import com.elevate5.elevateyou.model.User;
 
+import com.elevate5.elevateyou.session.SessionManager;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -40,6 +42,15 @@ public class App extends Application {
 
             showAlert(Alert.AlertType.INFORMATION, "Failed to load User Login");
         }
+    }
+
+    @Override
+    public void stop() {
+        if(SessionManager.getSession() != null){
+            SessionManager.closeSession();
+        }
+        Platform.exit();
+        System.exit(0);
     }
 
     private void showAlert(Alert.AlertType alertType, String message) {

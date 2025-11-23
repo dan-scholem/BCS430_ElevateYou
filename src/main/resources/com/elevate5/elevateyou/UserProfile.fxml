@@ -135,7 +135,9 @@
       <Label fx:id="agemessage" layoutX="407.0" layoutY="286.0" />
       <Label fx:id="emailmessage" layoutX="478.0" layoutY="243.0" />
       <Button fx:id="emergencyCardButton" layoutX="244.0" layoutY="643.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" style="-fx-background-radius: 10; -fx-background-color: #83C5BE; -fx-text-fill: white;" text="Emergency Card" />
-      <StackPane layoutX="836.0" layoutY="30.0" prefHeight="81.0" prefWidth="77.0">
+     <Button fx:id="importButton" layoutX="810.0" layoutY="660.0" onAction="#onImportAllData" styleClass="savebutton" stylesheets="styles.css" text="Import" />
+      <Button fx:id="exportButton" layoutX="888.0" layoutY="660.0" onAction="#onExportAllData" styleClass="savebutton" stylesheets="styles.css" text="Export" /> 
+     <StackPane layoutX="836.0" layoutY="30.0" prefHeight="81.0" prefWidth="77.0">
          <children>
             <ImageView fx:id="userImage" fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" />
             <Circle fx:id="photoCircle" fill="WHITE" radius="37.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0">
