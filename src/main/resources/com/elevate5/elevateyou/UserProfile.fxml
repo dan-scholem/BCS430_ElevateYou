@@ -12,7 +12,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
@@ -106,7 +109,7 @@
       <Button layoutX="572.0" layoutY="660.0" mnemonicParsing="false" onAction="#updateUser" styleClass="savebutton" stylesheets="@styles.css" text="Update Profile" />
       <TextField fx:id="firstName" layoutX="350.0" layoutY="140.0" promptText="First Name" />
       <TextField fx:id="lastName" layoutX="350.0" layoutY="193.0" promptText="Last Name" />
-      <Button fx:id="profileImageButton" layoutX="447.0" layoutY="588.0" mnemonicParsing="false" onAction="#uploadProfilePhoto" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
+      <Button fx:id="uploadImageButton" layoutX="447.0" layoutY="588.0" mnemonicParsing="false" onAction="#uploadProfilePhoto" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
       <Label layoutX="233.0" layoutY="282.0" styleClass="settingslabel" stylesheets="@styles.css" text="Age" />
       <Label layoutX="227.0" layoutY="394.0" styleClass="settingslabel" stylesheets="@styles.css" text="Height" />
       <Label layoutX="225.0" layoutY="448.0" styleClass="settingslabel" stylesheets="@styles.css" text="Weight" />
@@ -125,11 +128,6 @@
       <Label layoutX="390.0" layoutY="451.0" styleClass="settingslabel" stylesheets="@styles.css" text="lbs" />
       <Label layoutX="227.0" layoutY="502.0" styleClass="settingslabel" stylesheets="@styles.css" text="Bio" />
       <TextArea fx:id="userbioTextField" layoutX="279.0" layoutY="493.0" prefHeight="66.0" prefWidth="277.0" promptText="Tell us about you" />
-      <Button fx:id="profileButton" layoutX="871.0" layoutY="44.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="54.0" prefWidth="87.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;">
-         <effect>
-            <DropShadow />
-         </effect>
-      </Button>
       <Label layoutX="229.0" layoutY="239.0" styleClass="settingslabel" stylesheets="@styles.css" text="Email" />
       <TextField fx:id="userEmail" layoutX="297.0" layoutY="239.0" promptText="Email" />
       <Label fx:id="weightmessage" layoutX="432.0" layoutY="455.0" />
@@ -137,5 +135,20 @@
       <Label fx:id="agemessage" layoutX="407.0" layoutY="286.0" />
       <Label fx:id="emailmessage" layoutX="478.0" layoutY="243.0" />
       <Button fx:id="emergencyCardButton" layoutX="244.0" layoutY="643.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" style="-fx-background-radius: 10; -fx-background-color: #83C5BE; -fx-text-fill: white;" text="Emergency Card" />
+      <StackPane layoutX="836.0" layoutY="30.0" prefHeight="81.0" prefWidth="77.0">
+         <children>
+            <ImageView fx:id="userImage" fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" />
+            <Circle fx:id="photoCircle" fill="WHITE" radius="37.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color green="0.4274509847164154" blue="0.46666666865348816" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Circle>
+            <Button fx:id="profileImgButton" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="20.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
