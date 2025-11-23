@@ -8,6 +8,7 @@ import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +20,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,13 +31,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
+
 
 import static com.elevate5.elevateyou.App.fauth;
 import static javafx.application.Application.launch;
@@ -98,9 +99,6 @@ public class CreateAccountController {
     private Button medButton;
 
     @FXML
-    private Button profileButton;
-
-    @FXML
     private Label agemessage;
 
     @FXML
@@ -113,9 +111,18 @@ public class CreateAccountController {
     private Label weightmessage;
 
     @FXML
-    private Button profileImageButton;
+    private Button uploadImageButton;
+
+    @FXML
+    private Button profileImgButton;
 
     private String photoFile;
+
+    @FXML
+    private Circle photoCircle;
+
+    @FXML
+    private ImageView userImage;
 
 
     @FXML
@@ -196,6 +203,7 @@ public class CreateAccountController {
         data.put("HeightInFeet", "");
         data.put("HeightInInches", "");
         data.put("UserBio", "");
+        data.put("ProfileImageUrl", "");
 
         DocumentReference eventDocRef = App.fstore.collection("Events").document(user.getUid());
         EventManager eventData = new EventManager();
@@ -447,7 +455,6 @@ public class CreateAccountController {
 
             showAlert(Alert.AlertType.CONFIRMATION, "Profile successfully updated!");
 
-
             /** Fields are cleared if update is successful **/
 
             firstName.clear();
@@ -472,8 +479,6 @@ public class CreateAccountController {
         }
     }
 
-
-
         /** This method checks to see if the email the user entered is valid  **/
 
         private boolean isEmailValid (String email){
@@ -484,7 +489,7 @@ public class CreateAccountController {
         }
 
         // Checks if the user already exists when trying to register an account
-        public void checkUserEmail (String email){
+        public void checkUserEmail (String email) {
             try {
 
                 UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
@@ -533,47 +538,124 @@ public class CreateAccountController {
 
         }
 
-        @FXML
-        protected void uploadProfilePhoto (ActionEvent event){
+        public void initialize() {
 
-            FileChooser fileChooser = new FileChooser();
+            loadProfileImage();
+        }
 
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png"));
+    @FXML
+    protected void uploadProfilePhoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Images", "*.jpg", "*.jpeg", "*.png"));
+        fileChooser.setTitle("Upload Profile Image");
 
-            fileChooser.setTitle("Upload Profile Image");
+        File imagefile = fileChooser.showOpenDialog(uploadImageButton.getScene().getWindow());
 
-            File imagefile = fileChooser.showOpenDialog(profileImageButton.getScene().getWindow());
+        String imageUrl = imagefile.getAbsolutePath();
 
-            if (imagefile != null) {
+        if (imagefile != null) {
 
-                try {
-                    photoFile = imagefile.toURI().toString();
+            try {
 
-                    ImageView imageView = new ImageView(photoFile);
+                Image userimg = new Image(imagefile.toURI().toString());
 
-                    imageView.setPreserveRatio(true);
+                ImagePattern imgpattern = new ImagePattern(userimg);
 
-                    imageView.setFitWidth(50);
-                    imageView.setFitHeight(50);
+                photoCircle.setFill(imgpattern);
 
-                    profileButton.setPrefSize(50, 50);
+                userImage.setPreserveRatio(true);
+                userImage.setFitWidth(69);
+                userImage.setFitHeight(76);
 
-                    profileButton.setGraphic(imageView);
+                saveImageInFirestore(imageUrl);
 
-                    showAlert(Alert.AlertType.INFORMATION, "Profile photo uploaded successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Profile photo uploaded successfully.");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Unable to upload profile image: " + e.getMessage());
+            }
+        }
+    }
+
+    protected void saveImageInFirestore(String imageUrl) {
+
+        String documentID = SessionManager.getSession().getUser().getUid();
+
+        try {
+            Map<String, Object> photoInfo = new HashMap<>();
+
+            photoInfo.put("profilePhotoUrl", imageUrl);
+
+            ApiFuture<WriteResult> future = App.fstore.collection("Users")
+                    .document(documentID)
+                    .update(photoInfo);
+
+        }
+
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+            System.out.println("Error saving profile image to Firestore: " + e.getMessage());
+
+            showAlert(Alert.AlertType.ERROR, "Error saving image to Firestore");
+        }
+    }
+
+    private void loadProfileImage() {
+
+            try {
+                String documentID = SessionManager.getSession().getUser().getUid();
+
+                ApiFuture<DocumentSnapshot> future = App.fstore.collection("Users")
+                        .document(documentID)
+                        .get();
+
+                DocumentSnapshot document = future.get();
+
+                if (document.exists()) {
+
+                    String profileimgUrl = document.getString("profilePhotoUrl");
+
+                    if (profileimgUrl != null && !profileimgUrl.isEmpty()) {
+
+                        File imgFile = new File(profileimgUrl);
+
+                        if (imgFile.exists()) {
+
+                            Image userimg = new Image(imgFile.toURI().toString());
+
+                            ImagePattern imgpattern = new ImagePattern(userimg);
+
+                            photoCircle.setFill(imgpattern);
+
+                            userImage.setImage(userimg);
+                            userImage.setPreserveRatio(true);
+                            userImage.setFitWidth(69);
+                            userImage.setFitHeight(76);
+
+                            System.out.println("Profile photo added successfully");
+                        }
+
+                        else {
+                            System.out.println("Error adding profile photo");
+                        }
+                    }
+
                 }
-
-                catch (Exception e) {
-
-                    showAlert(Alert.AlertType.ERROR, "Unable to upload profile image." + e.getMessage());
-                }
-
 
 
             }
 
+            catch(Exception e) {
+
+            System.out.println("Error adding profile image" + e.getMessage());
 
         }
+    }
+
 
         @FXML
         protected void dashboardButtonClick () {
@@ -643,7 +725,7 @@ public class CreateAccountController {
         protected void settingsButtonClick () throws IOException {
 
             try {
-                Stage stage = (Stage) profileButton.getScene().getWindow();
+                Stage stage = (Stage) profileImgButton.getScene().getWindow();
 
                 UserProfile.loadSettingsScene(stage);
             } catch (IOException e) {

@@ -17,15 +17,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -65,7 +69,7 @@ public class DashboardController {
     private Button medButton;
 
     @FXML
-    private Button profileButton;
+    private Button profileImgButton;
 
     @FXML
     private Button quotesaffirmationBtn;
@@ -86,6 +90,9 @@ public class DashboardController {
     private ImageView userImage;
 
     private Session session;
+
+    @FXML
+    private Circle photoCircle;
 
     @FXML
     public void initialize() {
@@ -111,7 +118,63 @@ public class DashboardController {
         }
 
         setNotificationService();
+
+        loadProfileImage();
     }
+
+    private void loadProfileImage() {
+
+        try {
+            String documentID = SessionManager.getSession().getUser().getUid();
+
+            ApiFuture<DocumentSnapshot> future = App.fstore.collection("Users")
+                    .document(documentID)
+                    .get();
+
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+
+                String profileimgUrl = document.getString("profilePhotoUrl");
+
+                if (profileimgUrl != null && !profileimgUrl.isEmpty()) {
+
+                    File imgFile = new File(profileimgUrl);
+
+                    if (imgFile.exists()) {
+
+                        Image userimg = new Image(imgFile.toURI().toString());
+
+                        ImagePattern imgpattern = new ImagePattern(userimg);
+
+                        photoCircle.setFill(imgpattern);
+
+                        userImage.setImage(userimg);
+                        userImage.setPreserveRatio(true);
+                        userImage.setFitWidth(69);
+                        userImage.setFitHeight(76);
+
+                        System.out.println("Profile photo added successfully");
+                    }
+
+                    else {
+                        System.out.println("Error adding profile photo");
+                    }
+                }
+
+            }
+
+
+        }
+
+        catch(Exception e) {
+
+            System.out.println("Error adding profile image" + e.getMessage());
+
+        }
+    }
+
+
 
     // Logout
     @FXML
@@ -184,7 +247,7 @@ public class DashboardController {
     @FXML
     protected void settingsButtonClick() throws IOException {
         try {
-            Stage stage = (Stage) profileButton.getScene().getWindow();
+            Stage stage = (Stage) profileImgButton.getScene().getWindow();
             UserProfile.loadSettingsScene(stage);
         } catch (IOException e) {
             throw new RuntimeException(e);
