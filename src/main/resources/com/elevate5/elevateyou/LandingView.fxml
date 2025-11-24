@@ -5,6 +5,8 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.LandingView">
@@ -38,16 +40,30 @@
                 <!-- Dropdown list -->
                 <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="-fx-background-colosr: white;                      -fx-border-color: rgba(0,0,0,0.12);                      -fx-border-radius: 8;                      -fx-background-radius: 8;                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                      -fx-padding: 10;                      -fx-view-order: -1;" visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
                 </VBox>
-                <Button fx:id="profileButton" layoutX="813.0" layoutY="18.0" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="51.0" prefWidth="80.0" style="-fx-background-radius: 10px; -fx-background-color: #83C5BE;" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
-                    <graphic>
-                        <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@images/profileicon.png" />
-                        </ImageView>
-                    </graphic>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </Button>
+                <StackPane layoutX="661" layoutY="10" minHeight="50.0" prefHeight="81" prefWidth="77" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
+                    <ImageView fx:id="userImage" fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" />
+                    <Circle fx:id="photoCircle" fill="WHITE" radius="37.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0">
+                        <effect>
+                            <DropShadow>
+                                <color>
+                                    <Color green="0.4274509847164154" blue="0.46666666865348816" />
+                                </color>
+                            </DropShadow>
+                        </effect>
+                    </Circle>
+                    <Button fx:id="profileImgButton" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="20.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
+                        <!--
+                        <graphic>
+                            <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@images/profileicon.png" />
+                            </ImageView>
+                        </graphic>
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                    </Button>
+                    -->
+                </StackPane>
 
             </AnchorPane>
         </top>
