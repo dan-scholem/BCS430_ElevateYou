@@ -9,6 +9,8 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
@@ -18,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.checkerframework.checker.units.qual.C;
 
@@ -36,6 +39,9 @@ public class CaloriesWaterIntakeController {
     @FXML private DatePicker waterDate;
     @FXML private TextField waterOunces;
 
+    @FXML private Slider calorieGoalSlider;
+    @FXML private TextField calorieGoalField;
+
     // ===== Tables + columns =====
     @FXML private TableView<CalorieEntry> caloriesTable;
     @FXML private TableColumn<CalorieEntry, LocalDate> colCalDate;
@@ -49,6 +55,9 @@ public class CaloriesWaterIntakeController {
     // ===== UI bits =====
     @FXML private Label lblCalTotal;
     @FXML private Label lblWaterTotal;
+    @FXML private Label calorieGoalErrorText;
+    @FXML private ProgressBar calorieGoalProgress;
+    @FXML private Label remainingCalsLabel;
 
     // ===== Sidebar buttons (only needed for onAction handlers that exist here) =====
     @FXML private Button dashButton;
@@ -74,20 +83,25 @@ public class CaloriesWaterIntakeController {
 
         //Initializes calorieDataMap with Firestore Data
         try{
-            DocumentReference docRef = App.fstore.collection("Calories").document(SessionManager.getSession().getUserID());
+            DocumentReference docRef = SessionManager.getSession().getCaloriesDocRef();
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot doc = future.get();
             if(doc.exists()) {
                 for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
-                    List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
-                    ObservableList<CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
-                    for (int i = 0; i < data.size(); i++) {
-                        String date = data.get(i).get("date").toString();
-                        int calories = Integer.parseInt(data.get(i).get("calories").toString());
-                        String food = data.get(i).get("food").toString();
-                        CalorieEntry loadedEntry = new CalorieEntry(date, food, calories);
-                        loadedCaloriesData.add(loadedEntry);
-                        calorieDataMap.put(date, loadedCaloriesData);
+                    if(!key.equals("CalorieGoal")) {
+                        List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                        ObservableList<CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
+                        for (int i = 0; i < data.size(); i++) {
+                            String date = data.get(i).get("date").toString();
+                            int calories = Integer.parseInt(data.get(i).get("calories").toString());
+                            String food = data.get(i).get("food").toString();
+                            CalorieEntry loadedEntry = new CalorieEntry(date, food, calories);
+                            loadedCaloriesData.add(loadedEntry);
+                            calorieDataMap.put(date, loadedCaloriesData);
+                        }
+                    }else{
+                        int calorieGoal = SessionManager.getSession().getCalorieGoal();
+                        calorieGoalField.setText(calorieGoal + "");
                     }
                 }
                 calorieData = calorieDataMap.get(LocalDate.now().toString());
@@ -183,6 +197,53 @@ public class CaloriesWaterIntakeController {
 
         updateCalorieTotal();
         updateWaterTotal();
+
+        calorieGoalSlider.valueProperty().addListener(
+                (observable, oldValue, newValue) ->{
+                    calorieGoalField.setText(String.valueOf(newValue.intValue()));
+                    updateCalorieGoalUI();
+                    SessionManager.getSession().setCalorieGoal(newValue.intValue());
+                });
+
+
+        calorieGoalField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                int calorieGoal;
+                try{
+                    calorieGoal = Integer.parseInt(calorieGoalField.getText());
+                    if(calorieGoal < 1000) {
+                        calorieGoalField.setText("1000");
+                    }else if(calorieGoal > 3000) {
+                        calorieGoalField.setText("3000");
+                    }
+                    calorieGoalSlider.setValue(calorieGoal);
+                    updateCalorieGoalUI();
+                    SessionManager.getSession().setCalorieGoal(calorieGoal);
+                    calorieGoalErrorText.setVisible(false);
+                }catch(NumberFormatException e){
+                    calorieGoalErrorText.setVisible(true);
+                }
+            }
+        });
+
+        lblCalTotal.textProperty().addListener((observable, oldValue, newValue) -> {
+            try{
+                updateCalorieGoalUI();
+            }catch(NumberFormatException e){
+            }
+        });
+
+    }
+
+    private void updateCalorieGoalUI() {
+        calorieGoalProgress.setProgress((double) Integer.parseInt(lblCalTotal.getText()) /Integer.parseInt(calorieGoalField.getText()));
+        if(calorieGoalProgress.getProgress() > 1){
+            calorieGoalProgress.setStyle("-fx-accent: red;");
+            remainingCalsLabel.setText("0");
+        }else{
+            calorieGoalProgress.setStyle("-fx-accent: green;");
+            remainingCalsLabel.setText(Integer.parseInt(calorieGoalField.getText()) - Integer.parseInt(lblCalTotal.getText()) + "");
+        }
     }
 
     // ===== Calories handlers =====

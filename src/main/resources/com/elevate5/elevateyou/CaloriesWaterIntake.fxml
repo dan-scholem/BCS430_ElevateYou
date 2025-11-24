@@ -3,8 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
+<AnchorPane prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
     <!--
 <VBox alignment="CENTER" layoutY="135.0" prefHeight="675.0" prefWidth="218.0" spacing="14" style="-fx-background-color: #006D77;">
    <padding>
@@ -84,16 +85,16 @@
    </children>
 </VBox>
 -->
-    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="836.0" spacing="16" style="-fx-background-color: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
+    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="740.0" spacing="16" style="-fx-: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
         <padding>
-            <Insets bottom="16" left="16" right="16" top="16" />
+            <Insets bottom="16.0" left="16.0" right="12.0" top="16.0" />
         </padding>
 
         <!-- Calorie Intake -->
         <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Calorie Intake">
             <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
                 <padding>
-                    <Insets bottom="12" left="12" right="12" top="12" />
+                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                 </padding>
 
                 <GridPane hgap="10" vgap="8">
@@ -145,7 +146,7 @@
         <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Water Intake">
             <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
                 <padding>
-                    <Insets bottom="12" left="12" right="12" top="12" />
+                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                 </padding>
 
                 <GridPane hgap="10" vgap="8">
@@ -188,6 +189,28 @@
             </VBox>
         </TitledPane>
     </VBox>
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="12.0" AnchorPane.leftAnchor="760.0" AnchorPane.topAnchor="80.0">
+      <children>
+         <Label text="Calorie Goal">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <TextField fx:id="calorieGoalField" alignment="CENTER" maxWidth="100.0" prefWidth="50.0" />
+         <Slider fx:id="calorieGoalSlider" blockIncrement="50.0" majorTickUnit="50.0" max="3000.0" maxWidth="150.0" min="1000.0" minorTickCount="1" snapToTicks="true" />
+         <Label fx:id="calorieGoalErrorText" text="Enter Whole Number" textFill="RED" visible="false" />
+         <ProgressBar fx:id="calorieGoalProgress" prefHeight="30.0" prefWidth="150.0" progress="0.0" style="-fx-accent: green">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin></ProgressBar>
+         <HBox alignment="CENTER" spacing="5.0">
+            <children>
+               <Label text="Remaining Cals:" />
+               <Label fx:id="remainingCalsLabel" text="0" />
+            </children>
+         </HBox>
+      </children>
+   </VBox>
     <!--
 <Pane prefHeight="136.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
    <children>
