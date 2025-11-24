@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.concurrent.ExecutionException;
 
 
 import static com.elevate5.elevateyou.App.fauth;
@@ -538,11 +539,6 @@ public class CreateAccountController {
 
         }
 
-        public void initialize() {
-
-            loadProfileImage();
-        }
-
     @FXML
     protected void uploadProfilePhoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -757,6 +753,8 @@ public class CreateAccountController {
                 if (exportButton != null) exportButton.setDisable(true);
                 if (importButton != null) importButton.setDisable(true);
             }
+            loadProfileImage();
+
         }
         @FXML
         private void onExportAllData(ActionEvent event) {
