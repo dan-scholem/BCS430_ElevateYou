@@ -10,6 +10,7 @@ import com.google.firebase.auth.UserRecord;
 import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -25,6 +26,8 @@ public class Session {
     private User currUser;
     private DocumentReference savedArticlesDocRef;
     private WebView webView;
+    private int calorieGoal;
+    private final DocumentReference caloriesDocRef;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         webView = new WebView();
@@ -104,7 +107,14 @@ public class Session {
             String email = (String) doc.get("Email");
             String profilePicUrl = (String) doc.get("ProfilePicUrl");
             String bio = (String) doc.get("UserBio");
+            String weight = (String) doc.get("UserWeight");
             this.currUser = new User(firstName, lastName, email, profilePicUrl, userID, bio);
+            try{
+                assert weight != null;
+                this.currUser.setWeight(Integer.parseInt(weight));
+            } catch (NumberFormatException e) {
+                this.currUser.setWeight(0);
+            }
             ArrayList<String> friendsList;
             if(doc.get("Friends") != null) {
                 friendsList = new ArrayList<>((List<String>) doc.get("Friends"));
@@ -163,6 +173,22 @@ public class Session {
             }
         }
 
+        caloriesDocRef = App.fstore.collection("Calories").document(this.userID);
+        future = caloriesDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
+            setCalorieGoal(calorieGoal);
+        }
+
+
+    }
+
+    public void saveCalorieGoalToFirestore(){
+        DocumentReference calorieDocRef = App.fstore.collection("Calories").document(SessionManager.getSession().getUserID());
+        Map<String,Object> calorieGoalMap = new HashMap<String,Object>();
+        calorieGoalMap.put("CalorieGoal",this.calorieGoal);
+        ApiFuture<WriteResult> result = calorieDocRef.update(calorieGoalMap);
     }
 
     public UserRecord getUser() {
@@ -223,5 +249,17 @@ public class Session {
 
     public void setWebView(WebView webView) {
         this.webView = webView;
+    }
+
+    public int getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(int calorieGoal) {
+        this.calorieGoal = calorieGoal;
+    }
+
+    public DocumentReference getCaloriesDocRef() {
+        return caloriesDocRef;
     }
 }
