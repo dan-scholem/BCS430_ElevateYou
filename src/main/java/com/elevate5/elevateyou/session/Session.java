@@ -9,6 +9,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
 import javafx.scene.web.WebView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,8 @@ public class Session {
     private WebView webView;
     private int calorieGoal;
     private final DocumentReference caloriesDocRef;
+    private final Map<String, Object> weightEntryMap;
+    private final DocumentReference weightLogDocRef;
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         webView = new WebView();
@@ -181,14 +184,31 @@ public class Session {
             setCalorieGoal(calorieGoal);
         }
 
+        weightEntryMap = new HashMap<>();
+        weightLogDocRef = App.fstore.collection("Weight Log").document(this.userID);
+        future = weightLogDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            Map<String, Object> weightLogMap = doc.getData();
+            if(weightLogMap != null) {
+                weightEntryMap.putAll(weightLogMap);
+            }
+        }
 
     }
 
     public void saveCalorieGoalToFirestore(){
-        DocumentReference calorieDocRef = App.fstore.collection("Calories").document(SessionManager.getSession().getUserID());
-        Map<String,Object> calorieGoalMap = new HashMap<String,Object>();
+        Map<String,Object> calorieGoalMap = new HashMap<>();
         calorieGoalMap.put("CalorieGoal",this.calorieGoal);
-        ApiFuture<WriteResult> result = calorieDocRef.update(calorieGoalMap);
+        ApiFuture<WriteResult> result = this.caloriesDocRef.update(calorieGoalMap);
+    }
+
+    public void saveWeightEntryToSession(int weight){
+        weightEntryMap.put(String.valueOf(LocalDate.now()), weight);
+    }
+
+    public void saveWeightLogToFireStore(){
+        ApiFuture<WriteResult> result = this.weightLogDocRef.set(weightEntryMap);
     }
 
     public UserRecord getUser() {

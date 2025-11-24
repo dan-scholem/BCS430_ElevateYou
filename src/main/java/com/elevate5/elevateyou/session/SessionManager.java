@@ -15,6 +15,7 @@ public class SessionManager {
         session.getWebView().getEngine().load(null);
         session.setWebView(null);
         session.saveCalorieGoalToFirestore();
+        session.saveWeightLogToFireStore();
         session = null;
 
 

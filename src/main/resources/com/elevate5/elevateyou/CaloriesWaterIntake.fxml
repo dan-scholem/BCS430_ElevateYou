@@ -211,6 +211,31 @@
          </HBox>
       </children>
    </VBox>
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0" AnchorPane.leftAnchor="760.0" AnchorPane.topAnchor="380.0">
+      <children>
+         <Label text="Weight Entry">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <HBox alignment="CENTER_RIGHT" spacing="5.0">
+            <children>
+               <TextField fx:id="weightEntryField" maxWidth="50.0" prefWidth="50.0" />
+               <Label text="lbs">
+                  <padding>
+                     <Insets right="10.0" />
+                  </padding>
+               </Label>
+               <Button mnemonicParsing="false" onAction="#saveWeightEntry" text="Save">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+               </Button>
+            </children>
+         </HBox>
+         <Label fx:id="weightEntrySavedLabel" text="Entry Saved" textFill="#16ae0e" visible="false" />
+      </children>
+   </VBox>
     <!--
 <Pane prefHeight="136.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
    <children>

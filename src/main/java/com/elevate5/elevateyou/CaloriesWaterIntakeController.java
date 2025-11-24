@@ -8,6 +8,7 @@ import com.google.api.core.ApiService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
@@ -42,6 +44,8 @@ public class CaloriesWaterIntakeController {
     @FXML private Slider calorieGoalSlider;
     @FXML private TextField calorieGoalField;
 
+    @FXML private TextField weightEntryField;
+
     // ===== Tables + columns =====
     @FXML private TableView<CalorieEntry> caloriesTable;
     @FXML private TableColumn<CalorieEntry, LocalDate> colCalDate;
@@ -58,6 +62,9 @@ public class CaloriesWaterIntakeController {
     @FXML private Label calorieGoalErrorText;
     @FXML private ProgressBar calorieGoalProgress;
     @FXML private Label remainingCalsLabel;
+    @FXML private Label weightEntrySavedLabel;
+
+    private final FadeTransition fadeOut = new FadeTransition(Duration.millis(2000));
 
     // ===== Sidebar buttons (only needed for onAction handlers that exist here) =====
     @FXML private Button dashButton;
@@ -233,6 +240,12 @@ public class CaloriesWaterIntakeController {
             }
         });
 
+        fadeOut.setNode(weightEntrySavedLabel);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
+
     }
 
     private void updateCalorieGoalUI() {
@@ -371,6 +384,29 @@ public class CaloriesWaterIntakeController {
         }
     }
 
+    @FXML
+    private void saveWeightEntry(ActionEvent event) {
+        try{
+            int weightEntry = Integer.parseInt(weightEntryField.getText());
+            if(weightEntry > 0){
+                SessionManager.getSession().saveWeightEntryToSession(weightEntry);
+                weightEntrySavedLabel.setText("Weight entry saved");
+                weightEntrySavedLabel.setStyle("-fx-text-fill: green;");
+            }else{
+                weightEntrySavedLabel.setText("Please enter a valid weight");
+                weightEntrySavedLabel.setStyle("-fx-text-fill: red;");
+            }
+            weightEntrySavedLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }catch(NumberFormatException ex){
+            weightEntrySavedLabel.setText("Please enter a whole number");
+            weightEntrySavedLabel.setStyle("-fx-text-fill: red;");
+            weightEntrySavedLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }
+    }
+
+/*
     // ===== Sidebar navigation =====
     @FXML
     private void dashboardButtonClick() {
@@ -463,6 +499,8 @@ public class CaloriesWaterIntakeController {
             throw new RuntimeException(e);
         }
     }
+
+ */
 
     private void alert(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
