@@ -1,11 +1,11 @@
 package com.elevate5.elevateyou;
 
-import com.elevate5.elevateyou.model.Event;
 import com.elevate5.elevateyou.model.EventManager;
 import com.elevate5.elevateyou.service.UserBackupService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.CalendarView;
+import com.elevate5.elevateyou.view.LandingView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -124,6 +124,8 @@ public class CreateAccountController {
 
     @FXML
     private ImageView userImage;
+
+    private LandingView mainView;
 
 
     @FXML
@@ -558,6 +560,9 @@ public class CreateAccountController {
 
                 ImagePattern imgpattern = new ImagePattern(userimg);
 
+                photoCircle = mainView.getPhotoCircle();
+                userImage = mainView.getUserImage();
+
                 photoCircle.setFill(imgpattern);
 
                 userImage.setPreserveRatio(true);
@@ -582,7 +587,7 @@ public class CreateAccountController {
         try {
             Map<String, Object> photoInfo = new HashMap<>();
 
-            photoInfo.put("profilePhotoUrl", imageUrl);
+            photoInfo.put("ProfilePicUrl", imageUrl);
 
             ApiFuture<WriteResult> future = App.fstore.collection("Users")
                     .document(documentID)
@@ -865,6 +870,10 @@ public class CreateAccountController {
                         "Failed to open Emergency Card:\n" + e.getMessage()
                 ).showAndWait();
             }
+        }
+
+        public void injectLandingView(LandingView mainView) {
+            this.mainView = mainView;
         }
 
 }

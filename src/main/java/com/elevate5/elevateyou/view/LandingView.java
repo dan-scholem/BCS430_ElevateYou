@@ -1,6 +1,7 @@
 package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.CreateAccountController;
 import com.elevate5.elevateyou.UserLogin;
 import com.elevate5.elevateyou.model.NotificationModel;
 import com.elevate5.elevateyou.service.NotificationService;
@@ -145,8 +146,14 @@ public class LandingView {
 
                 if (profileimgUrl != null && !profileimgUrl.isEmpty()) {
 
+                    Image userimg;
+                    if(profileimgUrl.contains("http")){
+                        userimg = new Image(profileimgUrl);
+                    }else{
+                        File  file = new File(profileimgUrl);
+                        userimg = new Image(file.toURI().toString());
+                    }
 
-                    Image userimg = new Image(profileimgUrl);
 
                     ImagePattern imgpattern = new ImagePattern(userimg);
 
@@ -277,6 +284,8 @@ public class LandingView {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/UserProfile.fxml"));
             Parent profileRoot = fxmlLoader.load();
             mainPane.setCenter(profileRoot);
+            CreateAccountController createAccountController = fxmlLoader.getController();
+            createAccountController.injectLandingView(this);
             Stage stage = (Stage) profileImgButton.getScene().getWindow();
             stage.setTitle("Profile");
         } catch (IOException e) {
@@ -450,5 +459,11 @@ public class LandingView {
         }
     }
 
+    public Circle getPhotoCircle() {
+        return photoCircle;
+    }
 
+    public ImageView getUserImage() {
+        return userImage;
+    }
 }
