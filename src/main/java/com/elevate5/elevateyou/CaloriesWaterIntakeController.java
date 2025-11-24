@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.checkerframework.checker.units.qual.C;
@@ -45,6 +46,7 @@ public class CaloriesWaterIntakeController {
     @FXML private TextField calorieGoalField;
 
     @FXML private TextField weightEntryField;
+    @FXML private Button viewWeightLogButton;
 
     // ===== Tables + columns =====
     @FXML private TableView<CalorieEntry> caloriesTable;
@@ -404,6 +406,14 @@ public class CaloriesWaterIntakeController {
             weightEntrySavedLabel.setVisible(true);
             fadeOut.playFromStart();
         }
+    }
+
+    @FXML
+    private void viewWeightLogButtonAction(ActionEvent event) {
+        Stage weightLogPopup = new Stage();
+        weightLogPopup.initOwner(viewWeightLogButton.getScene().getWindow());
+        Scene weightLogScene = new Scene(new ScrollPane(), 300, 300);
+        weightLogPopup.setScene(weightLogScene);
     }
 
 /*

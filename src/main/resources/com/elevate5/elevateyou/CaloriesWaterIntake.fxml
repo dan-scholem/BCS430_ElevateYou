@@ -234,6 +234,7 @@
             </children>
          </HBox>
          <Label fx:id="weightEntrySavedLabel" text="Entry Saved" textFill="#16ae0e" visible="false" />
+         <Button fx:id="viewWeightLogButton" mnemonicParsing="false" onAction="#viewWeightLogButtonAction" text="View Log" />
       </children>
    </VBox>
     <!--
