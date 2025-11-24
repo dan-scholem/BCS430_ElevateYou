@@ -1,17 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.elevate5.elevateyou.view.LandingView">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.view.LandingView">
+    <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <top>
+            <AnchorPane prefHeight="120.0" prefWidth="1023.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+                <Pane prefHeight="190.0" prefWidth="199.0" style="-fx-background-color: #006D77;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="-20.0">
+                    <ImageView fitHeight="222.0" fitWidth="240.0" layoutX="-10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <rotationAxis>
+                            <Point3D />
+                        </rotationAxis>
+                        <Image url="@images/elevateyoulogo.png" />
+                    </ImageView>
+                    <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+                </Pane>
+                <Pane prefHeight="102.0" prefWidth="515.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="20.0">
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                    <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+                </Pane>
 
-    <Label fx:id="welcomeText" text="Welcome to ElevateYou!"/>
-    <Button text="Sign Up"/>
-    <Button text="Log In"/>
-</VBox>
+                <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="30.0">
+                    <children>
+                        <StackPane>
+                            <Button fx:id="bellButton" onAction="#onBellClicked" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-font-size: 18px; -fx-cursor: hand;" text="🔔" />
+                            <Label fx:id="badgeLabel" managed="false" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 9999; -fx-padding: 2 5;" text="3" visible="false" StackPane.alignment="TOP_RIGHT" />
+                        </StackPane>
+                    </children>
+                </HBox>
+                <!-- Dropdown list -->
+                <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="-fx-background-colosr: white;                      -fx-border-color: rgba(0,0,0,0.12);                      -fx-border-radius: 8;                      -fx-background-radius: 8;                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                      -fx-padding: 10;                      -fx-view-order: -1;" visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
+                </VBox>
+                <StackPane layoutX="661" layoutY="10" minHeight="50.0" prefHeight="81" prefWidth="77" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
+                    <ImageView fx:id="userImage" fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" />
+                    <Circle fx:id="photoCircle" fill="WHITE" radius="37.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0">
+                        <effect>
+                            <DropShadow>
+                                <color>
+                                    <Color green="0.4274509847164154" blue="0.46666666865348816" />
+                                </color>
+                            </DropShadow>
+                        </effect>
+                    </Circle>
+                    <Button fx:id="profileImgButton" mnemonicParsing="false" onAction="#settingsButtonClick" prefHeight="20.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
+                        <!--
+                        <graphic>
+                            <ImageView fx:id="userbioButton" fitHeight="38.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@images/profileicon.png" />
+                            </ImageView>
+                        </graphic>
+                        <effect>
+                            <DropShadow />
+                        </effect>
+                    </Button>
+                    -->
+                </StackPane>
+
+            </AnchorPane>
+        </top>
+        <left>
+            <VBox alignment="TOP_CENTER" prefHeight="579.0" prefWidth="199.0" spacing="14" style="-fx-background-color: #006D77;" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <!-- EDITED: added onAction -->
+                <Button fx:id="exerciseButton" onAction="#exerciseButtonClick" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="sleepButton" onAction="#sleepButtonClick" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="articlesButton" onAction="#articlesButtonClick" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Articles">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="friendsbutton" stylesheets="@styles.css" text="Friends">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="chatButton" onAction="#chatButtonClick" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+                <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+                    <font>
+                        <Font name="Poppins ExtraBold" size="13" />
+                    </font>
+                </Button>
+            </VBox>
+        </left>
+    </BorderPane>
+</AnchorPane>

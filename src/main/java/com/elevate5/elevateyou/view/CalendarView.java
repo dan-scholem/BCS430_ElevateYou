@@ -101,7 +101,7 @@ public class CalendarView extends Application {
 
         calendarTableView.getSelectionModel().setCellSelectionEnabled(true);
         calendarTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        calendarTableView.setFixedCellSize(100);
+        calendarTableView.setFixedCellSize(98);
 
         selectedDate = today;
 
@@ -514,17 +514,6 @@ public class CalendarView extends Application {
             }
             //calendar.addWeek(week);
             calendarTableView.getItems().add(week);
-        }
-    }
-
-    //button for going back to the app dashboard
-    @FXML
-    private void backToDashboard(ActionEvent event) {
-        try {
-            Stage stage = (Stage) backToDashboardButton.getScene().getWindow();
-            Dashboard.loadDashboardScene(stage);
-        } catch (IOException e){
-            throw new RuntimeException(e);
         }
     }
 

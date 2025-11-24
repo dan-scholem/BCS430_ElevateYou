@@ -1,232 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CaloriesWaterIntakeController">
+    <!--
+<VBox alignment="CENTER" layoutY="135.0" prefHeight="675.0" prefWidth="218.0" spacing="14" style="-fx-background-color: #006D77;">
+   <padding>
+      <Insets bottom="22" left="10" right="10" top="18" />
+   </padding>
+   <children>
+      <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+      <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
+         <font>
+            <Font name="Poppins ExtraBold" size="13" />
+         </font>
+      </Button>
+   </children>
+</VBox>
+-->
+    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="836.0" spacing="16" style="-fx-background-color: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
+        <padding>
+            <Insets bottom="16" left="16" right="16" top="16" />
+        </padding>
 
-    <!-- TOP BAR -->
-    <top>
-        <AnchorPane prefHeight="795.0" prefWidth="980.0" style="-fx-background-color:#FFFFFF;">
-            <children>
-                <Text layoutX="268.0" layoutY="37.0" text="Nutrition">
-                    <font><Font name="Poppins ExtraBold" size="18" /></font>
-                    Nutrition
-                </Text>
-            <VBox alignment="CENTER" layoutY="135.0" prefHeight="675.0" prefWidth="218.0" spacing="14" style="-fx-background-color: #006D77;">
-               <padding>
-                  <Insets bottom="22" left="10" right="10" top="18" />
-               </padding>
-               <children>
-                  <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton" stylesheets="@styles.css" text="Dashboard">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css" text="Medications">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css" text="Nutrition">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton" stylesheets="@styles.css" text="Journal">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="appointmentsButton" onAction="#appointmentButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Appointments">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton" stylesheets="@styles.css" text="Calendar">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="quotesaffirmationBtn" onAction="#quoteaffirmationButtonClick" styleClass="apppointmentbutton" stylesheets="@styles.css" text="Quotes &amp; Affirmations">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-                  <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css" text="Log Out">
-                     <font>
-                        <Font name="Poppins ExtraBold" size="13" />
-                     </font>
-                  </Button>
-               </children>
+        <!-- Calorie Intake -->
+        <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Calorie Intake">
+            <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
+                <padding>
+                    <Insets bottom="12" left="12" right="12" top="12" />
+                </padding>
+
+                <GridPane hgap="10" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+
+                    <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <DatePicker fx:id="calDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Food:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="foodText" promptText="e.g. Chicken and Rice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Calories:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="caloriesText" promptText="e.g. 350" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                        <Button onAction="#addCalories" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
+                        <Button onAction="#deleteSelectedCalorie" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
+                        <Button onAction="#clearCaloriesInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
+                    </HBox>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+
+                <TableView fx:id="caloriesTable" prefHeight="200.0">
+                    <columns>
+                        <TableColumn fx:id="colCalDate" prefWidth="160" text="Date" />
+                        <TableColumn fx:id="colFood" prefWidth="360" text="Food" />
+                        <TableColumn fx:id="colCals" prefWidth="140" text="Calories" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Label text="Total calories on selected date:" />
+                    <Label fx:id="lblCalTotal" text="0" />
+                </HBox>
             </VBox>
-              <VBox layoutX="217.0" prefHeight="808.0" prefWidth="836.0" spacing="16" style="-fx-background-color: #EDF6F9;">
-                  <padding>
-                  <Insets bottom="16" left="16" right="16" top="16" />
-               </padding>
-      
-                     <!-- Calorie Intake -->
-                  <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Calorie Intake">
-                      <content>
-                          <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
-                              <padding>
-                           <Insets bottom="12" left="12" right="12" top="12" />
-                        </padding>
-      
-                                 <GridPane hgap="10" vgap="8">
-                                  <columnConstraints>
-                                      <ColumnConstraints halignment="RIGHT" minWidth="70" />
-                                      <ColumnConstraints hgrow="ALWAYS" />
-                                      <ColumnConstraints halignment="RIGHT" minWidth="70" />
-                                      <ColumnConstraints />
-                                      <ColumnConstraints />
-                                      <ColumnConstraints />
-                                  </columnConstraints>
-      
-                                     <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                  <DatePicker fx:id="calDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-      
-                                     <Label text="Food:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                  <TextField fx:id="foodText" promptText="e.g. Chicken and Rice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      
-                                     <Label text="Calories:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                  <TextField fx:id="caloriesText" promptText="e.g. 350" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      
-                                     <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                                      <Button onAction="#addCalories" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
-                                      <Button onAction="#deleteSelectedCalorie" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
-                                      <Button onAction="#clearCaloriesInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
-                                  </HBox>
-                           <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints />
-                           </rowConstraints>
-                              </GridPane>
-      
-                                 <TableView fx:id="caloriesTable" prefHeight="260">
-                                  <columns>
-                                      <TableColumn fx:id="colCalDate" prefWidth="160" text="Date" />
-                                      <TableColumn fx:id="colFood" prefWidth="360" text="Food" />
-                                      <TableColumn fx:id="colCals" prefWidth="140" text="Calories" />
-                                  </columns>
-                              </TableView>
-      
-                                 <HBox alignment="CENTER_RIGHT" spacing="10">
-                                  <Label text="Total calories on selected date:" />
-                                  <Label fx:id="lblCalTotal" text="0" />
-                              </HBox>
-                          </VBox>
-                      </content>
-                  </TitledPane>
-      
-                        <!-- Water Intake -->
-                  <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Water Intake">
-                      <content>
-                          <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
-                              <padding>
-                           <Insets bottom="12" left="12" right="12" top="12" />
-                        </padding>
-      
-                                    <GridPane hgap="10" vgap="8">
-                                  <columnConstraints>
-                                      <ColumnConstraints halignment="RIGHT" minWidth="70" />
-                                      <ColumnConstraints hgrow="ALWAYS" />
-                                      <ColumnConstraints halignment="RIGHT" minWidth="70" />
-                                      <ColumnConstraints />
-                                      <ColumnConstraints />
-                                      <ColumnConstraints />
-                                  </columnConstraints>
-      
-                                        <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                  <DatePicker fx:id="waterDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-      
-                                        <Label text="Ounces:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                  <TextField fx:id="waterOunces" promptText="e.g. 16" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-      
-                                        <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="0">
-                                      <Button onAction="#addWater" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
-                                      <Button onAction="#deleteSelectedWater" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
-                                      <Button onAction="#clearWaterInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
-                                  </HBox>
-                           <rowConstraints>
-                              <RowConstraints />
-                           </rowConstraints>
-                              </GridPane>
-            
-                                          <TableView fx:id="waterTable" prefHeight="220">
-                                  <columns>
-                                      <TableColumn fx:id="colWaterDate" prefWidth="160" text="Date" />
-                                      <TableColumn fx:id="colOunces" prefWidth="140" text="Ounces" />
-                                  </columns>
-                              </TableView>
-      
-                                    <HBox alignment="CENTER_RIGHT" spacing="10">
-                                  <Label text="Total ounces on selected date:" />
-                                  <Label fx:id="lblWaterTotal" text="0" />
-                              </HBox>
-                          </VBox>
-                      </content>
-                  </TitledPane>
-              </VBox>
-            <Pane prefHeight="136.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
-               <children>
-                  <ImageView fitHeight="215.0" fitWidth="217.0" layoutX="14.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/elevateyoulogo.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="47.0" layoutY="115.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
-               </children>
-            </Pane>
-            </children>
-        </AnchorPane>
-    </top>
-</BorderPane>
+        </TitledPane>
+
+        <!-- Water Intake -->
+        <TitledPane expanded="true" style="-fx-background-color:transparent;" text="Water Intake">
+            <VBox spacing="10" style="-fx-background-color:#FFFFFF; -fx-background-radius:20;">
+                <padding>
+                    <Insets bottom="12" left="12" right="12" top="12" />
+                </padding>
+
+                <GridPane hgap="10" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="70" />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+
+                    <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <DatePicker fx:id="waterDate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Ounces:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="waterOunces" promptText="e.g. 16" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <HBox alignment="CENTER_RIGHT" spacing="8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="0">
+                        <Button onAction="#addWater" styleClass="addbutton" stylesheets="@styles.css" text="Add" />
+                        <Button onAction="#deleteSelectedWater" styleClass="deletebutton" stylesheets="@styles.css" text="Delete" />
+                        <Button onAction="#clearWaterInputs" styleClass="clearbutton" stylesheets="@styles.css" text="Clear" />
+                    </HBox>
+                    <rowConstraints>
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+
+                <TableView fx:id="waterTable" prefHeight="160.0">
+                    <columns>
+                        <TableColumn fx:id="colWaterDate" prefWidth="160" text="Date" />
+                        <TableColumn fx:id="colOunces" prefWidth="140" text="Ounces" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Label text="Total ounces on selected date:" />
+                    <Label fx:id="lblWaterTotal" text="0" />
+                </HBox>
+            </VBox>
+        </TitledPane>
+    </VBox>
+    <!--
+<Pane prefHeight="136.0" prefWidth="218.0" style="-fx-background-color: #006D77;">
+   <children>
+      <ImageView fitHeight="215.0" fitWidth="217.0" layoutX="14.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/elevateyoulogo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="47.0" layoutY="115.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou" />
+   </children>
+</Pane>
+-->
+</AnchorPane>
