@@ -104,7 +104,14 @@ public class Session {
             String email = (String) doc.get("Email");
             String profilePicUrl = (String) doc.get("ProfilePicUrl");
             String bio = (String) doc.get("UserBio");
+            String weight = (String) doc.get("UserWeight");
             this.currUser = new User(firstName, lastName, email, profilePicUrl, userID, bio);
+            try{
+                assert weight != null;
+                this.currUser.setWeight(Integer.parseInt(weight));
+            } catch (NumberFormatException e) {
+                this.currUser.setWeight(0);
+            }
             ArrayList<String> friendsList;
             if(doc.get("Friends") != null) {
                 friendsList = new ArrayList<>((List<String>) doc.get("Friends"));
