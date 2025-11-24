@@ -140,32 +140,40 @@ public class LandingView {
 
             if (document.exists()) {
 
-                String profileimgUrl = document.getString("profilePhotoUrl");
+                String profileimgUrl = document.getString("ProfilePicUrl");
+                System.out.println(profileimgUrl);
 
                 if (profileimgUrl != null && !profileimgUrl.isEmpty()) {
 
-                    File imgFile = new File(profileimgUrl);
 
-                    if (imgFile.exists()) {
+                    Image userimg = new Image(profileimgUrl);
 
-                        Image userimg = new Image(imgFile.toURI().toString());
+                    ImagePattern imgpattern = new ImagePattern(userimg);
 
-                        ImagePattern imgpattern = new ImagePattern(userimg);
+                    photoCircle.setFill(imgpattern);
 
-                        photoCircle.setFill(imgpattern);
+                    userImage.setImage(userimg);
+                    userImage.setPreserveRatio(true);
+                    userImage.setFitWidth(69);
+                    userImage.setFitHeight(76);
 
-                        userImage.setImage(userimg);
-                        userImage.setPreserveRatio(true);
-                        userImage.setFitWidth(69);
-                        userImage.setFitHeight(76);
+                    System.out.println("Profile photo added successfully");
 
-                        System.out.println("Profile photo added successfully");
-                    }
-
-                    else {
-                        System.out.println("Error adding profile photo");
-                    }
                 }
+                else {
+                    Image userimg = new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png");
+
+                    ImagePattern imgpattern = new ImagePattern(userimg);
+
+                    photoCircle.setFill(imgpattern);
+
+                    userImage.setImage(userimg);
+                    userImage.setPreserveRatio(true);
+                    userImage.setFitWidth(69);
+                    userImage.setFitHeight(76);
+                    System.out.println("Error adding profile photo");
+                }
+
 
             }
 
