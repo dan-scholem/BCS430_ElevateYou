@@ -10,10 +10,7 @@ import com.google.firebase.auth.UserRecord;
 import javafx.scene.web.WebView;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Session {
@@ -281,5 +278,9 @@ public class Session {
 
     public DocumentReference getCaloriesDocRef() {
         return caloriesDocRef;
+    }
+
+    public Map<String, Object> getWeightEntryMap() {
+        return weightEntryMap;
     }
 }
