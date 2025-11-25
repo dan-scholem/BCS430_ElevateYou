@@ -37,9 +37,6 @@
                         </StackPane>
                     </children>
                 </HBox>
-                <!-- Dropdown list -->
-                <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="-fx-background-colosr: white;                      -fx-border-color: rgba(0,0,0,0.12);                      -fx-border-radius: 8;                      -fx-background-radius: 8;                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                      -fx-padding: 10;                      -fx-view-order: -1;" visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
-                </VBox>
                 <StackPane layoutX="661" layoutY="10" minHeight="50.0" prefHeight="81" prefWidth="77" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="20.0">
                     <ImageView fx:id="userImage" fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" />
                     <Circle fx:id="photoCircle" fill="WHITE" radius="37.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0">
@@ -141,4 +138,22 @@
             </VBox>
         </left>
     </BorderPane>
+    <VBox fx:id="dropdownList"
+          managed="false"
+          prefWidth="380.0"
+          spacing="6"
+          style="
+                          -fx-background-color: white;
+                          -fx-background-insets: 0;
+                          -fx-border-color: rgba(0,0,0,0.12);
+                          -fx-border-radius: 8;
+                          -fx-background-radius: 8;
+                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+                          -fx-padding: 10;
+                          -fx-view-order: -1;
+                            "
+          visible="false"
+          AnchorPane.rightAnchor="24.0"
+          AnchorPane.topAnchor="70.0">
+    </VBox>
 </AnchorPane>
