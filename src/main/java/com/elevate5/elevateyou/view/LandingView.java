@@ -154,8 +154,12 @@ public class LandingView {
                         userimg = new Image(file.toURI().toString());
                     }
 
-
-                    ImagePattern imgpattern = new ImagePattern(userimg);
+                    ImagePattern imgpattern;
+                    try{
+                        imgpattern = new ImagePattern(userimg);
+                    }catch(Exception e){
+                        imgpattern = new ImagePattern(new Image("https://icons.iconarchive.com/icons/iconarchive/childrens-book-animals/48/Duck-icon.png"));
+                    }
 
                     photoCircle.setFill(imgpattern);
 
