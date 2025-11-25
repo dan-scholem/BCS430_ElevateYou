@@ -18,10 +18,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,6 +37,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class CaloriesWaterIntakeController {
 
@@ -409,12 +416,19 @@ public class CaloriesWaterIntakeController {
     }
 
     @FXML
-    private void viewWeightLogButtonAction(ActionEvent event) {
+    private void viewWeightLogButtonAction(ActionEvent event) throws IOException {
         Stage weightLogPopup = new Stage();
         weightLogPopup.initOwner(viewWeightLogButton.getScene().getWindow());
-        Scene weightLogScene = new Scene(new ScrollPane(), 300, 300);
+        weightLogPopup.initModality(Modality.APPLICATION_MODAL);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/WeightLogView.fxml"));
+        Scene weightLogScene = new Scene(loader.load(), 300, 300);
         weightLogPopup.setScene(weightLogScene);
+        weightLogPopup.setTitle("Weight Log");
+        weightLogPopup.show();
     }
+
+
+
 
 /*
     // ===== Sidebar navigation =====

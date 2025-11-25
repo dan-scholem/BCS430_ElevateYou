@@ -85,7 +85,7 @@
    </children>
 </VBox>
 -->
-    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="740.0" spacing="16" style="-fx-: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
+    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="760.0" spacing="16" style="-fx-: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
         <padding>
             <Insets bottom="16.0" left="16.0" right="12.0" top="16.0" />
         </padding>
