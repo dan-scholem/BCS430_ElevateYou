@@ -418,12 +418,15 @@ public class CaloriesWaterIntakeController {
     @FXML
     private void viewWeightLogButtonAction(ActionEvent event) throws IOException {
         Stage weightLogPopup = new Stage();
-        weightLogPopup.initOwner(viewWeightLogButton.getScene().getWindow());
-        weightLogPopup.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/WeightLogView.fxml"));
         Scene weightLogScene = new Scene(loader.load(), 300, 300);
         weightLogPopup.setScene(weightLogScene);
         weightLogPopup.setTitle("Weight Log");
+        weightLogPopup.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if(!newVal){
+                weightLogPopup.hide();
+            }
+        });
         weightLogPopup.show();
     }
 
