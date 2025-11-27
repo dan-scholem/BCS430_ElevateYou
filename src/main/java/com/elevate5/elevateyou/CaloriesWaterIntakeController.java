@@ -8,6 +8,7 @@ import com.google.api.core.ApiService;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,17 +18,26 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class CaloriesWaterIntakeController {
 
@@ -41,6 +51,9 @@ public class CaloriesWaterIntakeController {
 
     @FXML private Slider calorieGoalSlider;
     @FXML private TextField calorieGoalField;
+
+    @FXML private TextField weightEntryField;
+    @FXML private Button viewWeightLogButton;
 
     // ===== Tables + columns =====
     @FXML private TableView<CalorieEntry> caloriesTable;
@@ -58,6 +71,9 @@ public class CaloriesWaterIntakeController {
     @FXML private Label calorieGoalErrorText;
     @FXML private ProgressBar calorieGoalProgress;
     @FXML private Label remainingCalsLabel;
+    @FXML private Label weightEntrySavedLabel;
+
+    private final FadeTransition fadeOut = new FadeTransition(Duration.millis(2000));
 
     // ===== Sidebar buttons (only needed for onAction handlers that exist here) =====
     @FXML private Button dashButton;
@@ -233,6 +249,12 @@ public class CaloriesWaterIntakeController {
             }
         });
 
+        fadeOut.setNode(weightEntrySavedLabel);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
+
     }
 
     private void updateCalorieGoalUI() {
@@ -371,6 +393,47 @@ public class CaloriesWaterIntakeController {
         }
     }
 
+    @FXML
+    private void saveWeightEntry(ActionEvent event) {
+        try{
+            int weightEntry = Integer.parseInt(weightEntryField.getText());
+            if(weightEntry > 0){
+                SessionManager.getSession().saveWeightEntryToSession(weightEntry);
+                weightEntrySavedLabel.setText("Weight entry saved");
+                weightEntrySavedLabel.setStyle("-fx-text-fill: green;");
+            }else{
+                weightEntrySavedLabel.setText("Please enter a valid weight");
+                weightEntrySavedLabel.setStyle("-fx-text-fill: red;");
+            }
+            weightEntrySavedLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }catch(NumberFormatException ex){
+            weightEntrySavedLabel.setText("Please enter a whole number");
+            weightEntrySavedLabel.setStyle("-fx-text-fill: red;");
+            weightEntrySavedLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }
+    }
+
+    @FXML
+    private void viewWeightLogButtonAction(ActionEvent event) throws IOException {
+        Stage weightLogPopup = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/elevate5/elevateyou/WeightLogView.fxml"));
+        Scene weightLogScene = new Scene(loader.load(), 300, 300);
+        weightLogPopup.setScene(weightLogScene);
+        weightLogPopup.setTitle("Weight Log");
+        weightLogPopup.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if(!newVal){
+                weightLogPopup.hide();
+            }
+        });
+        weightLogPopup.show();
+    }
+
+
+
+
+/*
     // ===== Sidebar navigation =====
     @FXML
     private void dashboardButtonClick() {
@@ -463,6 +526,8 @@ public class CaloriesWaterIntakeController {
             throw new RuntimeException(e);
         }
     }
+
+ */
 
     private void alert(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();

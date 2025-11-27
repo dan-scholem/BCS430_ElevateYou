@@ -85,7 +85,7 @@
    </children>
 </VBox>
 -->
-    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="740.0" spacing="16" style="-fx-: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
+    <VBox layoutX="217.0" prefHeight="808.0" prefWidth="760.0" spacing="16" style="-fx-: #EDF6F9;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-40.0">
         <padding>
             <Insets bottom="16.0" left="16.0" right="12.0" top="16.0" />
         </padding>
@@ -209,6 +209,32 @@
                <Label fx:id="remainingCalsLabel" text="0" />
             </children>
          </HBox>
+      </children>
+   </VBox>
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0" AnchorPane.leftAnchor="760.0" AnchorPane.topAnchor="380.0">
+      <children>
+         <Label text="Weight Entry">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+         <HBox alignment="CENTER_RIGHT" spacing="5.0">
+            <children>
+               <TextField fx:id="weightEntryField" maxWidth="50.0" prefWidth="50.0" />
+               <Label text="lbs">
+                  <padding>
+                     <Insets right="10.0" />
+                  </padding>
+               </Label>
+               <Button mnemonicParsing="false" onAction="#saveWeightEntry" text="Save">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+               </Button>
+            </children>
+         </HBox>
+         <Label fx:id="weightEntrySavedLabel" text="Entry Saved" textFill="#16ae0e" visible="false" />
+         <Button fx:id="viewWeightLogButton" mnemonicParsing="false" onAction="#viewWeightLogButtonAction" text="View Log" />
       </children>
    </VBox>
     <!--
