@@ -2,11 +2,10 @@ package com.elevate5.elevateyou.session;
 
 import com.elevate5.elevateyou.App;
 import com.elevate5.elevateyou.CaloriesWaterIntakeController;
+import com.elevate5.elevateyou.Medication;
 import com.elevate5.elevateyou.model.*;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.auth.UserRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +34,8 @@ public class Session {
     private final Map<String, Object> weightEntryMap;
     private final DocumentReference weightLogDocRef;
     private String latestSleepArticle;
+    private final CollectionReference medCollectionRef;
+    private final ObservableList<Medication> medications = FXCollections.observableArrayList();
 
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
@@ -248,6 +249,43 @@ public class Session {
             }
         }
 
+        medCollectionRef = App.fstore.collection("Medications").document(user.getEmail()).collection("UserMedications");
+        try {
+            ApiFuture<QuerySnapshot> query = medCollectionRef.get();
+
+            List<QueryDocumentSnapshot> documents = query.get().getDocuments();
+
+            for (QueryDocumentSnapshot document : documents) {
+                String docID = document.getId();
+                String medname = document.getString("medicationName");
+                String dosage = document.getString("dosage");
+                String frequency = document.getString("frequency");
+                String notes = document.getString("notes");
+
+                String startDateStr = document.getString("startDate");
+                String endDateStr = document.getString("endDate");
+
+                LocalDate startDate = null;
+                LocalDate endDate = null;
+
+                if (startDateStr != null) {
+                    startDate = LocalDate.parse(startDateStr);
+                }
+                if (endDateStr != null) {
+                    endDate = LocalDate.parse(endDateStr);
+                }
+
+                Medication newmedication = new Medication(docID, medname, dosage, frequency, startDate, endDate, notes);
+
+                medications.add(newmedication);
+
+            }
+
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println("Error loading medication" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void saveCalorieGoalToFirestore(){
@@ -362,5 +400,9 @@ public class Session {
 
     public String getLatestSleepArticle() {
         return latestSleepArticle;
+    }
+
+    public ObservableList<Medication> getMedications() {
+        return medications;
     }
 }

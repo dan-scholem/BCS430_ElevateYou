@@ -1,5 +1,6 @@
 package com.elevate5.elevateyou;
 
+import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.view.AppointmentView;
 import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
@@ -90,7 +91,7 @@ public class MedicationController {
     @FXML
     private TableColumn<Medication, String> notesColumn;
 
-    private final ObservableList<Medication> medications = FXCollections.observableArrayList();
+    private ObservableList<Medication> medications = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() throws ExecutionException, InterruptedException {
@@ -112,47 +113,12 @@ public class MedicationController {
 
         medications.clear();
 
-        try {
-            CollectionReference medCollectionRef = App.fstore.collection("Medications").document(App.theUser.getEmail()).collection("UserMedications");
+        medications.addAll(SessionManager.getSession().getMedications());
 
-            ApiFuture<QuerySnapshot> query = medCollectionRef.get();
-
-            List<QueryDocumentSnapshot> documents = query.get().getDocuments();
-
-            for (QueryDocumentSnapshot document : documents) {
-                String docID = document.getId();
-                String medname = document.getString("medicationName");
-                String dosage = document.getString("dosage");
-                String frequency = document.getString("frequency");
-                String notes = document.getString("notes");
-
-                String startDateStr = document.getString("startDate");
-                String endDateStr = document.getString("endDate");
-
-                LocalDate startDate = null;
-                LocalDate endDate = null;
-
-                if (startDateStr != null) {
-                    startDate = LocalDate.parse(startDateStr);
-                }
-                if (endDateStr != null) {
-                    endDate = LocalDate.parse(endDateStr);
-                }
-
-                Medication newmedication = new Medication(docID, medname, dosage, frequency, startDate, endDate, notes);
-
-                medications.add(newmedication);
-
-            }
-
-        } catch (ExecutionException | InterruptedException e) {
-            System.out.println("Error loading medication" + e.getMessage());
-            throw new RuntimeException(e);
-        }
     }
 
 
-    /**
+        /**
      * This method is for adding a new medication into the table after the Add button is clicked
      **/
 

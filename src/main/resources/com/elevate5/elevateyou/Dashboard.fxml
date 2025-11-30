@@ -40,13 +40,13 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
          <children>
-                 <Pane prefHeight="78.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
+                 <Pane prefHeight="60.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
                      <effect>
                          <DropShadow />
                      </effect>
                      <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
                  </Pane>
-            <Label fx:id="latestSleepArticleLabel" text="Label">
+            <Label fx:id="latestSleepArticleLabel" text="Label" wrapText="true">
                <VBox.margin>
                   <Insets left="10.0" top="50.0" />
                </VBox.margin></Label>
@@ -78,12 +78,17 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
          <children>
-                 <Pane prefHeight="96.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;">
+                 <Pane prefHeight="60.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;">
                      <effect>
                          <DropShadow />
                      </effect>
                      <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
                  </Pane>
+            <Label fx:id="medicationsLabel" text="Label" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" top="50.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
        </GridPane>

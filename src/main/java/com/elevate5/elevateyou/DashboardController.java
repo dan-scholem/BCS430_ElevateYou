@@ -93,7 +93,9 @@ public class DashboardController {
         calorieChart.setLegendVisible(false);
 
         latestSleepArticleLabel.setText(SessionManager.getSession().getLatestSleepArticle());
-        latestSleepArticleLabel.setWrapText(true);
+
+
+
 
     }
 
