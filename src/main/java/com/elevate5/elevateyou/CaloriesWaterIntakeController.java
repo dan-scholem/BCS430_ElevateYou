@@ -1,43 +1,26 @@
 package com.elevate5.elevateyou;
 
 import com.elevate5.elevateyou.session.SessionManager;
-import com.elevate5.elevateyou.view.AppointmentView;
-import com.elevate5.elevateyou.view.CalendarView;
 import com.google.api.core.ApiFuture;
-import com.google.api.core.ApiService;
 import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 public class CaloriesWaterIntakeController {
 
@@ -97,33 +80,13 @@ public class CaloriesWaterIntakeController {
         calDate.setValue(LocalDate.now());
         waterDate.setValue(LocalDate.now());
 
-        //Initializes calorieDataMap with Firestore Data
-        try{
-            int calorieGoal = SessionManager.getSession().getCalorieGoal();
-            calorieGoalField.setText(calorieGoal + "");
-            calorieDataMap = SessionManager.getSession().getCalorieDataMap();
-            calorieData = SessionManager.getSession().getCalorieDataMap().get(LocalDate.now().toString());
+        //Initializes calorieDataMap from Session data
+        calorieGoalField.setText(SessionManager.getSession().getCalorieGoal() + "");
+        calorieDataMap = SessionManager.getSession().getCalorieDataMap();
+        calorieData = calorieDataMap.get(LocalDate.now().toString());
 
-            DocumentReference waterDocRef = SessionManager.getSession().getWaterDocRef();
-            ApiFuture<DocumentSnapshot> future = waterDocRef.get();
-            DocumentSnapshot doc = future.get();
-            if(doc.exists()) {
-                for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
-                    List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
-                    ObservableList<WaterEntry> loadedWaterData = FXCollections.observableArrayList();
-                    for (int i = 0; i < data.size(); i++) {
-                        String date = data.get(i).get("date").toString();
-                        int ounces = Integer.parseInt(data.get(i).get("ounces").toString());
-                        WaterEntry loadedWaterEntry = new WaterEntry(date, ounces);
-                        loadedWaterData.add(loadedWaterEntry);
-                        waterDataMap.put(date, loadedWaterData);
-                    }
-                }
-                waterData = waterDataMap.get(LocalDate.now().toString());
-            }
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        waterDataMap = SessionManager.getSession().getWaterDataMap();
+        waterData = waterDataMap.get(LocalDate.now().toString());
 
         // Calories table
         colCalDate.setCellValueFactory(new PropertyValueFactory<>("date"));

@@ -189,10 +189,10 @@ public class Session {
                     if(!key.equals("CalorieGoal")) {
                         List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
                         ObservableList<CaloriesWaterIntakeController.CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
-                        for (int i = 0; i < data.size(); i++) {
-                            String date = data.get(i).get("date").toString();
-                            int calories = Integer.parseInt(data.get(i).get("calories").toString());
-                            String food = data.get(i).get("food").toString();
+                        for (Map<String, Object> datum : data) {
+                            String date = datum.get("date").toString();
+                            int calories = Integer.parseInt(datum.get("calories").toString());
+                            String food = datum.get("food").toString();
                             CaloriesWaterIntakeController.CalorieEntry loadedEntry = new CaloriesWaterIntakeController.CalorieEntry(date, food, calories);
                             loadedCaloriesData.add(loadedEntry);
                             calorieDataMap.put(date, loadedCaloriesData);
@@ -202,6 +202,23 @@ public class Session {
         }
 
         waterDocRef = App.fstore.collection("Water").document(this.userID);
+        future = waterDocRef.get();
+        doc = future.get();
+
+        if(doc.exists()) {
+            for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
+                List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                ObservableList<CaloriesWaterIntakeController.WaterEntry> loadedWaterData = FXCollections.observableArrayList();
+                for (Map<String, Object> datum : data) {
+                    String date = datum.get("date").toString();
+                    int ounces = Integer.parseInt(datum.get("ounces").toString());
+                    CaloriesWaterIntakeController.WaterEntry loadedWaterEntry = new CaloriesWaterIntakeController.WaterEntry(date, ounces);
+                    loadedWaterData.add(loadedWaterEntry);
+                    waterDataMap.put(date, loadedWaterData);
+                }
+            }
+            //waterData = waterDataMap.get(LocalDate.now().toString());
+        }
 
         weightEntryMap = new HashMap<>();
         weightLogDocRef = App.fstore.collection("Weight Log").document(this.userID);
