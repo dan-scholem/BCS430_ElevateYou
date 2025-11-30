@@ -16,8 +16,6 @@ import java.util.TreeMap;
 public class DashboardController {
 
 
-    private Map<String, Object> weightLog;
-
     @FXML
     private LineChart<String, Number> weightChart;
     @FXML
@@ -28,21 +26,19 @@ public class DashboardController {
     @FXML
     public void initialize() {
 
-        weightLog = new LinkedHashMap<>(new TreeMap<>(SessionManager.getSession().getWeightEntryMap()));
-
+        Map<String, Object> weightLog = new LinkedHashMap<>(new TreeMap<>(SessionManager.getSession().getWeightEntryMap()));
 
         weightXAxis.setLabel("Date");
         weightYAxis.setLabel("Weight (lbs)");
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        //series.setName("Weight");
 
         long minWeight = 1000;
         long maxWeight = 0;
 
         for (Map.Entry<String, Object> entry : weightLog.entrySet()) {
             System.out.printf(entry.getKey() + ": " + entry.getValue() + "\n");
-            series.getData().add(new XYChart.Data<>(entry.getKey(), (Long) entry.getValue()));
+            series.getData().add(new XYChart.Data<>(formatDate(entry.getKey()), (Long) entry.getValue()));
             if((Long)entry.getValue() < minWeight){
                 minWeight = (Long)entry.getValue();
             }
@@ -56,8 +52,14 @@ public class DashboardController {
         weightYAxis.setUpperBound(maxWeight + 10);
 
         weightChart.getData().add(series);
+        weightChart.setLegendVisible(false);
 
 
+    }
+
+    public String formatDate(String date){
+        String[] dateSplit = date.split("-");
+        return dateSplit[1] + "/" + dateSplit[2];
     }
 
 
