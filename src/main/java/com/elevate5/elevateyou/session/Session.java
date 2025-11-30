@@ -1,12 +1,14 @@
 package com.elevate5.elevateyou.session;
 
 import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.CaloriesWaterIntakeController;
+import com.elevate5.elevateyou.Medication;
 import com.elevate5.elevateyou.model.*;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.auth.UserRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.web.WebView;
 
 import java.time.LocalDate;
@@ -26,8 +28,15 @@ public class Session {
     private WebView webView;
     private int calorieGoal;
     private final DocumentReference caloriesDocRef;
+    private final DocumentReference waterDocRef;
+    private Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> calorieDataMap = new HashMap<>();
+    private Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap = new HashMap<>();
     private final Map<String, Object> weightEntryMap;
     private final DocumentReference weightLogDocRef;
+    private String latestSleepArticle;
+    private final CollectionReference medCollectionRef;
+    private final ObservableList<Medication> medications = FXCollections.observableArrayList();
+
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         webView = new WebView();
@@ -179,6 +188,38 @@ public class Session {
         if(doc.exists()) {
             int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
             setCalorieGoal(calorieGoal);
+                for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
+                    if(!key.equals("CalorieGoal")) {
+                        List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                        ObservableList<CaloriesWaterIntakeController.CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
+                        for (Map<String, Object> datum : data) {
+                            String date = datum.get("date").toString();
+                            int calories = Integer.parseInt(datum.get("calories").toString());
+                            String food = datum.get("food").toString();
+                            CaloriesWaterIntakeController.CalorieEntry loadedEntry = new CaloriesWaterIntakeController.CalorieEntry(date, food, calories);
+                            loadedCaloriesData.add(loadedEntry);
+                            calorieDataMap.put(date, loadedCaloriesData);
+                        }
+                    }
+                }
+        }
+
+        waterDocRef = App.fstore.collection("Water").document(this.userID);
+        future = waterDocRef.get();
+        doc = future.get();
+
+        if(doc.exists()) {
+            for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
+                List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                ObservableList<CaloriesWaterIntakeController.WaterEntry> loadedWaterData = FXCollections.observableArrayList();
+                for (Map<String, Object> datum : data) {
+                    String date = datum.get("date").toString();
+                    int ounces = Integer.parseInt(datum.get("ounces").toString());
+                    CaloriesWaterIntakeController.WaterEntry loadedWaterEntry = new CaloriesWaterIntakeController.WaterEntry(date, ounces);
+                    loadedWaterData.add(loadedWaterEntry);
+                    waterDataMap.put(date, loadedWaterData);
+                }
+            }
         }
 
         weightEntryMap = new HashMap<>();
@@ -190,6 +231,59 @@ public class Session {
             if(weightLogMap != null) {
                 weightEntryMap.putAll(weightLogMap);
             }
+        }
+
+        DocumentReference sleepDocRef = App.fstore.collection("Sleep").document(this.userID);
+        future = sleepDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            Map<String, Object> sleepMap = (Map<String, Object>) doc.getData().get("article");
+            if(sleepMap != null) {
+                TreeMap<String, Object> sortedSleepMap = new TreeMap<>(sleepMap);
+                Map.Entry<String, Object> lastEntry  = sortedSleepMap.lastEntry();
+                Map<String, Object> sleepData = (Map<String, Object>) lastEntry.getValue();
+                latestSleepArticle = (String)sleepData.get("article");
+                latestSleepArticle = latestSleepArticle.replaceAll("is", "was");
+                latestSleepArticle = Character.toLowerCase(latestSleepArticle.charAt(0)) + latestSleepArticle.substring(1);
+                latestSleepArticle = "On " + lastEntry.getKey() + " " + latestSleepArticle;
+            }
+        }
+
+        medCollectionRef = App.fstore.collection("Medications").document(user.getEmail()).collection("UserMedications");
+        try {
+            ApiFuture<QuerySnapshot> query = medCollectionRef.get();
+
+            List<QueryDocumentSnapshot> documents = query.get().getDocuments();
+
+            for (QueryDocumentSnapshot document : documents) {
+                String docID = document.getId();
+                String medname = document.getString("medicationName");
+                String dosage = document.getString("dosage");
+                String frequency = document.getString("frequency");
+                String notes = document.getString("notes");
+
+                String startDateStr = document.getString("startDate");
+                String endDateStr = document.getString("endDate");
+
+                LocalDate startDate = null;
+                LocalDate endDate = null;
+
+                if (startDateStr != null) {
+                    startDate = LocalDate.parse(startDateStr);
+                }
+                if (endDateStr != null) {
+                    endDate = LocalDate.parse(endDateStr);
+                }
+
+                Medication newmedication = new Medication(docID, medname, dosage, frequency, startDate, endDate, notes);
+
+                medications.add(newmedication);
+
+            }
+
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println("Error loading medication" + e.getMessage());
+            throw new RuntimeException(e);
         }
 
     }
@@ -280,7 +374,35 @@ public class Session {
         return caloriesDocRef;
     }
 
+    public DocumentReference getWaterDocRef() {
+        return waterDocRef;
+    }
+
     public Map<String, Object> getWeightEntryMap() {
         return weightEntryMap;
+    }
+
+    public Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> getCalorieDataMap() {
+        return calorieDataMap;
+    }
+
+    public void setCalorieDataMap(Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> calorieDataMap) {
+        this.calorieDataMap = calorieDataMap;
+    }
+
+    public Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> getWaterDataMap() {
+        return waterDataMap;
+    }
+
+    public void setWaterDataMap(Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap) {
+        this.waterDataMap = waterDataMap;
+    }
+
+    public String getLatestSleepArticle() {
+        return latestSleepArticle;
+    }
+
+    public ObservableList<Medication> getMedications() {
+        return medications;
     }
 }

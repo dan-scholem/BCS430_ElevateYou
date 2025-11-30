@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
-       <GridPane hgap="15.0" prefHeight="244.0" prefWidth="759.0" vgap="15.0" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.DashboardController">
+       <GridPane hgap="15.0" prefHeight="340.0" prefWidth="900.0" vgap="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
            <columnConstraints>
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -14,40 +16,89 @@
            </columnConstraints>
            <rowConstraints>
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
-           <Pane prefHeight="120.0" prefWidth="194.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 20;">
-               <effect>
-                   <DropShadow />
-               </effect>
-               <Label layoutX="14.0" layoutY="20.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Steps Taken" />
-           </Pane>
-           <Pane prefHeight="78.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;" GridPane.columnIndex="2">
-               <effect>
-                   <DropShadow />
-               </effect>
-               <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories Burned" />
-           </Pane>
-           <Pane prefHeight="144.0" prefWidth="204.0" style="-fx-background-color: #FFDDD2; -fx-background-radius: 20;" GridPane.columnIndex="1">
-               <effect>
-                   <DropShadow />
-               </effect>
-               <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
-           </Pane>
-           <Pane prefHeight="96.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;" GridPane.columnIndex="3">
-               <effect>
-                   <DropShadow />
-               </effect>
-               <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
-           </Pane>
+      <VBox minHeight="200.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+         <children>
+                 <Pane prefHeight="120.0" prefWidth="194.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 20;">
+                     <effect>
+                         <DropShadow />
+                     </effect>
+                     <Label layoutX="14.0" layoutY="20.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories" />
+                 </Pane>
+            <LineChart fx:id="calorieChart" prefHeight="300.0" prefWidth="240.0">
+              <xAxis>
+                <CategoryAxis fx:id="calorieXAxis" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="calorieYAxis" side="LEFT" />
+              </yAxis>
+               <VBox.margin>
+                  <Insets left="-40.0" />
+               </VBox.margin>
+            </LineChart>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+         <children>
+                 <Pane prefHeight="60.0" prefWidth="174.0" style="-fx-background-color: #EDF6F9; -fx-background-radius: 20;">
+                     <effect>
+                         <DropShadow />
+                     </effect>
+                     <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Sleep" />
+                 </Pane>
+            <Label fx:id="latestSleepArticleLabel" text="Label" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" top="50.0" />
+               </VBox.margin></Label>
+         </children>
+      </VBox>
+      <VBox prefHeight="400.0" prefWidth="100.0" spacing="30.0" GridPane.columnIndex="1">
+         <children>
+                 <Pane prefHeight="120.0" prefWidth="194.0" style="-fx-background-color: #FFDDD2; -fx-background-radius: 20;">
+                     <effect>
+                         <DropShadow />
+                     </effect>
+                     <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Weight" />
+                 </Pane>
+            <LineChart fx:id="weightChart" prefHeight="300.0" prefWidth="240.0">
+              <xAxis>
+                <CategoryAxis fx:id="weightXAxis" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="weightYAxis" side="LEFT" />
+              </yAxis>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </LineChart>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+         <children>
+                 <Pane prefHeight="60.0" prefWidth="234.0" style="-fx-background-color: #E29578; -fx-background-radius: 20;">
+                     <effect>
+                         <DropShadow />
+                     </effect>
+                     <Label layoutX="14.0" layoutY="14.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Medications" />
+                 </Pane>
+            <Label fx:id="medicationsLabel" text="Label" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" top="50.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
        </GridPane>
-       <Pane prefHeight="190.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0">
+       <Pane prefHeight="80.0" prefWidth="340.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0">
            <effect>
                <DropShadow />
            </effect>
            <Label layoutX="20.0" layoutY="26.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Recent Activity" />
        </Pane>
-       <Pane prefHeight="190.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="430.0">
+       <Pane prefHeight="80.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="480.0">
            <effect>
                <DropShadow />
            </effect>
