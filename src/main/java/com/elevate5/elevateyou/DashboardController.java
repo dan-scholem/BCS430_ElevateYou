@@ -9,6 +9,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,6 +32,8 @@ public class DashboardController {
     private CategoryAxis calorieXAxis;
     @FXML
     private NumberAxis calorieYAxis;
+    @FXML
+    private Label latestSleepArticleLabel;
 
     @FXML
     public void initialize() {
@@ -89,6 +92,8 @@ public class DashboardController {
         calorieChart.getData().add(calorieSeries);
         calorieChart.setLegendVisible(false);
 
+        latestSleepArticleLabel.setText(SessionManager.getSession().getLatestSleepArticle());
+        latestSleepArticleLabel.setWrapText(true);
 
     }
 

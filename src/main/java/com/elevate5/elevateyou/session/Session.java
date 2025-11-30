@@ -34,6 +34,8 @@ public class Session {
     private Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap = new HashMap<>();
     private final Map<String, Object> weightEntryMap;
     private final DocumentReference weightLogDocRef;
+    private String latestSleepArticle;
+
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
         webView = new WebView();
@@ -217,7 +219,6 @@ public class Session {
                     waterDataMap.put(date, loadedWaterData);
                 }
             }
-            //waterData = waterDataMap.get(LocalDate.now().toString());
         }
 
         weightEntryMap = new HashMap<>();
@@ -228,6 +229,22 @@ public class Session {
             Map<String, Object> weightLogMap = doc.getData();
             if(weightLogMap != null) {
                 weightEntryMap.putAll(weightLogMap);
+            }
+        }
+
+        DocumentReference sleepDocRef = App.fstore.collection("Sleep").document(this.userID);
+        future = sleepDocRef.get();
+        doc = future.get();
+        if(doc.exists()) {
+            Map<String, Object> sleepMap = (Map<String, Object>) doc.getData().get("article");
+            if(sleepMap != null) {
+                TreeMap<String, Object> sortedSleepMap = new TreeMap<>(sleepMap);
+                Map.Entry<String, Object> lastEntry  = sortedSleepMap.lastEntry();
+                Map<String, Object> sleepData = (Map<String, Object>) lastEntry.getValue();
+                latestSleepArticle = (String)sleepData.get("article");
+                latestSleepArticle = latestSleepArticle.replaceAll("is", "was");
+                latestSleepArticle = Character.toLowerCase(latestSleepArticle.charAt(0)) + latestSleepArticle.substring(1);
+                latestSleepArticle = "On " + lastEntry.getKey() + " " + latestSleepArticle;
             }
         }
 
@@ -341,5 +358,9 @@ public class Session {
 
     public void setWaterDataMap(Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap) {
         this.waterDataMap = waterDataMap;
+    }
+
+    public String getLatestSleepArticle() {
+        return latestSleepArticle;
     }
 }
