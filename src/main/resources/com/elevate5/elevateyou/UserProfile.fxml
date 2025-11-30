@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
-   <Pane layoutX="215.0" layoutY="32.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
+   <Pane layoutX="215.0" layoutY="32.0" prefHeight="625.0" prefWidth="979.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
       <children>
           <!--
           <VBox alignment="BOTTOM_CENTER" layoutY="140.0" prefHeight="586.0" prefWidth="198.0" spacing="14"
@@ -112,11 +113,9 @@
           <Button fx:id="uploadImageButton" layoutX="232.0" layoutY="530.0" mnemonicParsing="false" onAction="#uploadProfilePhoto" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
           <Label layoutX="18.0" layoutY="228.0" styleClass="settingslabel" stylesheets="@styles.css" text="Age" />
           <Label layoutX="12.0" layoutY="340.0" styleClass="settingslabel" stylesheets="@styles.css" text="Height" />
-          <Label layoutX="10.0" layoutY="396.0" styleClass="settingslabel" stylesheets="@styles.css" text="Weight" />
           <TextField fx:id="ageField" layoutX="135.0" layoutY="228.0" prefHeight="25.0" prefWidth="99.0" promptText="Enter your age" />
           <TextField fx:id="feetField" layoutX="135.0" layoutY="340.0" prefHeight="25.0" prefWidth="52.0" promptText="Feet" />
           <Label layoutX="10.0" layoutY="284.0" styleClass="settingslabel" stylesheets="@styles.css" text="Gender" />
-          <TextField fx:id="weightField" layoutX="135.0" layoutY="396.0" prefHeight="25.0" prefWidth="74.0" promptText="Weight" />
           <RadioButton fx:id="genderButton1" layoutX="135.0" layoutY="284.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="settingslabel" stylesheets="@styles.css" text="Male">
               <toggleGroup>
                 <ToggleGroup fx:id="gender" />
@@ -126,9 +125,8 @@
           <TextField fx:id="inchesField" layoutX="220.0" layoutY="340.0" prefHeight="25.0" prefWidth="52.0" promptText="Inches" />
           <Label layoutX="190.0" layoutY="340.0" styleClass="settingslabel" stylesheets="@styles.css" text="ft" />
           <Label layoutX="275.0" layoutY="340.0" prefHeight="24.0" prefWidth="27.0" styleClass="settingslabel" stylesheets="@styles.css" text="in" />
-          <Label layoutX="215.0" layoutY="396.0" styleClass="settingslabel" stylesheets="@styles.css" text="lbs" />
-          <Label layoutX="12.0" layoutY="452.0" styleClass="settingslabel" stylesheets="@styles.css" text="Bio" />
-          <TextArea fx:id="userbioTextField" layoutX="135.0" layoutY="442.0" prefHeight="66.0" prefWidth="277.0" promptText="Tell us about you" />
+          <Label layoutX="15.0" layoutY="411.0" styleClass="settingslabel" stylesheets="@styles.css" text="Bio" />
+          <TextArea fx:id="userbioTextField" layoutX="134.0" layoutY="390.0" prefHeight="66.0" prefWidth="277.0" promptText="Tell us about you" />
           <Label layoutX="14.0" layoutY="172.0" styleClass="settingslabel" stylesheets="@styles.css" text="Email" />
           <TextField fx:id="userEmail" layoutX="135.0" layoutY="172.0" promptText="Email" />
           <Label fx:id="weightmessage" layoutX="217.0" layoutY="423.0" />
@@ -138,6 +136,12 @@
           <Button fx:id="emergencyCardButton" layoutX="21.0" layoutY="585.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" styleClass="savebutton" stylesheets="styles.css" text="Emergency Card" />
           <Button fx:id="importButton" layoutX="595.0" layoutY="590.0" onAction="#onImportAllData" styleClass="savebutton" stylesheets="styles.css" text="Import" />
           <Button fx:id="exportButton" layoutX="673.0" layoutY="590.0" onAction="#onExportAllData" styleClass="savebutton" stylesheets="styles.css" text="Export" />
+         <Label layoutX="357.0" layoutY="60.0" styleClass="settingslabel" stylesheets="@styles.css" text="New Password" />
+         <PasswordField fx:id="newPassField" layoutX="515.0" layoutY="60.0" />
+         <Button fx:id="updatepassButton" layoutX="453.0" layoutY="204.0" mnemonicParsing="false" onAction="#updateUserPassword" prefHeight="31.0" prefWidth="151.0" styleClass="updatepass" text="Update Password" />
+         <Label layoutX="357.0" layoutY="104.0" styleClass="settingslabel" stylesheets="@styles.css" text="Confirm Password" />
+         <PasswordField fx:id="confirmNewPass" layoutX="538.0" layoutY="104.0" />
+         <Label fx:id="passlabel" layoutX="331.0" layoutY="155.0" prefHeight="31.0" prefWidth="630.0" wrapText="true" />
       </children>
    </Pane>
 </AnchorPane>
