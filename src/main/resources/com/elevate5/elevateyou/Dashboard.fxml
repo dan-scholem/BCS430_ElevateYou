@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -24,13 +25,16 @@
                      </effect>
                      <Label layoutX="14.0" layoutY="20.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Calories" />
                  </Pane>
-            <LineChart prefHeight="300.0" prefWidth="240.0">
+            <LineChart fx:id="calorieChart" prefHeight="300.0" prefWidth="240.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis fx:id="calorieXAxis" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis fx:id="calorieYAxis" side="LEFT" />
               </yAxis>
+               <VBox.margin>
+                  <Insets left="-40.0" />
+               </VBox.margin>
             </LineChart>
          </children>
       </VBox>
@@ -59,6 +63,9 @@
               <yAxis>
                 <NumberAxis fx:id="weightYAxis" side="LEFT" />
               </yAxis>
+               <VBox.margin>
+                  <Insets left="-40.0" />
+               </VBox.margin>
             </LineChart>
          </children>
       </VBox>
