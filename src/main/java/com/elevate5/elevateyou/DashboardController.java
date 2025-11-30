@@ -34,6 +34,8 @@ public class DashboardController {
     private NumberAxis calorieYAxis;
     @FXML
     private Label latestSleepArticleLabel;
+    @FXML
+    private Label medicationsLabel;
 
     @FXML
     public void initialize() {
@@ -93,6 +95,12 @@ public class DashboardController {
         calorieChart.setLegendVisible(false);
 
         latestSleepArticleLabel.setText(SessionManager.getSession().getLatestSleepArticle());
+
+        String medicationText = "";
+        for(int i = 0; i < SessionManager.getSession().getMedications().size(); i++){
+            medicationText +=  SessionManager.getSession().getMedications().get(i).getMedicationName() + " " + SessionManager.getSession().getMedications().get(i).getFrequency() + "\n";
+        }
+        medicationsLabel.setText(medicationText);
 
 
 

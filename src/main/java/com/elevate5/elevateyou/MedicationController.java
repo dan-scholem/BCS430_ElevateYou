@@ -178,6 +178,7 @@ public class MedicationController {
         Medication newmedication = new Medication(medDocID, medname, dosage, frequency, startdate, enddate, notes);
 
         medications.add(newmedication);
+        SessionManager.getSession().getMedications().add(newmedication);
 
         mednameField.clear();
         dosageField.clear();
