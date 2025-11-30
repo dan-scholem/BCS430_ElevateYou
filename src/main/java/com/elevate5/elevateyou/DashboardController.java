@@ -48,12 +48,13 @@ public class DashboardController {
         long maxWeight = 0;
 
         for (Map.Entry<String, Object> entry : weightLog.entrySet()) {
-            series.getData().add(new XYChart.Data<>(formatDate(entry.getKey()), (Long) entry.getValue()));
-            if((Long)entry.getValue() < minWeight){
-                minWeight = (Long)entry.getValue();
+            long weight = Long.parseLong(String.valueOf(entry.getValue()));
+            series.getData().add(new XYChart.Data<>(formatDate(entry.getKey()), weight));
+            if(weight < minWeight){
+                minWeight = weight;
             }
-            if((Long)entry.getValue() > maxWeight){
-                maxWeight = (Long)entry.getValue();
+            if(weight > maxWeight){
+                maxWeight = weight;
             }
         }
 
