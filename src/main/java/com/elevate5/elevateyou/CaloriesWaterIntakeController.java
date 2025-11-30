@@ -99,32 +99,14 @@ public class CaloriesWaterIntakeController {
 
         //Initializes calorieDataMap with Firestore Data
         try{
-            DocumentReference docRef = SessionManager.getSession().getCaloriesDocRef();
-            ApiFuture<DocumentSnapshot> future = docRef.get();
+            int calorieGoal = SessionManager.getSession().getCalorieGoal();
+            calorieGoalField.setText(calorieGoal + "");
+            calorieDataMap = SessionManager.getSession().getCalorieDataMap();
+            calorieData = SessionManager.getSession().getCalorieDataMap().get(LocalDate.now().toString());
+
+            DocumentReference waterDocRef = SessionManager.getSession().getWaterDocRef();
+            ApiFuture<DocumentSnapshot> future = waterDocRef.get();
             DocumentSnapshot doc = future.get();
-            if(doc.exists()) {
-                for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
-                    if(!key.equals("CalorieGoal")) {
-                        List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
-                        ObservableList<CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
-                        for (int i = 0; i < data.size(); i++) {
-                            String date = data.get(i).get("date").toString();
-                            int calories = Integer.parseInt(data.get(i).get("calories").toString());
-                            String food = data.get(i).get("food").toString();
-                            CalorieEntry loadedEntry = new CalorieEntry(date, food, calories);
-                            loadedCaloriesData.add(loadedEntry);
-                            calorieDataMap.put(date, loadedCaloriesData);
-                        }
-                    }else{
-                        int calorieGoal = SessionManager.getSession().getCalorieGoal();
-                        calorieGoalField.setText(calorieGoal + "");
-                    }
-                }
-                calorieData = calorieDataMap.get(LocalDate.now().toString());
-            }
-            docRef = App.fstore.collection("Water").document(SessionManager.getSession().getUserID());
-            future = docRef.get();
-            doc = future.get();
             if(doc.exists()) {
                 for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
                     List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);

@@ -1,12 +1,15 @@
 package com.elevate5.elevateyou.session;
 
 import com.elevate5.elevateyou.App;
+import com.elevate5.elevateyou.CaloriesWaterIntakeController;
 import com.elevate5.elevateyou.model.*;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.UserRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.web.WebView;
 
 import java.time.LocalDate;
@@ -26,6 +29,9 @@ public class Session {
     private WebView webView;
     private int calorieGoal;
     private final DocumentReference caloriesDocRef;
+    private final DocumentReference waterDocRef;
+    private Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> calorieDataMap = new HashMap<>();
+    private Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap = new HashMap<>();
     private final Map<String, Object> weightEntryMap;
     private final DocumentReference weightLogDocRef;
 
@@ -179,7 +185,23 @@ public class Session {
         if(doc.exists()) {
             int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
             setCalorieGoal(calorieGoal);
+                for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
+                    if(!key.equals("CalorieGoal")) {
+                        List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
+                        ObservableList<CaloriesWaterIntakeController.CalorieEntry> loadedCaloriesData = FXCollections.observableArrayList();
+                        for (int i = 0; i < data.size(); i++) {
+                            String date = data.get(i).get("date").toString();
+                            int calories = Integer.parseInt(data.get(i).get("calories").toString());
+                            String food = data.get(i).get("food").toString();
+                            CaloriesWaterIntakeController.CalorieEntry loadedEntry = new CaloriesWaterIntakeController.CalorieEntry(date, food, calories);
+                            loadedCaloriesData.add(loadedEntry);
+                            calorieDataMap.put(date, loadedCaloriesData);
+                        }
+                    }
+                }
         }
+
+        waterDocRef = App.fstore.collection("Water").document(this.userID);
 
         weightEntryMap = new HashMap<>();
         weightLogDocRef = App.fstore.collection("Weight Log").document(this.userID);
@@ -280,7 +302,27 @@ public class Session {
         return caloriesDocRef;
     }
 
+    public DocumentReference getWaterDocRef() {
+        return waterDocRef;
+    }
+
     public Map<String, Object> getWeightEntryMap() {
         return weightEntryMap;
+    }
+
+    public Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> getCalorieDataMap() {
+        return calorieDataMap;
+    }
+
+    public void setCalorieDataMap(Map<String, ObservableList<CaloriesWaterIntakeController.CalorieEntry>> calorieDataMap) {
+        this.calorieDataMap = calorieDataMap;
+    }
+
+    public Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> getWaterDataMap() {
+        return waterDataMap;
+    }
+
+    public void setWaterDataMap(Map<String, ObservableList<CaloriesWaterIntakeController.WaterEntry>> waterDataMap) {
+        this.waterDataMap = waterDataMap;
     }
 }
