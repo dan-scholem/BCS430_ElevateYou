@@ -85,7 +85,7 @@
     -fx-font-weight: bold;
 }
 
-.apppointmentbutton, .tutorialsbutton, .calendarbutton, .friendsbutton, .chatbutton, .reviewsbutton, .logoutbutton {
+.apppointmentbutton, .tutorialsbutton, .calendarbutton, .friendsbutton, .chatbutton, .reviewsbutton, .logoutbutton, .updatepass {
     -fx-background-color: #E29578;
     -fx-background-radius: 30px;
     -fx-text-fill: #000000;

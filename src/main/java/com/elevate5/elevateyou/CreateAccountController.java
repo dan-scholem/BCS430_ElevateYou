@@ -35,6 +35,8 @@ import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import static com.elevate5.elevateyou.App.fauth;
@@ -71,9 +73,6 @@ public class CreateAccountController {
 
     @FXML
     private TextField inchesField;
-
-    @FXML
-    private TextField weightField;
 
     @FXML
     private TextArea userbioTextField;
@@ -126,6 +125,18 @@ public class CreateAccountController {
     private ImageView userImage;
 
     private LandingView mainView;
+
+    @FXML
+    private PasswordField confirmNewPass;
+
+    @FXML
+    private PasswordField currentPassField;
+
+    @FXML
+    private PasswordField newPassField;
+
+    @FXML
+    private Label passlabel;
 
 
     @FXML
@@ -202,7 +213,6 @@ public class CreateAccountController {
         data.put("LastName", lastName.getText());
         data.put("Age", "");
         data.put("Gender", "");
-        data.put("Weight", "");
         data.put("HeightInFeet", "");
         data.put("HeightInInches", "");
         data.put("UserBio", "");
@@ -372,33 +382,6 @@ public class CreateAccountController {
 
         }
 
-        /** Validate the user's weight **/
-
-        String weight = weightField.getText().trim();
-
-        if (!weight.isEmpty()) {
-
-            try {
-
-                int userweight = Integer.parseInt(weight);
-
-                if (userweight < 0 || userweight > 250) {
-
-                    weightmessage.setText("Please enter a valid weight amount (0-250)");
-                    weightmessage.setStyle("-fx-text-fill: red;");
-                    validationError = true;
-                } else {
-                    userinfo.put("Weight", String.valueOf(userweight));
-                }
-
-            } catch (NumberFormatException e) {
-
-                weightmessage.setText("Weight must be a valid number!");
-                weightmessage.setStyle("-fx-text-fill: red;");
-                validationError = true;
-            }
-        }
-
         /** Validates the user's email address **/
 
         String email = userEmail.getText().trim().toLowerCase();
@@ -466,7 +449,6 @@ public class CreateAccountController {
             ageField.clear();
             feetField.clear();
             inchesField.clear();
-            weightField.clear();
             userbioTextField.clear();
 
             if (genderButton1.isSelected()) {
@@ -511,6 +493,73 @@ public class CreateAccountController {
 
                 throw new RuntimeException(e);
             }
+        }
+
+        /** Regex expression for validating the user's password **/
+
+        private static Pattern userpassPattern = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*])(?=\\S+$).{6,10}$");
+
+        public static boolean validateUserPassword (String password) {
+
+            if (password == null) {
+
+                return false;
+            }
+
+            Matcher passmatch = userpassPattern.matcher(password);
+
+            return passmatch.matches();
+        }
+
+        /** Method to update the user's password in Firestore **/
+        @FXML
+        protected void updateUserPassword(ActionEvent event) {
+
+            String documentID = SessionManager.getSession().getUser().getUid();
+
+            String newUserPassword  = newPassField.getText();
+            String confirmUserPassword = confirmNewPass.getText();
+
+            if (!newUserPassword.equals(confirmUserPassword)) {
+
+                passlabel.setText("Passwords do not match.");
+                passlabel.setStyle("-fx-text-fill: red;");
+                return;
+            }
+
+            if (!validateUserPassword(newUserPassword)) {
+                passlabel.setText("Password must be 6 characters long, contain one uppercase and lowercase, number and a special character.");
+                passlabel.setStyle("-fx-text-fill: red;");
+                return;
+            }
+
+                try {
+                    // Updates the user's password in Firebase
+                    UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(documentID)
+                            .setPassword(newUserPassword);
+
+                    UserRecord userRecord = FirebaseAuth.getInstance().updateUser(request);
+
+                    System.out.println("Password matches and is valid");
+                    System.out.println("Successfully updated user password");
+
+                    passlabel.setText("Password updated successfully.");
+                    passlabel.setStyle("-fx-text-fill: green;");
+
+                }
+
+                catch (FirebaseAuthException e) {
+
+                    passlabel.setText("Password updated failed! Try again.");
+                    passlabel.setStyle("-fx-text-fill: red;");
+
+                    System.out.println("Failed to update user password" + e.getMessage());
+
+                }
+
+                newPassField.clear();
+                confirmNewPass.clear();
+
         }
 
         // This event is called to log the user out of the application and returns the user to the login screen
