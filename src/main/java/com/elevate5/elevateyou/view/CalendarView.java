@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -140,11 +141,8 @@ public class CalendarView extends Application {
                                 vbox.getChildren().add(dowLabel);
                                 //checks if there are events for the date in the cell and displays them
                                 if(eventManager.getEvents() != null && eventManager.getEvents().containsKey(item.getDate().toString())) {
-                                    //System.out.println("Events found at: " + item.getDate().toString());
-                                    //System.out.println(eventManager.getEvents().get(item.getDate().toString()).getClass());
                                     ArrayList<Event> events = (ArrayList<Event>) eventManager.getEvents().get(item.getDate().toString());
                                     for(Event event : events) {
-                                        //dayOfMonth = dayOfMonth + event.toString() + "\n";
                                         Button eventButton = new Button(event.toString());
                                         eventButton.setMaxWidth(Double.MAX_VALUE);
                                         eventButton.setAlignment(Pos.CENTER_LEFT);
@@ -158,22 +156,21 @@ public class CalendarView extends Application {
                                         vbox.getChildren().add(eventButton);
                                         //button representing each event, opens a popup with event info populated
                                         eventButton.setOnAction(e -> {
-                                            System.out.println("Selected event: " + event.toString());
                                             Popup popup = new Popup();
                                             if(!popup.isShowing()){
                                                 popup.setAutoHide(true);
 
                                                 VBox popBox = new VBox();
                                                 popBox.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-                                                Label popLabel = new Label("New Event");
+                                                popBox.setStyle("-fx-border-color: black;");
+                                                popBox.setPadding(new Insets(5));
+                                                Label popLabel = new Label("Event Name:");
                                                 TextField eventName = new TextField();
                                                 eventName.setText(event.getEventName());
                                                 eventName.setPromptText("Event Name...");
                                                 DatePicker eventDatePicker = new DatePicker();
                                                 eventDatePicker.setValue(LocalDate.parse(event.getDate()));
                                                 ComboBox<String> hourBox = new ComboBox<>();
-
-
                                                 ComboBox<String> minuteBox = new ComboBox<>();
                                                 if(LocalTime.parse(event.getTime()).getMinute() == 0){
                                                     minuteBox.setValue(LocalTime.parse(event.getTime()).getMinute() + "0");
@@ -196,8 +193,29 @@ public class CalendarView extends Application {
                                                 eventDescription.setText(event.getEventDescription());
                                                 eventDescription.setPromptText("Event Description...");
                                                 Button updateEventButton = new Button("Update Event");
+                                                updateEventButton.setStyle("-fx-font-family: \"Segoe UI\";\n" +
+                                                        "    -fx-font-weight: bold;\n" +
+                                                        "    -fx-background-color: #E29578;\n" +
+                                                        "    -fx-background-radius: 30px;\n" +
+                                                        "    -fx-text-fill: #000000;\n" +
+                                                        "    -fx-border-color: #FFDDD2;\n" +
+                                                        "    -fx-border-radius: 20px;");
                                                 Button cancelEventButton = new Button("Cancel");
+                                                cancelEventButton.setStyle("-fx-font-family: \"Segoe UI\";\n" +
+                                                        "    -fx-font-weight: bold;\n" +
+                                                        "    -fx-background-color: #E29578;\n" +
+                                                        "    -fx-background-radius: 30px;\n" +
+                                                        "    -fx-text-fill: #000000;\n" +
+                                                        "    -fx-border-color: #FFDDD2;\n" +
+                                                        "    -fx-border-radius: 20px;");
                                                 Button deleteEventButton = new Button("Delete");
+                                                deleteEventButton.setStyle("-fx-font-family: \"Segoe UI\";\n" +
+                                                        "    -fx-font-weight: bold;\n" +
+                                                        "    -fx-background-color: #E29578;\n" +
+                                                        "    -fx-background-radius: 30px;\n" +
+                                                        "    -fx-text-fill: #000000;\n" +
+                                                        "    -fx-border-color: #FFDDD2;\n" +
+                                                        "    -fx-border-radius: 20px;");
                                                 HBox buttonBox = new HBox();
 
                                                 hourBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -300,10 +318,13 @@ public class CalendarView extends Application {
 
                                                 popBox.getChildren().addAll(popLabel, eventName, eventDatePicker, timeBox, eventDescription, buttonBox);
                                                 popBox.setSpacing(5);
+                                                popBox.setPrefWidth(250);
 
                                                 popLabel.setAlignment(Pos.TOP_LEFT);
-                                                popLabel.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
-                                                popLabel.setPrefSize(200, 20);
+                                                popLabel.setStyle("""
+                                                    -fx-font-family: "Segoe UI";
+                                                    -fx-font-weight: bold;
+                                                    -fx-font-size:15;""");
 
                                                 popup.getContent().add(popBox);
 
@@ -326,25 +347,44 @@ public class CalendarView extends Application {
                 //cell functionality when clicking on empty space within a date
                 cell.setOnMouseClicked(event -> {
                     Popup popup = new Popup();
-                    //cell.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
                     if(cell.getItem() != null && !popup.isShowing()) {
                         popup.setAutoHide(true);
 
                         VBox popBox = new VBox();
                         popBox.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-                        Label popLabel = new Label("New Event");
+                        popBox.setStyle("-fx-border-color: black;");
+                        popBox.setPadding(new Insets(5));
+                        Label popLabel = new Label("New Event Name:");
                         TextField eventName = new TextField();
                         eventName.setPromptText("Event Name...");
                         DatePicker eventDatePicker = new DatePicker();
                         eventDatePicker.setValue(cell.getItem().getDate());
                         ComboBox<String> hourBox = new ComboBox<>();
+                        hourBox.setPromptText("Hour");
                         ComboBox<String> minuteBox = new ComboBox<>();
+                        minuteBox.setPromptText("Min");
                         ComboBox<String> AMorPMBox = new ComboBox<>();
                         HBox timeBox = new HBox();
                         TextArea eventDescription = new TextArea();
                         eventDescription.setPromptText("Event Description...");
                         Button addEventButton = new Button("Add Event");
+                        addEventButton.setStyle("""
+                                -fx-font-family: "Segoe UI";
+                                    -fx-font-weight: bold;
+                                    -fx-background-color: #E29578;
+                                    -fx-background-radius: 30px;
+                                    -fx-text-fill: #000000;
+                                    -fx-border-color: #FFDDD2;
+                                    -fx-border-radius: 20px;""");
                         Button cancelEventButton = new Button("Cancel");
+                        cancelEventButton.setStyle("""
+                                -fx-font-family: "Segoe UI";
+                                    -fx-font-weight: bold;
+                                    -fx-background-color: #E29578;
+                                    -fx-background-radius: 30px;
+                                    -fx-text-fill: #000000;
+                                    -fx-border-color: #FFDDD2;
+                                    -fx-border-radius: 20px;""");
                         HBox buttonBox = new HBox();
 
                         hourBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -419,10 +459,13 @@ public class CalendarView extends Application {
 
                         popBox.getChildren().addAll(popLabel, eventName, eventDatePicker, timeBox, eventDescription, buttonBox);
                         popBox.setSpacing(5);
+                        popBox.setPrefWidth(250);
 
                         popLabel.setAlignment(Pos.TOP_LEFT);
-                        popLabel.setStyle("-fx-background-color: lightgray; -fx-padding: 10px;");
-                        popLabel.setPrefSize(200, 20);
+                        popLabel.setStyle("""
+                                    -fx-font-family: "Segoe UI";
+                                    -fx-font-weight: bold;
+                                    -fx-font-size:15;""");
 
                         popup.getContent().add(popBox);
 
