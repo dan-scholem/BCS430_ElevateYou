@@ -46,6 +46,13 @@ public class AppointmentManager {
                 date = checkDateFormat[0] + "/" + checkDateFormat[1] + "/" + checkDateFormat[2];
             }
 
+            String[] nameArray = docName.split(" ");
+            StringBuilder docNameBuilder = new StringBuilder();
+            for (String s : nameArray) {
+                docNameBuilder.append(s.substring(0, 1).toUpperCase()).append(s.substring(1).toLowerCase()).append(" ");
+            }
+            docName = docNameBuilder.toString().trim();
+
             try{ //input validation
                 LocalDate testDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
                 LocalTime testTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));

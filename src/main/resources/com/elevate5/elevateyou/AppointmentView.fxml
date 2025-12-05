@@ -19,9 +19,9 @@
                 </HBox>
                 -->
                 <HBox alignment="CENTER_RIGHT" prefHeight="85.0" prefWidth="264.0" spacing="10" HBox.hgrow="ALWAYS">
-                    <Button fx:id="addAppointmentButton" onAction="#addAppointmentButtonAction" text="Add" />
-                    <Button fx:id="deleteAppointmentButton" onAction="#deleteAppointmentButtonAction" text="Delete" />
-                    <Button fx:id="searchDoctorsButton" onAction="#searchDoctorsButtonAction" text="Search for Doctors" />
+                    <Button fx:id="addAppointmentButton" styleClass="addApptButton" stylesheets="@styles.css" onAction="#addAppointmentButtonAction" text="Add" />
+                    <Button fx:id="deleteAppointmentButton" styleClass="deleteApptButton" stylesheets="@styles.css" onAction="#deleteAppointmentButtonAction" text="Delete" />
+                    <Button fx:id="searchDoctorsButton" styleClass="searchDrButton" stylesheets="@styles.css" onAction="#searchDoctorsButtonAction" text="Search for Doctors" />
                 </HBox>
             </HBox>
         </top>
@@ -32,9 +32,9 @@
                   <TableColumn fx:id="apptTimeCol" prefWidth="75.0" text="Time" />
                   <TableColumn fx:id="apptDocNameCol" prefWidth="100" text="Doctor" />
                   <TableColumn fx:id="apptTypeCol" prefWidth="150" text="Type" />
-                  <TableColumn fx:id="apptPhoneCol" prefWidth="200" text="Phone" />
-                  <TableColumn fx:id="apptAddressCol" prefWidth="150" text="Address" />
-                  <TableColumn fx:id="apptNotesCol" prefWidth="200" text="Notes" />
+                  <TableColumn fx:id="apptPhoneCol" prefWidth="100" text="Phone" />
+                  <TableColumn fx:id="apptAddressCol" prefWidth="300" text="Address" />
+                  <TableColumn fx:id="apptNotesCol" prefWidth="250" text="Notes" />
               </columns>
           </TableView>
         </center>
