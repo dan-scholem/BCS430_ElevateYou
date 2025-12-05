@@ -109,8 +109,6 @@ public class CalendarView extends Application {
 
         populateCalendar(selectedDate, calendarTableView);
 
-        //selection = calendarTableView.getSelectionModel().getSelectedItems();
-
         if(SessionManager.getSession() != null){
             session = SessionManager.getSession();
         }
@@ -121,19 +119,6 @@ public class CalendarView extends Application {
             eventManager.setEvents(session.getUserEventManager().getEvents());
 
 
-        } else{
-            /*
-            LocalDate sampleDate = LocalDate.of(2025,10,7);
-            LocalTime sampleTime = LocalTime.of(16,30);
-            Event sampleEvent = new Event(sampleDate.toString(), sampleTime.toString(), "Dr Appointment", "Appointment");
-            Event sample2 = new Event(LocalDate.of(2025, 10, 7).toString(), LocalTime.of(15, 00).toString(), "Take Meds", "Advil 20mg");
-            eventManager.addEvent(sampleEvent.getDate().toString(), sampleEvent);
-            eventManager.addEvent(sample2.getDate().toString(), sample2);
-            Collections.sort(eventManager.getEvents().get(sampleEvent.getDate().toString()), (e1, e2) -> e1.getTime().compareTo(e2.getTime()));
-            Event sample3 = new Event(LocalDate.of(2025, 11, 15).toString(), LocalTime.of(12, 00).toString(), "Workout", "Back and Biceps");
-            eventManager.addEvent(sample3.getDate().toString(), sample3);
-
-             */
         }
 
 
@@ -163,6 +148,13 @@ public class CalendarView extends Application {
                                         Button eventButton = new Button(event.toString());
                                         eventButton.setMaxWidth(Double.MAX_VALUE);
                                         eventButton.setAlignment(Pos.CENTER_LEFT);
+                                        eventButton.setStyle("-fx-font-family: \"Segoe UI\";\n" +
+                                                "    -fx-font-weight: bold;\n" +
+                                                "    -fx-background-color: #E29578;\n" +
+                                                "    -fx-background-radius: 30px;\n" +
+                                                "    -fx-text-fill: #000000;\n" +
+                                                "    -fx-border-color: #FFDDD2;\n" +
+                                                "    -fx-border-radius: 20px;");
                                         vbox.getChildren().add(eventButton);
                                         //button representing each event, opens a popup with event info populated
                                         eventButton.setOnAction(e -> {
