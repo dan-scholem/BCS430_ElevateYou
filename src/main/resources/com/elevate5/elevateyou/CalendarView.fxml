@@ -8,25 +8,13 @@
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-40.0">
         <top>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-                <!--
-                <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="400.0">
-                    <opaqueInsets>
-                        <Insets/>
-                    </opaqueInsets>
-                    <padding>
-                        <Insets left="20.0"/>
-                    </padding>
-                    <Button fx:id="backToDashboardButton" contentDisplay="CENTER" mnemonicParsing="false"
-                            onAction="#backToDashboard" text="Dashboard"/>
-                </HBox>
-                -->
-                <Button fx:id="decrementMonth" ellipsisString="&lt;" mnemonicParsing="false" onAction="#handleDecrementMonth" prefHeight="25.0" prefWidth="35.0" text="&lt;" />
-                <Label fx:id="monthLabel" alignment="CENTER" prefHeight="34.0" prefWidth="272.0" text="Calendar">
+                <Button fx:id="decrementMonth" ellipsisString="&lt;" mnemonicParsing="false" onAction="#handleDecrementMonth" styleClass="decrementMonth" stylesheets="@styles.css" text="&lt;" />
+                <Label fx:id="monthLabel" alignment="CENTER" prefHeight="34.0" prefWidth="272.0" styleClass="monthLabel" stylesheets="@styles.css" text="Calendar">
                   <font>
                       <Font size="24.0" />
                   </font>
                 </Label>
-                <Button fx:id="incrementMonth" ellipsisString="&gt;" mnemonicParsing="false" onAction="#handleIncrementMonth" text="&gt;" />
+                <Button fx:id="incrementMonth" ellipsisString="&gt;" mnemonicParsing="false" onAction="#handleIncrementMonth" styleClass="incrementMonth" stylesheets="@styles.css" text="&gt;" />
             </HBox>
         </top>
       <center>
