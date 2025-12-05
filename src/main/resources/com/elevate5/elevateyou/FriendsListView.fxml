@@ -26,7 +26,7 @@
                 <buttons>
                     <Button fx:id="friendsListButton" maxWidth="100.0" mnemonicParsing="false" onAction="#friendsListButtonClick" prefHeight="40.0" prefWidth="100.0" text="Friends" />
                     <StackPane prefHeight="40.0" prefWidth="120.0">
-                        <Button maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" text="Requests" />
+                        <Button fx:id="friendRequestsButton" maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" text="Requests" />
                         <Label fx:id="numRequestsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red; -fx-border-radius: 100; -fx-background-radius: 100; -fx-text-fill: white;" translateX="50.0" translateY="-20.0" />
                     </StackPane>
                 </buttons>
