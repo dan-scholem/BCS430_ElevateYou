@@ -136,12 +136,15 @@
           <Button fx:id="emergencyCardButton" layoutX="21.0" layoutY="585.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" styleClass="savebutton" stylesheets="styles.css" text="Emergency Card" />
           <Button fx:id="importButton" layoutX="595.0" layoutY="590.0" onAction="#onImportAllData" styleClass="savebutton" stylesheets="styles.css" text="Import" />
           <Button fx:id="exportButton" layoutX="673.0" layoutY="590.0" onAction="#onExportAllData" styleClass="savebutton" stylesheets="styles.css" text="Export" />
-         <Label layoutX="357.0" layoutY="60.0" styleClass="settingslabel" stylesheets="@styles.css" text="New Password" />
-         <PasswordField fx:id="newPassField" layoutX="515.0" layoutY="60.0" />
-         <Button fx:id="updatepassButton" layoutX="453.0" layoutY="204.0" mnemonicParsing="false" onAction="#updateUserPassword" prefHeight="31.0" prefWidth="151.0" styleClass="updatepass" text="Update Password" />
-         <Label layoutX="357.0" layoutY="104.0" styleClass="settingslabel" stylesheets="@styles.css" text="Confirm Password" />
-         <PasswordField fx:id="confirmNewPass" layoutX="538.0" layoutY="104.0" />
-         <Label fx:id="passlabel" layoutX="331.0" layoutY="155.0" prefHeight="31.0" prefWidth="630.0" wrapText="true" />
+         <Label layoutX="433.0" layoutY="130.0" styleClass="settingslabel" stylesheets="@styles.css" text="New Password" />
+         <PasswordField fx:id="newPassField" layoutX="593.0" layoutY="130.0" prefHeight="25.0" prefWidth="197.0" />
+         <Button fx:id="updatepassButton" layoutX="520.0" layoutY="247.0" mnemonicParsing="false" onAction="#updateUserPassword" prefHeight="31.0" prefWidth="151.0" styleClass="updatepass" text="Update Password" />
+         <Label layoutX="404.0" layoutY="173.0" styleClass="settingslabel" stylesheets="@styles.css" text="Confirm Password" />
+         <PasswordField fx:id="confirmNewPass" layoutX="593.0" layoutY="172.0" prefHeight="25.0" prefWidth="197.0" />
+         <Label fx:id="passlabel" layoutX="315.0" layoutY="204.0" prefHeight="31.0" prefWidth="630.0" wrapText="true" />
+         <Label layoutX="535.0" layoutY="36.0" styleClass="settingslabel" stylesheets="@styles.css" text="Change Password" />
+         <Label layoutX="419.0" layoutY="93.0" styleClass="settingslabel" stylesheets="@styles.css" text="Current Password" />
+         <PasswordField fx:id="currentPassField" layoutX="593.0" layoutY="93.0" prefHeight="25.0" prefWidth="197.0" />
       </children>
    </Pane>
 </AnchorPane>

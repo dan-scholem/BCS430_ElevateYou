@@ -31,6 +31,8 @@
             <Label layoutX="69.0" layoutY="269.0" prefHeight="28.0" prefWidth="92.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
             </Label>
             <TextField fx:id="userEmail" layoutX="69.0" layoutY="312.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <Label fx:id="emailValidation" layoutX="360.0" layoutY="316.0" prefHeight="17.0" prefWidth="314.0" wrapText="true" />
+            <Label fx:id="passwordValidation" layoutX="360.0" layoutY="405.0" prefHeight="36.0" prefWidth="397.0" wrapText="true" />
          </children>
       </AnchorPane>
    </children>
