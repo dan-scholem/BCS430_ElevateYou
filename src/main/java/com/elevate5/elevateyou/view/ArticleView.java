@@ -2,7 +2,6 @@ package com.elevate5.elevateyou.view;
 
 import com.elevate5.elevateyou.*;
 import com.elevate5.elevateyou.model.ArticleModel;
-import com.elevate5.elevateyou.service.NotificationService;
 import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.ArticleViewModel;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
