@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -103,7 +104,14 @@ public class LandingView {
             DocumentSnapshot doc = future.get();
             String name = (String) doc.get("FirstName");
             if (name != null) {
-                welcometext.setText("Good Morning, " + name);
+                if(LocalTime.now().getHour() >= 5 && LocalTime.now().getHour() < 12) {
+                    welcometext.setText("Good Morning, " + name);
+                }else if(LocalTime.now().getHour() >= 12 && LocalTime.now().getHour() < 18) {
+                    welcometext.setText("Good Afternoon, " + name);
+                }else{
+                    welcometext.setText("Good Evening, " + name);
+                }
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
