@@ -186,8 +186,11 @@ public class Session {
         future = caloriesDocRef.get();
         doc = future.get();
         if(doc.exists()) {
-            int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
-            setCalorieGoal(calorieGoal);
+            try{
+                int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
+                setCalorieGoal(calorieGoal);
+            } catch (NullPointerException e) {}
+           //int calorieGoal = Integer.parseInt(doc.getData().get("CalorieGoal").toString());
                 for(String key : Objects.requireNonNull(doc.getData()).keySet()) {
                     if(!key.equals("CalorieGoal")) {
                         List<Map<String, Object>> data = (List<Map<String, Object>>) doc.getData().get(key);
