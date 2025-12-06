@@ -97,11 +97,11 @@ public class DashboardController {
 
         latestSleepArticleLabel.setText(SessionManager.getSession().getLatestSleepArticle());
 
-        String medicationText = "";
+        StringBuilder medicationText = new StringBuilder();
         for(int i = 0; i < SessionManager.getSession().getMedications().size(); i++){
-            medicationText +=  SessionManager.getSession().getMedications().get(i).getMedicationName() + " " + SessionManager.getSession().getMedications().get(i).getFrequency() + "\n";
+            medicationText.append(SessionManager.getSession().getMedications().get(i).getMedicationName()).append(" ").append(SessionManager.getSession().getMedications().get(i).getFrequency()).append("\n");
         }
-        medicationsLabel.setText(medicationText);
+        medicationsLabel.setText(medicationText.toString());
 
 
 
