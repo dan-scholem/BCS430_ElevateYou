@@ -1,53 +1,27 @@
 package com.elevate5.elevateyou.view;
 
-import com.elevate5.elevateyou.*;
 import com.elevate5.elevateyou.model.User;
-import com.elevate5.elevateyou.session.SessionManager;
 import com.elevate5.elevateyou.viewmodel.FriendsListViewModel;
 import com.google.cloud.firestore.*;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class FriendsListView extends Application {
+public class FriendsListView {
 
-    @FXML
-    private Button appointmentsButton;
-    @FXML
-    private Button calendarButton;
-    @FXML
-    private Button dashButton;
-    @FXML
-    private Button exerciseButton;
-    @FXML
-    private Button foodButton;
-    @FXML
-    private Button journalButton;
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private Button medButton;
-    @FXML
-    private Button sleepButton;
     @FXML
     private TextField searchField;
     @FXML
@@ -230,6 +204,14 @@ public class FriendsListView extends Application {
         if(friendsListViewModel.containsBlockedUser(docUserId)){
             requestFriendButton.setDisable(true);
         }
+        requestFriendButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return requestFriendButton;
     }
@@ -248,6 +230,15 @@ public class FriendsListView extends Application {
 
         });
 
+        acceptRequestButton.setStyle("""
+             -fx-font-family: "Segoe UI";
+             -fx-font-weight: bold;
+             -fx-background-color: #E29578;
+             -fx-background-radius: 30px;
+             -fx-text-fill: #000000;
+             -fx-border-color: #FFDDD2;
+             -fx-border-radius: 20px;""");
+
         return acceptRequestButton;
     }
 
@@ -263,6 +254,15 @@ public class FriendsListView extends Application {
             }
 
         });
+
+        denyRequestButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return denyRequestButton;
     }
@@ -281,6 +281,15 @@ public class FriendsListView extends Application {
             }
 
         });
+
+        removeFriendButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return removeFriendButton;
     }
@@ -305,6 +314,15 @@ public class FriendsListView extends Application {
 
         });
 
+        blockButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
+
         return blockButton;
     }
 
@@ -326,126 +344,4 @@ public class FriendsListView extends Application {
     }
 
 
-    @FXML
-    private void logoutUser(ActionEvent event) throws IOException {
-        Stage stage;
-        Alert logoutalert = new Alert(Alert.AlertType.CONFIRMATION);
-        logoutalert.setTitle("Logout");
-        logoutalert.setHeaderText("You are about to logout!");
-        logoutalert.setContentText("Are you sure you want to logout?");
-
-        if (logoutalert.showAndWait().get() == ButtonType.OK) {
-            stage = (Stage) logoutButton.getScene().getWindow();
-            System.out.println("User logged out successfully");
-            SessionManager.closeSession();
-            stage.close();
-            UserLogin.loadUserLoginScene(stage);
-        }
-    }
-
-    @FXML
-    protected void dashboardButtonClick() {
-        try {
-            Stage stage = (Stage) dashButton.getScene().getWindow();
-            Dashboard.loadDashboardScene(stage);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void medicationButtonClick() throws IOException {
-        try {
-            Stage stage = (Stage) medButton.getScene().getWindow();
-            Medication.loadMedTrackerScene(stage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void calendarButtonClick() throws IOException {
-        try {
-            Stage stage = (Stage) calendarButton.getScene().getWindow();
-            CalendarView.loadCalendarScene(stage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void foodButtonClick() {
-        try {
-            Stage stage = (Stage) foodButton.getScene().getWindow();
-            CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void journalButtonClick() throws IOException {
-        try {
-            Stage stage = (Stage) journalButton.getScene().getWindow();
-            JournalEntry.loadJournalScene(stage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    private void exerciseButtonClick(ActionEvent event) {
-        System.out.println("[NAV] Exercise clicked"); // visibility in console
-
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/elevate5/elevateyou/ui/exercise.fxml")
-            );
-            Node view = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene((javafx.scene.Parent) view, 900, 600));
-            stage.setTitle("Exercise Tracker");
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to open Exercise:\n" + e.getMessage()).showAndWait();
-        }
-    }
-
-    @FXML
-    public void appointmentButtonClick() throws IOException {
-        try {
-            Stage stage = (Stage) appointmentsButton.getScene().getWindow();
-            AppointmentView.loadAppointmentScene(stage);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void sleepButtonClick() {
-        try {
-            Stage s = (Stage) sleepButton.getScene().getWindow();
-            Sleep.loadSleepScene(s);
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(UserLogin.class.getResource("FriendsListView.fxml"));
-
-        Scene scene = new Scene(fxmlLoader.load(), 1218, 738);
-        stage.setTitle("Friends List");
-        stage.setScene(scene);
-        stage.show();
-    }
 }
