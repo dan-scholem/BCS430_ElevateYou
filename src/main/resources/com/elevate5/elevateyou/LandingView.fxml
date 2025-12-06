@@ -26,7 +26,7 @@
                     <effect>
                         <DropShadow />
                     </effect>
-                    <Label fx:id="welcometext" layoutX="21.0" layoutY="24.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
+                    <Label fx:id="welcometext" layoutX="40.0" layoutY="36.0" styleClass="dashboardarea" stylesheets="@styles.css" text="Good morning User" />
                 </Pane>
 
                 <HBox fx:id="topRightBar" alignment="CENTER" spacing="8" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="30.0">
@@ -138,22 +138,6 @@
             </VBox>
         </left>
     </BorderPane>
-    <VBox fx:id="dropdownList"
-          managed="false"
-          prefWidth="380.0"
-          spacing="6"
-          style="
-                          -fx-background-color: white;
-                          -fx-background-insets: 0;
-                          -fx-border-color: rgba(0,0,0,0.12);
-                          -fx-border-radius: 8;
-                          -fx-background-radius: 8;
-                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
-                          -fx-padding: 10;
-                          -fx-view-order: -1;
-                            "
-          visible="false"
-          AnchorPane.rightAnchor="24.0"
-          AnchorPane.topAnchor="70.0">
+    <VBox fx:id="dropdownList" managed="false" prefWidth="380.0" spacing="6" style="                           -fx-background-color: white;                           -fx-background-insets: 0;                           -fx-border-color: rgba(0,0,0,0.12);                           -fx-border-radius: 8;                           -fx-background-radius: 8;                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);                           -fx-padding: 10;                           -fx-view-order: -1;                             " visible="false" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="70.0">
     </VBox>
 </AnchorPane>
