@@ -22,8 +22,8 @@
                       <padding>
                           <Insets right="20.0" />
                       </padding>
-                      <Button fx:id="dailyArticlesButton" mnemonicParsing="false" onAction="#dailyArticlesButtonClick" text="Daily Articles" visible="false" />
-                      <Button fx:id="savedArticlesButton" mnemonicParsing="false" onAction="#savedArticlesButtonClick" text="Favorites" />
+                      <Button fx:id="dailyArticlesButton" styleClass="dailyArticlesButton" stylesheets="@styles.css" mnemonicParsing="false" onAction="#dailyArticlesButtonClick" text="Daily Articles" visible="false" />
+                      <Button fx:id="savedArticlesButton" styleClass="savedArticlesButton" stylesheets="@styles.css" mnemonicParsing="false" onAction="#savedArticlesButtonClick" text="Favorites" />
                       <ComboBox fx:id="categoryBox" prefWidth="150.0" promptText="General">
                           <items>
                               <FXCollections fx:factory="observableArrayList">
@@ -36,7 +36,7 @@
                           </items>
                       </ComboBox>
                       <TextField fx:id="searchField" promptText="Search..." />
-                      <Button mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
+                      <Button mnemonicParsing="false" onAction="#searchButtonClick" styleClass="articleSearchButton" stylesheets="@styles.css" text="Search" />
                   </HBox>
               </HBox>
           </top>
