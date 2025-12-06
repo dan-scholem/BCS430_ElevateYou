@@ -138,6 +138,12 @@ public class CreateAccountController {
     @FXML
     private Label passlabel;
 
+    @FXML
+    private Label emailValidation;
+
+    @FXML
+    private Label passwordValidation;
+
 
     @FXML
     public void onSignInButtonClick(ActionEvent actionEvent) {
@@ -157,14 +163,48 @@ public class CreateAccountController {
     @FXML
     protected void onCreateAccountButtonClick() throws IOException, FirebaseAuthException, ExecutionException, InterruptedException {
 
+        String emailaddress = userEmail.getText();
+        String userpass = userPassword.getText();
+
+
         if (userEmail.getText().isEmpty() || userPassword.getText().isEmpty()) {
 
-            showAlert(Alert.AlertType.ERROR, "Please fill all the required fields!");
+            showAlert(Alert.AlertType.ERROR, "Please fill in all the required fields!");
 
-            userEmail.clear();
-            userPassword.clear();
+            return;
 
-        } else {
+        }
+
+        boolean emailpassValidationErrors = false;
+
+        if (!isEmailValid(emailaddress)) {
+
+            emailValidation.setText("Please enter a valid email address!");
+            emailValidation.setStyle("-fx-text-fill: red;");
+            emailValidation.setVisible(true);
+            emailpassValidationErrors = true;
+        }
+
+        else {
+            emailValidation.setVisible(false);
+        }
+
+        if (!validateUserPassword(userpass)) {
+            passwordValidation.setText("Password must contain at least 6 characters, have uppercase and lowercase, numbers, and a special character.");
+            passwordValidation.setStyle("-fx-text-fill: red;");
+            passwordValidation.setVisible(true);
+            emailpassValidationErrors = true;
+
+        }
+
+        else {
+            passwordValidation.setVisible(false);
+        }
+
+        if (emailpassValidationErrors) {
+            return;
+        }
+
 
             if (registerUser()) {
 
@@ -197,7 +237,6 @@ public class CreateAccountController {
 
             }
 
-        }
 
     }
 
@@ -466,9 +505,9 @@ public class CreateAccountController {
 
         /** This method checks to see if the email the user entered is valid  **/
 
-        private boolean isEmailValid (String email){
+        private boolean isEmailValid (String email) {
 
-            String emailregex = "^[a-z0-9-.]+@[a-z]{1,20}\\.[a-z]{2,}$";
+            String emailregex = "^[A-Za-z0-9_.-]+@[A-Za-z]{1,60}\\.[a-z]{2,}$";
 
             return email.matches(emailregex);
         }
@@ -497,7 +536,7 @@ public class CreateAccountController {
 
         /** Regex expression for validating the user's password **/
 
-        private static Pattern userpassPattern = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*])(?=\\S+$).{6,10}$");
+        private static Pattern userpassPattern = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*])(?=\\S+$).{6,30}$");
 
         public static boolean validateUserPassword (String password) {
 
@@ -528,7 +567,7 @@ public class CreateAccountController {
             }
 
             if (!validateUserPassword(newUserPassword)) {
-                passlabel.setText("Password must be 6 characters long, contain one uppercase and lowercase, number and a special character.");
+                passlabel.setText("Password must contain at least 6 characters, have uppercase and lowercase, numbers, and a special character.");
                 passlabel.setStyle("-fx-text-fill: red;");
                 return;
             }
@@ -557,6 +596,7 @@ public class CreateAccountController {
 
                 }
 
+                currentPassField.clear();
                 newPassField.clear();
                 confirmNewPass.clear();
 
