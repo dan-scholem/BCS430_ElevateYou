@@ -33,7 +33,7 @@ public class DoctorSearchModel {
             if(taxonomy_desc == null){
                 taxonomy_desc = "";
             }
-            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&postal_code=" + postalCode + "&taxonomy_description=" + taxonomy_desc + "&limit=50";
+            String searchString = apiURL + "&first_name=" + firstName + "&last_name=" + lastName + "&postal_code=" + postalCode + "&taxonomy_description=" + taxonomy_desc + "&limit=100";
             URL url = new URL(searchString);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
