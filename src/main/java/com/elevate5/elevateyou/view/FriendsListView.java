@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class FriendsListView extends Application {
+public class FriendsListView {
 
     @FXML
     private Button appointmentsButton;
@@ -230,6 +230,14 @@ public class FriendsListView extends Application {
         if(friendsListViewModel.containsBlockedUser(docUserId)){
             requestFriendButton.setDisable(true);
         }
+        requestFriendButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return requestFriendButton;
     }
@@ -248,6 +256,15 @@ public class FriendsListView extends Application {
 
         });
 
+        acceptRequestButton.setStyle("""
+             -fx-font-family: "Segoe UI";
+             -fx-font-weight: bold;
+             -fx-background-color: #E29578;
+             -fx-background-radius: 30px;
+             -fx-text-fill: #000000;
+             -fx-border-color: #FFDDD2;
+             -fx-border-radius: 20px;""");
+
         return acceptRequestButton;
     }
 
@@ -263,6 +280,15 @@ public class FriendsListView extends Application {
             }
 
         });
+
+        denyRequestButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return denyRequestButton;
     }
@@ -281,6 +307,15 @@ public class FriendsListView extends Application {
             }
 
         });
+
+        removeFriendButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
 
         return removeFriendButton;
     }
@@ -305,6 +340,15 @@ public class FriendsListView extends Application {
 
         });
 
+        blockButton.setStyle("""
+                -fx-font-family: "Segoe UI";
+                    -fx-font-weight: bold;
+                    -fx-background-color: #E29578;
+                    -fx-background-radius: 30px;
+                    -fx-text-fill: #000000;
+                    -fx-border-color: #FFDDD2;
+                    -fx-border-radius: 20px;""");
+
         return blockButton;
     }
 
@@ -326,6 +370,7 @@ public class FriendsListView extends Application {
     }
 
 
+    /*
     @FXML
     private void logoutUser(ActionEvent event) throws IOException {
         Stage stage;
@@ -448,4 +493,6 @@ public class FriendsListView extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    */
 }

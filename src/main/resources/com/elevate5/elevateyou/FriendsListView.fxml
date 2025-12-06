@@ -24,9 +24,9 @@
         <bottom>
             <ButtonBar prefHeight="60.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                 <buttons>
-                    <Button fx:id="friendsListButton" maxWidth="100.0" mnemonicParsing="false" onAction="#friendsListButtonClick" prefHeight="40.0" prefWidth="100.0" text="Friends" />
+                    <Button fx:id="friendsListButton" maxWidth="100.0" mnemonicParsing="false" onAction="#friendsListButtonClick" prefHeight="40.0" prefWidth="100.0" styleClass="friendsListButton" stylesheets="@styles.css" text="Friends" />
                     <StackPane prefHeight="40.0" prefWidth="120.0">
-                        <Button fx:id="friendRequestsButton" maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" text="Requests" />
+                        <Button fx:id="friendRequestsButton" maxWidth="100.0" mnemonicParsing="false" onAction="#requestsButtonClick" prefHeight="40.0" prefWidth="100.0" styleClass="friendRequestsButton" stylesheets="@styles.css" text="Requests" />
                         <Label fx:id="numRequestsLabel" alignment="CENTER" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: red; -fx-border-radius: 100; -fx-background-radius: 100; -fx-text-fill: white;" translateX="50.0" translateY="-20.0" />
                     </StackPane>
                 </buttons>
@@ -42,7 +42,7 @@
                         <children>
                             <Label fx:id="optionLabel" text="Friends">
                                 <font>
-                                    <Font size="36.0" />
+                                    <Font name="Segoe UI Bold" size="36.0" />
                                 </font>
                             </Label>
                         </children>
@@ -52,7 +52,7 @@
                     </HBox>
                     <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="263.0" spacing="10.0" HBox.hgrow="ALWAYS">
                         <TextField fx:id="searchField" promptText="Search..." />
-                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" text="Search" />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonClick" styleClass="userSearchButton" stylesheets="@styles.css" text="Search" />
                     </HBox>
                 </children>
                 <padding>
