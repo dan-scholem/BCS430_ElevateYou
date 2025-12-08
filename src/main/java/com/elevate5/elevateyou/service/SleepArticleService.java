@@ -48,7 +48,7 @@ public class SleepArticleService {
         int score = clamp(base + penalty + napBonus, 0, 100);
 
         String article = buildArticle(dateKey, total, napTotal, fragmented, exerciseLate, score, timeRange);
-
+        SessionManager.getSession().setLatestSleepArticle(article);
         articleDao.upsertArticle(uid, dateKey, score, article);
     }
 

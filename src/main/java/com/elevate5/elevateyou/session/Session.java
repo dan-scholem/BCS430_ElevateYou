@@ -408,4 +408,8 @@ public class Session {
     public ObservableList<Medication> getMedications() {
         return medications;
     }
+
+    public void setLatestSleepArticle(String latestSleepArticle) {
+        this.latestSleepArticle = latestSleepArticle;
+    }
 }
