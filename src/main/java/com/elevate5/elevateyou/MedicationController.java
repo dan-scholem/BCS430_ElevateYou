@@ -142,6 +142,12 @@ public class MedicationController {
             return;
         }
 
+        if (enddateField.getValue().isBefore(startdateField.getValue())) {
+            Alert datealert = new Alert(Alert.AlertType.ERROR, "Please choose a later date!", ButtonType.OK);
+            datealert.showAndWait();
+            return;
+        }
+
         /** Adding the medication to Firestore, based on the user **/
 
         Map<String, Object> meds = new HashMap<>();
@@ -178,7 +184,7 @@ public class MedicationController {
         Medication newmedication = new Medication(medDocID, medname, dosage, frequency, startdate, enddate, notes);
 
         medications.add(newmedication);
-        SessionManager.getSession().getMedications().add(newmedication);
+        SessionManager.getSession().setMedications(medications);
 
         mednameField.clear();
         dosageField.clear();
@@ -205,6 +211,13 @@ public class MedicationController {
                 select.showAndWait();
                 return;
             }
+
+            if (enddateField.getValue().isBefore(startdateField.getValue())) {
+                Alert datealert = new Alert(Alert.AlertType.ERROR, "Please choose a later date!", ButtonType.OK);
+                datealert.showAndWait();
+                return;
+            }
+
             try {
                 this.selectedMed.setMedicationName(mednameField.getText());
                 this.selectedMed.setDosage(dosageField.getText());
@@ -230,6 +243,7 @@ public class MedicationController {
                 future.get();
 
                 MedicationTable.refresh();
+                SessionManager.getSession().setMedications(medications);
 
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Updated Medication");
@@ -301,8 +315,9 @@ public class MedicationController {
 
                     future.get();
 
-                    MedicationTable.getItems().remove(chosenMed);
-
+                    medications.remove(chosenMed);
+                    MedicationTable.setItems(medications);
+                    SessionManager.getSession().setMedications(medications);
                     MedicationTable.refresh();
 
                     chosenMed.setMedicationName(mednameField.getText());
