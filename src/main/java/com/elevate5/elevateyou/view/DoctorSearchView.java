@@ -17,12 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class DoctorSearchView extends Application {
     private TableColumn<DoctorModel, String> phoneNumberColumn;
     @FXML
     private TableColumn<DoctorModel, String> addressColumn;
+    @FXML
+    private VBox specialtyInfoBox;
 
     ObservableList<DoctorModel> searchResults = FXCollections.observableArrayList();
 
@@ -218,6 +221,16 @@ public class DoctorSearchView extends Application {
     private void backButtonAction(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void displaySpecialtyInfo(MouseEvent event) throws IOException {
+        specialtyInfoBox.setVisible(true);
+    }
+
+    @FXML
+    private void hideSpecialtyInfo(MouseEvent event) throws IOException {
+        specialtyInfoBox.setVisible(false);
     }
 
 

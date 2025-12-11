@@ -13,96 +13,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1042.0" styleClass="sidebackground" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.elevate5.elevateyou.CreateAccountController">
    <Pane layoutX="215.0" layoutY="32.0" prefHeight="625.0" prefWidth="979.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="-30.0">
       <children>
-          <!--
-          <VBox alignment="BOTTOM_CENTER" layoutY="140.0" prefHeight="586.0" prefWidth="198.0" spacing="14"
-                style="-fx-background-color: #006D77;">
-              <padding>
-                  <Insets bottom="22" left="10" right="10" top="18"/>
-              </padding>
-              <Button fx:id="dashButton" onAction="#dashboardButtonClick" styleClass="dashbutton"
-                      stylesheets="@styles.css" text="Dashboard">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="medButton" onAction="#medicationButtonClick" styleClass="medbutton" stylesheets="@styles.css"
-                      text="Medications">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="foodButton" onAction="#foodButtonClick" styleClass="foodbutton" stylesheets="@styles.css"
-                      text="Nutrition">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="exerciseButton" styleClass="exercisebutton" stylesheets="@styles.css" text="Exercise">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="sleepButton" styleClass="sleepbutton" stylesheets="@styles.css" text="Sleep">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="journalButton" onAction="#journalButtonClick" styleClass="journalbutton"
-                      stylesheets="@styles.css" text="Journal">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="appointmentsButton" styleClass="apppointmentbutton" stylesheets="@styles.css"
-                      text="Appointments">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="tutorialsButton" styleClass="tutorialsbutton" stylesheets="@styles.css" text="Tutorials">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="calendarButton" onAction="#calendarButtonClick" styleClass="calendarbutton"
-                      stylesheets="@styles.css" text="Calendar">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="friendsButton" styleClass="friendsbutton" stylesheets="@styles.css" text="Refer Friends">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="chatButton" styleClass="chatbutton" stylesheets="@styles.css" text="Live Chat">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="reviewsButton" styleClass="reviewsbutton" stylesheets="@styles.css" text="Reviews">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-              <Button fx:id="logoutButton" onAction="#logoutUser" styleClass="logoutbutton" stylesheets="@styles.css"
-                      text="Log Out">
-                  <font>
-                      <Font name="Poppins ExtraBold" size="13"/>
-                  </font>
-              </Button>
-          </VBox>
-          <Pane layoutY="-19.0" prefHeight="190.0" prefWidth="198.0" style="-fx-background-color: #006D77;">
-              <children>
-                <ImageView fitHeight="190.0" fitWidth="198.0" layoutX="4.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@images/elevateyoulogo.png"/>
-                    </image>
-                </ImageView>
-                <Label layoutX="37.0" layoutY="138.0" styleClass="dashlabel" stylesheets="@styles.css" text="ElevateYou"/>
-              </children>
-          </Pane>
-          -->
           <Label layoutX="331.0" styleClass="settingslabel" stylesheets="@styles.css" text="Profile Settings" />
           <Label layoutX="14.0" layoutY="60.0" styleClass="settingslabel" stylesheets="@styles.css" text="First Name" />
           <Label layoutX="15.0" layoutY="116.0" styleClass="settingslabel" stylesheets="@styles.css" text="Last Name" />
@@ -110,11 +20,10 @@
           <Button layoutX="357.0" layoutY="590.0" mnemonicParsing="false" onAction="#updateUser" styleClass="savebutton" stylesheets="@styles.css" text="Update Profile" />
           <TextField fx:id="firstName" layoutX="135.0" layoutY="60.0" promptText="First Name" />
           <TextField fx:id="lastName" layoutX="135.0" layoutY="116.0" promptText="Last Name" />
-          <Button fx:id="uploadImageButton" layoutX="232.0" layoutY="530.0" mnemonicParsing="false" onAction="#uploadProfilePhoto" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
+          <TextField fx:id="userEmail" layoutX="135.0" layoutY="172.0" promptText="Email" />
           <Label layoutX="18.0" layoutY="228.0" styleClass="settingslabel" stylesheets="@styles.css" text="Age" />
           <Label layoutX="12.0" layoutY="340.0" styleClass="settingslabel" stylesheets="@styles.css" text="Height" />
           <TextField fx:id="ageField" layoutX="135.0" layoutY="228.0" prefHeight="25.0" prefWidth="99.0" promptText="Enter your age" />
-          <TextField fx:id="feetField" layoutX="135.0" layoutY="340.0" prefHeight="25.0" prefWidth="52.0" promptText="Feet" />
           <Label layoutX="10.0" layoutY="284.0" styleClass="settingslabel" stylesheets="@styles.css" text="Gender" />
           <RadioButton fx:id="genderButton1" layoutX="135.0" layoutY="284.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="settingslabel" stylesheets="@styles.css" text="Male">
               <toggleGroup>
@@ -122,13 +31,23 @@
               </toggleGroup>
           </RadioButton>
           <RadioButton fx:id="genderButton2" layoutX="230.0" layoutY="284.0" mnemonicParsing="false" styleClass="settingslabel" stylesheets="@styles.css" text="Female" toggleGroup="$gender" />
+          <TextField fx:id="feetField" layoutX="135.0" layoutY="340.0" prefHeight="25.0" prefWidth="52.0" promptText="Feet" />
           <TextField fx:id="inchesField" layoutX="220.0" layoutY="340.0" prefHeight="25.0" prefWidth="52.0" promptText="Inches" />
           <Label layoutX="190.0" layoutY="340.0" styleClass="settingslabel" stylesheets="@styles.css" text="ft" />
           <Label layoutX="275.0" layoutY="340.0" prefHeight="24.0" prefWidth="27.0" styleClass="settingslabel" stylesheets="@styles.css" text="in" />
           <Label layoutX="15.0" layoutY="411.0" styleClass="settingslabel" stylesheets="@styles.css" text="Bio" />
           <TextArea fx:id="userbioTextField" layoutX="134.0" layoutY="390.0" prefHeight="66.0" prefWidth="277.0" promptText="Tell us about you" />
+          <Label layoutX="433.0" layoutY="130.0" styleClass="settingslabel" stylesheets="@styles.css" text="New Password" />
+          <PasswordField fx:id="currentPassField" layoutX="593.0" layoutY="93.0" prefHeight="25.0" prefWidth="197.0" />
+          <PasswordField fx:id="newPassField" layoutX="593.0" layoutY="130.0" prefHeight="25.0" prefWidth="197.0" />
+          <Label layoutX="404.0" layoutY="173.0" styleClass="settingslabel" stylesheets="@styles.css" text="Confirm Password" />
+          <PasswordField fx:id="confirmNewPass" layoutX="593.0" layoutY="172.0" prefHeight="25.0" prefWidth="197.0" />
+          <Button fx:id="updatepassButton" layoutX="520.0" layoutY="247.0" mnemonicParsing="false" onAction="#updateUserPassword" prefHeight="31.0" prefWidth="151.0" styleClass="updatepass" text="Update Password" />
+          <Label fx:id="passlabel" alignment="CENTER" layoutX="350.0" layoutY="204.0" prefHeight="31.0" prefWidth="620.0" wrapText="true" />
+          <Label layoutX="535.0" layoutY="36.0" styleClass="settingslabel" stylesheets="@styles.css" text="Change Password" />
+          <Label layoutX="419.0" layoutY="93.0" styleClass="settingslabel" stylesheets="@styles.css" text="Current Password" />
+          <Button fx:id="uploadImageButton" layoutX="232.0" layoutY="530.0" mnemonicParsing="false" onAction="#uploadProfilePhoto" styleClass="uploadbutton" stylesheets="@styles.css" text="Upload Picture" />
           <Label layoutX="14.0" layoutY="172.0" styleClass="settingslabel" stylesheets="@styles.css" text="Email" />
-          <TextField fx:id="userEmail" layoutX="135.0" layoutY="172.0" promptText="Email" />
           <Label fx:id="weightmessage" layoutX="217.0" layoutY="423.0" />
           <Label fx:id="heightmessage" layoutX="280.0" layoutY="366.0" />
           <Label fx:id="agemessage" layoutX="192.0" layoutY="254.0" />
@@ -136,15 +55,6 @@
           <Button fx:id="emergencyCardButton" layoutX="21.0" layoutY="585.0" onAction="#openEmergencyCard" prefHeight="40" prefWidth="140" styleClass="savebutton" stylesheets="styles.css" text="Emergency Card" />
           <Button fx:id="importButton" layoutX="595.0" layoutY="590.0" onAction="#onImportAllData" styleClass="savebutton" stylesheets="styles.css" text="Import" />
           <Button fx:id="exportButton" layoutX="673.0" layoutY="590.0" onAction="#onExportAllData" styleClass="savebutton" stylesheets="styles.css" text="Export" />
-         <Label layoutX="433.0" layoutY="130.0" styleClass="settingslabel" stylesheets="@styles.css" text="New Password" />
-         <PasswordField fx:id="newPassField" layoutX="593.0" layoutY="130.0" prefHeight="25.0" prefWidth="197.0" />
-         <Button fx:id="updatepassButton" layoutX="520.0" layoutY="247.0" mnemonicParsing="false" onAction="#updateUserPassword" prefHeight="31.0" prefWidth="151.0" styleClass="updatepass" text="Update Password" />
-         <Label layoutX="404.0" layoutY="173.0" styleClass="settingslabel" stylesheets="@styles.css" text="Confirm Password" />
-         <PasswordField fx:id="confirmNewPass" layoutX="593.0" layoutY="172.0" prefHeight="25.0" prefWidth="197.0" />
-         <Label fx:id="passlabel" alignment="CENTER" layoutX="384.0" layoutY="204.0" prefHeight="31.0" prefWidth="591.0" wrapText="true" />
-         <Label layoutX="535.0" layoutY="36.0" styleClass="settingslabel" stylesheets="@styles.css" text="Change Password" />
-         <Label layoutX="419.0" layoutY="93.0" styleClass="settingslabel" stylesheets="@styles.css" text="Current Password" />
-         <PasswordField fx:id="currentPassField" layoutX="593.0" layoutY="93.0" prefHeight="25.0" prefWidth="197.0" />
       </children>
    </Pane>
 </AnchorPane>

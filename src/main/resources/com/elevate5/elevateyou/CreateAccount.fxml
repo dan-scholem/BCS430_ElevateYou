@@ -18,6 +18,8 @@
             <Label layoutX="284.0" layoutY="30.0" prefHeight="40.0" prefWidth="245.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Create Your Account " textFill="#e29578">
             </Label>
             <TextField fx:id="firstName" layoutX="69.0" layoutY="138.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <TextField fx:id="lastName" layoutX="69.0" layoutY="220.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
+            <TextField fx:id="userEmail" layoutX="69.0" layoutY="312.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <PasswordField fx:id="userPassword" layoutX="69.0" layoutY="410.0" prefHeight="25.0" prefWidth="284.0" />
             <Button fx:id="createAccountButton" layoutX="265.0" layoutY="470.0" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" prefHeight="36.0" prefWidth="284.0" style="-fx-background-color: #E29578;" styleClass="createaccountbutton" stylesheets="@styles.css" text="Create Account">
             </Button>
@@ -25,12 +27,10 @@
             </Label>
             <Button fx:id="signInButton" layoutX="618.0" layoutY="506.0" mnemonicParsing="false" onAction="#onSignInButtonClick" prefHeight="36.0" prefWidth="124.0" style="-fx-background-color: #006D77;" styleClass="passwordlabel" stylesheets="@styles.css" text="Sign In" textFill="#ffddd2">
             </Button>
-            <TextField fx:id="lastName" layoutX="69.0" layoutY="220.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <Label layoutX="69.0" layoutY="365.0" prefHeight="29.0" prefWidth="143.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Password" textFill="#e29578">
             </Label>
             <Label layoutX="69.0" layoutY="269.0" prefHeight="28.0" prefWidth="92.0" styleClass="createaccountlabel" stylesheets="@styles.css" text="Email" textFill="#e29578">
             </Label>
-            <TextField fx:id="userEmail" layoutX="69.0" layoutY="312.0" prefHeight="25.0" prefWidth="284.0" style="-fx-border-radius: 20;" />
             <Label fx:id="emailValidation" layoutX="360.0" layoutY="316.0" prefHeight="17.0" prefWidth="314.0" wrapText="true" />
             <Label fx:id="passwordValidation" layoutX="360.0" layoutY="405.0" prefHeight="36.0" prefWidth="397.0" wrapText="true" />
          </children>
