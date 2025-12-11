@@ -444,7 +444,7 @@ public class CalendarView extends Application {
                                 Alert alert = new Alert(Alert.AlertType.ERROR);
                                 alert.setTitle("Error");
                                 alert.setHeaderText("Error");
-                                alert.setContentText(ex.getMessage() + "Invalid Date or Time");
+                                alert.setContentText("Invalid Date or Time");
                                 alert.showAndWait();
                             }
                         });
