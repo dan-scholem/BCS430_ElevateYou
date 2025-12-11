@@ -14,6 +14,8 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +30,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -571,7 +573,7 @@ public class CreateAccountController {
                 passlabel.setStyle("-fx-text-fill: red;");
                 return;
             }
-
+            if(passwordAuth(SessionManager.getSession().getUser().getEmail(), currentPassField.getText())) {
                 try {
                     // Updates the user's password in Firebase
                     UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(documentID)
@@ -595,12 +597,65 @@ public class CreateAccountController {
                     System.out.println("Failed to update user password" + e.getMessage());
 
                 }
+            }else{
+                passlabel.setText("Incorrect password!");
+                passlabel.setStyle("-fx-text-fill: red;");
+            }
+
 
                 currentPassField.clear();
                 newPassField.clear();
                 confirmNewPass.clear();
 
         }
+
+    public boolean passwordAuth(String email, String password) {
+
+        try{
+            InputStream jsonIn = getClass().getResourceAsStream("/com/elevate5/elevateyou/FirebaseAPI.json");
+            JsonObject config;
+            String apiKey;
+            try(InputStreamReader reader = new InputStreamReader(jsonIn, StandardCharsets.UTF_8)){
+                config = new Gson().fromJson(reader, JsonObject.class);
+                apiKey = config.get("api_key").getAsString();
+            }
+
+            String endpoint = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
+
+            URL url = new URL(endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setDoOutput(true);
+
+            String jsonInput = String.format("""
+                    {
+                     "email": "%s",
+                     "password": "%s",
+                     "returnSecureToken": true
+                    }
+                    """, email, password);
+
+            try(OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            if(connection.getResponseCode() == 200){
+                return true;
+            } else{
+                System.out.println(connection.getResponseMessage() + connection.getResponseCode());
+                return false;
+            }
+
+        } catch(FileNotFoundException e){
+            System.out.println("File not found: " + e.getMessage());
+        } catch(IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        return false;
+
+    }
 
         // This event is called to log the user out of the application and returns the user to the login screen
         @FXML
