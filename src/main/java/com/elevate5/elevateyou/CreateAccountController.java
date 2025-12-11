@@ -4,7 +4,6 @@ import com.elevate5.elevateyou.model.EventManager;
 import com.elevate5.elevateyou.service.UserBackupService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
-import com.elevate5.elevateyou.view.CalendarView;
 import com.elevate5.elevateyou.view.LandingView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -42,7 +41,6 @@ import java.util.regex.Pattern;
 
 
 import static com.elevate5.elevateyou.App.fauth;
-import static javafx.application.Application.launch;
 
 
 public class CreateAccountController {
@@ -81,24 +79,6 @@ public class CreateAccountController {
 
     @FXML
     private RadioButton genderButton1, genderButton2;
-
-    @FXML
-    private Button calendarButton;
-
-    @FXML
-    private Button dashButton;
-
-    @FXML
-    private Button foodButton;
-
-    @FXML
-    private Button journalButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
-    private Button medButton;
 
     @FXML
     private Label agemessage;
@@ -213,7 +193,6 @@ public class CreateAccountController {
                 if (addUser()) {
 
                     App.theUser.setEmail(userEmail.getText());
-                    //App.theUser.setPassword(userPassword.getText());
                     App.theUser.setFirstName(firstName.getText());
                     App.theUser.setLastName(lastName.getText());
 
@@ -657,33 +636,6 @@ public class CreateAccountController {
 
     }
 
-        // This event is called to log the user out of the application and returns the user to the login screen
-        @FXML
-        private void logoutUser (ActionEvent event) throws IOException {
-
-            Stage stage;
-
-            Alert logoutalert = new Alert(Alert.AlertType.CONFIRMATION);
-
-            logoutalert.setTitle("Logout");
-
-            logoutalert.setHeaderText("You are about to logout!");
-            logoutalert.setContentText("Are you sure you want to logout?");
-
-            if (logoutalert.showAndWait().get() == ButtonType.OK) {
-
-                stage = (Stage) logoutButton.getScene().getWindow();
-
-                System.out.println("User logged out successfully");
-
-                SessionManager.closeSession();
-
-                stage.close();
-
-                UserLogin.loadUserLoginScene(stage);
-            }
-
-        }
 
     @FXML
     protected void uploadProfilePhoto(ActionEvent event) {
@@ -797,88 +749,11 @@ public class CreateAccountController {
             catch(Exception e) {
 
             System.out.println("Error adding profile image" + e.getMessage());
+            e.printStackTrace();
 
         }
     }
 
-
-        @FXML
-        protected void dashboardButtonClick () {
-
-            try {
-
-                Stage stage = (Stage) dashButton.getScene().getWindow();
-
-                Dashboard.loadDashboardScene(stage);
-
-            } catch (Exception e) {
-
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void medicationButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) medButton.getScene().getWindow();
-
-                Medication.loadMedTrackerScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        @FXML
-        protected void calendarButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) calendarButton.getScene().getWindow();
-                CalendarView.loadCalendarScene(stage);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void foodButtonClick () {
-            try {
-                Stage stage = (Stage) foodButton.getScene().getWindow();
-                CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void journalButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) journalButton.getScene().getWindow();
-
-                JournalEntry.loadJournalScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        @FXML
-        protected void settingsButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) profileImgButton.getScene().getWindow();
-
-                UserProfile.loadSettingsScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
 
         private void showAlert (Alert.AlertType alertType, String message){
 
@@ -902,7 +777,7 @@ public class CreateAccountController {
                 if (exportButton != null) exportButton.setDisable(true);
                 if (importButton != null) importButton.setDisable(true);
             }
-            loadProfileImage();
+            //loadProfileImage();
 
         }
         @FXML
