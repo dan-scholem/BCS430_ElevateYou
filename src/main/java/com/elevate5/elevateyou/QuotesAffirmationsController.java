@@ -405,14 +405,31 @@ public class QuotesAffirmationsController implements Initializable {
             int affirmationChoice = customAffirmationsList.getSelectionModel().getSelectedIndex();
 
             if (affirmationChoice >= 0) {
-                customAffirmationsList.getItems().remove(affirmationChoice);
-                quoteaffirmationArea.setText("Affirmation removed from the list.");
 
-                saveCustomAffirmations(currentEmail);
-            }
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                alert.setTitle("Confirm Deletion");
+
+                alert.setHeaderText("Delete Affirmation");
+
+                alert.setContentText("Do you want to delete this affirmation?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                    customAffirmationsList.getItems().remove(affirmationChoice);
+
+                    quoteaffirmationArea.setText("Affirmation removed from the list.");
+
+                    saveCustomAffirmations(currentEmail);
+                }
+
 
             else {
-                quoteaffirmationArea.setText("Please choose an affirmation to delete.");
+                    quoteaffirmationArea.setText("Please choose an affirmation to delete.");
+                }
+
             }
 
         }
