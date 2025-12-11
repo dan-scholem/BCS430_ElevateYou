@@ -78,7 +78,7 @@ public class AppointmentManager {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Error");
                     alert.setHeaderText("Error");
-                    alert.setContentText(ex.getMessage());
+                    alert.setContentText("Invalid Date Format");
                     alert.showAndWait();
                 }
 
