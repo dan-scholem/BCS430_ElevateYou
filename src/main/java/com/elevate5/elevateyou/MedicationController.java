@@ -301,7 +301,7 @@ public class MedicationController {
 
                     future.get();
 
-                    MedicationTable.getItems().remove(chosenMed);
+                    medications.remove(chosenMed);
 
                     MedicationTable.refresh();
 
