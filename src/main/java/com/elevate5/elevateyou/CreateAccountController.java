@@ -4,7 +4,6 @@ import com.elevate5.elevateyou.model.EventManager;
 import com.elevate5.elevateyou.service.UserBackupService;
 import com.elevate5.elevateyou.session.Session;
 import com.elevate5.elevateyou.session.SessionManager;
-import com.elevate5.elevateyou.view.CalendarView;
 import com.elevate5.elevateyou.view.LandingView;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -14,6 +13,8 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +29,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -40,7 +41,6 @@ import java.util.regex.Pattern;
 
 
 import static com.elevate5.elevateyou.App.fauth;
-import static javafx.application.Application.launch;
 
 
 public class CreateAccountController {
@@ -79,24 +79,6 @@ public class CreateAccountController {
 
     @FXML
     private RadioButton genderButton1, genderButton2;
-
-    @FXML
-    private Button calendarButton;
-
-    @FXML
-    private Button dashButton;
-
-    @FXML
-    private Button foodButton;
-
-    @FXML
-    private Button journalButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
-    private Button medButton;
 
     @FXML
     private Label agemessage;
@@ -211,7 +193,6 @@ public class CreateAccountController {
                 if (addUser()) {
 
                     App.theUser.setEmail(userEmail.getText());
-                    //App.theUser.setPassword(userPassword.getText());
                     App.theUser.setFirstName(firstName.getText());
                     App.theUser.setLastName(lastName.getText());
 
@@ -571,7 +552,7 @@ public class CreateAccountController {
                 passlabel.setStyle("-fx-text-fill: red;");
                 return;
             }
-
+            if(passwordAuth(SessionManager.getSession().getUser().getEmail(), currentPassField.getText())) {
                 try {
                     // Updates the user's password in Firebase
                     UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(documentID)
@@ -595,6 +576,11 @@ public class CreateAccountController {
                     System.out.println("Failed to update user password" + e.getMessage());
 
                 }
+            }else{
+                passlabel.setText("Incorrect password!");
+                passlabel.setStyle("-fx-text-fill: red;");
+            }
+
 
                 currentPassField.clear();
                 newPassField.clear();
@@ -602,33 +588,54 @@ public class CreateAccountController {
 
         }
 
-        // This event is called to log the user out of the application and returns the user to the login screen
-        @FXML
-        private void logoutUser (ActionEvent event) throws IOException {
+    public boolean passwordAuth(String email, String password) {
 
-            Stage stage;
-
-            Alert logoutalert = new Alert(Alert.AlertType.CONFIRMATION);
-
-            logoutalert.setTitle("Logout");
-
-            logoutalert.setHeaderText("You are about to logout!");
-            logoutalert.setContentText("Are you sure you want to logout?");
-
-            if (logoutalert.showAndWait().get() == ButtonType.OK) {
-
-                stage = (Stage) logoutButton.getScene().getWindow();
-
-                System.out.println("User logged out successfully");
-
-                SessionManager.closeSession();
-
-                stage.close();
-
-                UserLogin.loadUserLoginScene(stage);
+        try{
+            InputStream jsonIn = getClass().getResourceAsStream("/com/elevate5/elevateyou/FirebaseAPI.json");
+            JsonObject config;
+            String apiKey;
+            try(InputStreamReader reader = new InputStreamReader(jsonIn, StandardCharsets.UTF_8)){
+                config = new Gson().fromJson(reader, JsonObject.class);
+                apiKey = config.get("api_key").getAsString();
             }
 
+            String endpoint = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + apiKey;
+
+            URL url = new URL(endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setDoOutput(true);
+
+            String jsonInput = String.format("""
+                    {
+                     "email": "%s",
+                     "password": "%s",
+                     "returnSecureToken": true
+                    }
+                    """, email, password);
+
+            try(OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            if(connection.getResponseCode() == 200){
+                return true;
+            } else{
+                System.out.println(connection.getResponseMessage() + connection.getResponseCode());
+                return false;
+            }
+
+        } catch(FileNotFoundException e){
+            System.out.println("File not found: " + e.getMessage());
+        } catch(IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
         }
+        return false;
+
+    }
+
 
     @FXML
     protected void uploadProfilePhoto(ActionEvent event) {
@@ -742,88 +749,11 @@ public class CreateAccountController {
             catch(Exception e) {
 
             System.out.println("Error adding profile image" + e.getMessage());
+            e.printStackTrace();
 
         }
     }
 
-
-        @FXML
-        protected void dashboardButtonClick () {
-
-            try {
-
-                Stage stage = (Stage) dashButton.getScene().getWindow();
-
-                Dashboard.loadDashboardScene(stage);
-
-            } catch (Exception e) {
-
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void medicationButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) medButton.getScene().getWindow();
-
-                Medication.loadMedTrackerScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        @FXML
-        protected void calendarButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) calendarButton.getScene().getWindow();
-                CalendarView.loadCalendarScene(stage);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void foodButtonClick () {
-            try {
-                Stage stage = (Stage) foodButton.getScene().getWindow();
-                CaloriesWaterIntake.loadCaloriesWaterIntakeScene(stage);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @FXML
-        protected void journalButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) journalButton.getScene().getWindow();
-
-                JournalEntry.loadJournalScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        @FXML
-        protected void settingsButtonClick () throws IOException {
-
-            try {
-                Stage stage = (Stage) profileImgButton.getScene().getWindow();
-
-                UserProfile.loadSettingsScene(stage);
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-        }
 
         private void showAlert (Alert.AlertType alertType, String message){
 
@@ -847,7 +777,7 @@ public class CreateAccountController {
                 if (exportButton != null) exportButton.setDisable(true);
                 if (importButton != null) importButton.setDisable(true);
             }
-            loadProfileImage();
+            //loadProfileImage();
 
         }
         @FXML
