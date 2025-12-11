@@ -35,7 +35,7 @@ public class Session {
     private final DocumentReference weightLogDocRef;
     private String latestSleepArticle;
     private final CollectionReference medCollectionRef;
-    private final ObservableList<Medication> medications = FXCollections.observableArrayList();
+    private ObservableList<Medication> medications = FXCollections.observableArrayList();
 
 
     public Session(UserRecord user) throws ExecutionException, InterruptedException {
@@ -407,6 +407,10 @@ public class Session {
 
     public ObservableList<Medication> getMedications() {
         return medications;
+    }
+
+    public void setMedications(ObservableList<Medication> medications) {
+        this.medications = medications;
     }
 
     public void setLatestSleepArticle(String latestSleepArticle) {

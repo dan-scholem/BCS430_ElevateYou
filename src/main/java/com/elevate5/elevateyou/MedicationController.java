@@ -184,7 +184,7 @@ public class MedicationController {
         Medication newmedication = new Medication(medDocID, medname, dosage, frequency, startdate, enddate, notes);
 
         medications.add(newmedication);
-        SessionManager.getSession().getMedications().add(newmedication);
+        SessionManager.getSession().setMedications(medications);
 
         mednameField.clear();
         dosageField.clear();
@@ -243,6 +243,7 @@ public class MedicationController {
                 future.get();
 
                 MedicationTable.refresh();
+                SessionManager.getSession().setMedications(medications);
 
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Updated Medication");
@@ -315,7 +316,8 @@ public class MedicationController {
                     future.get();
 
                     medications.remove(chosenMed);
-
+                    MedicationTable.setItems(medications);
+                    SessionManager.getSession().setMedications(medications);
                     MedicationTable.refresh();
 
                     chosenMed.setMedicationName(mednameField.getText());
