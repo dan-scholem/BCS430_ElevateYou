@@ -142,6 +142,12 @@ public class MedicationController {
             return;
         }
 
+        if (enddateField.getValue().isBefore(startdateField.getValue())) {
+            Alert datealert = new Alert(Alert.AlertType.ERROR, "Please choose a later date!", ButtonType.OK);
+            datealert.showAndWait();
+            return;
+        }
+
         /** Adding the medication to Firestore, based on the user **/
 
         Map<String, Object> meds = new HashMap<>();
@@ -205,6 +211,13 @@ public class MedicationController {
                 select.showAndWait();
                 return;
             }
+
+            if (enddateField.getValue().isBefore(startdateField.getValue())) {
+                Alert datealert = new Alert(Alert.AlertType.ERROR, "Please choose a later date!", ButtonType.OK);
+                datealert.showAndWait();
+                return;
+            }
+
             try {
                 this.selectedMed.setMedicationName(mednameField.getText());
                 this.selectedMed.setDosage(dosageField.getText());
