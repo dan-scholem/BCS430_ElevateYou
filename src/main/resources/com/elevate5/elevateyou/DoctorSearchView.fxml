@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -22,6 +23,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font></Label>
                   <TextField fx:id="specialtyField" prefHeight="25.0" prefWidth="98.0" promptText="Specialty..." />
+                  <ImageView fx:id="specialtyInfo" fitHeight="20.0" fitWidth="17.0" onMouseEntered="#displaySpecialtyInfo" onMouseExited="#hideSpecialtyInfo" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="-5.0">
+                     <image>
+                        <Image url="@images/question-mark.png" />
+                     </image>
+                  </ImageView>
                   <Label text="Location:">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -60,5 +66,21 @@
              </HBox>
          </bottom>
       </BorderPane>
+      <VBox fx:id="specialtyInfoBox" prefHeight="200.0" prefWidth="124.0" spacing="5.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label text="Common Specialties:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="Family Medicine" />
+            <Label text="Internal Medicine" />
+            <Label text="Dentist" />
+            <Label text="Gastroenterology" />
+            <Label text="Psychologist" />
+            <Label text="Cardiovascular Disease" />
+            <Label text="Oncology" />
+            <Label text="Optometrist" />
+            <Label text="Gynecology" />
+         </children></VBox>
    </children>
 </AnchorPane>
